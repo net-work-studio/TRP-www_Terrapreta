@@ -11,7 +11,7 @@ export const seoObject = defineType({
       title: "Meta Title",
       description: "Override page title for search engines (50-60 chars)",
       validation: (rule) =>
-        rule.max(70).warning("Meta titles should be under 60 characters"),
+        rule.max(60).warning("Meta titles should be under 60 characters"),
     }),
     defineField({
       type: "text",
@@ -21,7 +21,7 @@ export const seoObject = defineType({
       description: "Description for search results (150-160 chars)",
       validation: (rule) =>
         rule
-          .max(170)
+          .max(160)
           .warning("Meta descriptions should be under 160 characters"),
     }),
     defineField({
