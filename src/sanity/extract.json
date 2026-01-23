@@ -1089,7 +1089,7 @@
             }
           ]
         },
-        "optional": true
+        "optional": false
       },
       "isActive": {
         "type": "objectAttribute",
