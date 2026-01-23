@@ -209,7 +209,7 @@ export type Redirect = {
   _rev: string;
   source: string;
   destination: string;
-  permanent?: "permanent" | "temporary";
+  permanent: "permanent" | "temporary";
   isActive?: "active" | "inactive";
   notes?: string;
 };
