@@ -121,5 +121,4 @@ const nextConfig: NextConfig = {
 export default withPlausibleProxy({
   scriptName: "script.file-downloads.hash.outbound-links.js",
   customDomain: "https://plausible.net-work.studio",
-  selfHosted: true,
 })(nextConfig);

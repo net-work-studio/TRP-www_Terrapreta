@@ -57,7 +57,7 @@ export default async function Footer() {
             </div>
             <div className="flex flex-col gap-7.5">
               <p className="max-w-full text-pretty md:max-w-[50ch] md:text-balance">
-                Our mission is to regenerate one million hectares of land by
+                Our mission is to regenerate one thousand hectares of land by
                 2031 via Soil-based Solutions.
               </p>
               {unGoalLogos.length > 0 && (
