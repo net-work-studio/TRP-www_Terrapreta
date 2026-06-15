@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "preinstall": "node debug-netlify-install.mjs",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "check": "bunx ultracite check",
