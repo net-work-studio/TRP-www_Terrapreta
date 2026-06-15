@@ -1,0 +1,59 @@
+CONTEXT.md
+  s_638ece00caec27::t_9b0be1879ed7a4 14-21
+  s_638ece00caec27::t_b9dd562678a6ff 1-9
+  s_638ece00caec27::t_a62adf678586a9 10-13
+src/app/(frontend)/services/[slug]/page.tsx
+  s_638ece00caec27::t_98826f5082d1d9 29-32
+  s_638ece00caec27::t_c76979333fbe1e 135-136
+  s_638ece00caec27::t_183ac4c384355c 134,146-156
+  s_638ece00caec27::t_b41a656e6c4be5 115,120
+  s_638ece00caec27::t_82fc03a2a75919 9
+src/sanity/lib/image.ts
+  s_638ece00caec27::t_cef2c8a5ca68f8 2,12-125
+src/components/layout/page-grid.tsx
+  s_638ece00caec27::t_1d94a5bf1fb26a 4,25-27,77,83
+src/components/ui/sanity-image.tsx
+  s_638ece00caec27::t_9731e1941710c3 1-75
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_638ece00caec27::t_94dd06b6bc6110 15
+  s_638ece00caec27::t_1e27c23c480b6f 137,144
+src/sanity/lib/queries.ts
+  s_638ece00caec27::t_d4130cb8f8ebed 299
+  s_638ece00caec27::t_008d6aa9675247 180
+  s_638ece00caec27::t_6751a92cb182fe 3-28
+  s_638ece00caec27::t_023e0b336a725c 55
+  s_638ece00caec27::t_38377b4e006391 308
+  s_638ece00caec27::t_34278f1a891e36 95,117,132,237
+  s_638ece00caec27::t_4ef8e5d229951d 202,206
+  s_638ece00caec27::t_70d7ae1d970bad 286,289
+src/components/shared/footer.tsx
+  s_638ece00caec27::t_481efd5f7a477d 161,168
+  s_638ece00caec27::t_464a997242b122 4
+src/components/ui/portable-image.tsx
+  s_638ece00caec27::t_ab6f77e7144705 2,78,83
+src/app/(frontend)/_sections/logos.tsx
+  s_638ece00caec27::t_06f641ebacc60f 2,35,41
+src/app/(frontend)/_sections/services.tsx
+  s_638ece00caec27::t_45df974a58279f 12,26,40,45,64,69
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_638ece00caec27::t_769f3122552985 143,150
+  s_638ece00caec27::t_16cb9c2202660e 16
+src/app/(frontend)/_sections/customers.tsx
+  s_638ece00caec27::t_e835ae4f926acf 3,64,70,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "9dd833bf97a715ed752b3468fd1d46ab81e8775a",
+  "prompts": {},
+  "sessions": {
+    "s_638ece00caec27": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "21c9b3be-dd17-466a-8b9c-10bfa7c2bbb2",
+        "model": "default"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
