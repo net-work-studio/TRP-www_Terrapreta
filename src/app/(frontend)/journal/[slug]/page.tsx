@@ -33,6 +33,10 @@ import {
 } from "@/sanity/lib/queries";
 import type { JOURNAL_ITEM_QUERY_RESULT } from "@/sanity/types";
 
+type SlugPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
 const BLUR_QUALITY = 5;
@@ -47,7 +51,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/journal/[slug]">): Promise<Metadata> {
+}: SlugPageProps): Promise<Metadata> {
   const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
     await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
 
@@ -247,7 +251,7 @@ async function CachedJournalPage({
 
 async function DynamicJournalPage({
   params,
-}: Pick<PageProps<"/journal/[slug]">, "params">) {
+}: SlugPageProps) {
   const [{ slug }, { perspective, stega }] = await Promise.all([
     params,
     getDynamicFetchOptions(),
@@ -284,7 +288,7 @@ function JournalPageFallback() {
   );
 }
 
-export default async function Page({ params }: PageProps<"/journal/[slug]">) {
+export default async function Page({ params }: SlugPageProps) {
   const { isEnabled: isDraftMode } = await draftMode();
 
   if (isDraftMode) {

@@ -25,6 +25,10 @@ import {
 } from "@/sanity/lib/queries";
 import type { SERVICE_QUERY_RESULT } from "@/sanity/types";
 
+type SlugPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
     query: SERVICE_SLUGS_QUERY,
@@ -34,7 +38,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps<"/services/[slug]">): Promise<Metadata> {
+}: SlugPageProps): Promise<Metadata> {
   const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
     await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
 
@@ -309,7 +313,7 @@ async function CachedServicePage({
 
 async function DynamicServicePage({
   params,
-}: Pick<PageProps<"/services/[slug]">, "params">) {
+}: SlugPageProps) {
   const [{ slug }, { perspective, stega }] = await Promise.all([
     params,
     getDynamicFetchOptions(),
@@ -346,7 +350,7 @@ function ServicePageFallback() {
 
 export default async function Page({
   params,
-}: PageProps<"/services/[slug]">) {
+}: SlugPageProps) {
   const { isEnabled: isDraftMode } = await draftMode();
 
   if (isDraftMode) {
