@@ -1,3 +1,4 @@
+import { CogIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
@@ -5,6 +6,7 @@ export const siteDoc = defineType({
   type: "document",
   name: "site",
   title: "Site",
+  icon: CogIcon,
   groups,
   fields: [
     defineField({
@@ -13,7 +15,9 @@ export const siteDoc = defineType({
       title: "Site Name",
       hidden: true,
       readOnly: true,
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("The site settings document needs a site name."),
+      ],
     }),
     defineField({
       type: "seoObject",
@@ -23,4 +27,15 @@ export const siteDoc = defineType({
       description: "Default SEO settings used across the site and for the homepage",
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+    },
+    prepare({ title }) {
+      return {
+        subtitle: "Site settings",
+        title: title || "Site settings",
+      };
+    },
+  },
 });

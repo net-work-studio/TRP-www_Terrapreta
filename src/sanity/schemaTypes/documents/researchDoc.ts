@@ -1,21 +1,27 @@
-import { defineType, defineField } from "sanity";
+import { DocumentTextIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 export const researchDoc = defineType({
   type: "document",
   name: "research",
   title: "Research",
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       type: "titleSlugObject",
       name: "titleSlug",
       title: "Title + Slug",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Research needs a title and slug."),
+      ],
     }),
     defineField({
       type: "imageObject",
       name: "mainImage",
       title: "Main Image",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A main image is required for research pages."),
+      ],
     }),
     defineField({
       type: "reference",
@@ -30,4 +36,18 @@ export const researchDoc = defineType({
       to: [{ type: "project" }],
     }),
   ],
+  preview: {
+    select: {
+      media: "mainImage.image",
+      slug: "titleSlug.slug.current",
+      title: "titleSlug.name",
+    },
+    prepare({ media, slug, title }) {
+      return {
+        media,
+        subtitle: slug ? `/research/${slug}` : "Research",
+        title: title || "Untitled research",
+      };
+    },
+  },
 });

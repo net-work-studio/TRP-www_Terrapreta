@@ -41,30 +41,7 @@ export default defineField({
         { name: "list" },
       ],
       groups: [
-        {
-          name: "blog",
-          of: ["blog-frontpage", "blog-list", "blog-post-content"],
-        },
-        { name: "hero", of: ["hero", "hero.saas", "hero.split"] },
-        {
-          name: "lists",
-          of: [
-            "accordion-list",
-            "blog-list",
-            "card-list",
-            "flag-list",
-            "logo-list",
-            "person-list",
-            "pricing-list",
-            "stat-list",
-            "step-list",
-            "testimonial-list",
-          ],
-        },
-        {
-          name: "testimonials",
-          of: ["testimonial-list", "testimonial.featured"],
-        },
+        { name: "hero", of: ["heroSplitModule"] },
       ],
     },
   },

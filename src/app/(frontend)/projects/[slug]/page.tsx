@@ -15,6 +15,7 @@ import {
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -107,6 +108,12 @@ function ProjectPageContent({
     notFound();
   }
 
+  const schemaType = cleanOptionalString(projectItem.seo?.schemaType) || "Project";
+  const statusLabel = projectItem.status
+    ? cleanOptionalString(projectItem.status)?.replace("-", " ")
+    : undefined;
+  const knowsAbout = cleanCommaList(projectItem.seo?.customSchema?.knowsAbout);
+
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
       <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
@@ -160,7 +167,7 @@ function ProjectPageContent({
           )}
           {projectItem.status && (
             <li className="capitalize">
-              {projectItem.status.replace("-", " ")}
+              {statusLabel}
             </li>
           )}
         </ul>
@@ -178,7 +185,7 @@ function ProjectPageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": projectItem.seo?.schemaType || "Project",
+          "@type": schemaType,
           name: projectItem.name,
           description: projectItem.shortDescription,
           ...(projectItem.location && { location: projectItem.location }),
@@ -189,11 +196,7 @@ function ProjectPageContent({
               .auto("format")
               .url(),
           }),
-          ...(projectItem.seo?.customSchema?.knowsAbout && {
-            knowsAbout: projectItem.seo.customSchema.knowsAbout
-              .split(",")
-              .map((s: string) => s.trim()),
-          }),
+          ...(knowsAbout && { knowsAbout }),
         }}
       />
       <BreadcrumbJsonLd

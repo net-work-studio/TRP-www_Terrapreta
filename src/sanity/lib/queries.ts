@@ -1,5 +1,50 @@
 import { defineQuery } from "next-sanity";
 
+const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
+  _key,
+  _type,
+  style,
+  listItem,
+  level,
+  markDefs[]{
+    _key,
+    _type,
+    href,
+    blank,
+    _type == "internalLink" => {
+      "slug": reference->slug.current,
+      "type": reference->_type
+    }
+  },
+  children[]{
+    _key,
+    _type,
+    text,
+    marks
+  },
+  _type == "imageObject" => {
+    altContent,
+    caption,
+    image{
+      _type,
+      hotspot,
+      crop,
+      asset->{
+        _id,
+        url,
+        metadata{
+          lqip,
+          dimensions{
+            width,
+            height,
+            aspectRatio
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const SITE_SETTINGS_QUERY =
   defineQuery(`*[_type == "site" && _id == "site"][0]{
   name,
@@ -28,7 +73,11 @@ export const PROJECTS_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    isBig
+    "prominence": select(
+      prominence == "featured" => "featured",
+      isBig == true => "featured",
+      "standard"
+    )
   },
   mainImage{
     _type,
@@ -53,7 +102,11 @@ export const JOURNAL_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    isBig
+    "prominence": select(
+      prominence == "featured" => "featured",
+      isBig == true => "featured",
+      "standard"
+    )
   },
   mainImage{
     _type,
@@ -91,37 +144,7 @@ export const JOURNAL_ITEM_QUERY =
   publishingDate,
   shortDescription,
   contentObject[]{
-    ...,
-    _type == "block" => {
-      ...,
-      markDefs[]{
-        ...,
-        _type == "internalLink" => {
-          ...,
-          "slug": reference->slug.current,
-          "type": reference->_type
-        }
-      }
-    },
-    _type == "imageObject" => {
-      ...,
-      image{
-        ...,
-        hotspot,
-        crop,
-        asset->{
-          _id,
-          url,
-          metadata{
-            dimensions{
-              width,
-              height,
-              aspectRatio
-            }
-          }
-        }
-      }
-    }
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
   },
   tag->{
     _id,
@@ -182,37 +205,7 @@ export const SERVICE_QUERY =
   shortDescription,
 
   content[]{
-    ...,
-    _type == "block" => {
-      ...,
-      markDefs[]{
-        ...,
-        _type == "internalLink" => {
-          ...,
-          "slug": reference->slug.current,
-          "type": reference->_type
-        }
-      }
-    },
-    _type == "imageObject" => {
-      ...,
-      image{
-        ...,
-        hotspot,
-        crop,
-        asset->{
-          _id,
-          url,
-          metadata{
-            dimensions{
-              width,
-              height,
-              aspectRatio
-            }
-          }
-        }
-      }
-    }
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
   },
   capabilities[]->{
     _id,
@@ -281,37 +274,7 @@ export const PROJECT_ITEM_QUERY =
   shortDescription,
   pageContent{
     content[]{
-      ...,
-      _type == "block" => {
-        ...,
-        markDefs[]{
-          ...,
-          _type == "internalLink" => {
-            ...,
-            "slug": reference->slug.current,
-            "type": reference->_type
-          }
-        }
-      },
-      _type == "imageObject" => {
-        ...,
-        image{
-          ...,
-          hotspot,
-          crop,
-          asset->{
-            _id,
-            url,
-            metadata{
-              dimensions{
-                width,
-                height,
-                aspectRatio
-              }
-            }
-          }
-        }
-      }
+      ${PORTABLE_TEXT_CONTENT_PROJECTION}
     }
   },
   relatedService->{
@@ -426,3 +389,12 @@ export const SERVICES_SITEMAP_QUERY = defineQuery(
     _updatedAt
   }`
 );
+
+export const REDIRECTS_QUERY = defineQuery(`*[
+  _type == "redirect"
+  && isActive == "active"
+]{
+  source,
+  destination,
+  permanent
+}`);

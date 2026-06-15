@@ -1,11 +1,12 @@
 import Link from "next/link";
-import type { PortableTextComponents } from "next-sanity";
+import { stegaClean, type PortableTextComponents } from "next-sanity";
 import { PortableImage } from "./portable-image";
 
 /**
  * Map document types to their URL paths
  */
 function getPathForType(type: string): string {
+  const cleanType = stegaClean(type);
   const pathMap: Record<string, string> = {
     journal: "/journal",
     project: "/projects",
@@ -15,7 +16,7 @@ function getPathForType(type: string): string {
     about: "/about",
     page: "",
   };
-  return pathMap[type] || "";
+  return pathMap[cleanType] || "";
 }
 
 /**
@@ -28,8 +29,8 @@ export const portableTextComponents: PortableTextComponents = {
   },
   marks: {
     link: ({ children, value }) => {
-      const href = value?.href || "#";
-      const blank = value?.blank === "true";
+      const href = value?.href ? stegaClean(value.href) : "#";
+      const blank = stegaClean(value?.blank) === "true";
       return (
         <a
           className="underline underline-offset-4 transition-colors hover:text-stone-400"
@@ -47,7 +48,8 @@ export const portableTextComponents: PortableTextComponents = {
         return <span>{children}</span>;
       }
       const basePath = getPathForType(type);
-      const href = basePath ? `${basePath}/${slug}` : `/${slug}`;
+      const cleanSlug = stegaClean(slug);
+      const href = basePath ? `${basePath}/${cleanSlug}` : `/${cleanSlug}`;
       return (
         <Link
           className="underline underline-offset-4 transition-colors hover:text-stone-400"

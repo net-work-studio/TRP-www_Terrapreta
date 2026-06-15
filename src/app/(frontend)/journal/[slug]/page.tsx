@@ -16,6 +16,7 @@ import {
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -109,6 +110,10 @@ function JournalPageContent({
     notFound();
   }
 
+  const schemaType =
+    cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
+  const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
+
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
       <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
@@ -189,7 +194,7 @@ function JournalPageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": journalItem.seo?.schemaType || "BlogPosting",
+          "@type": schemaType,
           headline: journalItem.name,
           description: journalItem.shortDescription,
           ...(journalItem.publishingDate && {
@@ -204,11 +209,7 @@ function JournalPageContent({
           ...(journalItem.location && {
             locationCreated: journalItem.location,
           }),
-          ...(journalItem.seo?.customSchema?.knowsAbout && {
-            knowsAbout: journalItem.seo.customSchema.knowsAbout
-              .split(",")
-              .map((s: string) => s.trim()),
-          }),
+          ...(knowsAbout && { knowsAbout }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",

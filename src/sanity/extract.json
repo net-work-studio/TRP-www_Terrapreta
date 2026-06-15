@@ -610,12 +610,22 @@
             "value": "gridDimensionObject"
           }
         },
-        "isBig": {
+        "prominence": {
           "type": "objectAttribute",
           "value": {
-            "type": "boolean"
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "standard"
+              },
+              {
+                "type": "string",
+                "value": "featured"
+              }
+            ]
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -840,7 +850,7 @@
                                       }
                                     ]
                                   },
-                                  "optional": true
+                                  "optional": false
                                 },
                                 "_type": {
                                   "type": "objectAttribute",
@@ -2235,7 +2245,7 @@
                                     }
                                   ]
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "_type": {
                                 "type": "objectAttribute",
@@ -2868,7 +2878,7 @@
                                     }
                                   ]
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "_type": {
                                 "type": "objectAttribute",

@@ -1,9 +1,11 @@
+import { ArrowRightIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const redirectDoc = defineType({
   type: "document",
   name: "redirect",
   title: "Redirect",
+  icon: ArrowRightIcon,
   fields: [
     defineField({
       type: "string",
@@ -11,13 +13,15 @@ export const redirectDoc = defineType({
       title: "Source Path",
       description:
         "The path to redirect from (e.g., /old-page or /blog/:slug for wildcards)",
-      validation: (rule) =>
-        rule.required().custom((value) => {
+      validation: (rule) => [
+        rule.required().error("A redirect needs a source path."),
+        rule.custom((value) => {
           if (!value?.startsWith("/")) {
             return "Source path must start with /";
           }
           return true;
         }),
+      ],
     }),
     defineField({
       type: "string",
@@ -25,13 +29,15 @@ export const redirectDoc = defineType({
       title: "Destination Path",
       description:
         "The path to redirect to (e.g., /new-page or /journal/:slug for wildcards)",
-      validation: (rule) =>
-        rule.required().custom((value) => {
+      validation: (rule) => [
+        rule.required().error("A redirect needs a destination path."),
+        rule.custom((value) => {
           if (!(value?.startsWith("/") || value?.startsWith("http"))) {
             return "Destination must start with / or be a full URL";
           }
           return true;
         }),
+      ],
     }),
     defineField({
       type: "string",
@@ -46,7 +52,9 @@ export const redirectDoc = defineType({
         layout: "radio",
       },
       initialValue: "permanent",
-      validation: (rule) => rule.required(),
+      validation: (rule) => [
+        rule.required().error("Choose whether this redirect is permanent."),
+      ],
     }),
     defineField({
       type: "string",

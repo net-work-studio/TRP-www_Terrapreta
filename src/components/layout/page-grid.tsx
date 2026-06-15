@@ -26,7 +26,7 @@ type GridItemProps = Partial<
       } | null;
     } | null;
   } | null;
-  isBig?: boolean;
+  isFeatured?: boolean;
   publishingDate?: string | null;
   slug: string;
   tag?: { _id: string; name: string | null } | null;
@@ -41,11 +41,23 @@ const BLUR_SIZE = 24;
 const IMAGE_QUALITY = 75;
 const ASPECT_RATIO = 3 / 2;
 
+function getSlugValue(slug: GridItemInput["slug"]): string | null {
+  if (!slug) {
+    return null;
+  }
+
+  if (typeof slug === "string") {
+    return slug;
+  }
+
+  return slug.current || null;
+}
+
 function GridItem({
   name,
   mainImage,
   tag,
-  isBig,
+  isFeatured,
   slug,
   publishingDate,
 }: GridItemProps) {
@@ -57,11 +69,11 @@ function GridItem({
     <Link
       className={cn(
         "group h-fit space-y-2.5",
-        isBig ? "col-span-2" : "col-span-1"
+        isFeatured ? "col-span-2" : "col-span-1"
       )}
       href={slug}
     >
-      <AspectRatio className="realative overflow-hidden" ratio={ASPECT_RATIO}>
+      <AspectRatio className="relative overflow-hidden" ratio={ASPECT_RATIO}>
         <Image
           alt={name || ""}
           blurDataURL={urlFor(mainImage.image)
@@ -74,7 +86,7 @@ function GridItem({
           fill
           placeholder="blur"
           quality={IMAGE_QUALITY}
-          sizes={isBig ? "50vw" : "30vw"}
+          sizes={isFeatured ? "50vw" : "30vw"}
           src={urlFor(mainImage.image)
             .quality(IMAGE_QUALITY)
             .auto("format")
@@ -90,13 +102,11 @@ function GridItem({
                 className="text-muted-foreground text-sm"
                 dateTime={publishingDate}
               >
-                {publishingDate
-                  ? new Date(publishingDate).toLocaleDateString(undefined, {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })
-                  : ""}
+                {new Date(publishingDate).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
               </time>
             )}
           </span>
@@ -117,21 +127,14 @@ export default function PageGrid({
   return (
     <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 starting:opacity-0 transition-opacity duration-300 md:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
-        let slugValue: string | null = null;
-        if (item.slug) {
-          if (typeof item.slug === "object" && "current" in item.slug) {
-            slugValue = item.slug.current || null;
-          } else if (typeof item.slug === "string") {
-            slugValue = item.slug;
-          }
-        }
+        const slugValue = getSlugValue(item.slug);
 
         return (
           <GridItem
             {...item}
-            isBig={item?.gridDimension?.isBig ?? undefined}
+            isFeatured={item.gridDimension?.prominence === "featured"}
             key={item._id}
-            publishingDate={item?.publishingDate ?? undefined}
+            publishingDate={item.publishingDate ?? undefined}
             slug={slugValue ? `/${basePath}/${slugValue}` : "#"}
           />
         );

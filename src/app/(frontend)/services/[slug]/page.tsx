@@ -8,6 +8,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -87,6 +88,9 @@ function ServicePageContent({
   service: NonNullable<SERVICE_QUERY_RESULT>;
   slug: string;
 }) {
+  const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";
+  const knowsAbout = cleanCommaList(service.seo?.customSchema?.knowsAbout);
+
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center gap-20 bg-stone-800 py-40">
@@ -235,18 +239,14 @@ function ServicePageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": service.seo?.schemaType || "Service",
+          "@type": schemaType,
           name: service.name,
           description: service.shortDescription,
           provider: {
             "@type": "Organization",
             name: "Terrapreta",
             url: "https://terrapreta.it",
-            ...(service.seo?.customSchema?.knowsAbout && {
-              knowsAbout: service.seo.customSchema.knowsAbout
-                .split(",")
-                .map((s: string) => s.trim()),
-            }),
+            ...(knowsAbout && { knowsAbout }),
           },
           serviceType: "Environmental Consulting",
           areaServed: {
