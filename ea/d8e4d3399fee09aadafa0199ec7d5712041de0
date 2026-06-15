@@ -1,0 +1,23 @@
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_894a0514174863::t_a10c80a0dbcedc 35-38,53,231,270
+src/app/(frontend)/services/[slug]/page.tsx
+  s_894a0514174863::t_c17d08ffb0a76b 28-31,41,316,353
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_894a0514174863::t_edf5819b8f4717 36-39,54,254,291
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "ead8e4d3399fee09aadafa0199ec7d5712041de0",
+  "prompts": {},
+  "sessions": {
+    "s_894a0514174863": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e32d66d9-a9e5-432b-831c-8b2e1d2a382a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
