@@ -1,3 +1,4 @@
+import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { richTextBlock } from "../helpers/richTextBlock";
 
@@ -7,18 +8,23 @@ export const serviceDoc = defineType({
   type: "document",
   name: "service",
   title: "Service",
+  icon: DocumentTextIcon,
   fields: [
     defineField({
       type: "string",
       name: "name",
       title: "Title",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A service needs a title before publishing."),
+      ],
     }),
     defineField({
       type: "slug",
       name: "slug",
       title: "Slug",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A slug is required to generate the service URL."),
+      ],
       options: {
         source: "name",
       },
@@ -27,12 +33,19 @@ export const serviceDoc = defineType({
       type: "text",
       name: "shortDescription",
       title: "Short Description",
+      validation: (rule) => [
+        rule
+          .max(220)
+          .warning("Keep service summaries under 220 characters for cards and SEO."),
+      ],
     }),
     defineField({
       type: "imageObject",
       name: "mainImage",
       title: "Main Image",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A main image is required for service pages."),
+      ],
     }),
     defineField({
       type: "array",
@@ -53,7 +66,11 @@ export const serviceDoc = defineType({
       of: [
         defineArrayMember({ type: "reference", to: [{ type: "capability" }] }),
       ],
-      validation: (e) => e.max(MAX_CAPABILITIES),
+      validation: (rule) => [
+        rule
+          .max(MAX_CAPABILITIES)
+          .error(`Select no more than ${MAX_CAPABILITIES} capabilities.`),
+      ],
     }),
     defineField({
       type: "array",
@@ -95,4 +112,18 @@ export const serviceDoc = defineType({
       },
     }),
   ],
+  preview: {
+    select: {
+      description: "shortDescription",
+      media: "mainImage.image",
+      title: "name",
+    },
+    prepare({ description, media, title }) {
+      return {
+        media,
+        subtitle: description || "Service",
+        title: title || "Untitled service",
+      };
+    },
+  },
 });

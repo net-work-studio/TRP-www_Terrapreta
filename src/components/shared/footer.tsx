@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import Mark from "@/components/brand/mark";
 import { Button } from "@/components/ui/button";
-import { urlFor } from "@/sanity/lib/image";
+import SanityImage from "@/components/ui/sanity-image";
 import {
   type SanityFetchOptions,
   sanityFetch,
@@ -159,26 +158,14 @@ export default async function Footer({
           )
       )
       .map((goal) => (
-        <Image
+        <SanityImage
           alt={goal.name || "UN Goal"}
-          blurDataURL={urlFor(goal.logoNegative)
-            .quality(5)
-            .width(24)
-            .height(24)
-            .auto("format")
-            .url()}
           className="h-18 w-auto object-contain"
           height={144}
           key={goal._id}
-          placeholder="blur"
           quality={75}
           sizes="20vw"
-          src={urlFor(goal.logoNegative)
-            .width(144)
-            .height(144)
-            .quality(75)
-            .auto("format")
-            .url()}
+          source={goal.logoNegative}
           width={160}
         />
       )) || [];

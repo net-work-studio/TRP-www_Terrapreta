@@ -1,21 +1,27 @@
+import { MasterDetailIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const projectDoc = defineType({
   type: "document",
   name: "project",
   title: "Project",
+  icon: MasterDetailIcon,
   fields: [
     defineField({
       type: "string",
       name: "name",
       title: "Title",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A project needs a title before publishing."),
+      ],
     }),
     defineField({
       type: "slug",
       name: "slug",
       title: "Slug",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A slug is required to generate the project URL."),
+      ],
       options: {
         source: "name",
       },
@@ -24,7 +30,9 @@ export const projectDoc = defineType({
       type: "imageObject",
       name: "mainImage",
       title: "Main Image",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A main image is required for project pages."),
+      ],
     }),
     defineField({
       type: "string",
@@ -39,7 +47,9 @@ export const projectDoc = defineType({
           { title: "Cancelled", value: "cancelled" },
         ],
       },
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Choose the current project status."),
+      ],
     }),
     defineField({ type: "string", name: "location", title: "Location" }),
     defineField({
@@ -57,6 +67,11 @@ export const projectDoc = defineType({
       type: "text",
       name: "shortDescription",
       title: "Short Description",
+      validation: (rule) => [
+        rule
+          .max(220)
+          .warning("Keep project summaries under 220 characters for cards and SEO."),
+      ],
     }),
     defineField({
       type: "contentObject",
@@ -87,4 +102,18 @@ export const projectDoc = defineType({
       },
     }),
   ],
+  preview: {
+    select: {
+      media: "mainImage.image",
+      status: "status",
+      title: "name",
+    },
+    prepare({ media, status, title }) {
+      return {
+        media,
+        subtitle: status ? `Project - ${status}` : "Project",
+        title: title || "Untitled project",
+      };
+    },
+  },
 });

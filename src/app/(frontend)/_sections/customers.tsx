@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
-import { urlFor } from "@/sanity/lib/image";
+import SanityImage from "@/components/ui/sanity-image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -62,31 +61,15 @@ function CustomersContent({
           ) => (
             <div className="flex flex-col gap-2.5" key={customer._id}>
               <AspectRatio className="relative rounded" ratio={5 / 4}>
-                <Image
+                <SanityImage
                   alt={customer.name}
-                  blurDataURL={urlFor(customer.mainImage)
-                    .width(24)
-                    .height(24)
-                    .quality(5)
-                    .auto("format")
-                    .url()}
                   className="rounded object-cover"
                   fill
-                  placeholder="blur"
                   quality={75}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw,"
-                  src={urlFor(customer.mainImage)
-                    .quality(75)
-                    .auto("format")
-                    .url()}
+                  source={customer.mainImage}
                   style={{
-                    objectPosition: getObjectPosition(
-                      (
-                        customer.mainImage as {
-                          hotspot?: SanityImageHotspot | null;
-                        }
-                      ).hotspot
-                    ),
+                    objectPosition: getObjectPosition(customer.mainImage.hotspot),
                   }}
                 />
               </AspectRatio>

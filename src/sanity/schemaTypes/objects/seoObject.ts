@@ -1,17 +1,20 @@
-import { defineField, defineType } from "sanity";
+import { SearchIcon } from "@sanity/icons";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const seoObject = defineType({
   type: "object",
   name: "seoObject",
   title: "SEO",
+  icon: SearchIcon,
   fields: [
     defineField({
       type: "string",
       name: "metaTitle",
       title: "Meta Title",
       description: "Override page title for search engines (50-60 chars)",
-      validation: (rule) =>
+      validation: (rule) => [
         rule.max(60).warning("Meta titles should be under 60 characters"),
+      ],
     }),
     defineField({
       type: "text",
@@ -19,10 +22,11 @@ export const seoObject = defineType({
       title: "Meta Description",
       rows: 3,
       description: "Description for search results (150-160 chars)",
-      validation: (rule) =>
+      validation: (rule) => [
         rule
           .max(160)
           .warning("Meta descriptions should be under 160 characters"),
+      ],
     }),
     defineField({
       type: "image",
@@ -39,6 +43,11 @@ export const seoObject = defineType({
       title: "Canonical URL",
       description:
         "Override the default canonical URL (leave empty to use page URL)",
+      validation: (rule) => [
+        rule
+          .uri({ scheme: ["http", "https"] })
+          .error("Canonical URL must start with http:// or https://"),
+      ],
     }),
     defineField({
       type: "string",
@@ -97,7 +106,7 @@ export const seoObject = defineType({
           type: "array",
           name: "hasOfferCatalog",
           title: "Services Offered",
-          of: [{ type: "string" }],
+          of: [defineArrayMember({ type: "string" })],
         }),
       ],
     }),
@@ -129,4 +138,16 @@ export const seoObject = defineType({
       initialValue: "summary_large_image",
     }),
   ],
+  preview: {
+    select: {
+      description: "metaDescription",
+      title: "metaTitle",
+    },
+    prepare({ description, title }) {
+      return {
+        subtitle: description || "SEO settings",
+        title: title || "Default SEO",
+      };
+    },
+  },
 });

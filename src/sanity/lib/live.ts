@@ -9,13 +9,13 @@ import {
 } from "next-sanity/live";
 import { cookies, draftMode } from "next/headers";
 import { createElement, Suspense, type ReactNode } from "react";
-import { token } from "@/sanity/lib/token";
+import { browserToken, serverToken } from "@/sanity/lib/token";
 import { client } from "./client";
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
-  browserToken: token,
-  serverToken: token,
+  browserToken,
+  serverToken,
   strict: true,
 });
 

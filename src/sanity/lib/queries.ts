@@ -1,5 +1,62 @@
 import { defineQuery } from "next-sanity";
 
+const IMAGE_ASSET_PROJECTION = /* groq */ `
+        _id,
+        url,
+        metadata{
+          lqip,
+          dimensions{
+            width,
+            height,
+            aspectRatio
+          }
+        }`;
+
+const IMAGE_FIELD_PROJECTION = /* groq */ `
+      _type,
+      hotspot,
+      crop,
+      asset->{
+${IMAGE_ASSET_PROJECTION}
+      }`;
+
+const IMAGE_OBJECT_PROJECTION = /* groq */ `
+    _type,
+    image{
+${IMAGE_FIELD_PROJECTION}
+    }`;
+
+const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
+  _key,
+  _type,
+  style,
+  listItem,
+  level,
+  markDefs[]{
+    _key,
+    _type,
+    href,
+    blank,
+    _type == "internalLink" => {
+      "slug": reference->slug.current,
+      "type": reference->_type
+    }
+  },
+  children[]{
+    _key,
+    _type,
+    text,
+    marks
+  },
+  _type == "imageObject" => {
+    altContent,
+    caption,
+    image{
+${IMAGE_FIELD_PROJECTION}
+    }
+  }
+`;
+
 export const SITE_SETTINGS_QUERY =
   defineQuery(`*[_type == "site" && _id == "site"][0]{
   name,
@@ -28,17 +85,14 @@ export const PROJECTS_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    isBig
+    "prominence": select(
+      prominence == "featured" => "featured",
+      isBig == true => "featured",
+      "standard"
+    )
   },
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   tag->{
     _id,
@@ -53,17 +107,14 @@ export const JOURNAL_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    isBig
+    "prominence": select(
+      prominence == "featured" => "featured",
+      isBig == true => "featured",
+      "standard"
+    )
   },
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   publishingDate,
   tag->{
@@ -78,50 +129,13 @@ export const JOURNAL_ITEM_QUERY =
   name,
   slug,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   location,
   publishingDate,
   shortDescription,
   contentObject[]{
-    ...,
-    _type == "block" => {
-      ...,
-      markDefs[]{
-        ...,
-        _type == "internalLink" => {
-          ...,
-          "slug": reference->slug.current,
-          "type": reference->_type
-        }
-      }
-    },
-    _type == "imageObject" => {
-      ...,
-      image{
-        ...,
-        hotspot,
-        crop,
-        asset->{
-          _id,
-          url,
-          metadata{
-            dimensions{
-              width,
-              height,
-              aspectRatio
-            }
-          }
-        }
-      }
-    }
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
   },
   tag->{
     _id,
@@ -163,14 +177,7 @@ export const SERVICES_QUERY =
   slug,
   shortDescription,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   }
 }`);
 
@@ -182,37 +189,7 @@ export const SERVICE_QUERY =
   shortDescription,
 
   content[]{
-    ...,
-    _type == "block" => {
-      ...,
-      markDefs[]{
-        ...,
-        _type == "internalLink" => {
-          ...,
-          "slug": reference->slug.current,
-          "type": reference->_type
-        }
-      }
-    },
-    _type == "imageObject" => {
-      ...,
-      image{
-        ...,
-        hotspot,
-        crop,
-        asset->{
-          _id,
-          url,
-          metadata{
-            dimensions{
-              width,
-              height,
-              aspectRatio
-            }
-          }
-        }
-      }
-    }
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
   },
   capabilities[]->{
     _id,
@@ -222,19 +199,11 @@ export const SERVICE_QUERY =
     _id,
     name,
     logoDark{
-      asset->{
-        _id,
-        _type,
-        url
-      }
+${IMAGE_FIELD_PROJECTION}
     }
   },
   mainImage{
-    image{
-      asset->{
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   seo{
     metaTitle,
@@ -265,14 +234,7 @@ export const PROJECT_ITEM_QUERY =
   name,
   slug,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   status,
   location,
@@ -281,37 +243,7 @@ export const PROJECT_ITEM_QUERY =
   shortDescription,
   pageContent{
     content[]{
-      ...,
-      _type == "block" => {
-        ...,
-        markDefs[]{
-          ...,
-          _type == "internalLink" => {
-            ...,
-            "slug": reference->slug.current,
-            "type": reference->_type
-          }
-        }
-      },
-      _type == "imageObject" => {
-        ...,
-        image{
-          ...,
-          hotspot,
-          crop,
-          asset->{
-            _id,
-            url,
-            metadata{
-              dimensions{
-                width,
-                height,
-                aspectRatio
-              }
-            }
-          }
-        }
-      }
+      ${PORTABLE_TEXT_CONTENT_PROJECTION}
     }
   },
   relatedService->{
@@ -351,18 +283,10 @@ export const UN_GOALS_QUERY =
   _id,
   name,
   logoNegative{
-    _type,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   },
   logoPositive{
-    _type,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   }
 }`);
 
@@ -372,12 +296,7 @@ export const CUSTOMERS_QUERY =
   name,
   shortDescription,
   mainImage{
-    hotspot,
-    crop,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   }
 }`);
 
@@ -386,11 +305,7 @@ export const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
   name,
   type,
   logoDark{
-    _type,
-    asset->{
-      _id,
-      url,
-    }
+${IMAGE_FIELD_PROJECTION}
   },
 }`);
 
@@ -426,3 +341,12 @@ export const SERVICES_SITEMAP_QUERY = defineQuery(
     _updatedAt
   }`
 );
+
+export const REDIRECTS_QUERY = defineQuery(`*[
+  _type == "redirect"
+  && isActive == "active"
+]{
+  source,
+  destination,
+  permanent
+}`);
