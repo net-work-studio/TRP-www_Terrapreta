@@ -1,0 +1,21 @@
+package.json
+  s_02b6c7372c0c9d::t_fb3222d248b294 11
+debug-netlify-install.mjs
+  s_02b6c7372c0c9d::t_629d2ca73826d8 1-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "b2626d6cdfaf401bfd340bd744c9004e2c21ef8f",
+  "prompts": {},
+  "sessions": {
+    "s_02b6c7372c0c9d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e9806393-c901-4abb-bbf5-06b49c72f82a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
