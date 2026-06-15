@@ -320,6 +320,30 @@ async function DynamicServicePage({
   );
 }
 
+function ServicePageFallback() {
+  return (
+    <div aria-busy="true">
+      <div className="flex w-full flex-col items-center justify-center gap-20 bg-stone-800 py-40">
+        <div className="container-site grid grid-cols-1 gap-20 lg:grid-cols-[40%_60%] lg:gap-5">
+          <div className="flex flex-col items-start justify-center gap-10">
+            <div className="flex w-full flex-col gap-1.5">
+              <div className="h-10 w-2/3 animate-pulse rounded bg-stone-700" />
+              <div className="h-6 w-full max-w-prose animate-pulse rounded bg-stone-700" />
+            </div>
+            <div className="h-10 w-48 animate-pulse rounded bg-stone-700" />
+          </div>
+          <div className="container-site relative aspect-3/2 w-full animate-pulse rounded-md bg-stone-700" />
+        </div>
+      </div>
+      <div className="container-article container-site space-y-5 py-20">
+        <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+        <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+        <div className="h-6 w-2/3 animate-pulse rounded bg-stone-800" />
+      </div>
+    </div>
+  );
+}
+
 export default async function Page({
   params,
 }: PageProps<"/services/[slug]">) {
@@ -327,7 +351,7 @@ export default async function Page({
 
   if (isDraftMode) {
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={<ServicePageFallback />}>
         <DynamicServicePage params={params} />
       </Suspense>
     );

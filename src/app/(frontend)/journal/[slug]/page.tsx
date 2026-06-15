@@ -258,12 +258,38 @@ async function DynamicJournalPage({
   );
 }
 
+function JournalPageFallback() {
+  return (
+    <article
+      aria-busy="true"
+      className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40"
+    >
+      <div className="flex w-full max-w-2xl flex-col items-center gap-5 pb-5">
+        <div className="h-4 w-40 animate-pulse rounded bg-stone-800" />
+        <div className="h-10 w-3/4 animate-pulse rounded bg-stone-800" />
+        <div className="h-6 w-full max-w-[70ch] animate-pulse rounded bg-stone-800" />
+      </div>
+      <AspectRatio className="w-full" ratio={ASPECT_RATIO}>
+        <div className="h-full w-full animate-pulse rounded bg-stone-800" />
+      </AspectRatio>
+      <div className="container-article w-full space-y-4 py-20">
+        <div className="h-5 w-48 animate-pulse rounded bg-stone-800" />
+        <div className="space-y-3 pt-4">
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-2/3 animate-pulse rounded bg-stone-800" />
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default async function Page({ params }: PageProps<"/journal/[slug]">) {
   const { isEnabled: isDraftMode } = await draftMode();
 
   if (isDraftMode) {
     return (
-      <Suspense fallback={null}>
+      <Suspense fallback={<JournalPageFallback />}>
         <DynamicJournalPage params={params} />
       </Suspense>
     );

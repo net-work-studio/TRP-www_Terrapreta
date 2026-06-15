@@ -9,6 +9,10 @@ import {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
 
+  // Perspective is intentionally hardcoded to "published": a sitemap must only
+  // expose live URLs, and resolving it via getDynamicFetchOptions() would read
+  // cookies() and force the sitemap to render dynamically. Do not "fix" this to
+  // use a dynamic perspective.
   const [{ data: projects }, { data: journal }, { data: services }] =
     await Promise.all([
       sanityFetchMetadata({

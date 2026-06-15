@@ -2,7 +2,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { Suspense } from "react";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
-import Footer from "@/components/shared/footer";
+import Footer, { FooterFallback } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { Toaster } from "@/components/ui/sonner";
 import {
@@ -27,7 +27,7 @@ export default async function FrontendLayout({
       <Header />
       <main className="mb-auto">{children}</main>
       {isDraftMode ? (
-        <Suspense fallback={<Footer perspective="published" stega={false} />}>
+        <Suspense fallback={<FooterFallback />}>
           <DynamicFooter />
         </Suspense>
       ) : (
