@@ -1,10 +1,8 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
-import { Suspense } from "react";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -20,8 +18,10 @@ import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
   sanityFetchMetadata,
   sanityFetchStaticParams,
@@ -51,16 +51,18 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: SlugPageProps): Promise<Metadata> {
-  const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
-    await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
+  const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
+    params,
+    getSanityRequestState(),
+  ]);
 
   const [{ data: projectItem }, siteSettings] = await Promise.all([
     sanityFetchMetadata({
       query: PROJECT_ITEM_QUERY,
       params: { slug },
-      perspective,
+      perspective: fetchOptions.perspective,
     }),
-    getSiteSettings(perspective),
+    getSiteSettings(fetchOptions),
   ]);
 
   if (!projectItem?.name) {
@@ -209,7 +211,7 @@ async function CachedProjectPage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+}: { slug: string } & SanityFetchOptions) {
   "use cache";
 
   const { data: projectItem } = await sanityFetch({
@@ -229,14 +231,12 @@ async function CachedProjectPage({
 async function DynamicProjectPage({
   params,
 }: SlugPageProps) {
-  const [{ slug }, { perspective, stega }] = await Promise.all([
+  const [{ slug }, { fetchOptions }] = await Promise.all([
     params,
-    getDynamicFetchOptions(),
+    getSanityRequestState(),
   ]);
 
-  return (
-    <CachedProjectPage perspective={perspective} slug={slug} stega={stega} />
-  );
+  return <CachedProjectPage slug={slug} {...fetchOptions} />;
 }
 
 function ProjectPageFallback() {
@@ -268,18 +268,14 @@ function ProjectPageFallback() {
 export default async function Page({
   params,
 }: SlugPageProps) {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<ProjectPageFallback />}>
-        <DynamicProjectPage params={params} />
-      </Suspense>
-    );
-  }
-
-  const { slug } = await params;
-  return (
-    <CachedProjectPage perspective="published" slug={slug} stega={false} />
-  );
+  return renderSanityCacheBoundary({
+    draft: <DynamicProjectPage params={params} />,
+    fallback: <ProjectPageFallback />,
+    published: async () => {
+      const { slug } = await params;
+      return (
+        <CachedProjectPage slug={slug} {...PUBLISHED_SANITY_FETCH_OPTIONS} />
+      );
+    },
+  });
 }

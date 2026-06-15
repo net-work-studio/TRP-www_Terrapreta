@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
-import { Suspense } from "react";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
@@ -13,8 +11,10 @@ import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
   sanityFetchMetadata,
   sanityFetchStaticParams,
@@ -39,16 +39,18 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: SlugPageProps): Promise<Metadata> {
-  const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
-    await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
+  const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
+    params,
+    getSanityRequestState(),
+  ]);
 
   const [{ data: service }, siteSettings] = await Promise.all([
     sanityFetchMetadata({
       query: SERVICE_QUERY,
       params: { slug },
-      perspective,
+      perspective: fetchOptions.perspective,
     }),
-    getSiteSettings(perspective),
+    getSiteSettings(fetchOptions),
   ]);
 
   if (!service?.name) {
@@ -294,7 +296,7 @@ async function CachedServicePage({
   slug,
   perspective,
   stega,
-}: { slug: string } & DynamicFetchOptions) {
+}: { slug: string } & SanityFetchOptions) {
   "use cache";
 
   const { data: service } = await sanityFetch({
@@ -314,14 +316,12 @@ async function CachedServicePage({
 async function DynamicServicePage({
   params,
 }: SlugPageProps) {
-  const [{ slug }, { perspective, stega }] = await Promise.all([
+  const [{ slug }, { fetchOptions }] = await Promise.all([
     params,
-    getDynamicFetchOptions(),
+    getSanityRequestState(),
   ]);
 
-  return (
-    <CachedServicePage perspective={perspective} slug={slug} stega={stega} />
-  );
+  return <CachedServicePage slug={slug} {...fetchOptions} />;
 }
 
 function ServicePageFallback() {
@@ -351,18 +351,14 @@ function ServicePageFallback() {
 export default async function Page({
   params,
 }: SlugPageProps) {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<ServicePageFallback />}>
-        <DynamicServicePage params={params} />
-      </Suspense>
-    );
-  }
-
-  const { slug } = await params;
-  return (
-    <CachedServicePage perspective="published" slug={slug} stega={false} />
-  );
+  return renderSanityCacheBoundary({
+    draft: <DynamicServicePage params={params} />,
+    fallback: <ServicePageFallback />,
+    published: async () => {
+      const { slug } = await params;
+      return (
+        <CachedServicePage slug={slug} {...PUBLISHED_SANITY_FETCH_OPTIONS} />
+      );
+    },
+  });
 }

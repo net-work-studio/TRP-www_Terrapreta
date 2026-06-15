@@ -1,8 +1,6 @@
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { draftMode } from "next/headers";
-import { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,8 +13,10 @@ import {
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
@@ -171,7 +171,7 @@ function ServicesContent({
   );
 }
 
-async function CachedServices({ perspective, stega }: DynamicFetchOptions) {
+async function CachedServices({ perspective, stega }: SanityFetchOptions) {
   "use cache";
 
   const { data: services } = await sanityFetch({
@@ -184,20 +184,14 @@ async function CachedServices({ perspective, stega }: DynamicFetchOptions) {
 }
 
 async function DynamicServices() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedServices perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedServices {...fetchOptions} />;
 }
 
 export default async function Services() {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<ServicesContent services={null} />}>
-        <DynamicServices />
-      </Suspense>
-    );
-  }
-
-  return <CachedServices perspective="published" stega={false} />;
+  return renderSanityCacheBoundary({
+    draft: <DynamicServices />,
+    fallback: <ServicesContent services={null} />,
+    published: <CachedServices {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

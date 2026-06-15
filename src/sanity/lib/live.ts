@@ -8,6 +8,7 @@ import {
   type LivePerspective,
 } from "next-sanity/live";
 import { cookies, draftMode } from "next/headers";
+import { createElement, Suspense, type ReactNode } from "react";
 import { token } from "@/sanity/lib/token";
 import { client } from "./client";
 
@@ -18,20 +19,76 @@ export const { sanityFetch, SanityLive } = defineLive({
   strict: true,
 });
 
-export interface DynamicFetchOptions {
+export interface SanityFetchOptions {
   perspective: LivePerspective;
   stega: boolean;
 }
 
-export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
+export interface SanityRequestState {
+  fetchOptions: SanityFetchOptions;
+  isDraftMode: boolean;
+}
+
+export const PUBLISHED_SANITY_FETCH_OPTIONS = {
+  perspective: "published",
+  stega: false,
+} as const satisfies SanityFetchOptions;
+
+type SanityBoundaryPublished =
+  | ReactNode
+  | (() => Promise<ReactNode> | ReactNode);
+
+interface SanityCacheBoundaryOptions {
+  draft: ReactNode;
+  fallback: ReactNode;
+  isDraftMode?: boolean;
+  published: SanityBoundaryPublished;
+}
+
+export async function isSanityDraftMode(): Promise<boolean> {
   const { isEnabled: isDraftMode } = await draftMode();
+  return isDraftMode;
+}
+
+export async function getSanityRequestState(): Promise<SanityRequestState> {
+  const isDraftMode = await isSanityDraftMode();
+
   if (!isDraftMode) {
-    return { perspective: "published", stega: false };
+    return {
+      fetchOptions: PUBLISHED_SANITY_FETCH_OPTIONS,
+      isDraftMode,
+    };
   }
 
   const jar = await cookies();
   const perspective = await resolvePerspectiveFromCookies({ cookies: jar });
-  return { perspective: perspective ?? "drafts", stega: true };
+
+  return {
+    fetchOptions: {
+      perspective: perspective ?? "drafts",
+      stega: true,
+    },
+    isDraftMode,
+  };
+}
+
+export async function renderSanityCacheBoundary({
+  draft,
+  fallback,
+  isDraftMode,
+  published,
+}: SanityCacheBoundaryOptions): Promise<ReactNode> {
+  const shouldRenderDraft = isDraftMode ?? (await isSanityDraftMode());
+
+  if (shouldRenderDraft) {
+    return createElement(Suspense, { fallback }, draft);
+  }
+
+  if (typeof published === "function") {
+    return published();
+  }
+
+  return published;
 }
 
 export async function sanityFetchStaticParams<const QueryString extends string>({

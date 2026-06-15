@@ -4,7 +4,7 @@ import Mark from "@/components/brand/mark";
 import { Button } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
@@ -136,7 +136,7 @@ export function FooterFallback() {
 export default async function Footer({
   perspective,
   stega,
-}: DynamicFetchOptions) {
+}: SanityFetchOptions) {
   "use cache";
 
   const { data: unGoals } = await sanityFetch({

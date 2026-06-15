@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Link from "next/link";
 import {
   EcosystemRestorationJsonLd,
@@ -11,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
-import { getDynamicFetchOptions } from "@/sanity/lib/live";
+import { getSanityRequestState } from "@/sanity/lib/live";
 import Customers from "./_sections/customers";
 import HomeHero from "./_sections/home-hero";
 import Logos from "./_sections/logos";
@@ -21,11 +20,8 @@ import Services from "./_sections/services";
 import SoilRevolution from "./_sections/soil-revolution";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [{ perspective }, { isEnabled: isDraftMode }] = await Promise.all([
-    getDynamicFetchOptions(),
-    draftMode(),
-  ]);
-  const siteSettings = await getSiteSettings(perspective);
+  const { fetchOptions, isDraftMode } = await getSanityRequestState();
+  const siteSettings = await getSiteSettings(fetchOptions);
 
   return generateMetadataHelper({
     title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",

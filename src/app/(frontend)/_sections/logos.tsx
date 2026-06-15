@@ -1,11 +1,11 @@
 import { Ticker } from "motion-plus/react";
 import Image from "next/image";
-import { draftMode } from "next/headers";
-import { Suspense } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { ORGANIZATIONS_QUERY } from "@/sanity/lib/queries";
@@ -65,7 +65,7 @@ function LogosContent({
   );
 }
 
-async function CachedLogos({ perspective, stega }: DynamicFetchOptions) {
+async function CachedLogos({ perspective, stega }: SanityFetchOptions) {
   "use cache";
 
   const { data: logos } = await sanityFetch({
@@ -78,20 +78,14 @@ async function CachedLogos({ perspective, stega }: DynamicFetchOptions) {
 }
 
 async function DynamicLogos() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedLogos perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedLogos {...fetchOptions} />;
 }
 
 export default async function Logos() {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<LogosContent logos={null} />}>
-        <DynamicLogos />
-      </Suspense>
-    );
-  }
-
-  return <CachedLogos perspective="published" stega={false} />;
+  return renderSanityCacheBoundary({
+    draft: <DynamicLogos />,
+    fallback: <LogosContent logos={null} />,
+    published: <CachedLogos {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

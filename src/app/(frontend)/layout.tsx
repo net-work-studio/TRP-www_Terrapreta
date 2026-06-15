@@ -1,18 +1,19 @@
-import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
-import { Suspense } from "react";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
 import Footer, { FooterFallback } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { Toaster } from "@/components/ui/sonner";
 import {
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  isSanityDraftMode,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
   SanityLive,
 } from "@/sanity/lib/live";
 
 async function DynamicFooter() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <Footer perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <Footer {...fetchOptions} />;
 }
 
 export default async function FrontendLayout({
@@ -20,19 +21,19 @@ export default async function FrontendLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isEnabled: isDraftMode } = await draftMode();
+  const isDraftMode = await isSanityDraftMode();
+  const footer = await renderSanityCacheBoundary({
+    draft: <DynamicFooter />,
+    fallback: <FooterFallback />,
+    isDraftMode,
+    published: <Footer {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 
   return (
     <>
       <Header />
       <main className="mb-auto">{children}</main>
-      {isDraftMode ? (
-        <Suspense fallback={<FooterFallback />}>
-          <DynamicFooter />
-        </Suspense>
-      ) : (
-        <Footer perspective="published" stega={false} />
-      )}
+      {footer}
       <Toaster />
       <SanityLive includeDrafts={isDraftMode} />
       {isDraftMode ? (

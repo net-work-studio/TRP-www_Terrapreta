@@ -6,7 +6,7 @@
 - [`live.ts`](#livets)
 - [`sanityFetch`](#sanityfetch)
 - [`sanityFetchMetadata`](#sanityfetchmetadata)
-- [`getDynamicFetchOptions`](#getdynamicfetchoptions)
+- [`getSanityRequestState`](#getsanityrequeststate)
 - [`sanityFetchStaticParams`](#sanityfetchstaticparams)
 - [Anti-patterns to grep for](#anti-patterns-to-grep-for)
 
@@ -48,6 +48,7 @@ Create `src/sanity/lib/live.ts` alongside `client.ts`. If it already exists, app
 import {type QueryParams} from 'next-sanity'
 import {defineLive, resolvePerspectiveFromCookies, type LivePerspective} from 'next-sanity/live'
 import {cookies, draftMode} from 'next/headers'
+import {createElement, Suspense, type ReactNode} from 'react'
 import {client} from './client'
 
 const token = process.env.SANITY_API_READ_TOKEN
@@ -62,19 +63,57 @@ export const {SanityLive, sanityFetch} = defineLive({
   strict: true,
 })
 
-export interface DynamicFetchOptions {
+export interface SanityFetchOptions {
   perspective: LivePerspective
   stega: boolean
 }
-export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
+
+export interface SanityRequestState {
+  fetchOptions: SanityFetchOptions
+  isDraftMode: boolean
+}
+
+export const PUBLISHED_SANITY_FETCH_OPTIONS = {
+  perspective: 'published',
+  stega: false,
+} as const satisfies SanityFetchOptions
+
+export async function isSanityDraftMode(): Promise<boolean> {
   const {isEnabled: isDraftMode} = await draftMode()
+  return isDraftMode
+}
+
+export async function getSanityRequestState(): Promise<SanityRequestState> {
+  const isDraftMode = await isSanityDraftMode()
   if (!isDraftMode) {
-    return {perspective: 'published', stega: false}
+    return {fetchOptions: PUBLISHED_SANITY_FETCH_OPTIONS, isDraftMode}
   }
 
   const jar = await cookies()
   const perspective = await resolvePerspectiveFromCookies({cookies: jar})
-  return {perspective: perspective ?? 'drafts', stega: true}
+  return {
+    fetchOptions: {perspective: perspective ?? 'drafts', stega: true},
+    isDraftMode,
+  }
+}
+
+export async function renderSanityCacheBoundary({
+  draft,
+  fallback,
+  isDraftMode,
+  published,
+}: {
+  draft: ReactNode
+  fallback: ReactNode
+  isDraftMode?: boolean
+  published: ReactNode | (() => Promise<ReactNode> | ReactNode)
+}): Promise<ReactNode> {
+  const shouldRenderDraft = isDraftMode ?? (await isSanityDraftMode())
+  if (shouldRenderDraft) {
+    return createElement(Suspense, {fallback}, draft)
+  }
+
+  return typeof published === 'function' ? published() : published
 }
 
 // For usage within `generateStaticParams`
@@ -112,17 +151,17 @@ For fetching data in React Server Components that have a `'use cache'` directive
 
 - `perspective` switches between published, drafts, and specific Sanity Content Releases.
 - `stega: true` (combined with `stega.studioUrl` in `createClient` and `<VisualEditing>` in the root layout) renders click-to-edit overlays.
-- `getDynamicFetchOptions` resolves `perspective` from the `sanity-preview-perspective` cookie, which `<VisualEditing>` manages when the app is rendered inside Presentation Tool's preview iframe.
+- `getSanityRequestState` resolves `perspective` from the `sanity-preview-perspective` cookie, which `<VisualEditing>` manages when the app is rendered inside Presentation Tool's preview iframe, and returns `isDraftMode` for metadata/layout code that needs it.
 
 The async function that calls `sanityFetch` must carry `'use cache'` or `'use cache: remote'`, and must take `perspective` and `stega` as props. Never hardcode them.
 
 Pattern:
 
 ```tsx
-import {sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {sanityFetch, type SanityFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
-async function CachedComponent({slug, perspective, stega}: {slug: string} & DynamicFetchOptions) {
+async function CachedComponent({slug, perspective, stega}: {slug: string} & SanityFetchOptions) {
   'use cache'
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
   const {data} = await sanityFetch({query: pageQuery, params: {slug}, perspective, stega})
@@ -148,10 +187,10 @@ async function CachedComponent({slug}: {slug: string}) {
 `'use server'` boundaries cannot accept `perspective`/`stega` as props (server action inputs are untrusted). Resolve them inside the `'use server'` function and forward them to a separate `'use cache'` boundary:
 
 ```tsx
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {getSanityRequestState, sanityFetch, type SanityFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
-async function fetchMore({page, perspective, stega}: {page: string} & DynamicFetchOptions) {
+async function fetchMore({page, perspective, stega}: {page: string} & SanityFetchOptions) {
   'use cache'
   const pagesQuery = defineQuery(`*[_type == "page"][0...$page]`)
   const {data} = await sanityFetch({query: pagesQuery, params: {page}, perspective, stega})
@@ -159,8 +198,8 @@ async function fetchMore({page, perspective, stega}: {page: string} & DynamicFet
 }
 async function renderMore({page}: {page: string}) {
   'use server'
-  const {perspective, stega} = await getDynamicFetchOptions()
-  const data = await fetchMore({page, perspective, stega})
+  const {fetchOptions} = await getSanityRequestState()
+  const data = await fetchMore({page, ...fetchOptions})
 }
 ```
 
@@ -182,23 +221,27 @@ It's `sanityFetch` without `stega` (never wanted in these contexts) and without 
 Presentation Tool can open an app in a standalone preview window, so the correct content release must still be reflected in `<title>` and friends. Always resolve `perspective`:
 
 ```ts
-import {getDynamicFetchOptions, sanityFetchMetadata} from '@/sanity/lib/live'
+import {getSanityRequestState, sanityFetchMetadata} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
 export async function generateMetadata({params}: PageProps<'/[slug]'>) {
-  const [{slug}, {perspective}] = await Promise.all([params, getDynamicFetchOptions()])
+  const [{slug}, {fetchOptions}] = await Promise.all([params, getSanityRequestState()])
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
-  const {data} = await sanityFetchMetadata({query: pageQuery, params: {slug}, perspective})
+  const {data} = await sanityFetchMetadata({
+    query: pageQuery,
+    params: {slug},
+    perspective: fetchOptions.perspective,
+  })
 }
 ```
 
 Anti-pattern: hardcoding `perspective: 'published'` — content-release previewing won't work.
 
-## `getDynamicFetchOptions`
+## `getSanityRequestState`
 
-Resolves `perspective` and `stega` outside the `'use cache'` boundary so they can be passed in as plain props. Calls `cookies()`, which is a dynamic API, so the call must live inside a `<Suspense>` boundary (or a route with a sibling `loading.tsx`) so it doesn't block the static shell from streaming.
+Resolves draft mode plus `perspective` and `stega` outside the `'use cache'` boundary so they can be passed in as plain props. It calls `cookies()` only in draft mode, so request-state resolution should live inside a `<Suspense>` boundary (or a route with a sibling `loading.tsx`) when used by render paths that should keep the static shell streaming.
 
-Avoid calling `getDynamicFetchOptions` in the top-level body of a `layout.tsx` or `page.tsx` that should remain part of the static shell. The exception is routes that intentionally use a sibling `loading.tsx` for fallback UI (see [dynamic-segments.md](dynamic-segments.md)) — there the page can await `getDynamicFetchOptions` directly because `loading.tsx` provides the streaming fallback.
+Avoid calling `getSanityRequestState` in the top-level body of a `layout.tsx` or `page.tsx` that should remain part of the static shell. The exception is routes that intentionally use a sibling `loading.tsx` for fallback UI (see [dynamic-segments.md](dynamic-segments.md)) — there the page can await `getSanityRequestState` directly because `loading.tsx` provides the streaming fallback.
 
 When Cache Components are enabled, `<Suspense>` boundaries determine the static shell. For fully prerendered routes, render the Suspense tree only when in draft mode — see [three-layer-pattern.md](three-layer-pattern.md).
 
@@ -213,8 +256,8 @@ Used inside `generateStaticParams`. `stega` is never wanted (the data feeds rout
 
 When migrating an existing app, these are the strings to search for and refactor:
 
-- `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` call → replace with `perspective` and `stega` props sourced from `getDynamicFetchOptions` via the three-layer pattern.
+- `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` call → replace with `perspective` and `stega` props sourced from `getSanityRequestState` via the three-layer pattern.
 - `sanityFetch(` directly inside a function whose body starts with `'use server'` → split into a separate `'use cache'` helper and forward `perspective`/`stega` as props.
 - `sanityFetch(` inside `generateStaticParams` → swap for `sanityFetchStaticParams`.
-- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `sanityFetchMetadata` and resolve `perspective` via `getDynamicFetchOptions`.
-- `await draftMode()` immediately followed by `await getDynamicFetchOptions()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move the dynamic-API calls into a child component wrapped in `<Suspense>` so the static shell can prerender.
+- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `sanityFetchMetadata` and resolve `perspective` via `getSanityRequestState`.
+- `await draftMode()` immediately followed by `await getSanityRequestState()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move the request-state call into a child component wrapped in `<Suspense>` so the static shell can prerender.

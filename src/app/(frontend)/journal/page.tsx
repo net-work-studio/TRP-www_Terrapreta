@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
-import { Suspense } from "react";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { JOURNAL_QUERY } from "@/sanity/lib/queries";
@@ -38,7 +38,7 @@ function JournalContent({ journal }: { journal: JOURNAL_QUERY_RESULT | null }) {
   );
 }
 
-async function CachedJournalPage({ perspective, stega }: DynamicFetchOptions) {
+async function CachedJournalPage({ perspective, stega }: SanityFetchOptions) {
   "use cache";
 
   const { data: journal } = await sanityFetch({
@@ -51,20 +51,14 @@ async function CachedJournalPage({ perspective, stega }: DynamicFetchOptions) {
 }
 
 async function DynamicJournalPage() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedJournalPage perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedJournalPage {...fetchOptions} />;
 }
 
 export default async function Page() {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<JournalContent journal={null} />}>
-        <DynamicJournalPage />
-      </Suspense>
-    );
-  }
-
-  return <CachedJournalPage perspective="published" stega={false} />;
+  return renderSanityCacheBoundary({
+    draft: <DynamicJournalPage />,
+    fallback: <JournalContent journal={null} />,
+    published: <CachedJournalPage {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

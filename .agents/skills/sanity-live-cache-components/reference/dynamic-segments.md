@@ -34,10 +34,10 @@ export default function Loading() {
 ```tsx
 // src/app/[slug]/page.tsx
 import {
-  getDynamicFetchOptions,
+  getSanityRequestState,
   sanityFetch,
   sanityFetchStaticParams,
-  type DynamicFetchOptions,
+  type SanityFetchOptions,
 } from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 
@@ -50,16 +50,16 @@ export async function generateStaticParams() {
 }
 
 // With sibling `loading.tsx`, skip the `<Suspense>` + `DynamicPage` indirection: await `params`
-// and `getDynamicFetchOptions` directly inside `Page`.
+// and `getSanityRequestState` directly inside `Page`.
 export default async function Page({params}: PageProps<'/[slug]'>) {
-  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
-  return <CachedPage slug={slug} perspective={perspective} stega={stega} />
+  const [{slug}, {fetchOptions}] = await Promise.all([params, getSanityRequestState()])
+  return <CachedPage slug={slug} {...fetchOptions} />
 }
 async function CachedPage({
   slug,
   perspective,
   stega,
-}: Awaited<PageProps<'/[slug]'>['params']> & DynamicFetchOptions) {
+}: Awaited<PageProps<'/[slug]'>['params']> & SanityFetchOptions) {
   'use cache'
   const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]`)
   const {data} = await sanityFetch({
@@ -79,7 +79,7 @@ A `layout.tsx` can't use `loading.tsx` for fallback UI — [it's one level highe
 ```tsx
 // src/app/(website)/[slug]/layout.tsx
 
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {getSanityRequestState, sanityFetch, type SanityFetchOptions} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {Suspense} from 'react'
 
@@ -98,14 +98,14 @@ export default function WebsiteLayout({children, params}: LayoutProps<'/[slug]'>
   )
 }
 async function DynamicFooter({params}: Pick<LayoutProps<'/[slug]'>, 'params'>) {
-  const [{slug}, {perspective, stega}] = await Promise.all([params, getDynamicFetchOptions()])
-  return <Footer slug={slug} perspective={perspective} stega={stega} />
+  const [{slug}, {fetchOptions}] = await Promise.all([params, getSanityRequestState()])
+  return <Footer slug={slug} {...fetchOptions} />
 }
 async function Footer({
   slug,
   perspective,
   stega,
-}: Awaited<LayoutProps<'/[slug]'>['params']> & DynamicFetchOptions) {
+}: Awaited<LayoutProps<'/[slug]'>['params']> & SanityFetchOptions) {
   'use cache'
   const footerQuery = defineQuery(`*[_type == "footer" && slug.current == $slug][0]`)
   const {data} = await sanityFetch({query: footerQuery, params: {slug}, perspective, stega})

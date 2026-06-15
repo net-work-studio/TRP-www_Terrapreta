@@ -25,7 +25,7 @@ This skill assumes familiarity with the `next-cache-components` skill — it cov
 
 | File                                                                 | When to read                                                                                                                   |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| [reference/live-helpers.md](reference/live-helpers.md)               | Full `client.ts` / `live.ts`, `sanityFetch*` and `getDynamicFetchOptions` details                                              |
+| [reference/live-helpers.md](reference/live-helpers.md)               | Full `client.ts` / `live.ts`, `sanityFetch*`, request-state, and cache-boundary helper details                                 |
 | [reference/three-layer-pattern.md](reference/three-layer-pattern.md) | The Page → Dynamic → Cached pattern for `page.tsx`, including the `searchParams` variant                                       |
 | [reference/layouts.md](reference/layouts.md)                         | Non-blocking data fetching inside `layout.tsx` with a shared `'use cache'` helper                                              |
 | [reference/dynamic-segments.md](reference/dynamic-segments.md)       | High-performance `[slug]` routes: `loading.tsx` + partial `generateStaticParams`, or non-blocking dynamic `params` in a layout |
@@ -43,7 +43,7 @@ npm install next-sanity@^13 --save-exact
 If the app is already using `defineLive`, this skill is a refactor, not a rewrite. The 5-step sequence below still applies, but watch for these specific differences:
 
 - **Don't overwrite `client.ts` or `live.ts`** if they exist. Append missing options. Preserve any existing `token` and `stega.*` settings — see [reference/live-helpers.md](reference/live-helpers.md).
-- **Search the codebase for hardcoded `perspective: 'published'` and `stega: false`** in `sanityFetch` callsites and refactor them to source `perspective`/`stega` via `getDynamicFetchOptions` and the three-layer pattern.
+- **Search the codebase for hardcoded `perspective: 'published'` and `stega: false`** in `sanityFetch` callsites and refactor them to source `perspective`/`stega` via `getSanityRequestState` and the three-layer pattern.
 - **Search for `sanityFetch` calls inside `generateStaticParams`** → swap for `sanityFetchStaticParams`.
 - **Search for `sanityFetch` calls inside `generateMetadata` / `sitemap.ts` / `opengraph-image.tsx` / etc.** → swap for `sanityFetchMetadata`.
 - **Search for `sanityFetch` calls directly inside a `'use server'` function** → split into a separate `'use cache'` helper.
@@ -86,7 +86,7 @@ export const {SanityLive, sanityFetch} = defineLive({
 })
 ```
 
-Full file contents (including `client.ts`, `getDynamicFetchOptions`, `sanityFetchMetadata`, `sanityFetchStaticParams`) and per-helper guidance: [reference/live-helpers.md](reference/live-helpers.md).
+Full file contents (including `client.ts`, `getSanityRequestState`, `renderSanityCacheBoundary`, `sanityFetchMetadata`, `sanityFetchStaticParams`) and per-helper guidance: [reference/live-helpers.md](reference/live-helpers.md).
 
 The helpers exported from `live.ts`:
 
@@ -95,7 +95,8 @@ The helpers exported from `live.ts`:
 | `sanityFetch`             | `'use cache'` components rendered from `page.tsx` / `layout.tsx`                               |
 | `sanityFetchMetadata`     | `generateMetadata`, `generateViewport`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, etc. |
 | `sanityFetchStaticParams` | `generateStaticParams` only                                                                    |
-| `getDynamicFetchOptions`  | Resolving `perspective`/`stega` outside any `'use cache'` boundary                             |
+| `getSanityRequestState`   | Resolving draft mode plus `perspective`/`stega` outside any `'use cache'` boundary             |
+| `renderSanityCacheBoundary` | Centralizing the draft-mode Suspense branch and published fallback rendering                 |
 | `SanityLive`              | Rendered once in a root layout                                                                 |
 
 ---
@@ -145,7 +146,7 @@ Page/Layout (Layer 1: draftMode branch)
                         └── <CachedX perspective={p} stega={s} />  (Layer 3: 'use cache')
 ```
 
-**Critical rule**: Only Layer 3 carries `'use cache'`. The top-level `Page` / `Layout` must **not** have `'use cache'` — it awaits `params`, `searchParams`, or `cookies()` (via `getDynamicFetchOptions`), and those dynamic APIs are forbidden inside `'use cache'`. Layer 3 carrying `'use cache'` is enough for the whole route to prerender into the static shell. Adding `'use cache'` to the top-level function is the most common failure mode — TypeScript and the runtime will both complain.
+**Critical rule**: Only Layer 3 carries `'use cache'`. The top-level `Page` / `Layout` must **not** have `'use cache'` — it awaits `params`, `searchParams`, or `cookies()` (via `getSanityRequestState`), and those dynamic APIs are forbidden inside `'use cache'`. Layer 3 carrying `'use cache'` is enough for the whole route to prerender into the static shell. Adding `'use cache'` to the top-level function is the most common failure mode — TypeScript and the runtime will both complain.
 
 Pick the right reference for the file you're editing:
 
@@ -160,9 +161,9 @@ Pick the right reference for the file you're editing:
 
 When auditing an app, search for these and refactor:
 
-- `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` call → use the three-layer pattern, source `perspective`/`stega` via `getDynamicFetchOptions`.
+- `perspective: 'published'` and `stega: false` hardcoded together in a `sanityFetch` call → use the three-layer pattern, source `perspective`/`stega` via `getSanityRequestState`.
 - `sanityFetch(` directly inside a function whose body begins with `'use server'` → split into a separate `'use cache'` helper.
 - `sanityFetch(` inside `generateStaticParams` → swap for `sanityFetchStaticParams`.
-- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `sanityFetchMetadata` and resolve `perspective` via `getDynamicFetchOptions`.
-- `await draftMode()` immediately followed by `await getDynamicFetchOptions()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move those dynamic-API calls into a child component wrapped in `<Suspense>` so the static shell can prerender.
+- `sanityFetch(` inside `generateMetadata` / `generateViewport` / `sitemap.ts` / `robots.ts` / `opengraph-image.tsx` etc. → swap for `sanityFetchMetadata` and resolve `perspective` via `getSanityRequestState`.
+- `await draftMode()` immediately followed by `await getSanityRequestState()` at the top of a `page.tsx` or `layout.tsx` without a sibling `loading.tsx` → move the request-state call into a child component wrapped in `<Suspense>` so the static shell can prerender.
 - More than one `<SanityLive>` or `<VisualEditing>` rendered in the tree → consolidate to a single render in the right layout.

@@ -19,12 +19,17 @@ When `sanityFetch` runs inside a `layout.tsx`, the goal is to keep `children` st
 
 ```tsx
 // src/app/(website)/layout.tsx
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  sanityFetch,
+  type SanityFetchOptions,
+} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
 import {draftMode} from 'next/headers'
-import {Suspense} from 'react'
 
-async function fetchSettings({perspective, stega}: DynamicFetchOptions) {
+async function fetchSettings({perspective, stega}: SanityFetchOptions) {
   'use cache'
   const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
   const {data} = await sanityFetch({query: settingsQuery, perspective, stega})
@@ -33,42 +38,43 @@ async function fetchSettings({perspective, stega}: DynamicFetchOptions) {
 
 export default async function WebsiteLayout({children}: LayoutProps<'/'>) {
   const {isEnabled: isDraftMode} = await draftMode()
+  const navbar = await renderSanityCacheBoundary({
+    draft: <DynamicNavbar />,
+    fallback: <NavbarFallback />,
+    isDraftMode,
+    published: <CachedNavbar {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  })
+  const footer = await renderSanityCacheBoundary({
+    draft: <DynamicFooter />,
+    fallback: null,
+    isDraftMode,
+    published: <CachedFooter {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  })
+
   return (
     <>
-      {isDraftMode ? (
-        <Suspense fallback={<NavbarFallback />}>
-          <DynamicNavbar />
-        </Suspense>
-      ) : (
-        <CachedNavbar perspective="published" stega={false} />
-      )}
+      {navbar}
       {children}
-      {isDraftMode ? (
-        <Suspense>
-          <DynamicFooter />
-        </Suspense>
-      ) : (
-        <CachedFooter perspective="published" stega={false} />
-      )}
+      {footer}
     </>
   )
 }
 
 async function DynamicNavbar() {
-  const {perspective, stega} = await getDynamicFetchOptions()
-  return <CachedNavbar perspective={perspective} stega={stega} />
+  const {fetchOptions} = await getSanityRequestState()
+  return <CachedNavbar {...fetchOptions} />
 }
-async function CachedNavbar({perspective, stega}: DynamicFetchOptions) {
+async function CachedNavbar({perspective, stega}: SanityFetchOptions) {
   'use cache'
   const data = await fetchSettings({perspective, stega})
   return <Navbar data={data} />
 }
 
 async function DynamicFooter() {
-  const {perspective, stega} = await getDynamicFetchOptions()
-  return <CachedFooter perspective={perspective} stega={stega} />
+  const {fetchOptions} = await getSanityRequestState()
+  return <CachedFooter {...fetchOptions} />
 }
-async function CachedFooter({perspective, stega}: DynamicFetchOptions) {
+async function CachedFooter({perspective, stega}: SanityFetchOptions) {
   'use cache'
   const data = await fetchSettings({perspective, stega})
   return <Footer data={data} />
@@ -100,7 +106,7 @@ async function CachedWebsiteLayout({
   children,
   perspective,
   stega,
-}: {children: ReactNode} & DynamicFetchOptions) {
+}: {children: ReactNode} & SanityFetchOptions) {
   'use cache'
   const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
   const {data} = await sanityFetch({query: settingsQuery, perspective, stega})
@@ -121,31 +127,34 @@ Useful as a sanity check when adapting the pattern to a layout with only one dat
 
 ```tsx
 // src/app/(website)/layout.tsx
-import {getDynamicFetchOptions, sanityFetch, type DynamicFetchOptions} from '@/sanity/lib/live'
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  sanityFetch,
+  type SanityFetchOptions,
+} from '@/sanity/lib/live'
 import {defineQuery} from 'next-sanity'
-import {draftMode} from 'next/headers'
-import {Suspense} from 'react'
 
 export default async function WebsiteLayout({children}: LayoutProps<'/'>) {
-  const {isEnabled: isDraftMode} = await draftMode()
+  const footer = await renderSanityCacheBoundary({
+    draft: <DynamicFooter />,
+    fallback: <FooterFallback />,
+    published: <Footer {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  })
+
   return (
     <>
       {children}
-      {isDraftMode ? (
-        <Suspense fallback={<FooterFallback />}>
-          <DynamicFooter />
-        </Suspense>
-      ) : (
-        <Footer perspective="published" stega={false} />
-      )}
+      {footer}
     </>
   )
 }
 async function DynamicFooter() {
-  const {perspective, stega} = await getDynamicFetchOptions()
-  return <Footer perspective={perspective} stega={stega} />
+  const {fetchOptions} = await getSanityRequestState()
+  return <Footer {...fetchOptions} />
 }
-async function Footer({perspective, stega}: DynamicFetchOptions) {
+async function Footer({perspective, stega}: SanityFetchOptions) {
   'use cache'
   const footerQuery = defineQuery(`*[_type == "footer"][0]`)
   const {data} = await sanityFetch({query: footerQuery, perspective, stega})

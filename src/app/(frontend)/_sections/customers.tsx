@@ -1,12 +1,12 @@
 import Image from "next/image";
-import { draftMode } from "next/headers";
-import { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { CUSTOMERS_QUERY } from "@/sanity/lib/queries";
@@ -106,7 +106,7 @@ function CustomersContent({
   );
 }
 
-async function CachedCustomers({ perspective, stega }: DynamicFetchOptions) {
+async function CachedCustomers({ perspective, stega }: SanityFetchOptions) {
   "use cache";
 
   const { data: customers } = await sanityFetch({
@@ -119,20 +119,14 @@ async function CachedCustomers({ perspective, stega }: DynamicFetchOptions) {
 }
 
 async function DynamicCustomers() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedCustomers perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedCustomers {...fetchOptions} />;
 }
 
 export default async function Customers() {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<CustomersContent customers={null} />}>
-        <DynamicCustomers />
-      </Suspense>
-    );
-  }
-
-  return <CachedCustomers perspective="published" stega={false} />;
+  return renderSanityCacheBoundary({
+    draft: <DynamicCustomers />,
+    fallback: <CustomersContent customers={null} />,
+    published: <CachedCustomers {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
-import { Suspense } from "react";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
-  type DynamicFetchOptions,
-  getDynamicFetchOptions,
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
   sanityFetch,
 } from "@/sanity/lib/live";
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
@@ -31,7 +31,7 @@ function ServicesContent({
   );
 }
 
-async function CachedServicesPage({ perspective, stega }: DynamicFetchOptions) {
+async function CachedServicesPage({ perspective, stega }: SanityFetchOptions) {
   "use cache";
 
   const { data: services } = await sanityFetch({
@@ -44,20 +44,14 @@ async function CachedServicesPage({ perspective, stega }: DynamicFetchOptions) {
 }
 
 async function DynamicServicesPage() {
-  const { perspective, stega } = await getDynamicFetchOptions();
-  return <CachedServicesPage perspective={perspective} stega={stega} />;
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedServicesPage {...fetchOptions} />;
 }
 
 export default async function Page() {
-  const { isEnabled: isDraftMode } = await draftMode();
-
-  if (isDraftMode) {
-    return (
-      <Suspense fallback={<ServicesContent services={null} />}>
-        <DynamicServicesPage />
-      </Suspense>
-    );
-  }
-
-  return <CachedServicesPage perspective="published" stega={false} />;
+  return renderSanityCacheBoundary({
+    draft: <DynamicServicesPage />,
+    fallback: <ServicesContent services={null} />,
+    published: <CachedServicesPage {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }
