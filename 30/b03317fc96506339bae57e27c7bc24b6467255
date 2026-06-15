@@ -1,0 +1,31 @@
+.agents/skills/sanity-live-cache-components/SKILL.md
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-168
+skills-lock.json
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-11
+.agents/skills/sanity-live-cache-components/reference/live-helpers.md
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-220
+.agents/skills/sanity-live-cache-components/reference/three-layer-pattern.md
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-146
+.claude/skills/sanity-live-cache-components
+  s_e5e6bfe29e8244::t_627e41263f37ba 1
+.agents/skills/sanity-live-cache-components/reference/layouts.md
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-163
+.agents/skills/sanity-live-cache-components/reference/dynamic-segments.md
+  s_e5e6bfe29e8244::t_627e41263f37ba 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "30b03317fc96506339bae57e27c7bc24b6467255",
+  "prompts": {},
+  "sessions": {
+    "s_e5e6bfe29e8244": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "799614ef-c183-46d9-99bc-e02dc40d1895",
+        "model": "gpt-5.5"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
