@@ -4,6 +4,7 @@ import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { Suspense } from "react";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -18,27 +19,44 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
-import { PROJECT_ITEM_QUERY } from "@/sanity/lib/queries";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
+import {
+  PROJECT_ITEM_QUERY,
+  PROJECT_SLUGS_QUERY,
+} from "@/sanity/lib/queries";
+import type { PROJECT_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
 const BLUR_QUALITY = 5;
 const BLUR_SIZE = 24;
 
+export async function generateStaticParams() {
+  const { data } = await sanityFetchStaticParams({
+    query: PROJECT_SLUGS_QUERY,
+  });
+  return data ?? [];
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const { isEnabled: isDraftMode } = await draftMode();
+}: PageProps<"/projects/[slug]">): Promise<Metadata> {
+  const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
+    await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
+
   const [{ data: projectItem }, siteSettings] = await Promise.all([
-    sanityFetch({
+    sanityFetchMetadata({
       query: PROJECT_ITEM_QUERY,
       params: { slug },
+      perspective,
     }),
-    getSiteSettings(),
+    getSiteSettings(perspective),
   ]);
 
   if (!projectItem?.name) {
@@ -72,18 +90,14 @@ export async function generateMetadata({
   });
 }
 
-export default async function Page({
-  params,
+function ProjectPageContent({
+  projectItem,
+  slug,
 }: {
-  params: Promise<{ slug: string }>;
+  projectItem: NonNullable<PROJECT_ITEM_QUERY_RESULT>;
+  slug: string;
 }) {
-  const { slug } = await params;
-  const { data: projectItem } = await sanityFetch({
-    query: PROJECT_ITEM_QUERY,
-    params: { slug },
-  });
-
-  if (!projectItem?.mainImage?.image) {
+  if (!projectItem.mainImage?.image) {
     notFound();
   }
 
@@ -98,10 +112,10 @@ export default async function Page({
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="text-3xl tracking-tight md:text-4xl lg:text-5xl">
-          {projectItem?.name}
+          {projectItem.name}
         </h1>
         <p className="max-w-[70ch] text-pretty text-lg text-stone-400 md:text-xl lg:text-2xl">
-          {projectItem?.shortDescription}
+          {projectItem.shortDescription}
         </p>
       </hgroup>
 
@@ -132,19 +146,19 @@ export default async function Page({
 
       <div className="container-article space-y-4 py-20">
         <ul className="flex items-center gap-2 text-lg text-muted-foreground">
-          {projectItem?.location && (
+          {projectItem.location && (
             <>
               <li>{projectItem.location}</li>
-              {projectItem?.status && <Minus size={16} />}
+              {projectItem.status && <Minus size={16} />}
             </>
           )}
-          {projectItem?.status && (
+          {projectItem.status && (
             <li className="capitalize">
               {projectItem.status.replace("-", " ")}
             </li>
           )}
         </ul>
-        {projectItem?.pageContent?.content && (
+        {projectItem.pageContent?.content && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
               components={portableTextComponents}
@@ -158,18 +172,18 @@ export default async function Page({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": projectItem?.seo?.schemaType || "Project",
-          name: projectItem?.name,
-          description: projectItem?.shortDescription,
-          ...(projectItem?.location && { location: projectItem.location }),
-          ...(projectItem?.status && { status: projectItem.status }),
-          ...(projectItem?.mainImage?.image && {
+          "@type": projectItem.seo?.schemaType || "Project",
+          name: projectItem.name,
+          description: projectItem.shortDescription,
+          ...(projectItem.location && { location: projectItem.location }),
+          ...(projectItem.status && { status: projectItem.status }),
+          ...(projectItem.mainImage?.image && {
             image: urlFor(projectItem.mainImage.image)
               .width(1200)
               .auto("format")
               .url(),
           }),
-          ...(projectItem?.seo?.customSchema?.knowsAbout && {
+          ...(projectItem.seo?.customSchema?.knowsAbout && {
             knowsAbout: projectItem.seo.customSchema.knowsAbout
               .split(",")
               .map((s: string) => s.trim()),
@@ -180,9 +194,62 @@ export default async function Page({
         items={[
           { name: "Home", url: "/" },
           { name: "Projects", url: "/projects" },
-          { name: projectItem?.name || "Project", url: `/projects/${slug}` },
+          { name: projectItem.name || "Project", url: `/projects/${slug}` },
         ]}
       />
     </article>
+  );
+}
+
+async function CachedProjectPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
+
+  const { data: projectItem } = await sanityFetch({
+    query: PROJECT_ITEM_QUERY,
+    params: { slug },
+    perspective,
+    stega,
+  });
+
+  if (!projectItem) {
+    notFound();
+  }
+
+  return <ProjectPageContent projectItem={projectItem} slug={slug} />;
+}
+
+async function DynamicProjectPage({
+  params,
+}: Pick<PageProps<"/projects/[slug]">, "params">) {
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+
+  return (
+    <CachedProjectPage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+export default async function Page({
+  params,
+}: PageProps<"/projects/[slug]">) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={null}>
+        <DynamicProjectPage params={params} />
+      </Suspense>
+    );
+  }
+
+  const { slug } = await params;
+  return (
+    <CachedProjectPage perspective="published" slug={slug} stega={false} />
   );
 }

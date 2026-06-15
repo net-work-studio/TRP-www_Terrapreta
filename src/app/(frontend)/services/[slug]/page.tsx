@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { Suspense } from "react";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
@@ -10,22 +12,39 @@ import { portableTextComponents } from "@/components/ui/portable-text-components
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
-import { SERVICE_QUERY } from "@/sanity/lib/queries";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
+import {
+  SERVICE_QUERY,
+  SERVICE_SLUGS_QUERY,
+} from "@/sanity/lib/queries";
+import type { SERVICE_QUERY_RESULT } from "@/sanity/types";
+
+export async function generateStaticParams() {
+  const { data } = await sanityFetchStaticParams({
+    query: SERVICE_SLUGS_QUERY,
+  });
+  return data ?? [];
+}
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const { isEnabled: isDraftMode } = await draftMode();
+}: PageProps<"/services/[slug]">): Promise<Metadata> {
+  const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
+    await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
+
   const [{ data: service }, siteSettings] = await Promise.all([
-    sanityFetch({
+    sanityFetchMetadata({
       query: SERVICE_QUERY,
       params: { slug },
+      perspective,
     }),
-    getSiteSettings(),
+    getSiteSettings(perspective),
   ]);
 
   if (!service?.name) {
@@ -55,26 +74,22 @@ export async function generateMetadata({
   });
 }
 
-export default async function Page({
-  params,
+function ServicePageContent({
+  service,
+  slug,
 }: {
-  params: Promise<{ slug: string }>;
+  service: NonNullable<SERVICE_QUERY_RESULT>;
+  slug: string;
 }) {
-  const { slug } = await params;
-  const { data: service } = await sanityFetch({
-    query: SERVICE_QUERY,
-    params: { slug },
-  });
-
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center gap-20 bg-stone-800 py-40">
         <div className="container-site grid grid-cols-1 gap-20 lg:grid-cols-[40%_60%] lg:gap-5">
           <div className="flex flex-col items-start justify-center gap-10">
             <hgroup className="flex w-full flex-col items-start justify-center gap-1.5">
-              <h1 className="font-bold text-4xl">{service?.name}</h1>
+              <h1 className="font-bold text-4xl">{service.name}</h1>
               <p className="max-w-prose text-pretty text-lg text-stone-300">
-                {service?.shortDescription}
+                {service.shortDescription}
               </p>
             </hgroup>
             <Button>
@@ -82,9 +97,9 @@ export default async function Page({
             </Button>
           </div>
           <div className="container-site relative aspect-3/2 rounded-md">
-            {service?.mainImage?.image && (
+            {service.mainImage?.image && (
               <Image
-                alt={service?.name || ""}
+                alt={service.name || ""}
                 blurDataURL={urlFor(service.mainImage.image)
                   .width(24)
                   .height(24)
@@ -106,12 +121,11 @@ export default async function Page({
       </div>
 
       <article className="container-article container-site space-y-20 py-20">
-        {/* Clients */}
-        {service?.clients && (
+        {service.clients && (
           <div className="flex flex-col items-start justify-center">
             <h3 className="text-2xl">Our Clients</h3>
             <div className="flex flex-row items-center justify-center gap-5">
-              {service?.clients
+              {service.clients
                 ?.filter(
                   (client: {
                     _id: string;
@@ -173,11 +187,10 @@ export default async function Page({
           </div>
         )}
 
-        {/* Capabilities */}
         <div className="flex flex-col items-start justify-center space-y-2.5">
           <h3 className="font-bold text-2xl">Our Capabilities</h3>
           <div className="flex flex-row flex-wrap items-start justify-start gap-x-2.5 gap-y-3">
-            {service?.capabilities
+            {service.capabilities
               ?.filter(
                 (capability: {
                   _id: string;
@@ -197,7 +210,7 @@ export default async function Page({
         </div>
 
         <div className="flex flex-col items-start justify-center space-y-5 text-lg md:text-xl lg:text-2xl">
-          {service?.content && (
+          {service.content && (
             <PortableText
               components={portableTextComponents}
               value={service.content}
@@ -210,20 +223,20 @@ export default async function Page({
         items={[
           { name: "Home", url: "/" },
           { name: "Services", url: "/services" },
-          { name: service?.name || "Service", url: `/services/${slug}` },
+          { name: service.name || "Service", url: `/services/${slug}` },
         ]}
       />
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": service?.seo?.schemaType || "Service",
-          name: service?.name,
-          description: service?.shortDescription,
+          "@type": service.seo?.schemaType || "Service",
+          name: service.name,
+          description: service.shortDescription,
           provider: {
             "@type": "Organization",
             name: "Terrapreta",
             url: "https://terrapreta.it",
-            ...(service?.seo?.customSchema?.knowsAbout && {
+            ...(service.seo?.customSchema?.knowsAbout && {
               knowsAbout: service.seo.customSchema.knowsAbout
                 .split(",")
                 .map((s: string) => s.trim()),
@@ -238,7 +251,7 @@ export default async function Page({
             "@type": "OfferCatalog",
             name: "Terrapreta Services",
             itemListElement:
-              service?.seo?.customSchema?.hasOfferCatalog &&
+              service.seo?.customSchema?.hasOfferCatalog &&
               service.seo.customSchema.hasOfferCatalog.length > 0
                 ? service.seo.customSchema.hasOfferCatalog.map(
                     (item: string) => ({
@@ -254,13 +267,13 @@ export default async function Page({
                       "@type": "Offer",
                       itemOffered: {
                         "@type": "Service",
-                        name: service?.name,
-                        description: service?.shortDescription,
+                        name: service.name,
+                        description: service.shortDescription,
                       },
                     },
                   ],
           },
-          ...(service?.mainImage?.image && {
+          ...(service.mainImage?.image && {
             image: urlFor(service.mainImage.image)
               .width(1200)
               .auto("format")
@@ -270,5 +283,58 @@ export default async function Page({
         id="service-json-ld"
       />
     </>
+  );
+}
+
+async function CachedServicePage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
+
+  const { data: service } = await sanityFetch({
+    query: SERVICE_QUERY,
+    params: { slug },
+    perspective,
+    stega,
+  });
+
+  if (!service) {
+    notFound();
+  }
+
+  return <ServicePageContent service={service} slug={slug} />;
+}
+
+async function DynamicServicePage({
+  params,
+}: Pick<PageProps<"/services/[slug]">, "params">) {
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+
+  return (
+    <CachedServicePage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+export default async function Page({
+  params,
+}: PageProps<"/services/[slug]">) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={null}>
+        <DynamicServicePage params={params} />
+      </Suspense>
+    );
+  }
+
+  const { slug } = await params;
+  return (
+    <CachedServicePage perspective="published" slug={slug} stega={false} />
   );
 }

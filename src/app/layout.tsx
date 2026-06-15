@@ -90,7 +90,7 @@ export default function RootLayout({
             },
           }}
         />
-        <PlausibleProvider domain="terrapreta.it">{children}</PlausibleProvider>
+        <PlausibleProvider>{children}</PlausibleProvider>
       </body>
     </html>
   );

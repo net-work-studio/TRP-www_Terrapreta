@@ -1,8 +1,14 @@
 import Image from "next/image";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { CUSTOMERS_QUERY } from "@/sanity/lib/queries";
 import type { CUSTOMERS_QUERY_RESULT, SanityImageHotspot } from "@/sanity/types";
 
@@ -15,11 +21,11 @@ function getObjectPosition(hotspot?: SanityImageHotspot | null): string {
   return `${x}% ${y}%`;
 }
 
-export default async function Customers() {
-  const { data: customers } = await sanityFetch({
-    query: CUSTOMERS_QUERY,
-  });
-
+function CustomersContent({
+  customers,
+}: {
+  customers: CUSTOMERS_QUERY_RESULT | null;
+}) {
   const validCustomers =
     customers?.filter(
       (
@@ -98,4 +104,35 @@ export default async function Customers() {
       </div>
     </div>
   );
+}
+
+async function CachedCustomers({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
+
+  const { data: customers } = await sanityFetch({
+    query: CUSTOMERS_QUERY,
+    perspective,
+    stega,
+  });
+
+  return <CustomersContent customers={customers} />;
+}
+
+async function DynamicCustomers() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedCustomers perspective={perspective} stega={stega} />;
+}
+
+export default async function Customers() {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={<CustomersContent customers={null} />}>
+        <DynamicCustomers />
+      </Suspense>
+    );
+  }
+
+  return <CachedCustomers perspective="published" stega={false} />;
 }

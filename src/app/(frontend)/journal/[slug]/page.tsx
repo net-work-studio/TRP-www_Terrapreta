@@ -4,6 +4,7 @@ import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { Suspense } from "react";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -19,27 +20,44 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
-import { JOURNAL_ITEM_QUERY } from "@/sanity/lib/queries";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
+import {
+  JOURNAL_ITEM_QUERY,
+  JOURNAL_SLUGS_QUERY,
+} from "@/sanity/lib/queries";
+import type { JOURNAL_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
 const BLUR_QUALITY = 5;
 const BLUR_SIZE = 24;
 
+export async function generateStaticParams() {
+  const { data } = await sanityFetchStaticParams({
+    query: JOURNAL_SLUGS_QUERY,
+  });
+  return data ?? [];
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const { isEnabled: isDraftMode } = await draftMode();
+}: PageProps<"/journal/[slug]">): Promise<Metadata> {
+  const [{ slug }, { perspective }, { isEnabled: isDraftMode }] =
+    await Promise.all([params, getDynamicFetchOptions(), draftMode()]);
+
   const [{ data: journalItem }, siteSettings] = await Promise.all([
-    sanityFetch({
+    sanityFetchMetadata({
       query: JOURNAL_ITEM_QUERY,
       params: { slug },
+      perspective,
     }),
-    getSiteSettings(),
+    getSiteSettings(perspective),
   ]);
 
   if (!journalItem?.name) {
@@ -74,18 +92,14 @@ export async function generateMetadata({
   });
 }
 
-export default async function Page({
-  params,
+function JournalPageContent({
+  journalItem,
+  slug,
 }: {
-  params: Promise<{ slug: string }>;
+  journalItem: NonNullable<JOURNAL_ITEM_QUERY_RESULT>;
+  slug: string;
 }) {
-  const { slug } = await params;
-  const { data: journalItem } = await sanityFetch({
-    query: JOURNAL_ITEM_QUERY,
-    params: { slug },
-  });
-
-  if (!journalItem?.mainImage?.image) {
+  if (!journalItem.mainImage?.image) {
     notFound();
   }
 
@@ -100,16 +114,16 @@ export default async function Page({
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="/journal">
-                {journalItem?.tag?.name}
+                {journalItem.tag?.name}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="text-3xl tracking-tight md:text-4xl lg:text-5xl">
-          {journalItem?.name}
+          {journalItem.name}
         </h1>
         <p className="max-w-[70ch] text-pretty text-lg text-stone-400 md:text-xl lg:text-2xl">
-          {journalItem?.shortDescription}
+          {journalItem.shortDescription}
         </p>
       </hgroup>
 
@@ -140,10 +154,10 @@ export default async function Page({
 
       <div className="container-article space-y-4 py-20">
         <ul className="flex items-center gap-2 text-lg text-muted-foreground">
-          <li>{journalItem?.location}</li>
+          <li>{journalItem.location}</li>
           <Minus size={16} />
           <li>
-            {journalItem?.publishingDate
+            {journalItem.publishingDate
               ? new Date(journalItem.publishingDate).toLocaleDateString(
                   undefined,
                   {
@@ -155,7 +169,7 @@ export default async function Page({
               : ""}
           </li>
         </ul>
-        {journalItem?.contentObject && (
+        {journalItem.contentObject && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
               components={portableTextComponents}
@@ -169,22 +183,22 @@ export default async function Page({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": journalItem?.seo?.schemaType || "BlogPosting",
-          headline: journalItem?.name,
-          description: journalItem?.shortDescription,
-          ...(journalItem?.publishingDate && {
+          "@type": journalItem.seo?.schemaType || "BlogPosting",
+          headline: journalItem.name,
+          description: journalItem.shortDescription,
+          ...(journalItem.publishingDate && {
             datePublished: journalItem.publishingDate,
           }),
-          ...(journalItem?.mainImage?.image && {
+          ...(journalItem.mainImage?.image && {
             image: urlFor(journalItem.mainImage.image)
               .width(1200)
               .auto("format")
               .url(),
           }),
-          ...(journalItem?.location && {
+          ...(journalItem.location && {
             locationCreated: journalItem.location,
           }),
-          ...(journalItem?.seo?.customSchema?.knowsAbout && {
+          ...(journalItem.seo?.customSchema?.knowsAbout && {
             knowsAbout: journalItem.seo.customSchema.knowsAbout
               .split(",")
               .map((s: string) => s.trim()),
@@ -203,9 +217,60 @@ export default async function Page({
         items={[
           { name: "Home", url: "/" },
           { name: "Journal", url: "/journal" },
-          { name: journalItem?.name || "Article", url: `/journal/${slug}` },
+          { name: journalItem.name || "Article", url: `/journal/${slug}` },
         ]}
       />
     </article>
+  );
+}
+
+async function CachedJournalPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & DynamicFetchOptions) {
+  "use cache";
+
+  const { data: journalItem } = await sanityFetch({
+    query: JOURNAL_ITEM_QUERY,
+    params: { slug },
+    perspective,
+    stega,
+  });
+
+  if (!journalItem) {
+    notFound();
+  }
+
+  return <JournalPageContent journalItem={journalItem} slug={slug} />;
+}
+
+async function DynamicJournalPage({
+  params,
+}: Pick<PageProps<"/journal/[slug]">, "params">) {
+  const [{ slug }, { perspective, stega }] = await Promise.all([
+    params,
+    getDynamicFetchOptions(),
+  ]);
+
+  return (
+    <CachedJournalPage perspective={perspective} slug={slug} stega={stega} />
+  );
+}
+
+export default async function Page({ params }: PageProps<"/journal/[slug]">) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={null}>
+        <DynamicJournalPage params={params} />
+      </Suspense>
+    );
+  }
+
+  const { slug } = await params;
+  return (
+    <CachedJournalPage perspective="published" slug={slug} stega={false} />
   );
 }

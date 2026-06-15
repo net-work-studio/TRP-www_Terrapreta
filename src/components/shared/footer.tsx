@@ -3,12 +3,24 @@ import Link from "next/link";
 import Mark from "@/components/brand/mark";
 import { Button } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
 import type { UN_GOALS_QUERY_RESULT } from "@/sanity/types";
 
-export default async function Footer() {
-  const { data: unGoals } = await sanityFetch({ query: UN_GOALS_QUERY });
+export default async function Footer({
+  perspective,
+  stega,
+}: DynamicFetchOptions) {
+  "use cache";
+
+  const { data: unGoals } = await sanityFetch({
+    query: UN_GOALS_QUERY,
+    perspective,
+    stega,
+  });
 
   const unGoalLogos =
     unGoals
@@ -47,6 +59,7 @@ export default async function Footer() {
           width={160}
         />
       )) || [];
+
   return (
     <div className="mt-20 flex w-full justify-center border-stone-800 border-t md:mt-40">
       <footer className="container-site flex flex-col justify-start gap-10 py-20">

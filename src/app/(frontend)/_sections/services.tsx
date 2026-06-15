@@ -1,6 +1,8 @@
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
 import type { SERVICES_QUERY_RESULT } from "@/sanity/types";
 
@@ -109,11 +115,11 @@ function ServiceCard({
   );
 }
 
-export default async function Services() {
-  const { data: services } = await sanityFetch({
-    query: SERVICES_QUERY,
-  });
-
+function ServicesContent({
+  services,
+}: {
+  services: SERVICES_QUERY_RESULT | null;
+}) {
   return (
     <div className="container-site flex flex-col items-start justify-center gap-10">
       <hgroup className="flex w-full flex-col gap-1.5">
@@ -163,4 +169,35 @@ export default async function Services() {
       </div>
     </div>
   );
+}
+
+async function CachedServices({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
+
+  const { data: services } = await sanityFetch({
+    query: SERVICES_QUERY,
+    perspective,
+    stega,
+  });
+
+  return <ServicesContent services={services} />;
+}
+
+async function DynamicServices() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedServices perspective={perspective} stega={stega} />;
+}
+
+export default async function Services() {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={<ServicesContent services={null} />}>
+        <DynamicServices />
+      </Suspense>
+    );
+  }
+
+  return <CachedServices perspective="published" stega={false} />;
 }

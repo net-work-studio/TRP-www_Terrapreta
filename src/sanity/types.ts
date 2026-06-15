@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: src/sanity/extract.json
 export type CustomSchema = {
   knowsAbout?: string;
@@ -644,6 +646,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette;
   lqip?: string;
   blurHash?: string;
+  thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
 };
@@ -659,14 +662,14 @@ export type SanityFileAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   source?: SanityAssetSourceData;
 };
 
@@ -688,14 +691,14 @@ export type SanityImageAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
 };
@@ -758,48 +761,6 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-export declare const internalGroqTypeReferenceTo: unique symbol;
-
-// Source: src/app/(frontend)/_sections/logos.tsx
-// Variable: ORGANIZATIONS_QUERY
-// Query: *[_type == "organization"]{  _id,  name,  type,  logoDark{    _type,    asset->{      _id,      url,    }  },}
-export type ORGANIZATIONS_QUERY_RESULT = Array<{
-  _id: string;
-  name: string;
-  type: "client" | "partner" | "sponsor";
-  logoDark: {
-    _type: "image";
-    asset: {
-      _id: string;
-      url: string | null;
-    } | null;
-  };
-}>;
-
-// Source: src/app/sitemap.ts
-// Variable: PROJECTS_SITEMAP_QUERY
-// Query: *[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
-export type PROJECTS_SITEMAP_QUERY_RESULT = Array<{
-  slug: string;
-  _updatedAt: string;
-}>;
-
-// Source: src/app/sitemap.ts
-// Variable: JOURNAL_SITEMAP_QUERY
-// Query: *[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
-export type JOURNAL_SITEMAP_QUERY_RESULT = Array<{
-  slug: string;
-  _updatedAt: string;
-}>;
-
-// Source: src/app/sitemap.ts
-// Variable: SERVICES_SITEMAP_QUERY
-// Query: *[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
-export type SERVICES_SITEMAP_QUERY_RESULT = Array<{
-  slug: string;
-  _updatedAt: string;
-}>;
-
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[_type == "site" && _id == "site"][0]{  name,  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
@@ -811,7 +772,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     ogImage: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     } | null;
     canonicalUrl: string | null;
@@ -838,7 +799,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -862,7 +823,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -886,7 +847,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -951,7 +912,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
         image: {
           asset: {
             _id: string;
-            url: string | null;
+            url: string;
             metadata: {
               dimensions: {
                 width: number;
@@ -979,7 +940,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
     ogImage: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     } | null;
     canonicalUrl: string | null;
@@ -1025,7 +986,7 @@ export type SERVICES_QUERY_RESULT = Array<{
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -1097,7 +1058,7 @@ export type SERVICE_QUERY_RESULT = {
         image: {
           asset: {
             _id: string;
-            url: string | null;
+            url: string;
             metadata: {
               dimensions: {
                 width: number;
@@ -1126,14 +1087,14 @@ export type SERVICE_QUERY_RESULT = {
       asset: {
         _id: string;
         _type: "sanity.imageAsset";
-        url: string | null;
+        url: string;
       } | null;
     };
   }> | null;
   mainImage: {
     image: {
       asset: {
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -1143,7 +1104,7 @@ export type SERVICE_QUERY_RESULT = {
     ogImage: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     } | null;
     canonicalUrl: string | null;
@@ -1179,7 +1140,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
       _type: "image";
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     };
   };
@@ -1252,7 +1213,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
           image: {
             asset: {
               _id: string;
-              url: string | null;
+              url: string;
               metadata: {
                 dimensions: {
                   width: number;
@@ -1286,7 +1247,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
     ogImage: {
       asset: {
         _id: string;
-        url: string | null;
+        url: string;
       } | null;
     } | null;
     canonicalUrl: string | null;
@@ -1319,14 +1280,14 @@ export type UN_GOALS_QUERY_RESULT = Array<{
     _type: "image";
     asset: {
       _id: string;
-      url: string | null;
+      url: string;
     } | null;
   };
   logoPositive: {
     _type: "image";
     asset: {
       _id: string;
-      url: string | null;
+      url: string;
     } | null;
   };
 }>;
@@ -1343,19 +1304,76 @@ export type CUSTOMERS_QUERY_RESULT = Array<{
     crop: SanityImageCrop | null;
     asset: {
       _id: string;
-      url: string | null;
+      url: string;
     } | null;
   } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: ORGANIZATIONS_QUERY
+// Query: *[_type == "organization"]{  _id,  name,  type,  logoDark{    _type,    asset->{      _id,      url,    }  },}
+export type ORGANIZATIONS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  type: "client" | "partner" | "sponsor";
+  logoDark: {
+    _type: "image";
+    asset: {
+      _id: string;
+      url: string;
+    } | null;
+  };
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROJECT_SLUGS_QUERY
+// Query: *[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}
+export type PROJECT_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: JOURNAL_SLUGS_QUERY
+// Query: *[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}
+export type JOURNAL_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: SERVICE_SLUGS_QUERY
+// Query: *[_type == "service" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}
+export type SERVICE_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROJECTS_SITEMAP_QUERY
+// Query: *[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
+export type PROJECTS_SITEMAP_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: JOURNAL_SITEMAP_QUERY
+// Query: *[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
+export type JOURNAL_SITEMAP_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: SERVICES_SITEMAP_QUERY
+// Query: *[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {    "slug": slug.current,    _updatedAt  }
+export type SERVICES_SITEMAP_QUERY_RESULT = Array<{
+  slug: string;
+  _updatedAt: string;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "organization"]{\n  _id,\n  name,\n  type,\n  logoDark{\n    _type,\n    asset->{\n      _id,\n      url,\n    }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;
-    '*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': PROJECTS_SITEMAP_QUERY_RESULT;
-    '*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': JOURNAL_SITEMAP_QUERY_RESULT;
-    '*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': SERVICES_SITEMAP_QUERY_RESULT;
     '*[_type == "site" && _id == "site"][0]{\n  name,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
     '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    isBig\n  },\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
@@ -1366,5 +1384,12 @@ declare module "@sanity/client" {
     '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n    _type,\n    image{\n      _type,\n      asset->{\n        _id,\n        url\n      }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  pageContent{\n    content[]{\n      ...,\n      _type == "block" => {\n        ...,\n        markDefs[]{\n          ...,\n          _type == "internalLink" => {\n            ...,\n            "slug": reference->slug.current,\n            "type": reference->_type\n          }\n        }\n      },\n      _type == "imageObject" => {\n        ...,\n        image{\n          ...,\n          hotspot,\n          crop,\n          asset->{\n            _id,\n            url,\n            metadata{\n              dimensions{\n                width,\n                height,\n                aspectRatio\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
     '*[_type == "unGoal"] | order(name asc){\n  _id,\n  name,\n  logoNegative{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  },\n  logoPositive{\n    _type,\n    asset->{\n      _id,\n      url\n    }\n  }\n}': UN_GOALS_QUERY_RESULT;
     '*[_type == "customer"] | order(name asc){\n  _id,\n  name,\n  shortDescription,\n  mainImage{\n    hotspot,\n    crop,\n    asset->{\n      _id,\n      url\n    }\n  }\n}': CUSTOMERS_QUERY_RESULT;
+    '*[_type == "organization"]{\n  _id,\n  name,\n  type,\n  logoDark{\n    _type,\n    asset->{\n      _id,\n      url,\n    }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': PROJECT_SLUGS_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': JOURNAL_SLUGS_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': SERVICE_SLUGS_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': PROJECTS_SITEMAP_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': JOURNAL_SITEMAP_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {\n    "slug": slug.current,\n    _updatedAt\n  }': SERVICES_SITEMAP_QUERY_RESULT;
   }
 }

@@ -380,3 +380,49 @@ export const CUSTOMERS_QUERY =
     }
   }
 }`);
+
+export const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
+  _id,
+  name,
+  type,
+  logoDark{
+    _type,
+    asset->{
+      _id,
+      url,
+    }
+  },
+}`);
+
+export const PROJECT_SLUGS_QUERY = defineQuery(
+  `*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+);
+
+export const JOURNAL_SLUGS_QUERY = defineQuery(
+  `*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+);
+
+export const SERVICE_SLUGS_QUERY = defineQuery(
+  `*[_type == "service" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+);
+
+export const PROJECTS_SITEMAP_QUERY = defineQuery(
+  `*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {
+    "slug": slug.current,
+    _updatedAt
+  }`
+);
+
+export const JOURNAL_SITEMAP_QUERY = defineQuery(
+  `*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {
+    "slug": slug.current,
+    _updatedAt
+  }`
+);
+
+export const SERVICES_SITEMAP_QUERY = defineQuery(
+  `*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {
+    "slug": slug.current,
+    _updatedAt
+  }`
+);

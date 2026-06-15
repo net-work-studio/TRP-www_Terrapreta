@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  type DynamicFetchOptions,
+  getDynamicFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { JOURNAL_QUERY } from "@/sanity/lib/queries";
+import type { JOURNAL_QUERY_RESULT } from "@/sanity/types";
 
 export const metadata: Metadata = generateMetadataHelper({
   title: "Journal",
@@ -11,9 +18,7 @@ export const metadata: Metadata = generateMetadataHelper({
   url: "/journal",
 });
 
-export default async function Page() {
-  const { data: journal } = await sanityFetch({ query: JOURNAL_QUERY });
-
+function JournalContent({ journal }: { journal: JOURNAL_QUERY_RESULT | null }) {
   const validJournal =
     journal?.filter(
       (item): item is typeof item & { slug: { current: string } } =>
@@ -25,11 +30,41 @@ export default async function Page() {
     slug: item.slug.current,
   }));
 
-  /* FIXME links to pages are not working */
   return (
     <>
       <PageHeader position="left" title="Journal" />
       <PageGrid basePath="journal" items={transformedJournal} />
     </>
   );
+}
+
+async function CachedJournalPage({ perspective, stega }: DynamicFetchOptions) {
+  "use cache";
+
+  const { data: journal } = await sanityFetch({
+    query: JOURNAL_QUERY,
+    perspective,
+    stega,
+  });
+
+  return <JournalContent journal={journal} />;
+}
+
+async function DynamicJournalPage() {
+  const { perspective, stega } = await getDynamicFetchOptions();
+  return <CachedJournalPage perspective={perspective} stega={stega} />;
+}
+
+export default async function Page() {
+  const { isEnabled: isDraftMode } = await draftMode();
+
+  if (isDraftMode) {
+    return (
+      <Suspense fallback={<JournalContent journal={null} />}>
+        <DynamicJournalPage />
+      </Suspense>
+    );
+  }
+
+  return <CachedJournalPage perspective="published" stega={false} />;
 }
