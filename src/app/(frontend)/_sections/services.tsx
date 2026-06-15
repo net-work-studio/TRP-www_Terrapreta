@@ -1,5 +1,4 @@
 import { Plus } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
@@ -10,8 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import SanityImage from "@/components/ui/sanity-image";
 import TagTitle from "@/components/ui/tag-title";
-import { urlFor } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -24,13 +23,7 @@ import type { SERVICES_QUERY_RESULT } from "@/sanity/types";
 
 interface ServiceCardProps {
   name: string;
-  mainImage: {
-    image: {
-      asset: {
-        url: string;
-      };
-    };
-  };
+  mainImage: SERVICES_QUERY_RESULT[number]["mainImage"];
   shortDescription: string;
   slug: string;
 }
@@ -44,19 +37,12 @@ function ServiceCard({
   return (
     <div className="relative flex aspect-3/2 w-full grid-cols-3 items-end gap-5 rounded bg-gray-600 p-7.5">
       <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/20" />
-      <Image
+      <SanityImage
         alt={name}
-        blurDataURL={urlFor(mainImage.image)
-          .width(24)
-          .height(24)
-          .quality(5)
-          .auto("format")
-          .url()}
         className="z-0 h-full w-full rounded object-cover object-center"
         fill
-        placeholder="blur"
         quality={75}
-        src={urlFor(mainImage.image).quality(75).auto("format").url()}
+        source={mainImage}
       />
 
       <div className="z-10 flex items-baseline gap-5">
@@ -75,22 +61,12 @@ function ServiceCard({
                 <div className="space-y-10">
                   <AspectRatio ratio={3 / 2}>
                     <div className="absolute right-0 bottom-0 left-0 z-1 h-[45%] w-full bg-linear-to-t from-stone-950 to-transparent" />
-                    <Image
+                    <SanityImage
                       alt={name}
-                      blurDataURL={urlFor(mainImage.image)
-                        .width(24)
-                        .height(24)
-                        .quality(5)
-                        .auto("format")
-                        .url()}
                       className="h-full w-full rounded object-cover object-center"
                       fill
-                      placeholder="blur"
                       quality={75}
-                      src={urlFor(mainImage.image)
-                        .quality(75)
-                        .auto("format")
-                        .url()}
+                      source={mainImage}
                     />
                   </AspectRatio>
                   <DialogTitle className="px-5 text-left font-normal text-2xl text-stone-50 md:px-10 md:text-3xl">

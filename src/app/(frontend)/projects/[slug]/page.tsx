@@ -1,6 +1,5 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
@@ -13,6 +12,7 @@ import {
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
+import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
@@ -39,8 +39,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const BLUR_QUALITY = 5;
-const BLUR_SIZE = 24;
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
@@ -136,24 +134,14 @@ function ProjectPageContent({
         className="relative blur-none starting:blur-xl transition-all duration-400"
         ratio={ASPECT_RATIO}
       >
-        <Image
+        <SanityImage
           alt={projectItem.name || ""}
-          blurDataURL={urlFor(projectItem.mainImage.image)
-            .width(BLUR_SIZE)
-            .height(BLUR_SIZE)
-            .quality(BLUR_QUALITY)
-            .auto("format")
-            .url()}
           className="z-0 h-full w-full object-cover"
           fill
-          placeholder="blur"
           priority
           quality={IMAGE_QUALITY}
           sizes="100vw"
-          src={urlFor(projectItem.mainImage.image)
-            .quality(IMAGE_QUALITY)
-            .auto("format")
-            .url()}
+          source={projectItem.mainImage}
         />
       </AspectRatio>
 

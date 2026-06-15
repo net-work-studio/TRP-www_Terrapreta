@@ -1,5 +1,31 @@
 import { defineQuery } from "next-sanity";
 
+const IMAGE_ASSET_PROJECTION = /* groq */ `
+        _id,
+        url,
+        metadata{
+          lqip,
+          dimensions{
+            width,
+            height,
+            aspectRatio
+          }
+        }`;
+
+const IMAGE_FIELD_PROJECTION = /* groq */ `
+      _type,
+      hotspot,
+      crop,
+      asset->{
+${IMAGE_ASSET_PROJECTION}
+      }`;
+
+const IMAGE_OBJECT_PROJECTION = /* groq */ `
+    _type,
+    image{
+${IMAGE_FIELD_PROJECTION}
+    }`;
+
 const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
   _key,
   _type,
@@ -26,21 +52,7 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     altContent,
     caption,
     image{
-      _type,
-      hotspot,
-      crop,
-      asset->{
-        _id,
-        url,
-        metadata{
-          lqip,
-          dimensions{
-            width,
-            height,
-            aspectRatio
-          }
-        }
-      }
+${IMAGE_FIELD_PROJECTION}
     }
   }
 `;
@@ -80,14 +92,7 @@ export const PROJECTS_QUERY =
     )
   },
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   tag->{
     _id,
@@ -109,14 +114,7 @@ export const JOURNAL_QUERY =
     )
   },
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   publishingDate,
   tag->{
@@ -131,14 +129,7 @@ export const JOURNAL_ITEM_QUERY =
   name,
   slug,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   location,
   publishingDate,
@@ -186,14 +177,7 @@ export const SERVICES_QUERY =
   slug,
   shortDescription,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   }
 }`);
 
@@ -215,19 +199,11 @@ export const SERVICE_QUERY =
     _id,
     name,
     logoDark{
-      asset->{
-        _id,
-        _type,
-        url
-      }
+${IMAGE_FIELD_PROJECTION}
     }
   },
   mainImage{
-    image{
-      asset->{
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   seo{
     metaTitle,
@@ -258,14 +234,7 @@ export const PROJECT_ITEM_QUERY =
   name,
   slug,
   mainImage{
-    _type,
-    image{
-      _type,
-      asset->{
-        _id,
-        url
-      }
-    }
+${IMAGE_OBJECT_PROJECTION}
   },
   status,
   location,
@@ -314,18 +283,10 @@ export const UN_GOALS_QUERY =
   _id,
   name,
   logoNegative{
-    _type,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   },
   logoPositive{
-    _type,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   }
 }`);
 
@@ -335,12 +296,7 @@ export const CUSTOMERS_QUERY =
   name,
   shortDescription,
   mainImage{
-    hotspot,
-    crop,
-    asset->{
-      _id,
-      url
-    }
+${IMAGE_FIELD_PROJECTION}
   }
 }`);
 
@@ -349,11 +305,7 @@ export const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
   name,
   type,
   logoDark{
-    _type,
-    asset->{
-      _id,
-      url,
-    }
+${IMAGE_FIELD_PROJECTION}
   },
 }`);
 

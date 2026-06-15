@@ -1,6 +1,5 @@
 import { Ticker } from "motion-plus/react";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
+import SanityImage from "@/components/ui/sanity-image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -33,15 +32,13 @@ function LogosContent({
       )
       .map((logo) => (
         <div className="flex items-center justify-center px-16" key={logo._id}>
-          <Image
+          <SanityImage
             alt={logo.name}
-            blurDataURL={urlFor(logo.logoDark).quality(5).auto("format").url()}
             className="h-12 w-auto object-contain"
             height={48}
-            placeholder="blur"
             quality={75}
             sizes="20vw"
-            src={urlFor(logo.logoDark).quality(75).auto("format").url()}
+            source={logo.logoDark}
             width={120}
           />
         </div>

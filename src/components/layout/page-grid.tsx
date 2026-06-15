@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
+import SanityImage from "@/components/ui/sanity-image";
 import { cn } from "@/lib/utils";
-import { urlFor } from "@/sanity/lib/image";
 import type {
   JOURNAL_QUERY_RESULT,
   PROJECTS_QUERY_RESULT,
@@ -23,6 +22,9 @@ type GridItemProps = Partial<
       asset: {
         _id: string;
         url: string | null;
+        metadata?: {
+          lqip?: string | null;
+        } | null;
       } | null;
     } | null;
   } | null;
@@ -36,8 +38,6 @@ type GridItemInput = Omit<GridItemProps, "slug"> & {
   slug: Slug | null | string;
 };
 
-const BLUR_QUALITY = 5;
-const BLUR_SIZE = 24;
 const IMAGE_QUALITY = 75;
 const ASPECT_RATIO = 3 / 2;
 
@@ -74,23 +74,13 @@ function GridItem({
       href={slug}
     >
       <AspectRatio className="relative overflow-hidden" ratio={ASPECT_RATIO}>
-        <Image
+        <SanityImage
           alt={name || ""}
-          blurDataURL={urlFor(mainImage.image)
-            .width(BLUR_SIZE)
-            .height(BLUR_SIZE)
-            .quality(BLUR_QUALITY)
-            .auto("format")
-            .url()}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
           fill
-          placeholder="blur"
           quality={IMAGE_QUALITY}
           sizes={isFeatured ? "50vw" : "30vw"}
-          src={urlFor(mainImage.image)
-            .quality(IMAGE_QUALITY)
-            .auto("format")
-            .url()}
+          source={mainImage}
         />
       </AspectRatio>
       <hgroup className="space-y-2">
