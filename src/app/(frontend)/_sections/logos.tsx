@@ -1,26 +1,21 @@
 import { Ticker } from "motion-plus/react";
 import Image from "next/image";
-import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
+import { ORGANIZATIONS_QUERY } from "@/sanity/lib/queries";
 import type { ORGANIZATIONS_QUERY_RESULT } from "@/sanity/types";
 
-const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
-  _id,
-  name,
-  type,
-  logoDark{
-    _type,
-    asset->{
-      _id,
-      url,
-    }
-  },
-}`);
-
-export default async function Logos() {
-  const { data: logos } = await sanityFetch({ query: ORGANIZATIONS_QUERY });
-
+function LogosContent({
+  logos,
+}: {
+  logos: ORGANIZATIONS_QUERY_RESULT | null;
+}) {
   const logoItems =
     logos
       ?.filter(
@@ -62,14 +57,35 @@ export default async function Logos() {
         </p>
       </hgroup>
       <div className="relative w-full">
-        {/* Left fade */}
         <div className="absolute top-0 left-0 z-10 h-full w-24 bg-linear-to-r from-stone-900 to-transparent" />
-
-        {/* Right fade */}
         <div className="absolute top-0 right-0 z-10 h-full w-24 bg-linear-to-l from-stone-900 to-transparent" />
-
         <Ticker hoverFactor={0.8} items={logoItems} />
       </div>
     </div>
   );
+}
+
+async function CachedLogos({ perspective, stega }: SanityFetchOptions) {
+  "use cache";
+
+  const { data: logos } = await sanityFetch({
+    query: ORGANIZATIONS_QUERY,
+    perspective,
+    stega,
+  });
+
+  return <LogosContent logos={logos} />;
+}
+
+async function DynamicLogos() {
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedLogos {...fetchOptions} />;
+}
+
+export default async function Logos() {
+  return renderSanityCacheBoundary({
+    draft: <DynamicLogos />,
+    fallback: <LogosContent logos={null} />,
+    published: <CachedLogos {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

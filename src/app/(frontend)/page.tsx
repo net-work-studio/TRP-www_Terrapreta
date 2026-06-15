@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
+import { getSanityRequestState } from "@/sanity/lib/live";
 import Customers from "./_sections/customers";
 import HomeHero from "./_sections/home-hero";
 import Logos from "./_sections/logos";
@@ -19,7 +20,8 @@ import Services from "./_sections/services";
 import SoilRevolution from "./_sections/soil-revolution";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteSettings = await getSiteSettings();
+  const { fetchOptions, isDraftMode } = await getSanityRequestState();
+  const siteSettings = await getSiteSettings(fetchOptions);
 
   return generateMetadataHelper({
     title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",
@@ -33,6 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ogTitle: siteSettings?.seo?.ogTitle ?? undefined,
     ogDescription: siteSettings?.seo?.ogDescription ?? undefined,
     twitterCard: siteSettings?.seo?.twitterCard ?? undefined,
+    isDraftMode,
   });
 }
 

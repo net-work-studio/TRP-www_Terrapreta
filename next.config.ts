@@ -1,5 +1,6 @@
 import { createClient } from "@sanity/client";
 import type { NextConfig } from "next";
+import { sanity } from "next-sanity/live/cache-life";
 import { withPlausibleProxy } from "next-plausible";
 import { apiVersion } from "./src/sanity/env";
 
@@ -33,6 +34,8 @@ async function getSanityRedirects() {
 }
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
+  cacheLife: { default: sanity },
   images: {
     remotePatterns: [
       {
@@ -119,6 +122,5 @@ const nextConfig: NextConfig = {
 };
 
 export default withPlausibleProxy({
-  scriptName: "script.file-downloads.hash.outbound-links.js",
-  customDomain: "https://plausible.net-work.studio",
+  src: "https://plausible.net-work.studio/js/script.file-downloads.hash.outbound-links.js",
 })(nextConfig);

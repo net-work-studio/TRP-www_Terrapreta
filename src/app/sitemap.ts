@@ -1,36 +1,33 @@
 import type { MetadataRoute } from "next";
-import { defineQuery } from "next-sanity";
-import { client } from "@/sanity/lib/client";
-
-const PROJECTS_SITEMAP_QUERY = defineQuery(
-  `*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
-
-const JOURNAL_SITEMAP_QUERY = defineQuery(
-  `*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
-
-const SERVICES_SITEMAP_QUERY = defineQuery(
-  `*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
+import { sanityFetchMetadata } from "@/sanity/lib/live";
+import {
+  JOURNAL_SITEMAP_QUERY,
+  PROJECTS_SITEMAP_QUERY,
+  SERVICES_SITEMAP_QUERY,
+} from "@/sanity/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
 
-  const [projects, journal, services] = await Promise.all([
-    client.fetch(PROJECTS_SITEMAP_QUERY),
-    client.fetch(JOURNAL_SITEMAP_QUERY),
-    client.fetch(SERVICES_SITEMAP_QUERY),
-  ]);
+  // Perspective is intentionally hardcoded to "published": a sitemap must only
+  // expose live URLs, and resolving request state here would read
+  // cookies() and force the sitemap to render dynamically. Do not "fix" this to
+  // use a dynamic perspective.
+  const [{ data: projects }, { data: journal }, { data: services }] =
+    await Promise.all([
+      sanityFetchMetadata({
+        query: PROJECTS_SITEMAP_QUERY,
+        perspective: "published",
+      }),
+      sanityFetchMetadata({
+        query: JOURNAL_SITEMAP_QUERY,
+        perspective: "published",
+      }),
+      sanityFetchMetadata({
+        query: SERVICES_SITEMAP_QUERY,
+        perspective: "published",
+      }),
+    ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -78,7 +75,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const dynamicRoutes: MetadataRoute.Sitemap = [
-    ...projects
+    ...(projects ?? [])
       .filter((project) => project.slug)
       .map((project) => ({
         url: `${baseUrl}/projects/${project.slug}`,
@@ -86,7 +83,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
-    ...journal
+    ...(journal ?? [])
       .filter((post) => post.slug)
       .map((post) => ({
         url: `${baseUrl}/journal/${post.slug}`,
@@ -94,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "weekly" as const,
         priority: 0.8,
       })),
-    ...services
+    ...(services ?? [])
       .filter((service) => service.slug)
       .map((service) => ({
         url: `${baseUrl}/services/${service.slug}`,

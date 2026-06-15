@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
+  sanityFetch,
+} from "@/sanity/lib/live";
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
 import type { SERVICES_QUERY_RESULT } from "@/sanity/types";
 
@@ -109,11 +115,11 @@ function ServiceCard({
   );
 }
 
-export default async function Services() {
-  const { data: services } = await sanityFetch({
-    query: SERVICES_QUERY,
-  });
-
+function ServicesContent({
+  services,
+}: {
+  services: SERVICES_QUERY_RESULT | null;
+}) {
   return (
     <div className="container-site flex flex-col items-start justify-center gap-10">
       <hgroup className="flex w-full flex-col gap-1.5">
@@ -163,4 +169,29 @@ export default async function Services() {
       </div>
     </div>
   );
+}
+
+async function CachedServices({ perspective, stega }: SanityFetchOptions) {
+  "use cache";
+
+  const { data: services } = await sanityFetch({
+    query: SERVICES_QUERY,
+    perspective,
+    stega,
+  });
+
+  return <ServicesContent services={services} />;
+}
+
+async function DynamicServices() {
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedServices {...fetchOptions} />;
+}
+
+export default async function Services() {
+  return renderSanityCacheBoundary({
+    draft: <DynamicServices />,
+    fallback: <ServicesContent services={null} />,
+    published: <CachedServices {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
 }

@@ -1,6 +1,5 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
@@ -19,27 +18,52 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
-import { JOURNAL_ITEM_QUERY } from "@/sanity/lib/queries";
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
+  sanityFetch,
+  sanityFetchMetadata,
+  sanityFetchStaticParams,
+} from "@/sanity/lib/live";
+import {
+  JOURNAL_ITEM_QUERY,
+  JOURNAL_SLUGS_QUERY,
+} from "@/sanity/lib/queries";
+import type { JOURNAL_ITEM_QUERY_RESULT } from "@/sanity/types";
+
+type SlugPageProps = {
+  params: Promise<{ slug: string }>;
+};
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
 const BLUR_QUALITY = 5;
 const BLUR_SIZE = 24;
 
+export async function generateStaticParams() {
+  const { data } = await sanityFetchStaticParams({
+    query: JOURNAL_SLUGS_QUERY,
+  });
+  return data ?? [];
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const { isEnabled: isDraftMode } = await draftMode();
+}: SlugPageProps): Promise<Metadata> {
+  const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
+    params,
+    getSanityRequestState(),
+  ]);
+
   const [{ data: journalItem }, siteSettings] = await Promise.all([
-    sanityFetch({
+    sanityFetchMetadata({
       query: JOURNAL_ITEM_QUERY,
       params: { slug },
+      perspective: fetchOptions.perspective,
     }),
-    getSiteSettings(),
+    getSiteSettings(fetchOptions),
   ]);
 
   if (!journalItem?.name) {
@@ -74,18 +98,14 @@ export async function generateMetadata({
   });
 }
 
-export default async function Page({
-  params,
+function JournalPageContent({
+  journalItem,
+  slug,
 }: {
-  params: Promise<{ slug: string }>;
+  journalItem: NonNullable<JOURNAL_ITEM_QUERY_RESULT>;
+  slug: string;
 }) {
-  const { slug } = await params;
-  const { data: journalItem } = await sanityFetch({
-    query: JOURNAL_ITEM_QUERY,
-    params: { slug },
-  });
-
-  if (!journalItem?.mainImage?.image) {
+  if (!journalItem.mainImage?.image) {
     notFound();
   }
 
@@ -100,16 +120,16 @@ export default async function Page({
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="/journal">
-                {journalItem?.tag?.name}
+                {journalItem.tag?.name}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className="text-3xl tracking-tight md:text-4xl lg:text-5xl">
-          {journalItem?.name}
+          {journalItem.name}
         </h1>
         <p className="max-w-[70ch] text-pretty text-lg text-stone-400 md:text-xl lg:text-2xl">
-          {journalItem?.shortDescription}
+          {journalItem.shortDescription}
         </p>
       </hgroup>
 
@@ -140,10 +160,10 @@ export default async function Page({
 
       <div className="container-article space-y-4 py-20">
         <ul className="flex items-center gap-2 text-lg text-muted-foreground">
-          <li>{journalItem?.location}</li>
+          <li>{journalItem.location}</li>
           <Minus size={16} />
           <li>
-            {journalItem?.publishingDate
+            {journalItem.publishingDate
               ? new Date(journalItem.publishingDate).toLocaleDateString(
                   undefined,
                   {
@@ -155,7 +175,7 @@ export default async function Page({
               : ""}
           </li>
         </ul>
-        {journalItem?.contentObject && (
+        {journalItem.contentObject && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
               components={portableTextComponents}
@@ -169,22 +189,22 @@ export default async function Page({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": journalItem?.seo?.schemaType || "BlogPosting",
-          headline: journalItem?.name,
-          description: journalItem?.shortDescription,
-          ...(journalItem?.publishingDate && {
+          "@type": journalItem.seo?.schemaType || "BlogPosting",
+          headline: journalItem.name,
+          description: journalItem.shortDescription,
+          ...(journalItem.publishingDate && {
             datePublished: journalItem.publishingDate,
           }),
-          ...(journalItem?.mainImage?.image && {
+          ...(journalItem.mainImage?.image && {
             image: urlFor(journalItem.mainImage.image)
               .width(1200)
               .auto("format")
               .url(),
           }),
-          ...(journalItem?.location && {
+          ...(journalItem.location && {
             locationCreated: journalItem.location,
           }),
-          ...(journalItem?.seo?.customSchema?.knowsAbout && {
+          ...(journalItem.seo?.customSchema?.knowsAbout && {
             knowsAbout: journalItem.seo.customSchema.knowsAbout
               .split(",")
               .map((s: string) => s.trim()),
@@ -203,9 +223,80 @@ export default async function Page({
         items={[
           { name: "Home", url: "/" },
           { name: "Journal", url: "/journal" },
-          { name: journalItem?.name || "Article", url: `/journal/${slug}` },
+          { name: journalItem.name || "Article", url: `/journal/${slug}` },
         ]}
       />
     </article>
   );
+}
+
+async function CachedJournalPage({
+  slug,
+  perspective,
+  stega,
+}: { slug: string } & SanityFetchOptions) {
+  "use cache";
+
+  const { data: journalItem } = await sanityFetch({
+    query: JOURNAL_ITEM_QUERY,
+    params: { slug },
+    perspective,
+    stega,
+  });
+
+  if (!journalItem) {
+    notFound();
+  }
+
+  return <JournalPageContent journalItem={journalItem} slug={slug} />;
+}
+
+async function DynamicJournalPage({
+  params,
+}: SlugPageProps) {
+  const [{ slug }, { fetchOptions }] = await Promise.all([
+    params,
+    getSanityRequestState(),
+  ]);
+
+  return <CachedJournalPage slug={slug} {...fetchOptions} />;
+}
+
+function JournalPageFallback() {
+  return (
+    <article
+      aria-busy="true"
+      className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40"
+    >
+      <div className="flex w-full max-w-2xl flex-col items-center gap-5 pb-5">
+        <div className="h-4 w-40 animate-pulse rounded bg-stone-800" />
+        <div className="h-10 w-3/4 animate-pulse rounded bg-stone-800" />
+        <div className="h-6 w-full max-w-[70ch] animate-pulse rounded bg-stone-800" />
+      </div>
+      <AspectRatio className="w-full" ratio={ASPECT_RATIO}>
+        <div className="h-full w-full animate-pulse rounded bg-stone-800" />
+      </AspectRatio>
+      <div className="container-article w-full space-y-4 py-20">
+        <div className="h-5 w-48 animate-pulse rounded bg-stone-800" />
+        <div className="space-y-3 pt-4">
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-2/3 animate-pulse rounded bg-stone-800" />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export default async function Page({ params }: SlugPageProps) {
+  return renderSanityCacheBoundary({
+    draft: <DynamicJournalPage params={params} />,
+    fallback: <JournalPageFallback />,
+    published: async () => {
+      const { slug } = await params;
+      return (
+        <CachedJournalPage slug={slug} {...PUBLISHED_SANITY_FETCH_OPTIONS} />
+      );
+    },
+  });
 }
