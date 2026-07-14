@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { stegaClean } from "next-sanity";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
@@ -29,7 +30,9 @@ type GridItemProps = Partial<
     } | null;
   } | null;
   isFeatured?: boolean;
+  isInteractive?: boolean;
   publishingDate?: string | null;
+  publicationScope?: string | null;
   slug: string;
   tag?: { _id: string; name: string | null } | null;
 };
@@ -58,6 +61,7 @@ function GridItem({
   mainImage,
   tag,
   isFeatured,
+  isInteractive = true,
   slug,
   publishingDate,
 }: GridItemProps) {
@@ -65,18 +69,21 @@ function GridItem({
     return null;
   }
 
-  return (
-    <Link
-      className={cn(
-        "group h-fit space-y-2.5",
-        isFeatured ? "col-span-2" : "col-span-1"
-      )}
-      href={slug}
-    >
+  const className = cn(
+    "h-fit space-y-2.5",
+    isInteractive && "group",
+    isFeatured ? "col-span-2" : "col-span-1"
+  );
+  const content = (
+    <>
       <AspectRatio className="relative overflow-hidden" ratio={ASPECT_RATIO}>
         <SanityImage
           alt={name || ""}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
+          className={cn(
+            "h-full w-full object-cover",
+            isInteractive &&
+              "transition-transform duration-300 group-hover:scale-103"
+          )}
           fill
           quality={IMAGE_QUALITY}
           sizes={isFeatured ? "50vw" : "30vw"}
@@ -103,6 +110,16 @@ function GridItem({
         )}
         <h2 className="text-xl">{name}</h2>
       </hgroup>
+    </>
+  );
+
+  if (!isInteractive) {
+    return <article className={className}>{content}</article>;
+  }
+
+  return (
+    <Link className={className} href={slug}>
+      {content}
     </Link>
   );
 }
@@ -124,6 +141,10 @@ export default function PageGrid({
             key={item._id}
             {...item}
             isFeatured={item.gridDimension?.prominence === "featured"}
+            isInteractive={
+              Boolean(slugValue) &&
+              stegaClean(item.publicationScope) !== "overview"
+            }
             publishingDate={item.publishingDate ?? undefined}
             slug={slugValue ? `/${basePath}/${slugValue}` : "#"}
           />
