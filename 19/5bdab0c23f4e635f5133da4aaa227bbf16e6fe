@@ -1,0 +1,19 @@
+next.config.ts
+  s_5c77f1d61c3dae::t_39f719ac33edfb 30-31,33-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "195bdab0c23f4e635f5133da4aaa227bbf16e6fe",
+  "prompts": {},
+  "sessions": {
+    "s_5c77f1d61c3dae": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f610a-c55c-7950-aa9d-cbd26ab7ca26",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
