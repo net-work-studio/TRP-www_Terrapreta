@@ -1,0 +1,21 @@
+src/app/(frontend)/projects/page.tsx
+  s_972dd692a3e6e1::t_2224e84d984910 28
+src/lib/navigation.ts
+  s_972dd692a3e6e1::t_ecf3abfb54108b 13,17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "f0d48d981f04a09a868ed238c9f47b9d311c739d",
+  "prompts": {},
+  "sessions": {
+    "s_972dd692a3e6e1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f616f-43c1-79f0-93f9-a1490c6e8f87",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
