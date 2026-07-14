@@ -25,7 +25,7 @@ function ProjectsContent({
 }) {
   return (
     <>
-      <PageHeader description="Showing our latest projects" title="Projects" />
+      <PageHeader position="left" title="Projects" />
       <PageGrid basePath="projects" items={projects ?? []} />
     </>
   );

@@ -10,11 +10,11 @@ export type NavigationGroup = {
 };
 
 export const navigationData: NavigationItem[] = [
-  /*   {
+  {
     label: "Projects",
     href: "/projects",
     description: "Our work and initiatives",
-  }, */
+  },
   {
     label: "Services",
     href: "/services",
