@@ -1,0 +1,60 @@
+src/app/(frontend)/_sections/customers.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 69
+src/sanity/schemaTypes/helpers/requiredField.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 5-6,10
+  s_5c77f1d61c3dae::t_8f405f8e76b3d3 1-4,7-9
+src/sanity/schemaTypes/documents/pressDoc.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 3,15
+src/sanity/schemaTypes/objects/titleSlugObject.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 3,5-11,16,22,27-38
+src/components/ui/portable-text-components.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 32,46-47,52
+src/sanity/schemaTypes/documents/processDoc.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 3,15
+src/sanity/lib/image.ts
+  s_5c77f1d61c3dae::t_2aba912eabeb23 30-31,110
+  s_5c77f1d61c3dae::t_eaa0ced5a01275 74-79
+  s_5c77f1d61c3dae::t_f02de59c2ed0ba 43-57
+  s_5c77f1d61c3dae::t_5be9b2b80d5849 20-21,29,41-42
+  s_5c77f1d61c3dae::t_8f405f8e76b3d3 17-19,23-28,32,37,40
+  s_5c77f1d61c3dae::t_840db7e56f5c19 5-8,34-36
+src/sanity/extract.json
+  s_5c77f1d61c3dae::t_01b8e9dc36b13a 776,2171,2471-2486,2820
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 20,111,182
+src/sanity/lib/queries.ts
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 29-35,95,113
+src/sanity/types.ts
+  s_5c77f1d61c3dae::t_01b8e9dc36b13a 159,400,451-452,513,797-799,820-823,929,1084,1271,1503-1504
+src/components/layout/page-grid.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 124
+src/sanity/schemaTypes/documents/projectDoc.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 76-84
+src/components/ui/portable-image.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 79
+src/sanity/schemaTypes/helpers/richTextBlock.ts
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 22
+src/components/ui/sanity-image.tsx
+  s_5c77f1d61c3dae::t_a272bb1f5e4b9a 14
+src/sanity/schemaTypes/documents/pageDoc.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 4,12-14
+migrations/backfill-grid-prominence/index.ts
+  s_5c77f1d61c3dae::t_840db7e56f5c19 1-24,26-31
+  s_5c77f1d61c3dae::t_f02de59c2ed0ba 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "0220ccb777767c079e63dfe52670b7934284d87b",
+  "prompts": {},
+  "sessions": {
+    "s_5c77f1d61c3dae": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f610a-c55c-7950-aa9d-cbd26ab7ca26",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
