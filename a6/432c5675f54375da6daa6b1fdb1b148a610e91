@@ -1,0 +1,23 @@
+package.json
+  s_a01715da32d39e::t_0347f03c8e0e38 5,32
+netlify.toml
+  s_a01715da32d39e::t_0347f03c8e0e38 18
+bun.lock
+  s_a01715da32d39e::t_bf6b5389918057 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "a6432c5675f54375da6daa6b1fdb1b148a610e91",
+  "prompts": {},
+  "sessions": {
+    "s_a01715da32d39e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f611b-9001-7c11-a618-b24d00eafe76",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
