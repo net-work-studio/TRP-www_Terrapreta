@@ -1,11 +1,12 @@
 import Link from "next/link";
-import type { PortableTextComponents } from "next-sanity";
+import { stegaClean, type PortableTextComponents } from "next-sanity";
 import { PortableImage } from "./portable-image";
 
 /**
  * Map document types to their URL paths
  */
 function getPathForType(type: string): string {
+  const cleanType = stegaClean(type);
   const pathMap: Record<string, string> = {
     journal: "/journal",
     project: "/projects",
@@ -15,7 +16,7 @@ function getPathForType(type: string): string {
     about: "/about",
     page: "",
   };
-  return pathMap[type] || "";
+  return pathMap[cleanType] || "";
 }
 
 /**
@@ -28,8 +29,8 @@ export const portableTextComponents: PortableTextComponents = {
   },
   marks: {
     link: ({ children, value }) => {
-      const href = value?.href || "#";
-      const blank = value?.blank === "true";
+      const href = stegaClean(value?.href) || "#";
+      const blank = stegaClean(value?.blank) === "true";
       return (
         <a
           className="underline underline-offset-4 transition-colors hover:text-stone-400"
@@ -42,7 +43,8 @@ export const portableTextComponents: PortableTextComponents = {
       );
     },
     internalLink: ({ children, value }) => {
-      const { slug, type } = value || {};
+      const slug = stegaClean(value?.slug);
+      const type = stegaClean(value?.type);
       if (!(slug && type)) {
         return <span>{children}</span>;
       }

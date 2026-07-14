@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
@@ -7,7 +6,9 @@ import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Button } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
+import SanityImage from "@/components/ui/sanity-image";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -24,6 +25,10 @@ import {
   SERVICE_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 import type { SERVICE_QUERY_RESULT } from "@/sanity/types";
+
+type ServiceClient = NonNullable<
+  NonNullable<SERVICE_QUERY_RESULT>["clients"]
+>[number];
 
 type SlugPageProps = {
   params: Promise<{ slug: string }>;
@@ -87,6 +92,9 @@ function ServicePageContent({
   service: NonNullable<SERVICE_QUERY_RESULT>;
   slug: string;
 }) {
+  const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";
+  const knowsAbout = cleanCommaList(service.seo?.customSchema?.knowsAbout);
+
   return (
     <>
       <div className="flex w-full flex-col items-center justify-center gap-20 bg-stone-800 py-40">
@@ -104,22 +112,12 @@ function ServicePageContent({
           </div>
           <div className="container-site relative aspect-3/2 rounded-md">
             {service.mainImage?.image && (
-              <Image
+              <SanityImage
                 alt={service.name || ""}
-                blurDataURL={urlFor(service.mainImage.image)
-                  .width(24)
-                  .height(24)
-                  .quality(5)
-                  .auto("format")
-                  .url()}
                 className="z-0 aspect-4/5 h-full w-full rounded-md object-cover object-center"
                 fill
-                placeholder="blur"
                 quality={75}
-                src={urlFor(service.mainImage.image)
-                  .quality(75)
-                  .auto("format")
-                  .url()}
+                source={service.mainImage}
               />
             )}
           </div>
@@ -133,62 +131,29 @@ function ServicePageContent({
             <div className="flex flex-row items-center justify-center gap-5">
               {service.clients
                 ?.filter(
-                  (client: {
-                    _id: string;
-                    name: string | null;
-                    logoDark: {
-                      asset: {
-                        _id: string;
-                        _type: "sanity.imageAsset";
-                        url: string | null;
-                      } | null;
-                    } | null;
-                  }): client is {
-                    _id: string;
+                  (
+                    client: ServiceClient
+                  ): client is ServiceClient & {
                     name: string;
                     logoDark: {
                       asset: {
                         _id: string;
-                        _type: "sanity.imageAsset";
                         url: string;
                       };
                     };
                   } => Boolean(client.name && client.logoDark?.asset?._id)
                 )
-                .map(
-                  (client: {
-                    _id: string;
-                    name: string;
-                    logoDark: {
-                      asset: {
-                        _id: string;
-                        _type: "sanity.imageAsset";
-                        url: string;
-                      };
-                    };
-                  }) => {
-                    const logoAsset = client.logoDark.asset;
-                    return (
-                      <div key={client._id}>
-                        <Image
-                          alt={client.name}
-                          blurDataURL={urlFor(logoAsset)
-                            .width(24)
-                            .height(24)
-                            .quality(5)
-                            .auto("format")
-                            .url()}
-                          height={100}
-                          src={urlFor(logoAsset)
-                            .quality(75)
-                            .auto("format")
-                            .url()}
-                          width={100}
-                        />
-                      </div>
-                    );
-                  }
-                )}
+                .map((client) => (
+                  <div key={client._id}>
+                    <SanityImage
+                      alt={client.name}
+                      height={100}
+                      quality={75}
+                      source={client.logoDark}
+                      width={100}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
         )}
@@ -235,18 +200,14 @@ function ServicePageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": service.seo?.schemaType || "Service",
+          "@type": schemaType,
           name: service.name,
           description: service.shortDescription,
           provider: {
             "@type": "Organization",
             name: "Terrapreta",
             url: "https://terrapreta.it",
-            ...(service.seo?.customSchema?.knowsAbout && {
-              knowsAbout: service.seo.customSchema.knowsAbout
-                .split(",")
-                .map((s: string) => s.trim()),
-            }),
+            ...(knowsAbout && { knowsAbout }),
           },
           serviceType: "Environmental Consulting",
           areaServed: {

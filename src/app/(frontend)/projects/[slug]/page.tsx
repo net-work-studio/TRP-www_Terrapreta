@@ -1,6 +1,5 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
@@ -13,10 +12,12 @@ import {
   BreadcrumbList,
 } from "@/components/ui/breadcrumb";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
+import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { urlFor } from "@/sanity/lib/image";
+import { getSanityImageUrl } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -38,8 +39,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const BLUR_QUALITY = 5;
-const BLUR_SIZE = 24;
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
@@ -107,6 +106,12 @@ function ProjectPageContent({
     notFound();
   }
 
+  const schemaType = cleanOptionalString(projectItem.seo?.schemaType) || "Project";
+  const statusLabel = projectItem.status
+    ? cleanOptionalString(projectItem.status)?.replaceAll("-", " ")
+    : undefined;
+  const knowsAbout = cleanCommaList(projectItem.seo?.customSchema?.knowsAbout);
+
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
       <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
@@ -129,24 +134,14 @@ function ProjectPageContent({
         className="relative blur-none starting:blur-xl transition-all duration-400"
         ratio={ASPECT_RATIO}
       >
-        <Image
+        <SanityImage
           alt={projectItem.name || ""}
-          blurDataURL={urlFor(projectItem.mainImage.image)
-            .width(BLUR_SIZE)
-            .height(BLUR_SIZE)
-            .quality(BLUR_QUALITY)
-            .auto("format")
-            .url()}
           className="z-0 h-full w-full object-cover"
           fill
-          placeholder="blur"
           priority
           quality={IMAGE_QUALITY}
           sizes="100vw"
-          src={urlFor(projectItem.mainImage.image)
-            .quality(IMAGE_QUALITY)
-            .auto("format")
-            .url()}
+          source={projectItem.mainImage}
         />
       </AspectRatio>
 
@@ -160,7 +155,7 @@ function ProjectPageContent({
           )}
           {projectItem.status && (
             <li className="capitalize">
-              {projectItem.status.replace("-", " ")}
+              {statusLabel}
             </li>
           )}
         </ul>
@@ -178,22 +173,15 @@ function ProjectPageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": projectItem.seo?.schemaType || "Project",
+          "@type": schemaType,
           name: projectItem.name,
           description: projectItem.shortDescription,
           ...(projectItem.location && { location: projectItem.location }),
           ...(projectItem.status && { status: projectItem.status }),
           ...(projectItem.mainImage?.image && {
-            image: urlFor(projectItem.mainImage.image)
-              .width(1200)
-              .auto("format")
-              .url(),
+            image: getSanityImageUrl(projectItem.mainImage, { width: 1200 }),
           }),
-          ...(projectItem.seo?.customSchema?.knowsAbout && {
-            knowsAbout: projectItem.seo.customSchema.knowsAbout
-              .split(",")
-              .map((s: string) => s.trim()),
-          }),
+          ...(knowsAbout && { knowsAbout }),
         }}
       />
       <BreadcrumbJsonLd

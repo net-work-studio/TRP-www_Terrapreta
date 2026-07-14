@@ -1,4 +1,4 @@
-import { defineArrayMember } from "sanity";
+import { defineArrayMember, defineField } from "sanity";
 
 /**
  * Rich text block configuration with internal link support.
@@ -14,16 +14,20 @@ export const richTextBlock = defineArrayMember({
         type: "object",
         title: "External Link",
         fields: [
-          {
+          defineField({
             name: "href",
             type: "url",
             title: "URL",
-            validation: (rule) =>
-              rule.uri({
-                scheme: ["http", "https", "mailto", "tel"],
-              }),
-          },
-          {
+            validation: (rule) => [
+              rule.required().error("Add the URL this link points to."),
+              rule
+                .uri({
+                  scheme: ["http", "https", "mailto", "tel"],
+                })
+                .error("URL must start with http, https, mailto, or tel."),
+            ],
+          }),
+          defineField({
             name: "blank",
             type: "string",
             title: "Open in new tab",
@@ -35,7 +39,7 @@ export const richTextBlock = defineArrayMember({
               layout: "radio",
             },
             initialValue: "true",
-          },
+          }),
         ],
       },
       {
@@ -43,7 +47,7 @@ export const richTextBlock = defineArrayMember({
         type: "object",
         title: "Internal Link",
         fields: [
-          {
+          defineField({
             name: "reference",
             type: "reference",
             title: "Reference",
@@ -56,7 +60,12 @@ export const richTextBlock = defineArrayMember({
               { type: "press" },
               { type: "about" },
             ],
-          },
+            validation: (rule) => [
+              rule
+                .required()
+                .error("Choose the document this link points to."),
+            ],
+          }),
         ],
       },
     ],

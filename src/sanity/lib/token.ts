@@ -1,7 +1,14 @@
 import "server-only";
 
-export const token = process.env.SANITY_API_READ_TOKEN;
+function getRequiredToken(name: string): string {
+  const value = process.env[name];
 
-if (!token) {
-  throw new Error("Missing SANITY_API_READ_TOKEN");
+  if (!value) {
+    throw new Error(`Missing ${name}`);
+  }
+
+  return value;
 }
+
+export const serverToken = getRequiredToken("SANITY_API_READ_TOKEN");
+export const browserToken = process.env.SANITY_API_BROWSER_TOKEN;

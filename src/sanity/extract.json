@@ -610,12 +610,22 @@
             "value": "gridDimensionObject"
           }
         },
-        "isBig": {
+        "prominence": {
           "type": "objectAttribute",
           "value": {
-            "type": "boolean"
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "standard"
+              },
+              {
+                "type": "string",
+                "value": "featured"
+              }
+            ]
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -763,7 +773,7 @@
                                   "value": {
                                     "type": "string"
                                   },
-                                  "optional": true
+                                  "optional": false
                                 },
                                 "blank": {
                                   "type": "objectAttribute",
@@ -840,7 +850,7 @@
                                       }
                                     ]
                                   },
-                                  "optional": true
+                                  "optional": false
                                 },
                                 "_type": {
                                   "type": "objectAttribute",
@@ -2158,7 +2168,7 @@
                                 "value": {
                                   "type": "string"
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "blank": {
                                 "type": "objectAttribute",
@@ -2235,7 +2245,7 @@
                                     }
                                   ]
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "_type": {
                                 "type": "objectAttribute",
@@ -2455,6 +2465,22 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "gridDimension": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "gridDimensionObject"
+        },
+        "optional": true
+      },
+      "tag": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "tag.reference"
         },
         "optional": true
       },
@@ -2791,7 +2817,7 @@
                                 "value": {
                                   "type": "string"
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "blank": {
                                 "type": "objectAttribute",
@@ -2868,7 +2894,7 @@
                                     }
                                   ]
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "_type": {
                                 "type": "objectAttribute",

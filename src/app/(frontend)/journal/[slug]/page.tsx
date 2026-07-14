@@ -1,6 +1,5 @@
 import { Minus } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
@@ -14,8 +13,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
+import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { urlFor } from "@/sanity/lib/image";
 import {
@@ -39,8 +40,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const BLUR_QUALITY = 5;
-const BLUR_SIZE = 24;
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
@@ -109,6 +108,10 @@ function JournalPageContent({
     notFound();
   }
 
+  const schemaType =
+    cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
+  const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
+
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
       <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
@@ -137,24 +140,14 @@ function JournalPageContent({
         className="relative blur-none starting:blur-xl transition-all duration-400"
         ratio={ASPECT_RATIO}
       >
-        <Image
+        <SanityImage
           alt={journalItem.name || ""}
-          blurDataURL={urlFor(journalItem.mainImage.image)
-            .width(BLUR_SIZE)
-            .height(BLUR_SIZE)
-            .quality(BLUR_QUALITY)
-            .auto("format")
-            .url()}
           className="z-0 h-full w-full object-cover"
           fill
-          placeholder="blur"
           priority
           quality={IMAGE_QUALITY}
           sizes="100vw"
-          src={urlFor(journalItem.mainImage.image)
-            .quality(IMAGE_QUALITY)
-            .auto("format")
-            .url()}
+          source={journalItem.mainImage}
         />
       </AspectRatio>
 
@@ -189,7 +182,7 @@ function JournalPageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": journalItem.seo?.schemaType || "BlogPosting",
+          "@type": schemaType,
           headline: journalItem.name,
           description: journalItem.shortDescription,
           ...(journalItem.publishingDate && {
@@ -204,11 +197,7 @@ function JournalPageContent({
           ...(journalItem.location && {
             locationCreated: journalItem.location,
           }),
-          ...(journalItem.seo?.customSchema?.knowsAbout && {
-            knowsAbout: journalItem.seo.customSchema.knowsAbout
-              .split(",")
-              .map((s: string) => s.trim()),
-          }),
+          ...(knowsAbout && { knowsAbout }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",

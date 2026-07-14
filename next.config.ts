@@ -3,6 +3,19 @@ import type { NextConfig } from "next";
 import { sanity } from "next-sanity/live/cache-life";
 import { withPlausibleProxy } from "next-plausible";
 import { apiVersion } from "./src/sanity/env";
+import { REDIRECTS_QUERY } from "./src/sanity/lib/queries";
+
+type SanityRedirect = {
+  destination: string | null;
+  permanent: string | null;
+  source: string | null;
+};
+
+type NextRedirect = {
+  destination: string;
+  permanent: boolean;
+  source: string;
+};
 
 // Sanity client for fetching redirects at build time
 const sanityClient = createClient({
@@ -13,21 +26,22 @@ const sanityClient = createClient({
 });
 
 // Fetch CMS-managed redirects from Sanity
-async function getSanityRedirects() {
+async function getSanityRedirects(): Promise<NextRedirect[]> {
   try {
-    const redirects = await sanityClient.fetch<
-      Array<{ source: string; destination: string; permanent: string }>
-    >(
-      `*[_type == "redirect" && isActive == "active"] {
-        source,
+    const redirects = await sanityClient.fetch<SanityRedirect[]>(REDIRECTS_QUERY);
+
+    return (redirects ?? [])
+      .filter(
+        (redirect): redirect is SanityRedirect & {
+          destination: string;
+          source: string;
+        } => Boolean(redirect.source && redirect.destination)
+      )
+      .map(({ destination, permanent, source }) => ({
         destination,
-        permanent
-      }`
-    );
-    return (redirects || []).map((r) => ({
-      ...r,
-      permanent: r.permanent === "permanent",
-    }));
+        permanent: permanent === "permanent",
+        source,
+      }));
   } catch {
     return [];
   }

@@ -1,3 +1,4 @@
+import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 import { richTextBlock } from "../helpers/richTextBlock";
@@ -6,6 +7,7 @@ export const journalDoc = defineType({
   type: "document",
   name: "journal",
   title: "Journal",
+  icon: DocumentTextIcon,
   groups,
   fields: [
     defineField({
@@ -13,14 +15,18 @@ export const journalDoc = defineType({
       name: "name",
       title: "Title",
       group: "meta",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A journal entry needs a title before publishing."),
+      ],
     }),
     defineField({
       type: "slug",
       name: "slug",
       title: "Slug",
       group: "meta",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A slug is required to generate the journal URL."),
+      ],
       options: {
         source: "name",
       },
@@ -37,7 +43,9 @@ export const journalDoc = defineType({
       title: "Tag",
       group: "content",
       to: [{ type: "tag" }],
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Choose a tag for this journal entry."),
+      ],
     }),
     defineField({
       type: "string",
@@ -46,35 +54,48 @@ export const journalDoc = defineType({
       group: "content",
       description:
         "Use always a city and country in English, never a state or region. (Example: Milan, Italy)",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Add the city and country for this journal entry."),
+      ],
     }),
     defineField({
       type: "date",
       name: "publishingDate",
       title: "Publishing Date",
       group: "content",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Choose a publishing date."),
+      ],
     }),
     defineField({
       type: "imageObject",
       name: "mainImage",
       title: "Main Image",
       group: "content",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("A main image is required for journal pages."),
+      ],
     }),
     defineField({
       type: "text",
       name: "shortDescription",
       title: "Short Description",
       group: "content",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Add a short summary for journal cards and SEO."),
+        rule
+          .max(220)
+          .warning("Keep journal summaries under 220 characters for cards and SEO."),
+      ],
     }),
     defineField({
       type: "array",
       name: "contentObject",
       title: "Content",
       group: "content",
-      validation: (e) => e.required(),
+      validation: (rule) => [
+        rule.required().error("Add content before publishing this journal entry."),
+      ],
       of: [richTextBlock, defineArrayMember({ type: "imageObject" })],
     }),
     defineField({
