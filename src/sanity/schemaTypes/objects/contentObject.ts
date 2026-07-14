@@ -1,4 +1,4 @@
-import { BlockContentIcon } from "@sanity/icons";
+import { BlockContentIcon } from "@sanity/icons/BlockContent";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { richTextBlock } from "../helpers/richTextBlock";
 

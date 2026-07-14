@@ -1,4 +1,6 @@
-import { AsteriskIcon, EarthGlobeIcon, SearchIcon } from "@sanity/icons";
+import { AsteriskIcon } from "@sanity/icons/Asterisk";
+import { EarthGlobeIcon } from "@sanity/icons/EarthGlobe";
+import { SearchIcon } from "@sanity/icons/Search";
 
 export const groups = [
   {

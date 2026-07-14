@@ -1,4 +1,4 @@
-import { SearchIcon } from "@sanity/icons";
+import { SearchIcon } from "@sanity/icons/Search";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const seoObject = defineType({

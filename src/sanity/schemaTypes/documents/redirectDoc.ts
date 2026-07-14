@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@sanity/icons";
+import { ArrowRightIcon } from "@sanity/icons/ArrowRight";
 import { defineField, defineType } from "sanity";
 
 export const redirectDoc = defineType({
