@@ -1,4 +1,4 @@
-import { CogIcon } from "@sanity/icons";
+import { CogIcon } from "@sanity/icons/Cog";
 import { defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
