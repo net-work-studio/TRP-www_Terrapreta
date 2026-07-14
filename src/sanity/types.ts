@@ -156,7 +156,7 @@ export type ContentObject = {
         listItem?: "bullet" | "number";
         markDefs?: Array<
           | {
-              href?: string;
+              href: string;
               blank?: "true" | "false";
               _type: "link";
               _key: string;
@@ -397,7 +397,7 @@ export type Journal = {
         listItem?: "bullet" | "number";
         markDefs?: Array<
           | {
-              href?: string;
+              href: string;
               blank?: "true" | "false";
               _type: "link";
               _key: string;
@@ -448,6 +448,8 @@ export type Project = {
   areaRestored?: string;
   interventionType?: string;
   shortDescription?: string;
+  gridDimension?: GridDimensionObject;
+  tag?: TagReference;
   pageContent?: ContentObject;
   relatedService?: ServiceReference;
   relatedResearch?: ResearchReference;
@@ -508,7 +510,7 @@ export type Service = {
         listItem?: "bullet" | "number";
         markDefs?: Array<
           | {
-              href?: string;
+              href: string;
               blank?: "true" | "false";
               _type: "link";
               _key: string;
@@ -792,7 +794,9 @@ export type PROJECTS_QUERY_RESULT = Array<{
   name: string;
   slug: Slug;
   shortDescription: string | null;
-  gridDimension: null;
+  gridDimension: {
+    prominence: "featured" | "standard";
+  } | null;
   mainImage: {
     _type: "imageObject";
     image: {
@@ -813,7 +817,10 @@ export type PROJECTS_QUERY_RESULT = Array<{
       } | null;
     };
   };
-  tag: null;
+  tag: {
+    _id: string;
+    name: string;
+  } | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
@@ -919,7 +926,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
           | {
               _key: string;
               _type: "link";
-              href: string | null;
+              href: string;
               blank: "false" | "true" | null;
             }
         > | null;
@@ -1074,7 +1081,7 @@ export type SERVICE_QUERY_RESULT = {
           | {
               _key: string;
               _type: "link";
-              href: string | null;
+              href: string;
               blank: "false" | "true" | null;
             }
         > | null;
@@ -1261,7 +1268,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
             | {
                 _key: string;
                 _type: "link";
-                href: string | null;
+                href: string;
                 blank: "false" | "true" | null;
               }
           > | null;
@@ -1493,8 +1500,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "site" && _id == "site"][0]{\n  name,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
-    '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
-    '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
     '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "imageObject" => {\n    altContent,\n    caption,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
     '*[_type == "tag"] | order(name asc){\n  _id,\n  name,\n  slug\n}': TAGS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n}': SERVICES_QUERY_RESULT;

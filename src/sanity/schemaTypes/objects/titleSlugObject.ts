@@ -1,32 +1,41 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { requiredField } from "../helpers/requiredField";
+
+type TitleSlugFieldMessages = {
+  name: string;
+  slug: string;
+};
+
+export function createTitleSlugFields({ name, slug }: TitleSlugFieldMessages) {
+  return [
+    defineField({
+      type: "string",
+      name: "name",
+      title: "Title",
+      validation: requiredField(name),
+    }),
+    defineField({
+      type: "slug",
+      name: "slug",
+      title: "Slug",
+      validation: requiredField(slug),
+      options: {
+        source: "name",
+      },
+    }),
+  ];
+}
 
 export const titleSlugObject = defineType({
   type: "object",
   name: "titleSlugObject",
   title: "Title + Slug",
   icon: DocumentTextIcon,
-  fields: [
-    defineField({
-      type: "string",
-      name: "name",
-      title: "Title",
-      validation: (rule) => [
-        rule.required().error("Add a title before publishing."),
-      ],
-    }),
-    defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
-      validation: (rule) => [
-        rule.required().error("A slug is required to generate a URL."),
-      ],
-      options: {
-        source: "name",
-      },
-    }),
-  ],
+  fields: createTitleSlugFields({
+    name: "Add a title before publishing.",
+    slug: "A slug is required to generate a URL.",
+  }),
   preview: {
     select: {
       slug: "slug.current",

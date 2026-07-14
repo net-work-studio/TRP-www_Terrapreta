@@ -1,6 +1,7 @@
 import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import modules from "../fragments/modules";
+import { createTitleSlugFields } from "../objects/titleSlugObject";
 
 export const pageDoc = defineType({
   type: "document",
@@ -8,24 +9,9 @@ export const pageDoc = defineType({
   title: "Page",
   icon: DocumentIcon,
   fields: [
-    defineField({
-      type: "string",
-      name: "name",
-      title: "Title",
-      validation: (rule) => [
-        rule.required().error("A page needs a title before publishing."),
-      ],
-    }),
-    defineField({
-      type: "slug",
-      name: "slug",
-      title: "Slug",
-      validation: (rule) => [
-        rule.required().error("A slug is required to generate the page URL."),
-      ],
-      options: {
-        source: "name",
-      },
+    ...createTitleSlugFields({
+      name: "A page needs a title before publishing.",
+      slug: "A slug is required to generate the page URL.",
     }),
     defineField({
       type: "imageObject",

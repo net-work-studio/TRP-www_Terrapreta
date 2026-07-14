@@ -19,6 +19,7 @@ export const richTextBlock = defineArrayMember({
             type: "url",
             title: "URL",
             validation: (rule) => [
+              rule.required().error("Add the URL this link points to."),
               rule
                 .uri({
                   scheme: ["http", "https", "mailto", "tel"],

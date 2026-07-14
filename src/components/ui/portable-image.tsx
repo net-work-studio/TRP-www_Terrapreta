@@ -76,6 +76,7 @@ export function PortableImage({ value }: PortableImageProps) {
     <figure className="my-8">
       <AspectRatio className="relative" ratio={targetAspectRatio}>
         <SanityImage
+          alt={value.caption || "Body content image"}
           className="z-0 h-full w-full object-cover"
           fill
           quality={IMAGE_QUALITY}

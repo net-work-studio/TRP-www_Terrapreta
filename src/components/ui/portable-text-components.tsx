@@ -29,7 +29,7 @@ export const portableTextComponents: PortableTextComponents = {
   },
   marks: {
     link: ({ children, value }) => {
-      const href = value?.href ? stegaClean(value.href) : "#";
+      const href = stegaClean(value?.href) || "#";
       const blank = stegaClean(value?.blank) === "true";
       return (
         <a
@@ -43,13 +43,13 @@ export const portableTextComponents: PortableTextComponents = {
       );
     },
     internalLink: ({ children, value }) => {
-      const { slug, type } = value || {};
+      const slug = stegaClean(value?.slug);
+      const type = stegaClean(value?.type);
       if (!(slug && type)) {
         return <span>{children}</span>;
       }
       const basePath = getPathForType(type);
-      const cleanSlug = stegaClean(slug);
-      const href = basePath ? `${basePath}/${cleanSlug}` : `/${cleanSlug}`;
+      const href = basePath ? `${basePath}/${slug}` : `/${slug}`;
       return (
         <Link
           className="underline underline-offset-4 transition-colors hover:text-stone-400"

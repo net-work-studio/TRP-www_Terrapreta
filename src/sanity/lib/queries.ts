@@ -26,6 +26,13 @@ const IMAGE_OBJECT_PROJECTION = /* groq */ `
 ${IMAGE_FIELD_PROJECTION}
     }`;
 
+const PROMINENCE_PROJECTION = /* groq */ `
+    "prominence": select(
+      prominence == "featured" => "featured",
+      isBig == true => "featured",
+      "standard"
+    )`;
+
 const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
   _key,
   _type,
@@ -85,11 +92,7 @@ export const PROJECTS_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    "prominence": select(
-      prominence == "featured" => "featured",
-      isBig == true => "featured",
-      "standard"
-    )
+${PROMINENCE_PROJECTION}
   },
   mainImage{
 ${IMAGE_OBJECT_PROJECTION}
@@ -107,11 +110,7 @@ export const JOURNAL_QUERY =
   slug,
   shortDescription,
   gridDimension{
-    "prominence": select(
-      prominence == "featured" => "featured",
-      isBig == true => "featured",
-      "standard"
-    )
+${PROMINENCE_PROJECTION}
   },
   mainImage{
 ${IMAGE_OBJECT_PROJECTION}

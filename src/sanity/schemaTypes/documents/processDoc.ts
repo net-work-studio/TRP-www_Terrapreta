@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { requiredField } from "../helpers/requiredField";
 
 export const processDoc = defineType({
   type: "document",
@@ -11,9 +12,7 @@ export const processDoc = defineType({
       type: "string",
       name: "name",
       title: "Title",
-      validation: (rule) => [
-        rule.required().error("A process needs a title."),
-      ],
+      validation: requiredField("A process needs a title."),
     }),
   ],
   preview: {

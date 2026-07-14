@@ -121,9 +121,9 @@ export default function PageGrid({
 
         return (
           <GridItem
+            key={item._id}
             {...item}
             isFeatured={item.gridDimension?.prominence === "featured"}
-            key={item._id}
             publishingDate={item.publishingDate ?? undefined}
             slug={slugValue ? `/${basePath}/${slugValue}` : "#"}
           />

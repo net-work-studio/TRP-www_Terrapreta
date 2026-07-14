@@ -773,7 +773,7 @@
                                   "value": {
                                     "type": "string"
                                   },
-                                  "optional": true
+                                  "optional": false
                                 },
                                 "blank": {
                                   "type": "objectAttribute",
@@ -2168,7 +2168,7 @@
                                 "value": {
                                   "type": "string"
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "blank": {
                                 "type": "objectAttribute",
@@ -2465,6 +2465,22 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "gridDimension": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "gridDimensionObject"
+        },
+        "optional": true
+      },
+      "tag": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "tag.reference"
         },
         "optional": true
       },
@@ -2801,7 +2817,7 @@
                                 "value": {
                                   "type": "string"
                                 },
-                                "optional": true
+                                "optional": false
                               },
                               "blank": {
                                 "type": "objectAttribute",

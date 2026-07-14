@@ -11,7 +11,7 @@ import {
 
 type SanityImageProps = {
   source: SanityImageSourceInput;
-} & Partial<ComponentProps<typeof Image>>;
+} & Partial<Omit<ComponentProps<typeof Image>, "src">>;
 
 export default function SanityImage({
   source,

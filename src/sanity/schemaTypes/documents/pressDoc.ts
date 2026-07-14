@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { requiredField } from "../helpers/requiredField";
 
 export const pressDoc = defineType({
   type: "document",
@@ -11,9 +12,7 @@ export const pressDoc = defineType({
       type: "string",
       name: "name",
       title: "Title",
-      validation: (rule) => [
-        rule.required().error("A press item needs a title."),
-      ],
+      validation: requiredField("A press item needs a title."),
     }),
   ],
   preview: {

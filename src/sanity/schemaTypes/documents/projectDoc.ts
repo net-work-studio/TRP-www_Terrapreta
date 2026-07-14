@@ -74,6 +74,15 @@ export const projectDoc = defineType({
       ],
     }),
     defineField({
+      type: "gridDimensionObject",
+      name: "gridDimension",
+    }),
+    defineField({
+      type: "reference",
+      name: "tag",
+      to: [{ type: "tag" }],
+    }),
+    defineField({
       type: "contentObject",
       name: "pageContent",
       title: "Page Content",

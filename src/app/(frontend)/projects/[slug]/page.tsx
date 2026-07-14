@@ -17,7 +17,7 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { urlFor } from "@/sanity/lib/image";
+import { getSanityImageUrl } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -108,7 +108,7 @@ function ProjectPageContent({
 
   const schemaType = cleanOptionalString(projectItem.seo?.schemaType) || "Project";
   const statusLabel = projectItem.status
-    ? cleanOptionalString(projectItem.status)?.replace("-", " ")
+    ? cleanOptionalString(projectItem.status)?.replaceAll("-", " ")
     : undefined;
   const knowsAbout = cleanCommaList(projectItem.seo?.customSchema?.knowsAbout);
 
@@ -179,10 +179,7 @@ function ProjectPageContent({
           ...(projectItem.location && { location: projectItem.location }),
           ...(projectItem.status && { status: projectItem.status }),
           ...(projectItem.mainImage?.image && {
-            image: urlFor(projectItem.mainImage.image)
-              .width(1200)
-              .auto("format")
-              .url(),
+            image: getSanityImageUrl(projectItem.mainImage, { width: 1200 }),
           }),
           ...(knowsAbout && { knowsAbout }),
         }}
