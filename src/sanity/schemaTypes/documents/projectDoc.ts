@@ -32,6 +32,13 @@ export const projectDoc = defineType({
       description:
         "Choose whether this project has a public detail page or only appears in the projects overview.",
       initialValue: "full",
+      validation: (rule) => [
+        rule.custom((value) =>
+          value === undefined || value === "full" || value === "overview"
+            ? true
+            : "Choose full project or overview only.",
+        ),
+      ],
       options: {
         list: [
           { title: "Full project", value: "full" },
