@@ -10,7 +10,7 @@ import SanityImage from "@/components/ui/sanity-image";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { urlFor } from "@/sanity/lib/image";
+import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -72,7 +72,7 @@ export async function generateMetadata({
     title: service.seo?.metaTitle || service.name,
     description:
       service.seo?.metaDescription || service.shortDescription || undefined,
-    image: service.seo?.ogImage ?? service.mainImage?.image ?? undefined,
+    image: service.seo?.ogImage ?? service.mainImage ?? undefined,
     url: `/services/${slug}`,
     canonicalUrl: service.seo?.canonicalUrl ?? undefined,
     robotsIndex: service.seo?.robotsIndex ?? undefined,
@@ -111,7 +111,7 @@ function ServicePageContent({
             </Button>
           </div>
           <div className="container-site relative aspect-3/2 rounded-md">
-            {service.mainImage?.image && (
+            {hasSanityImage(service.mainImage) && (
               <SanityImage
                 alt={service.name || ""}
                 className="z-0 aspect-4/5 h-full w-full rounded-md object-cover object-center"
@@ -240,11 +240,8 @@ function ServicePageContent({
                     },
                   ],
           },
-          ...(service.mainImage?.image && {
-            image: urlFor(service.mainImage.image)
-              .width(1200)
-              .auto("format")
-              .url(),
+          ...(hasSanityImage(service.mainImage) && {
+            image: getSanityImageUrl(service.mainImage, { width: 1200 }),
           }),
         }}
         id="service-json-ld"

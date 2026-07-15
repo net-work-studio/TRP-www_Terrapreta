@@ -26,7 +26,7 @@ export const glossaryDoc = defineType({
       },
     }),
     defineField({
-      type: "imageObject",
+      type: "editorialImage",
       name: "image",
       title: "Image",
     }),
@@ -44,7 +44,7 @@ export const glossaryDoc = defineType({
   preview: {
     select: {
       definition: "definition",
-      media: "image.image",
+      media: "image",
       title: "name",
     },
     prepare({ definition, media, title }) {

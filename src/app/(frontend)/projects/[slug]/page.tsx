@@ -17,7 +17,7 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getSanityImageUrl } from "@/sanity/lib/image";
+import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -86,8 +86,7 @@ export async function generateMetadata({
       projectItem.seo?.metaDescription ||
       projectItem.shortDescription ||
       undefined,
-    image:
-      projectItem.seo?.ogImage ?? projectItem.mainImage?.image ?? undefined,
+    image: projectItem.seo?.ogImage ?? projectItem.mainImage ?? undefined,
     url: `/projects/${slug}`,
     type: "article",
     canonicalUrl: projectItem.seo?.canonicalUrl ?? undefined,
@@ -108,7 +107,7 @@ function ProjectPageContent({
   projectItem: NonNullable<PROJECT_ITEM_QUERY_RESULT>;
   slug: string;
 }) {
-  if (!projectItem.mainImage?.image) {
+  if (!hasSanityImage(projectItem.mainImage)) {
     notFound();
   }
 
@@ -165,11 +164,11 @@ function ProjectPageContent({
             </li>
           )}
         </ul>
-        {projectItem.pageContent?.content && (
+        {projectItem.pageContent && (
           <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
             <PortableText
               components={portableTextComponents}
-              value={projectItem.pageContent.content}
+              value={projectItem.pageContent}
             />
           </section>
         )}
@@ -184,7 +183,7 @@ function ProjectPageContent({
           description: projectItem.shortDescription,
           ...(projectItem.location && { location: projectItem.location }),
           ...(projectItem.status && { status: projectItem.status }),
-          ...(projectItem.mainImage?.image && {
+          ...(hasSanityImage(projectItem.mainImage) && {
             image: getSanityImageUrl(projectItem.mainImage, { width: 1200 }),
           }),
           ...(knowsAbout && { knowsAbout }),

@@ -197,6 +197,71 @@ export type ImageObject = {
   caption?: string;
 };
 
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type RichTextContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<
+        | {
+            href: string;
+            blank?: "true" | "false";
+            _type: "link";
+            _key: string;
+          }
+        | {
+            reference:
+              | PageReference
+              | JournalReference
+              | ProjectReference
+              | ServiceReference
+              | ResearchReference
+              | PressReference
+              | AboutReference;
+            _type: "internalLink";
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & EditorialImage)
+>;
+
+export type EditorialImage = {
+  _type: "editorialImage";
+  asset: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  altContent?: string;
+  caption?: string;
+};
+
 export type TitleSlugObject = {
   _type: "titleSlugObject";
   name: string;
@@ -243,22 +308,6 @@ export type Customer = {
     _type: "image";
   };
   shortDescription?: string;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type UnGoal = {
@@ -358,7 +407,7 @@ export type Glossary = {
   _rev: string;
   name: string;
   slug: Slug;
-  image?: ImageObject;
+  image: EditorialImage;
   definition?: string;
 };
 
@@ -387,54 +436,9 @@ export type Journal = {
   tag: TagReference;
   location: string;
   publishingDate: string;
-  mainImage: ImageObject;
+  mainImage: EditorialImage;
   shortDescription: string;
-  contentObject: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<
-          | {
-              href: string;
-              blank?: "true" | "false";
-              _type: "link";
-              _key: string;
-            }
-          | {
-              reference:
-                | PageReference
-                | JournalReference
-                | ProjectReference
-                | ServiceReference
-                | ResearchReference
-                | PressReference
-                | AboutReference;
-              _type: "internalLink";
-              _key: string;
-            }
-        >;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-    | ({
-        _key: string;
-      } & ImageObject)
-  >;
+  contentObject: RichTextContent;
   relatedService?: ServiceReference;
   relatedProject?: ProjectReference;
   relatedResearch?: ResearchReference;
@@ -450,7 +454,7 @@ export type Project = {
   name: string;
   slug: Slug;
   publicationScope?: "full" | "overview";
-  mainImage: ImageObject;
+  mainImage: EditorialImage;
   status?: "in-progress" | "completed";
   year?: number;
   competition?: CompetitionObject;
@@ -460,7 +464,7 @@ export type Project = {
   shortDescription?: string;
   gridDimension?: GridDimensionObject;
   tag?: TagReference;
-  pageContent?: ContentObject;
+  pageContent?: RichTextContent;
   relatedService?: ServiceReference;
   relatedResearch?: ResearchReference;
   seo?: SeoObject;
@@ -489,7 +493,7 @@ export type Service = {
   name: string;
   slug: Slug;
   shortDescription?: string;
-  mainImage: ImageObject;
+  mainImage: EditorialImage;
   clients?: Array<
     {
       _key: string;
@@ -500,52 +504,7 @@ export type Service = {
       _key: string;
     } & CapabilityReference
   >;
-  content?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: "span";
-          _key: string;
-        }>;
-        style?:
-          | "normal"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "blockquote";
-        listItem?: "bullet" | "number";
-        markDefs?: Array<
-          | {
-              href: string;
-              blank?: "true" | "false";
-              _type: "link";
-              _key: string;
-            }
-          | {
-              reference:
-                | PageReference
-                | JournalReference
-                | ProjectReference
-                | ServiceReference
-                | ResearchReference
-                | PressReference
-                | AboutReference;
-              _type: "internalLink";
-              _key: string;
-            }
-        >;
-        level?: number;
-        _type: "block";
-        _key: string;
-      }
-    | ({
-        _key: string;
-      } & ImageObject)
-  >;
+  content?: RichTextContent;
   relatedProject?: Array<
     {
       _key: string;
@@ -584,7 +543,7 @@ export type Research = {
   _updatedAt: string;
   _rev: string;
   titleSlug: TitleSlugObject;
-  mainImage: ImageObject;
+  mainImage: EditorialImage;
   relatedService?: ServiceReference;
   relatedProject?: ProjectReference;
 };
@@ -597,7 +556,7 @@ export type Page = {
   _rev: string;
   name: string;
   slug: Slug;
-  mainImage: ImageObject;
+  mainImage: EditorialImage;
   modules?: Array<
     {
       _key: string;
@@ -739,12 +698,14 @@ export type AllSanitySchemaTypes =
   | GridDimensionObject
   | ContentObject
   | ImageObject
+  | SanityImageCrop
+  | SanityImageHotspot
+  | RichTextContent
+  | EditorialImage
   | TitleSlugObject
   | CompetitionObject
   | Redirect
   | Customer
-  | SanityImageCrop
-  | SanityImageHotspot
   | UnGoal
   | Organization
   | Navigation
@@ -799,7 +760,7 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
-// Query: *[_type == "project" && defined(slug.current)] {  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  shortDescription,  gridDimension{    "prominence": select(      prominence == "featured" => "featured",      isBig == true => "featured",      "standard"    )  },  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  tag->{    _id,    name  }}
+// Query: *[_type == "project" && defined(slug.current)] {  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  shortDescription,  gridDimension{    "prominence": select(      prominence == "featured" => "featured",      isBig == true => "featured",      "standard"    )  },  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  },  tag->{    _id,    name  }}
 export type PROJECTS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -810,21 +771,20 @@ export type PROJECTS_QUERY_RESULT = Array<{
     prominence: "featured" | "standard";
   } | null;
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -837,7 +797,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_QUERY
-// Query: *[_type == "journal" && defined(slug.current)] | order(publishingDate desc){  _id,  name,  slug,  shortDescription,  gridDimension{    "prominence": select(      prominence == "featured" => "featured",      isBig == true => "featured",      "standard"    )  },  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  publishingDate,  tag->{    _id,    name  }}
+// Query: *[_type == "journal" && defined(slug.current)] | order(publishingDate desc){  _id,  name,  slug,  shortDescription,  gridDimension{    "prominence": select(      prominence == "featured" => "featured",      isBig == true => "featured",      "standard"    )  },  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  },  publishingDate,  tag->{    _id,    name  }}
 export type JOURNAL_QUERY_RESULT = Array<{
   _id: string;
   name: string;
@@ -847,21 +807,20 @@ export type JOURNAL_QUERY_RESULT = Array<{
     prominence: "featured" | "standard";
   } | null;
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -875,27 +834,26 @@ export type JOURNAL_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_ITEM_QUERY
-// Query: *[_type == "journal" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  location,  publishingDate,  shortDescription,  contentObject[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "imageObject" => {    altContent,    caption,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  }  },  tag->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[_type == "journal" && slug.current == $slug][0]{  _id,  name,  slug,  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  },  location,  publishingDate,  shortDescription,  contentObject[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type in ["imageObject", "editorialImage"] => {    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  }  },  tag->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
 export type JOURNAL_ITEM_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: Slug;
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -951,7 +909,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
       }
     | {
         _key: string;
-        _type: "imageObject";
+        _type: "editorialImage";
         style: null;
         listItem: null;
         level: null;
@@ -959,23 +917,29 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
         children: null;
         altContent: string | null;
         caption: string | null;
-        image: {
-          _type: "image";
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          asset: {
-            _id: string;
-            url: string;
-            metadata: {
-              lqip: string | null;
-              dimensions: {
-                width: number;
-                height: number;
-                aspectRatio: number;
-              } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
             } | null;
           } | null;
         };
+      }
+    | {
+        _key: string;
+        _type: "editorialImage";
+        style: null;
+        listItem: null;
+        level: null;
+        markDefs: null;
+        children: null;
       }
   >;
   tag: {
@@ -1022,28 +986,27 @@ export type TAGS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SERVICES_QUERY
-// Query: *[_type == "service" && defined(slug.current)] | order(name asc){  _id,  name,  slug,  shortDescription,  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  }}
+// Query: *[_type == "service" && defined(slug.current)] | order(name asc){  _id,  name,  slug,  shortDescription,  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  }}
 export type SERVICES_QUERY_RESULT = Array<{
   _id: string;
   name: string;
   slug: Slug;
   shortDescription: string | null;
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -1052,7 +1015,7 @@ export type SERVICES_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SERVICE_QUERY
-// Query: *[_type == "service" && slug.current == $slug][0]{  _id,  name,  slug,  shortDescription,  content[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "imageObject" => {    altContent,    caption,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  }  },  capabilities[]->{    _id,    name  },  clients[]->{    _id,    name,    logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[_type == "service" && slug.current == $slug][0]{  _id,  name,  slug,  shortDescription,  content[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type in ["imageObject", "editorialImage"] => {    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  }  },  capabilities[]->{    _id,    name  },  clients[]->{    _id,    name,    logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
 export type SERVICE_QUERY_RESULT = {
   _id: string;
   name: string;
@@ -1106,7 +1069,7 @@ export type SERVICE_QUERY_RESULT = {
       }
     | {
         _key: string;
-        _type: "imageObject";
+        _type: "editorialImage";
         style: null;
         listItem: null;
         level: null;
@@ -1114,23 +1077,29 @@ export type SERVICE_QUERY_RESULT = {
         children: null;
         altContent: string | null;
         caption: string | null;
-        image: {
-          _type: "image";
-          hotspot: SanityImageHotspot | null;
-          crop: SanityImageCrop | null;
-          asset: {
-            _id: string;
-            url: string;
-            metadata: {
-              lqip: string | null;
-              dimensions: {
-                width: number;
-                height: number;
-                aspectRatio: number;
-              } | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
             } | null;
           } | null;
         };
+      }
+    | {
+        _key: string;
+        _type: "editorialImage";
+        style: null;
+        listItem: null;
+        level: null;
+        markDefs: null;
+        children: null;
       }
   > | null;
   capabilities: Array<{
@@ -1159,21 +1128,20 @@ export type SERVICE_QUERY_RESULT = {
     };
   }> | null;
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -1209,28 +1177,27 @@ export type SERVICE_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_ITEM_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  mainImage{    _type,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  status,  location,  areaRestored,  interventionType,  shortDescription,  pageContent{    content[]{        _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "imageObject" => {    altContent,    caption,    image{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  }    }  },  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  mainImage{    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  },  status,  location,  areaRestored,  interventionType,  shortDescription,  "pageContent": select(    pageContent._type == "contentObject" => pageContent.content[]{        _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type in ["imageObject", "editorialImage"] => {    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  }    },    pageContent[]{        _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type in ["imageObject", "editorialImage"] => {    "_type": "editorialImage",    altContent,    caption,    "hotspot": coalesce(hotspot, image.hotspot),    "crop": coalesce(crop, image.crop),    "asset": coalesce(      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      },      image.asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    )  }    }  ),  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
 export type PROJECT_ITEM_QUERY_RESULT = {
   _id: string;
   name: string;
   slug: Slug;
   publicationScope: "full" | "overview";
   mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      asset: {
-        _id: string;
-        url: string;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
+    _type: "editorialImage";
+    altContent: string | null;
+    caption: string | null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+          aspectRatio: number;
         } | null;
       } | null;
     };
@@ -1240,83 +1207,87 @@ export type PROJECT_ITEM_QUERY_RESULT = {
   areaRestored: string | null;
   interventionType: string | null;
   shortDescription: string | null;
-  pageContent: {
-    content: Array<
-      | {
+  pageContent: Array<
+    | {
+        _key: string;
+        _type: "block";
+        style:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal"
+          | null;
+        listItem: "bullet" | "number" | null;
+        level: number | null;
+        markDefs: Array<
+          | {
+              _key: string;
+              _type: "internalLink";
+              href: null;
+              blank: null;
+              slug: string | null;
+              type:
+                | "about"
+                | "journal"
+                | "page"
+                | "press"
+                | "project"
+                | "research"
+                | "service";
+            }
+          | {
+              _key: string;
+              _type: "link";
+              href: string;
+              blank: "false" | "true" | null;
+            }
+        > | null;
+        children: Array<{
           _key: string;
-          _type: "block";
-          style:
-            | "blockquote"
-            | "h1"
-            | "h2"
-            | "h3"
-            | "h4"
-            | "h5"
-            | "h6"
-            | "normal"
-            | null;
-          listItem: "bullet" | "number" | null;
-          level: number | null;
-          markDefs: Array<
-            | {
-                _key: string;
-                _type: "internalLink";
-                href: null;
-                blank: null;
-                slug: string | null;
-                type:
-                  | "about"
-                  | "journal"
-                  | "page"
-                  | "press"
-                  | "project"
-                  | "research"
-                  | "service";
-              }
-            | {
-                _key: string;
-                _type: "link";
-                href: string;
-                blank: "false" | "true" | null;
-              }
-          > | null;
-          children: Array<{
-            _key: string;
-            _type: "span";
-            text: string | null;
-            marks: Array<string> | null;
-          }> | null;
-        }
-      | {
-          _key: string;
-          _type: "imageObject";
-          style: null;
-          listItem: null;
-          level: null;
-          markDefs: null;
-          children: null;
-          altContent: string | null;
-          caption: string | null;
-          image: {
-            _type: "image";
-            hotspot: SanityImageHotspot | null;
-            crop: SanityImageCrop | null;
-            asset: {
-              _id: string;
-              url: string;
-              metadata: {
-                lqip: string | null;
-                dimensions: {
-                  width: number;
-                  height: number;
-                  aspectRatio: number;
-                } | null;
-              } | null;
+          _type: "span";
+          text: string | null;
+          marks: Array<string> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "editorialImage";
+        style: null;
+        listItem: null;
+        level: null;
+        markDefs: null;
+        children: null;
+        altContent: string | null;
+        caption: string | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
             } | null;
-          };
-        }
-    >;
-  } | null;
+          } | null;
+        };
+      }
+    | {
+        _key: string;
+        _type: "editorialImage";
+        style: null;
+        listItem: null;
+        level: null;
+        markDefs: null;
+        children: null;
+      }
+  > | null;
   relatedService: {
     _id: string;
     name: string;
@@ -1508,13 +1479,13 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "site" && _id == "site"][0]{\n  name,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
-    '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
-    '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
-    '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "imageObject" => {\n    altContent,\n    caption,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
+    '*[_type == "project" && defined(slug.current)] {\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
+    '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
+    '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type in ["imageObject", "editorialImage"] => {\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
     '*[_type == "tag"] | order(name asc){\n  _id,\n  name,\n  slug\n}': TAGS_QUERY_RESULT;
-    '*[_type == "service" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n}': SERVICES_QUERY_RESULT;
-    '*[_type == "service" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "imageObject" => {\n    altContent,\n    caption,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SERVICE_QUERY_RESULT;
-    '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  mainImage{\n\n    _type,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  pageContent{\n    content[]{\n      \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "imageObject" => {\n    altContent,\n    caption,\n    image{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  }\n\n    }\n  },\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
+    '*[_type == "service" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  }\n}': SERVICES_QUERY_RESULT;
+    '*[_type == "service" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type in ["imageObject", "editorialImage"] => {\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  }\n\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SERVICE_QUERY_RESULT;
+    '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  mainImage{\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  "pageContent": select(\n    pageContent._type == "contentObject" => pageContent.content[]{\n      \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type in ["imageObject", "editorialImage"] => {\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  }\n\n    },\n    pageContent[]{\n      \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type in ["imageObject", "editorialImage"] => {\n\n    "_type": "editorialImage",\n    altContent,\n    caption,\n    "hotspot": coalesce(hotspot, image.hotspot),\n    "crop": coalesce(crop, image.crop),\n    "asset": coalesce(\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      },\n      image.asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    )\n  }\n\n    }\n  ),\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
     '*[_type == "unGoal"] | order(name asc){\n  _id,\n  name,\n  logoNegative{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  },\n  logoPositive{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  }\n}': UN_GOALS_QUERY_RESULT;
     '*[_type == "customer"] | order(name asc){\n  _id,\n  name,\n  shortDescription,\n  mainImage{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  }\n}': CUSTOMERS_QUERY_RESULT;
     '*[_type == "organization"]{\n  _id,\n  name,\n  type,\n  logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;

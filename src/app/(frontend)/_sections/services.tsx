@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import SanityImage from "@/components/ui/sanity-image";
 import TagTitle from "@/components/ui/tag-title";
+import { hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -125,12 +126,14 @@ function ServicesContent({
             ): service is SERVICES_QUERY_RESULT[number] & {
               name: string;
               slug: { current: string };
-              mainImage: { image: { asset: { url: string } } };
+              mainImage: NonNullable<
+                SERVICES_QUERY_RESULT[number]["mainImage"]
+              >;
             } =>
               Boolean(
                 service.name &&
                   service.slug?.current &&
-                  service.mainImage?.image?.asset?.url
+                  hasSanityImage(service.mainImage)
               )
           )
           .map((service) => (

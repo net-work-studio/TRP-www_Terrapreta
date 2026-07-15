@@ -20,11 +20,20 @@ const IMAGE_FIELD_PROJECTION = /* groq */ `
 ${IMAGE_ASSET_PROJECTION}
       }`;
 
-const IMAGE_OBJECT_PROJECTION = /* groq */ `
-    _type,
-    image{
-${IMAGE_FIELD_PROJECTION}
-    }`;
+const EDITORIAL_IMAGE_PROJECTION = /* groq */ `
+    "_type": "editorialImage",
+    altContent,
+    caption,
+    "hotspot": coalesce(hotspot, image.hotspot),
+    "crop": coalesce(crop, image.crop),
+    "asset": coalesce(
+      asset->{
+${IMAGE_ASSET_PROJECTION}
+      },
+      image.asset->{
+${IMAGE_ASSET_PROJECTION}
+      }
+    )`;
 
 const PROMINENCE_PROJECTION = /* groq */ `
     "prominence": select(
@@ -55,12 +64,8 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     text,
     marks
   },
-  _type == "imageObject" => {
-    altContent,
-    caption,
-    image{
-${IMAGE_FIELD_PROJECTION}
-    }
+  _type in ["imageObject", "editorialImage"] => {
+${EDITORIAL_IMAGE_PROJECTION}
   }
 `;
 
@@ -96,7 +101,7 @@ export const PROJECTS_QUERY =
 ${PROMINENCE_PROJECTION}
   },
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   },
   tag->{
     _id,
@@ -114,7 +119,7 @@ export const JOURNAL_QUERY =
 ${PROMINENCE_PROJECTION}
   },
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   },
   publishingDate,
   tag->{
@@ -129,7 +134,7 @@ export const JOURNAL_ITEM_QUERY =
   name,
   slug,
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   },
   location,
   publishingDate,
@@ -177,7 +182,7 @@ export const SERVICES_QUERY =
   slug,
   shortDescription,
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   }
 }`);
 
@@ -203,7 +208,7 @@ ${IMAGE_FIELD_PROJECTION}
     }
   },
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   },
   seo{
     metaTitle,
@@ -235,18 +240,21 @@ export const PROJECT_ITEM_QUERY =
   slug,
   "publicationScope": coalesce(publicationScope, "full"),
   mainImage{
-${IMAGE_OBJECT_PROJECTION}
+${EDITORIAL_IMAGE_PROJECTION}
   },
   status,
   location,
   areaRestored,
   interventionType,
   shortDescription,
-  pageContent{
-    content[]{
+  "pageContent": select(
+    pageContent._type == "contentObject" => pageContent.content[]{
+      ${PORTABLE_TEXT_CONTENT_PROJECTION}
+    },
+    pageContent[]{
       ${PORTABLE_TEXT_CONTENT_PROJECTION}
     }
-  },
+  ),
   relatedService->{
     _id,
     name,

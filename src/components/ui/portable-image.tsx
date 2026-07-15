@@ -1,29 +1,21 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import SanityImage from "@/components/ui/sanity-image";
-import type { ImageObject } from "@/sanity/types";
+import {
+  getSanityImageField,
+  type SanityImageSourceInput,
+} from "@/sanity/lib/image";
 
 const LANDSCAPE_ASPECT_RATIO = 4 / 5;
 const PORTRAIT_ASPECT_RATIO = 5 / 4;
 const IMAGE_QUALITY = 75;
 
 type PortableImageProps = {
-  value: ImageObject & {
+  value: NonNullable<SanityImageSourceInput> & {
     _key?: string;
-    image?: ImageObject["image"] & {
-      asset?: {
-        metadata?: {
-          dimensions?: {
-            width?: number;
-            height?: number;
-            aspectRatio?: number;
-          };
-        };
-      };
-      dimensions?: {
-        width?: number;
-        height?: number;
-        aspectRatio?: number;
-      };
+    dimensions?: {
+      width?: number;
+      height?: number;
+      aspectRatio?: number;
     };
   };
 };
@@ -43,25 +35,14 @@ function getAspectRatio(dimensions?: {
 }
 
 export function PortableImage({ value }: PortableImageProps) {
-  if (!value?.image) {
+  const imageField = getSanityImageField(value);
+
+  if (!imageField?.asset) {
     return null;
   }
 
   const dimensions =
-    value.image.dimensions ||
-    (
-      value.image.asset as
-        | {
-            metadata?: {
-              dimensions?: {
-                width?: number;
-                height?: number;
-                aspectRatio?: number;
-              };
-            };
-          }
-        | undefined
-    )?.metadata?.dimensions;
+    value.dimensions || imageField.asset.metadata?.dimensions || undefined;
   const aspectRatio = getAspectRatio(dimensions);
 
   let targetAspectRatio: number;

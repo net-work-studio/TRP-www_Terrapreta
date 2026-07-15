@@ -1,13 +1,15 @@
-import type { SanityImageSource } from "@sanity/image-url";
 import type { Metadata } from "next";
 import { SITE_DEFAULTS } from "@/lib/constants";
-import { urlFor } from "@/sanity/lib/image";
+import {
+  getSanityImageUrl,
+  type SanityImageSourceInput,
+} from "@/sanity/lib/image";
 import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/types";
 
 interface GenerateMetadataOptions {
   title: string;
   description?: string;
-  image?: SanityImageSource | string;
+  image?: SanityImageSourceInput | string;
   url?: string;
   type?: "website" | "article";
   publishedTime?: string;
@@ -24,8 +26,8 @@ interface GenerateMetadataOptions {
 }
 
 function getImageUrl(
-  image: SanityImageSource | string | undefined,
-  defaultImage: SanityImageSource | null
+  image: SanityImageSourceInput | string | undefined,
+  defaultImage: SanityImageSourceInput
 ): string {
   if (typeof image === "string") {
     return image.startsWith("http")
@@ -34,11 +36,22 @@ function getImageUrl(
   }
 
   if (image) {
-    return urlFor(image).width(1200).height(630).auto("format").url();
+    const imageUrl = getSanityImageUrl(image, { width: 1200, height: 630 });
+
+    if (imageUrl) {
+      return imageUrl;
+    }
   }
 
   if (defaultImage) {
-    return urlFor(defaultImage).width(1200).height(630).auto("format").url();
+    const defaultImageUrl = getSanityImageUrl(defaultImage, {
+      width: 1200,
+      height: 630,
+    });
+
+    if (defaultImageUrl) {
+      return defaultImageUrl;
+    }
   }
 
   return `${SITE_DEFAULTS.baseUrl}${SITE_DEFAULTS.defaultImage}`;

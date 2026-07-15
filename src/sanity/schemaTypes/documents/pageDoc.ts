@@ -14,7 +14,7 @@ export const pageDoc = defineType({
       slug: "A slug is required to generate the page URL.",
     }),
     defineField({
-      type: "imageObject",
+      type: "editorialImage",
       name: "mainImage",
       title: "Main Image",
       validation: (rule) => [
@@ -38,7 +38,7 @@ export const pageDoc = defineType({
   ],
   preview: {
     select: {
-      media: "mainImage.image",
+      media: "mainImage",
       slug: "slug.current",
       title: "name",
     },

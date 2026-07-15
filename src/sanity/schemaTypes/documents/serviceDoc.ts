@@ -1,19 +1,34 @@
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
+import { LinkIcon } from "@sanity/icons/Link";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { richTextBlock } from "../helpers/richTextBlock";
+import { groups } from "../helpers/groups";
 
 const MAX_CAPABILITIES = 6;
+const [metaGroup, contentGroup, seoGroup] = groups;
+
+const serviceGroups = [
+  metaGroup,
+  contentGroup,
+  {
+    name: "related",
+    title: "Related",
+    icon: LinkIcon,
+  },
+  seoGroup,
+];
 
 export const serviceDoc = defineType({
   type: "document",
   name: "service",
   title: "Service",
   icon: DocumentTextIcon,
+  groups: serviceGroups,
   fields: [
     defineField({
       type: "string",
       name: "name",
       title: "Title",
+      group: "meta",
       validation: (rule) => [
         rule.required().error("A service needs a title before publishing."),
       ],
@@ -22,6 +37,7 @@ export const serviceDoc = defineType({
       type: "slug",
       name: "slug",
       title: "Slug",
+      group: "meta",
       validation: (rule) => [
         rule.required().error("A slug is required to generate the service URL."),
       ],
@@ -33,6 +49,7 @@ export const serviceDoc = defineType({
       type: "text",
       name: "shortDescription",
       title: "Short Description",
+      group: "content",
       validation: (rule) => [
         rule
           .max(220)
@@ -40,9 +57,10 @@ export const serviceDoc = defineType({
       ],
     }),
     defineField({
-      type: "imageObject",
+      type: "editorialImage",
       name: "mainImage",
       title: "Main Image",
+      group: "content",
       validation: (rule) => [
         rule.required().error("A main image is required for service pages."),
       ],
@@ -51,6 +69,7 @@ export const serviceDoc = defineType({
       type: "array",
       name: "clients",
       title: "Clients",
+      group: "related",
       of: [
         defineArrayMember({
           type: "reference",
@@ -62,6 +81,7 @@ export const serviceDoc = defineType({
       type: "array",
       name: "capabilities",
       title: "Capabilities",
+      group: "related",
       description: `You can select up to ${MAX_CAPABILITIES} capabilities`,
       of: [
         defineArrayMember({ type: "reference", to: [{ type: "capability" }] }),
@@ -73,15 +93,16 @@ export const serviceDoc = defineType({
       ],
     }),
     defineField({
-      type: "array",
+      type: "richTextContent",
       name: "content",
       title: "Content",
-      of: [richTextBlock, defineArrayMember({ type: "imageObject" })],
+      group: "content",
     }),
     defineField({
       type: "array",
       name: "relatedProject",
       title: "Related Project",
+      group: "related",
       of: [
         defineArrayMember({
           type: "reference",
@@ -93,6 +114,7 @@ export const serviceDoc = defineType({
       type: "array",
       name: "relatedResearch",
       title: "Related Research",
+      group: "related",
       of: [
         defineArrayMember({
           type: "reference",
@@ -104,6 +126,7 @@ export const serviceDoc = defineType({
       type: "seoObject",
       name: "seo",
       title: "SEO",
+      group: "seo",
       description: "Search engine optimization settings",
       initialValue: {
         robotsIndex: "index",
@@ -115,7 +138,7 @@ export const serviceDoc = defineType({
   preview: {
     select: {
       description: "shortDescription",
-      media: "mainImage.image",
+      media: "mainImage",
       title: "name",
     },
     prepare({ description, media, title }) {

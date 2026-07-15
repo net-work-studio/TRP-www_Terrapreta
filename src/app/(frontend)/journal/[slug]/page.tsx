@@ -18,7 +18,7 @@ import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { urlFor } from "@/sanity/lib/image";
+import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -81,8 +81,7 @@ export async function generateMetadata({
       journalItem.seo?.metaDescription ||
       journalItem.shortDescription ||
       undefined,
-    image:
-      journalItem.seo?.ogImage ?? journalItem.mainImage?.image ?? undefined,
+    image: journalItem.seo?.ogImage ?? journalItem.mainImage ?? undefined,
     url: `/journal/${slug}`,
     type: "article",
     publishedTime: journalItem.publishingDate ?? undefined,
@@ -104,7 +103,7 @@ function JournalPageContent({
   journalItem: NonNullable<JOURNAL_ITEM_QUERY_RESULT>;
   slug: string;
 }) {
-  if (!journalItem.mainImage?.image) {
+  if (!hasSanityImage(journalItem.mainImage)) {
     notFound();
   }
 
@@ -188,11 +187,8 @@ function JournalPageContent({
           ...(journalItem.publishingDate && {
             datePublished: journalItem.publishingDate,
           }),
-          ...(journalItem.mainImage?.image && {
-            image: urlFor(journalItem.mainImage.image)
-              .width(1200)
-              .auto("format")
-              .url(),
+          ...(hasSanityImage(journalItem.mainImage) && {
+            image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),
           }),
           ...(journalItem.location && {
             locationCreated: journalItem.location,

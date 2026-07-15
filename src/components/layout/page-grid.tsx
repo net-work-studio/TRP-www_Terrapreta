@@ -4,6 +4,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
 import { cn } from "@/lib/utils";
+import {
+  hasSanityImage,
+  type SanityImageSourceInput,
+} from "@/sanity/lib/image";
 import type {
   JOURNAL_QUERY_RESULT,
   PROJECTS_QUERY_RESULT,
@@ -16,19 +20,7 @@ type GridItemProps = Partial<
   _id: string;
   name: string | null;
   shortDescription: string | null;
-  mainImage: {
-    _type: "imageObject";
-    image: {
-      _type: "image";
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata?: {
-          lqip?: string | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
+  mainImage: SanityImageSourceInput;
   isFeatured?: boolean;
   isInteractive?: boolean;
   publishingDate?: string | null;
@@ -65,7 +57,7 @@ function GridItem({
   slug,
   publishingDate,
 }: GridItemProps) {
-  if (!mainImage?.image?.asset) {
+  if (!hasSanityImage(mainImage)) {
     return null;
   }
 

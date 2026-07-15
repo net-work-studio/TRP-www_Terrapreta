@@ -16,7 +16,7 @@ export const researchDoc = defineType({
       ],
     }),
     defineField({
-      type: "imageObject",
+      type: "editorialImage",
       name: "mainImage",
       title: "Main Image",
       validation: (rule) => [
@@ -38,7 +38,7 @@ export const researchDoc = defineType({
   ],
   preview: {
     select: {
-      media: "mainImage.image",
+      media: "mainImage",
       slug: "titleSlug.slug.current",
       title: "titleSlug.name",
     },

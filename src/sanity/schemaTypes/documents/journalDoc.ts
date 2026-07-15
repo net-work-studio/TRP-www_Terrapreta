@@ -1,7 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
-import { richTextBlock } from "../helpers/richTextBlock";
 
 export const journalDoc = defineType({
   type: "document",
@@ -68,7 +67,7 @@ export const journalDoc = defineType({
       ],
     }),
     defineField({
-      type: "imageObject",
+      type: "editorialImage",
       name: "mainImage",
       title: "Main Image",
       group: "content",
@@ -89,14 +88,13 @@ export const journalDoc = defineType({
       ],
     }),
     defineField({
-      type: "array",
+      type: "richTextContent",
       name: "contentObject",
       title: "Content",
       group: "content",
       validation: (rule) => [
         rule.required().error("Add content before publishing this journal entry."),
       ],
-      of: [richTextBlock, defineArrayMember({ type: "imageObject" })],
     }),
     defineField({
       type: "reference",
@@ -136,7 +134,7 @@ export const journalDoc = defineType({
     select: {
       title: "name",
       subtitle: "publishingDate",
-      media: "mainImage.image",
+      media: "mainImage",
     },
   },
 });
