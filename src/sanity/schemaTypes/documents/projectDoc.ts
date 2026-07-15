@@ -58,19 +58,40 @@ export const projectDoc = defineType({
     defineField({
       type: "string",
       name: "status",
-      title: "Status",
+      title: "Realization Status",
+      description:
+        "Optionally indicate whether the project is still in progress or has been completed.",
       options: {
         list: [
-          { title: "On Hold", value: "on-hold" },
           { title: "In Progress", value: "in-progress" },
-          { title: "In Construction", value: "in-construction" },
           { title: "Completed", value: "completed" },
-          { title: "Cancelled", value: "cancelled" },
         ],
+        layout: "radio",
       },
       validation: (rule) => [
-        rule.required().error("Choose the current project status."),
+        rule.custom((value) =>
+          value === undefined ||
+          value === "in-progress" ||
+          value === "completed"
+            ? true
+            : "Choose in progress or completed.",
+        ),
       ],
+    }),
+    defineField({
+      type: "number",
+      name: "year",
+      description:
+        "Optionally add the year most relevant to presenting this project, such as its completion or competition-result year.",
+      validation: (rule) => [
+        rule.integer().min(1000).max(9999).error("Enter a four-digit year."),
+      ],
+    }),
+    defineField({
+      type: "competitionObject",
+      name: "competition",
+      description:
+        "Add competition details only when this project was a competition entry.",
     }),
     defineField({ type: "string", name: "location", title: "Location" }),
     defineField({

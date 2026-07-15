@@ -1036,6 +1036,62 @@
     }
   },
   {
+    "name": "competitionObject",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "competitionObject"
+          }
+        },
+        "result": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "first-prize"
+              },
+              {
+                "type": "string",
+                "value": "second-prize"
+              },
+              {
+                "type": "string",
+                "value": "third-prize"
+              },
+              {
+                "type": "string",
+                "value": "honourable-mention"
+              },
+              {
+                "type": "string",
+                "value": "shortlisted"
+              },
+              {
+                "type": "string",
+                "value": "participant"
+              }
+            ]
+          },
+          "optional": false
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "redirect",
     "type": "document",
     "attributes": {
@@ -2435,27 +2491,30 @@
           "of": [
             {
               "type": "string",
-              "value": "on-hold"
-            },
-            {
-              "type": "string",
               "value": "in-progress"
             },
             {
               "type": "string",
-              "value": "in-construction"
-            },
-            {
-              "type": "string",
               "value": "completed"
-            },
-            {
-              "type": "string",
-              "value": "cancelled"
             }
           ]
         },
-        "optional": false
+        "optional": true
+      },
+      "year": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "competition": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "competitionObject"
+        },
+        "optional": true
       },
       "location": {
         "type": "objectAttribute",

@@ -203,6 +203,18 @@ export type TitleSlugObject = {
   slug: Slug;
 };
 
+export type CompetitionObject = {
+  _type: "competitionObject";
+  result:
+    | "first-prize"
+    | "second-prize"
+    | "third-prize"
+    | "honourable-mention"
+    | "shortlisted"
+    | "participant";
+  name?: string;
+};
+
 export type Redirect = {
   _id: string;
   _type: "redirect";
@@ -439,12 +451,9 @@ export type Project = {
   slug: Slug;
   publicationScope?: "full" | "overview";
   mainImage: ImageObject;
-  status:
-    | "on-hold"
-    | "in-progress"
-    | "in-construction"
-    | "completed"
-    | "cancelled";
+  status?: "in-progress" | "completed";
+  year?: number;
+  competition?: CompetitionObject;
   location?: string;
   areaRestored?: string;
   interventionType?: string;
@@ -731,6 +740,7 @@ export type AllSanitySchemaTypes =
   | ContentObject
   | ImageObject
   | TitleSlugObject
+  | CompetitionObject
   | Redirect
   | Customer
   | SanityImageCrop
@@ -1225,12 +1235,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
       } | null;
     };
   };
-  status:
-    | "cancelled"
-    | "completed"
-    | "in-construction"
-    | "in-progress"
-    | "on-hold";
+  status: "completed" | "in-progress" | null;
   location: string | null;
   areaRestored: string | null;
   interventionType: string | null;

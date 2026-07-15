@@ -23,6 +23,7 @@ import modules from "./fragments/modules";
 /* Modules */
 import { heroSplitModule } from "./modules/hero-split";
 /* Objects */
+import { competitionObject } from "./objects/competitionObject";
 import { contentObject } from "./objects/contentObject";
 import { gridDimensionObject } from "./objects/gridDimensionObject";
 import { imageObject } from "./objects/imageObject";
@@ -52,6 +53,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     redirectDoc,
 
     /* Objects */
+    competitionObject,
     titleSlugObject,
     imageObject,
     contentObject,
