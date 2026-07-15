@@ -46,7 +46,11 @@ export default function RootLayout({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
 
   return (
-    <html className="dark scroll-smooth bg-stone-950" lang="en">
+    <html
+      className="dark scroll-smooth bg-stone-950"
+      data-scroll-behavior="smooth"
+      lang="en"
+    >
       <head>
         <meta content="Terrapreta" name="apple-mobile-web-app-title" />
       </head>
