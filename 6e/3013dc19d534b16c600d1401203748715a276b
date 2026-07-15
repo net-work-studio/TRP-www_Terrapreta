@@ -1,0 +1,103 @@
+src/components/layout/page-grid.tsx
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 7-10,23,60
+migrations/content-shape.ts
+  s_1d62cad2aff589::t_fdb4fdedaf8a57 1-24
+  s_1d62cad2aff589::t_79de521092f8e4 25-36
+src/sanity/schemaTypes/documents/projectDoc.ts
+  s_055ac688fd224a::t_def5f67b04ee18 1-2,5-28,35,41,50,61,84,93,116,126,130-135,140,147,153,163,168,175,181,188,195
+  s_1d62cad2aff589::t_fa32d51ddb791f 81,172,206
+src/sanity/schemaTypes/documents/serviceDoc.ts
+  s_1d62cad2aff589::t_a6e7747eec5b16 2,4,7-18,25,31,40,52,63,72,84,99,105,117,129
+  s_1d62cad2aff589::t_fa32d51ddb791f 60,96,141
+src/sanity/schemaTypes/objects/editorialImageType.ts
+  s_1d62cad2aff589::t_e1fe90bb41c71c 1-44
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 20,89,110,186
+  s_1d62cad2aff589::t_69b808df1e7ea9 167,171
+src/sanity/lib/queries.ts
+  s_1d62cad2aff589::t_41162f7a7a9f86 23-36,67-68,104,122,137,185,211,243,250-254,257
+src/sanity/lib/image.ts
+  s_1d62cad2aff589::t_089ad7728e0319 17
+  s_1d62cad2aff589::t_7f7560c32d7222 6-16,18-20,34
+package.json
+  s_1d62cad2aff589::t_06f70a53b3f657 13
+  s_1d62cad2aff589::t_25351bb6819516 57
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 21,84,106,190-191
+src/app/(frontend)/services/[slug]/page.tsx
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 13,75,114,243-244
+src/sanity/extract.json
+  s_1d62cad2aff589::t_c04e47f2bf15e3 1008-1095,2271,2273,2337-2443,2552,2636,2787,2838-2839,3032,3108
+  s_1d62cad2aff589::t_3d42ef0db4a5f7 1007,1096-1436
+src/sanity/schemaTypes/index.ts
+  s_1d62cad2aff589::t_e1fe90bb41c71c 28,32,60-61
+src/sanity/lib/image-source.ts
+  s_1d62cad2aff589::t_7f7560c32d7222 1-39,41-92
+  s_1d62cad2aff589::t_089ad7728e0319 40
+migrations/flatten-editorial-images/index.ts
+  s_1d62cad2aff589::t_c132475d4dc09f 1-7,9-11,13-21
+  s_1d62cad2aff589::t_fa32d51ddb791f 8
+  s_1d62cad2aff589::t_a9b9c73ebee614 12
+src/sanity/types.ts
+  s_1d62cad2aff589::t_c04e47f2bf15e3 200-215,410,439,441,457,467,496,507,546,559,703-704,937,1097,1279,1283
+  s_1d62cad2aff589::t_3d42ef0db4a5f7 216-264,701-702,763,774-787,800,810-823,837,843-856,912,920-930,935-936,938-943,989,996-1009,1018,1072,1080-1090,1095-1096,1098-1103,1131-1144,1180,1187-1200,1210-1249,1251-1276,1278,1280-1282,1284-1290,1482-1484,1486-1488
+src/sanity/schemaTypes/documents/pageDoc.ts
+  s_1d62cad2aff589::t_fa32d51ddb791f 17,41
+src/sanity/schemaTypes/documents/researchDoc.ts
+  s_1d62cad2aff589::t_fa32d51ddb791f 19,41
+migrations/content-shape.test.ts
+  s_1d62cad2aff589::t_0343aa2377c235 2-5,49,75-106
+  s_1d62cad2aff589::t_c16d74c1805d81 38-48,197
+  s_1d62cad2aff589::t_5b8b81361f6c65 50-74,107-108,182-196
+  s_1d62cad2aff589::t_06f70a53b3f657 1,6-37,198
+  s_1d62cad2aff589::t_a9b9c73ebee614 109-181
+src/sanity/schemaTypes/objects/richTextContentType.ts
+  s_1d62cad2aff589::t_e1fe90bb41c71c 1-11
+src/sanity/schemaTypes/documents/journalDoc.ts
+  s_1d62cad2aff589::t_fa32d51ddb791f 2,70,91,137
+src/sanity/schemaTypes/documents/glossaryDoc.ts
+  s_1d62cad2aff589::t_fa32d51ddb791f 29,47
+tsconfig.json
+  s_1d62cad2aff589::t_a34154995389c6 12
+src/components/ui/portable-text-components.tsx
+  s_1d62cad2aff589::t_b1f3d65ba02826 28
+src/lib/metadata.ts
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 3-6,12,29-30,39-43,47-54
+migrations/unwrap-project-content/index.ts
+  s_1d62cad2aff589::t_a6e7747eec5b16 7-10
+  s_1d62cad2aff589::t_c132475d4dc09f 1-6,11-20
+src/sanity/lib/image.test.ts
+  s_1d62cad2aff589::t_701f5ffa327e09 20,25
+  s_1d62cad2aff589::t_d0eb7dbe8a7a57 1-5,7-19,21-24,26-33
+  s_1d62cad2aff589::t_7f7560c32d7222 6
+src/app/(frontend)/_sections/services.tsx
+  s_1d62cad2aff589::t_8ff286e1bb4f8f 14,129-131,136
+src/components/ui/portable-image.tsx
+  s_1d62cad2aff589::t_b1f3d65ba02826 3-6,13,15-18,38-40,45
+bun.lock
+  s_1d62cad2aff589::t_9eb9ffc61fe2b4 42,997-998,1163-1164
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "6e3013dc19d534b16c600d1401203748715a276b",
+  "prompts": {},
+  "sessions": {
+    "s_055ac688fd224a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f64b9-59ab-7542-a4ee-82e5b59e6c37",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_1d62cad2aff589": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f64b8-85d4-7ae3-8cff-828ceda1fe5a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
