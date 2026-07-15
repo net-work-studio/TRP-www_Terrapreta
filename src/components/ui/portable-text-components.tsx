@@ -26,7 +26,6 @@ function getPathForType(type: string): string {
 export const portableTextComponents: PortableTextComponents = {
   types: {
     editorialImage: PortableImage,
-    imageObject: PortableImage,
   },
   marks: {
     link: ({ children, value }) => {

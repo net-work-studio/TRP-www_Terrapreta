@@ -21,19 +21,14 @@ ${IMAGE_ASSET_PROJECTION}
       }`;
 
 const EDITORIAL_IMAGE_PROJECTION = /* groq */ `
-    "_type": "editorialImage",
+    _type,
     altContent,
     caption,
-    "hotspot": coalesce(hotspot, image.hotspot),
-    "crop": coalesce(crop, image.crop),
-    "asset": coalesce(
-      asset->{
+    hotspot,
+    crop,
+    asset->{
 ${IMAGE_ASSET_PROJECTION}
-      },
-      image.asset->{
-${IMAGE_ASSET_PROJECTION}
-      }
-    )`;
+    }`;
 
 const PROMINENCE_PROJECTION = /* groq */ `
     "prominence": select(
@@ -64,7 +59,7 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     text,
     marks
   },
-  _type in ["imageObject", "editorialImage"] => {
+  _type == "editorialImage" => {
 ${EDITORIAL_IMAGE_PROJECTION}
   }
 `;
@@ -247,14 +242,9 @@ ${EDITORIAL_IMAGE_PROJECTION}
   areaRestored,
   interventionType,
   shortDescription,
-  "pageContent": select(
-    pageContent._type == "contentObject" => pageContent.content[]{
-      ${PORTABLE_TEXT_CONTENT_PROJECTION}
-    },
-    pageContent[]{
-      ${PORTABLE_TEXT_CONTENT_PROJECTION}
-    }
-  ),
+  pageContent[]{
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
+  },
   relatedService->{
     _id,
     name,

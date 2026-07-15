@@ -24,10 +24,8 @@ import modules from "./fragments/modules";
 import { heroSplitModule } from "./modules/hero-split";
 /* Objects */
 import { competitionObject } from "./objects/competitionObject";
-import { contentObject } from "./objects/contentObject";
 import { editorialImageType } from "./objects/editorialImageType";
 import { gridDimensionObject } from "./objects/gridDimensionObject";
-import { imageObject } from "./objects/imageObject";
 import { linkObject } from "./objects/linkObject";
 import { richTextContentType } from "./objects/richTextContentType";
 import { seoObject } from "./objects/seoObject";
@@ -59,8 +57,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     titleSlugObject,
     editorialImageType,
     richTextContentType,
-    imageObject,
-    contentObject,
     gridDimensionObject,
     linkObject,
     seoObject,

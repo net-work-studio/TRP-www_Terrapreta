@@ -1,5 +1,5 @@
 import type {
-  ImageObject,
+  EditorialImage,
   SanityImageAsset as GeneratedSanityImageAsset,
 } from "../types";
 
@@ -26,19 +26,18 @@ type SanityImageAsset = Partial<
   metadata?: SanityImageAssetMetadata | null;
 };
 
-type GeneratedImageField = NonNullable<ImageObject["image"]>;
-export type SanityImageField = Partial<Pick<GeneratedImageField, "_type">> &
-  NullablePartial<Pick<GeneratedImageField, "crop" | "hotspot">> & {
+export type SanityImageField = {
+  _type?: EditorialImage["_type"] | "image";
+} & NullablePartial<Pick<EditorialImage, "crop" | "hotspot">> & {
     asset?: SanityImageAsset | null;
   };
 
 export type SanityImageSourceInput =
   | {
-      _type?: ImageObject["_type"] | SanityImageField["_type"] | string;
+      _type?: SanityImageField["_type"];
       alt?: string | null;
       altContent?: string | null;
       caption?: string | null;
-      image?: SanityImageField | null;
       asset?: SanityImageAsset | null;
       hotspot?: SanityImageField["hotspot"];
       crop?: SanityImageField["crop"];
@@ -53,13 +52,9 @@ export function getSanityImageField(
     return null;
   }
 
-  if (source.image) {
-    return source.image;
-  }
-
   if (source.asset) {
     return {
-      _type: source._type === "image" ? source._type : undefined,
+      _type: source._type,
       asset: source.asset,
       crop: source.crop,
       hotspot: source.hotspot,

@@ -11,23 +11,18 @@ const asset = {
   url: "https://cdn.sanity.io/images/example/production/example.webp",
 };
 
-describe("Sanity image compatibility", () => {
-  test("exposes the same rendering metadata for wrapped and direct images", () => {
-    const wrappedImage = {
-      _type: "imageObject",
-      altContent: "Restored urban soil",
-      image: { _type: "image", asset },
-    } as const;
+describe("Sanity images", () => {
+  test("exposes rendering metadata from a direct image", () => {
     const directImage = {
       _type: "editorialImage",
       altContent: "Restored urban soil",
       asset,
     } as const;
 
-    for (const image of [wrappedImage, directImage]) {
-      expect(hasSanityImage(image)).toBe(true);
-      expect(getSanityImageAlt(image)).toBe("Restored urban soil");
-      expect(getBlurDataUrl(image)).toBe("data:image/jpeg;base64,example");
-    }
+    expect(hasSanityImage(directImage)).toBe(true);
+    expect(getSanityImageAlt(directImage)).toBe("Restored urban soil");
+    expect(getBlurDataUrl(directImage)).toBe(
+      "data:image/jpeg;base64,example"
+    );
   });
 });
