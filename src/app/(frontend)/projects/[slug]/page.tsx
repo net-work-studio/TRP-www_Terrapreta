@@ -44,7 +44,9 @@ export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
     query: PROJECT_SLUGS_QUERY,
   });
-  return data ?? [];
+  // Cache Components requires one build-time param. This placeholder fetches
+  // no document and is handled by the route's existing notFound() branch.
+  return data?.length ? data : [{ slug: "__placeholder__" }];
 }
 
 export async function generateMetadata({
@@ -72,6 +74,10 @@ export async function generateMetadata({
       siteSettings,
       isDraftMode,
     });
+  }
+
+  if (projectItem.publicationScope === "overview" && !isDraftMode) {
+    notFound();
   }
 
   return generateMetadataHelper({
@@ -196,10 +202,11 @@ function ProjectPageContent({
 }
 
 async function CachedProjectPage({
+  isDraftMode,
   slug,
   perspective,
   stega,
-}: { slug: string } & SanityFetchOptions) {
+}: { isDraftMode: boolean; slug: string } & SanityFetchOptions) {
   "use cache";
 
   const { data: projectItem } = await sanityFetch({
@@ -209,7 +216,10 @@ async function CachedProjectPage({
     stega,
   });
 
-  if (!projectItem) {
+  if (
+    !projectItem ||
+    (projectItem.publicationScope === "overview" && !isDraftMode)
+  ) {
     notFound();
   }
 
@@ -219,12 +229,18 @@ async function CachedProjectPage({
 async function DynamicProjectPage({
   params,
 }: SlugPageProps) {
-  const [{ slug }, { fetchOptions }] = await Promise.all([
+  const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
     params,
     getSanityRequestState(),
   ]);
 
-  return <CachedProjectPage slug={slug} {...fetchOptions} />;
+  return (
+    <CachedProjectPage
+      isDraftMode={isDraftMode}
+      slug={slug}
+      {...fetchOptions}
+    />
+  );
 }
 
 function ProjectPageFallback() {
@@ -262,7 +278,11 @@ export default async function Page({
     published: async () => {
       const { slug } = await params;
       return (
-        <CachedProjectPage slug={slug} {...PUBLISHED_SANITY_FETCH_OPTIONS} />
+        <CachedProjectPage
+          isDraftMode={false}
+          slug={slug}
+          {...PUBLISHED_SANITY_FETCH_OPTIONS}
+        />
       );
     },
   });

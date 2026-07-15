@@ -27,6 +27,27 @@ export const projectDoc = defineType({
       },
     }),
     defineField({
+      type: "string",
+      name: "publicationScope",
+      description:
+        "Choose whether this project has a public detail page or only appears in the projects overview.",
+      initialValue: "full",
+      validation: (rule) => [
+        rule.custom((value) =>
+          value === undefined || value === "full" || value === "overview"
+            ? true
+            : "Choose full project or overview only.",
+        ),
+      ],
+      options: {
+        list: [
+          { title: "Full project", value: "full" },
+          { title: "Overview only", value: "overview" },
+        ],
+        layout: "radio",
+      },
+    }),
+    defineField({
       type: "imageObject",
       name: "mainImage",
       title: "Main Image",
@@ -114,13 +135,16 @@ export const projectDoc = defineType({
   preview: {
     select: {
       media: "mainImage.image",
+      publicationScope: "publicationScope",
       status: "status",
       title: "name",
     },
-    prepare({ media, status, title }) {
+    prepare({ media, publicationScope, status, title }) {
+      const scopeLabel =
+        publicationScope === "overview" ? "Overview only" : "Full project";
       return {
         media,
-        subtitle: status ? `Project - ${status}` : "Project",
+        subtitle: status ? `${scopeLabel} - ${status}` : scopeLabel,
         title: title || "Untitled project",
       };
     },

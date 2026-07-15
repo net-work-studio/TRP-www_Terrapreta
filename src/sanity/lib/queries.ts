@@ -90,6 +90,7 @@ export const PROJECTS_QUERY =
   _id,
   name,
   slug,
+  "publicationScope": coalesce(publicationScope, "full"),
   shortDescription,
   gridDimension{
 ${PROMINENCE_PROJECTION}
@@ -232,6 +233,7 @@ export const PROJECT_ITEM_QUERY =
   _id,
   name,
   slug,
+  "publicationScope": coalesce(publicationScope, "full"),
   mainImage{
 ${IMAGE_OBJECT_PROJECTION}
   },
@@ -309,7 +311,13 @@ ${IMAGE_FIELD_PROJECTION}
 }`);
 
 export const PROJECT_SLUGS_QUERY = defineQuery(
-  `*[_type == "project" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
+  `*[
+    _type == "project"
+    && defined(slug.current)
+    && coalesce(publicationScope, "full") == "full"
+  ] | order(_updatedAt desc) [0...100]{
+    "slug": slug.current
+  }`
 );
 
 export const JOURNAL_SLUGS_QUERY = defineQuery(
@@ -321,7 +329,12 @@ export const SERVICE_SLUGS_QUERY = defineQuery(
 );
 
 export const PROJECTS_SITEMAP_QUERY = defineQuery(
-  `*[_type == "project" && defined(slug.current) && seo.robotsIndex != "noindex"] {
+  `*[
+    _type == "project"
+    && defined(slug.current)
+    && coalesce(publicationScope, "full") == "full"
+    && seo.robotsIndex != "noindex"
+  ] {
     "slug": slug.current,
     _updatedAt
   }`
