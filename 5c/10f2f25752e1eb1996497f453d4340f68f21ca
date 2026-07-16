@@ -1,0 +1,26 @@
+.migration/badge.md
+  s_21c9af38be5d77::t_53ee902ba82564 1-18,20-30
+  s_21c9af38be5d77::t_1036f1f92f2fe6 19
+src/components/ui/badge.tsx
+  s_21c9af38be5d77::t_cc3cf278dba177 1-2,28-48
+package.json
+  s_21c9af38be5d77::t_986912731b459e 23,49-50
+bun.lock
+  s_21c9af38be5d77::t_02552705841461 8,298-301,474,476,480,2640-2641,2822-2825,2898-2899,3070-3073
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5c10f2f25752e1eb1996497f453d4340f68f21ca",
+  "prompts": {},
+  "sessions": {
+    "s_21c9af38be5d77": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6bdd-7a52-7b10-b2d7-49ad73ef46ce",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
