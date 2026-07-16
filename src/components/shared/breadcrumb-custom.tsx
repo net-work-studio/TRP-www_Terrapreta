@@ -17,8 +17,8 @@ export default function BreadcrumbCustom({ tag }: BreadcrumbCustomProps) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href="/journal">Journal</Link>
+          <BreadcrumbLink render={<Link href="/journal" />}>
+            Journal
           </BreadcrumbLink>
         </BreadcrumbItem>
         {tag ? (
