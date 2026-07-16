@@ -1,0 +1,26 @@
+src/components/shared/breadcrumb-custom.tsx
+  s_c662c4cb7e11d9::t_937161ab5fb475 1-34
+  s_c662c4cb7e11d9::t_e5482fbbed0006 35
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_c662c4cb7e11d9::t_d95b02ec765e15 49-51
+  s_c662c4cb7e11d9::t_937161ab5fb475 4,36-48,52,58-60,125,129-131,134-141,148,160
+CONTEXT.md
+  s_c662c4cb7e11d9::t_ec711d17db7c18 56
+  s_c662c4cb7e11d9::t_d205a4f89d3fbf 50-55,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "1a93701a9bffc836ee7abac155382ad8e0e49ace",
+  "prompts": {},
+  "sessions": {
+    "s_c662c4cb7e11d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6ba1-36d3-7530-9db1-f150d8ee4427",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
