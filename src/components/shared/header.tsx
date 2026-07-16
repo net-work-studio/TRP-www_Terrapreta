@@ -52,18 +52,18 @@ export default function Header() {
       className={`fixed top-0 right-0 left-0 z-50 flex items-center justify-center py-4 transition-all duration-100 ${
         isScrolled
           ? "border-stone-800 border-b bg-stone-950"
-          : "bg-stone-950/20"
+          : "bg-stone-950/40"
       }`}
     >
       <header className="container-site z-20 flex w-full items-center justify-between">
-        <Link className="h-6 w-fit" href="/">
+        <Link className="h-7 w-fit pt-1" href="/">
           <Logotype />
         </Link>
         <NavigationDesktop />
-        <div className="flex items-center gap-4">
-          <Button asChild size={"sm"} variant={buttonVariant}>
+        <div className="flex items-center md:hidden gap-4">
+          {/* <Button asChild size={"sm"} variant={buttonVariant}>
             <Link href="/contacts">Contact Us</Link>
-          </Button>
+          </Button> */}
           <Button
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

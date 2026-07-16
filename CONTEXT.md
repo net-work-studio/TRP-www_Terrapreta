@@ -47,3 +47,11 @@ _Avoid_: Competition collection, award
 **Project year**:
 The optional year an editor considers most relevant to presenting a project, typically its completion year or the year its competition result was announced.
 _Avoid_: Mandatory start year
+
+**Journal entry**:
+A dated editorial article published in the Journal and classified by a tag.
+_Avoid_: Tag, journal page
+
+**Journal tag**:
+A taxonomy label that classifies journal entries and can narrow the Journal collection without defining website hierarchy.
+_Avoid_: Breadcrumb, section
