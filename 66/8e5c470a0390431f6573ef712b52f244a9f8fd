@@ -1,0 +1,23 @@
+src/components/ui/aspect-ratio.tsx
+  s_37907524350d9c::t_362105c7b1974a 9
+  s_37907524350d9c::t_714c63ea99d08c 1-3,5-8,10-12
+.migration/aspect-ratio.md
+  s_37907524350d9c::t_04e55f21f2e3aa 1-2,4-14,16-26
+  s_37907524350d9c::t_a26eed14df92a2 3,15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "668e5c470a0390431f6573ef712b52f244a9f8fd",
+  "prompts": {},
+  "sessions": {
+    "s_37907524350d9c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6bcf-a70d-7452-8538-5cb79344c9c7",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
