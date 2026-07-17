@@ -1,0 +1,21 @@
+src/components/ui/field.tsx
+  s_5000bd9446f161::t_8de033409f40f7 118
+.migration/field.md
+  s_5000bd9446f161::t_8de033409f40f7 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "426e434e94c7a4f256e5f465f5247db7cd0ff9f9",
+  "prompts": {},
+  "sessions": {
+    "s_5000bd9446f161": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f36-f6c0-7c31-ba7f-78a209fd6bc6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
