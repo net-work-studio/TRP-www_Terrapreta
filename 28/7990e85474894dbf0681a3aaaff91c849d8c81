@@ -1,0 +1,50 @@
+src/components/shared/footer.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 3
+  s_2232ec27b0d4e8::t_0485af1a086b52 29-37
+src/app/(frontend)/services/[slug]/page.tsx
+  s_2232ec27b0d4e8::t_45dee1cc4104e7 109-111
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 7
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 4
+  s_2232ec27b0d4e8::t_241dc345437095 44-50
+.migration/button.md
+  s_2232ec27b0d4e8::t_d43156baed1a68 1-35
+src/app/(frontend)/_sections/services.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 4
+  s_2232ec27b0d4e8::t_5435bcfe470797 84-89,114-118,120-121
+src/app/(frontend)/_sections/home-hero.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 4
+  s_2232ec27b0d4e8::t_b804d3b1e4c65b 23-29,31-32
+src/app/(frontend)/contacts/page.tsx
+  s_2232ec27b0d4e8::t_6246d13beb0725 23-28
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 5
+src/components/shared/header.tsx
+  s_2232ec27b0d4e8::t_bdaec619197d1f 24
+src/app/(frontend)/page.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 9
+  s_2232ec27b0d4e8::t_301efa7473040d 110-112
+src/app/not-found.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 4
+  s_2232ec27b0d4e8::t_400002845b6494 35-43
+src/components/ui/button.tsx
+  s_2232ec27b0d4e8::t_b8ab46ad3f038e 1,39-52
+src/app/error.tsx
+  s_2232ec27b0d4e8::t_c87a57bf4c0e88 5
+  s_2232ec27b0d4e8::t_a25281c27380bf 40-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "287990e85474894dbf0681a3aaaff91c849d8c81",
+  "prompts": {},
+  "sessions": {
+    "s_2232ec27b0d4e8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6ed8-bddc-7642-a578-4428a4f642aa",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
