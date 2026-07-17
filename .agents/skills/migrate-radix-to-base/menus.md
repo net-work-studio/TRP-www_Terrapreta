@@ -9,7 +9,7 @@ Cross-cutting rules (apply to every part below):
 | Radix pattern | Base UI equivalent |
 | --- | --- |
 | `asChild` (`boolean`, `false`) | `render` (`ReactElement \| ((props: HTMLProps, state) => ReactElement)`). No merge-onto-child boolean; pass the element or a function. |
-| `dir` (`"ltr" \| "rtl"`) on roots | Dropped everywhere. Base UI reads direction from `<DirectionProvider>` (`@base-ui-components/react/direction-provider`) or the DOM `dir` attribute. |
+| `dir` (`"ltr" \| "rtl"`) on roots | Dropped everywhere. Base UI reads direction from `<DirectionProvider>` (`@base-ui/react/direction-provider`) or the DOM `dir` attribute. |
 | `forceMount` (`boolean`) | `keepMounted` (`boolean`, `false`) on `Portal` / indicator parts. Same use case (animation/SEO), presence is CSS-driven via `data-starting-style` / `data-ending-style` instead of Radix `data-state` + forced mount. |
 | `onEscapeKeyDown` / `onPointerDownOutside` / `onFocusOutside` / `onInteractOutside` (content parts) | Dropped as separate props. Use `onOpenChange(open, eventDetails)` on the Root and branch on `eventDetails.reason` (`'escape-key'`, `'outside-press'`, `'focus-out'`, ...). Call `eventDetails.cancel()` to prevent the close (replaces `event.preventDefault()`). |
 | `onSelect` on items (`(event: Event) => void`; `event.preventDefault()` keeps menu open) | `onClick` (`(event: BaseUIEvent<React.MouseEvent<HTMLDivElement>>) => void`) plus `closeOnClick` (`boolean`) to control whether the menu closes. |
@@ -396,9 +396,9 @@ Base UI only on Root: `closeDelay` (`50`), `actionsRef` (`{ unmount() }`), `onOp
 
 | Radix | Base UI |
 | --- | --- |
-| `--radix-navigation-menu-viewport-width` (on Viewport) | `--popup-width` (`number`, on **Popup**) — fixed width of the popup; animate `width: var(--popup-width)`. |
-| `--radix-navigation-menu-viewport-height` (on Viewport) | `--popup-height` (`number`, on **Popup**). |
-| – | Positioner also exposes `--anchor-width`, `--anchor-height`, `--available-width`, `--available-height`, `--positioner-width`, `--positioner-height`, `--transform-origin`. |
+| `--radix-navigation-menu-viewport-width` (on Viewport) | `--popup-width` (`number`, on **Popup**) — size Popup with `width: var(--popup-width)` and include `width` in Popup's transition properties. |
+| `--radix-navigation-menu-viewport-height` (on Viewport) | `--popup-height` (`number`, on **Popup**) — size Popup with `height: var(--popup-height)` and include `height` in Popup's transition properties. |
+| – | Positioner separately exposes `--anchor-width`, `--anchor-height`, `--available-width`, `--available-height`, and `--transform-origin`; do not route the Radix viewport size variables through Positioner. |
 
 ---
 

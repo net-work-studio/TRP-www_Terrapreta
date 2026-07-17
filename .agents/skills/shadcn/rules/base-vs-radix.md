@@ -45,11 +45,12 @@ This applies to all trigger and close components: `DialogTrigger`, `SheetTrigger
 
 ---
 
-## Button / trigger as non-button element (base only)
+## Links and non-button triggers (base only)
 
-When `render` changes an element to a non-button (`<a>`, `<span>`), add `nativeButton={false}`.
+Use a semantic link styled with `buttonVariants` for navigation. Reserve
+`Button` for actions.
 
-**Incorrect (base):** missing `nativeButton={false}`.
+**Incorrect (base):** using a button primitive as a link.
 
 ```tsx
 <Button render={<a href="/docs" />}>Read the docs</Button>
@@ -58,9 +59,7 @@ When `render` changes an element to a non-button (`<a>`, `<span>`), add `nativeB
 **Correct (base):**
 
 ```tsx
-<Button render={<a href="/docs" />} nativeButton={false}>
-  Read the docs
-</Button>
+<a className={buttonVariants()} href="/docs">Read the docs</a>
 ```
 
 **Correct (radix):**
@@ -71,7 +70,8 @@ When `render` changes an element to a non-button (`<a>`, `<span>`), add `nativeB
 </Button>
 ```
 
-Same for triggers whose `render` is not a `Button`:
+When a trigger's `render` target is not a native button, set
+`nativeButton={false}`:
 
 ```tsx
 // base.

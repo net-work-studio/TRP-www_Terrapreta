@@ -104,13 +104,19 @@ full build.
 
 ## Hard rules
 
-- NEVER touch non-radix libraries or their wrappers: cmdk (command), vaul
-  (drawer), sonner, input-otp, react-day-picker (calendar), recharts (chart).
-  Report them as intentionally untouched.
+- NEVER touch non-radix libraries or their wrappers in the default migration:
+  cmdk (command), vaul (drawer), sonner, input-otp, react-day-picker
+  (calendar), recharts (chart). In particular, keep vaul outside a default
+  Radix-to-Base migration; migrate it only as a separately requested drawer
+  migration. Report these libraries as intentionally untouched.
 - No Base UI counterpart: AspectRatio -> CSS aspect-ratio div; Label ->
   native `<label>`; VisuallyHidden -> `sr-only`; Direction -> Direction
-  Provider (`direction` prop, not `dir`). Popover Anchor and NavigationMenu
-  Indicator have no equivalent: inert passthrough + flag.
+  Provider (`direction` prop, not `dir`). The Radix part names Popover Anchor
+  and NavigationMenu Indicator are removed, but their capabilities are not:
+  replace Popover Anchor with the overlay family's Positioner `anchor` prop,
+  and replace NavigationMenu Indicator through the menu family's Icon/Arrow
+  mapping. Preserve anchoring and indicator behavior; do not leave inert
+  passthrough parts.
 - `button.tsx` migrates to the REAL `@base-ui/react/button` primitive, never
   a hand-rolled useRender wrapper.
 - Behavior deltas are FLAGGED, never silently patched (tabs manual

@@ -36,12 +36,12 @@ export default async function FrontendLayout({
       {footer}
       <Toaster />
       <SanityLive includeDrafts={isDraftMode} />
-      {isDraftMode ? (
+      {isDraftMode && (
         <>
           <DisableDraftMode />
           <VisualEditing />
         </>
-      ) : null}
+      )}
     </>
   );
 }

@@ -28,12 +28,12 @@ export default function Header() {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     }
 
     // Cleanup on unmount
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -52,6 +52,9 @@ export default function Header() {
         <NavigationDesktop />
         <div className="flex items-center md:hidden gap-4">
           <Button
+            aria-label={
+              isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
+            }
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             size="icon"

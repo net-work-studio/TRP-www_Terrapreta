@@ -114,7 +114,8 @@ One subpath per component either way.
 - `--radix-<comp>-trigger-width` -> `--anchor-width`
 - `--radix-accordion-content-height` -> `--accordion-panel-height`
 - nav-menu `--radix-navigation-menu-viewport-height/width` ->
-  `--positioner-height/width`, `--popup-height/width`, `--available-width`
+  `--popup-height/width` on `NavigationMenu.Popup`; size and animate the Popup's
+  `height`/`width`, and do not route these viewport variables through Positioner
 
 ### Props
 - Tooltip Provider: `delayDuration` -> `delay`.
@@ -215,8 +216,8 @@ Scroll-area: Scrollbar/Thumb renames only. Label: no primitive; native
 Viewport moves out of Root into `Portal > Positioner > Popup > Viewport`
 (our NavigationMenuPositioner). Indicator -> Icon. `viewport` boolean prop
 removed; `align` forwarded to Positioner. New `data-instant`,
-`data-activation-direction` hooks; vars -> `--positioner-height/width`,
-`--popup-height/width`.
+`data-activation-direction` hooks; Radix viewport-size vars ->
+`--popup-height/width` on Popup, including Popup height/width transitions.
 
 ### breadcrumb / marker (Slot users)
 `Slot.Root` + `asChild` -> `useRender` + `mergeProps`

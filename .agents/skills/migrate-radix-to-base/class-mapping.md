@@ -43,7 +43,7 @@ uses per-side slide classes, keep the `data-[side=...]` or
 | `--radix-<comp>-trigger-height` | `--anchor-height` |
 | `--radix-accordion-content-height` | `--accordion-panel-height` |
 | `--radix-collapsible-content-height` | `--collapsible-panel-height` |
-| `--radix-navigation-menu-viewport-height/width` | `--positioner-height` / `--positioner-width` |
+| `--radix-navigation-menu-viewport-height/width` | `--popup-height` / `--popup-width` on `NavigationMenu.Popup` |
 
 ## Element changes kill pseudo-class variants
 

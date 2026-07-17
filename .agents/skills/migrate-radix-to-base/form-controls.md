@@ -339,7 +339,7 @@ Part mapping: `Root -> Root`, `Track -> Track`, `Range -> Indicator` (renamed), 
 | `disabled` | `boolean`, default `false` | `disabled: boolean`, default `false` | Same. |
 | `orientation` | `"horizontal" \| "vertical"`, default `"horizontal"` | `orientation: Orientation`, default `'horizontal'` | Same. |
 | `dir` | `"ltr" \| "rtl"`, no default | dropped | Use `DirectionProvider`. |
-| `inverted` | `boolean`, default `false` | dropped (workaround) | No equivalent. For horizontal sliders, wrap in `DirectionProvider dir="rtl"` (direction-based inversion); there is no built-in way to invert a vertical slider. |
+| `inverted` | `boolean`, default `false` | dropped (workaround) | No equivalent. For horizontal sliders, wrap in `DirectionProvider direction="rtl"` (direction-based inversion); there is no built-in way to invert a vertical slider. |
 | `min` | `number`, default `0` | `min: number`, default `0` | Same. |
 | `max` | `number`, default `100` | `max: number`, default `100` | Same. |
 | `step` | `number`, default `1` | `step: number`, default `1` | Same. |

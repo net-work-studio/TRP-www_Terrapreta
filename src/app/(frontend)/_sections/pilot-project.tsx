@@ -44,6 +44,7 @@ export default function PilotProject() {
         <Link
           className={buttonVariants()}
           href="https://osservatorio-goccia.org/"
+          rel="noopener"
           target="_blank"
         >
           Explore the Pilot Project

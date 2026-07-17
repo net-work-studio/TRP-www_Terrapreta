@@ -116,9 +116,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        warning: "oklch(var(--warning) / <alpha-value>)",
-        "warning-foreground":
-          "oklch(var(--warning-foreground) / <alpha-value>)",
+        warning: "var(--warning)",
+        "warning-foreground": "var(--warning-foreground)",
       },
     },
   },
@@ -172,7 +171,17 @@ warning: "bg-warning text-warning-foreground hover:bg-warning/90",
 Compose shadcn/ui primitives into higher-level components:
 
 ```tsx
-export function ConfirmDialog({ title, description, onConfirm, children }) {
+export function ConfirmDialog({
+  title,
+  description,
+  onConfirm,
+  children,
+}: {
+  title: string
+  description: string
+  onConfirm: () => void
+  children: React.ReactNode
+}) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>

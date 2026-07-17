@@ -153,7 +153,7 @@ separate spinner.
     <AttachmentDescription>PDF · 2.4 MB</AttachmentDescription>
   </AttachmentContent>
   <AttachmentActions>
-    <AttachmentAction>
+    <AttachmentAction aria-label="Download homepage-feedback.pdf">
       <DownloadIcon />
     </AttachmentAction>
   </AttachmentActions>

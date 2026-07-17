@@ -16,11 +16,11 @@ check node_modules/@base-ui/react/**/*.d.ts, never guess.
 
 | Component | Radix prop | Base UI fate | Call-site action |
 |---|---|---|---|
-| Accordion | `type="single"\|"multiple"` + `collapsible` | dropped; `value`/`defaultValue` are ALWAYS arrays; multiple-open via `multiple` | `type="single" collapsible` -> remove both; wrap values in arrays; `type="multiple"` -> `multiple` |
+| Accordion | `type="single"\|"multiple"` + `collapsible` | `type`/`collapsible` are dropped; `value`/`defaultValue` are ALWAYS arrays; multiple-open via `multiple`; Base single mode is always collapsible | `type="multiple"` -> `multiple`. For `type="single"`, remove both props only when `collapsible` was explicitly enabled. When `collapsible` is false or omitted (Radix's default), preserve non-collapsible behavior by retaining controlled-value logic that rejects an empty array or by calling `eventDetails.cancel()` when the next value is empty; wrap scalar values in arrays. |
 | Tabs | `activationMode="manual"` | dropped; Base UI defaults to MANUAL activation | remove prop; near-equivalent opt-in is `Tabs.List activateOnFocus` (behavior delta: flag, do not auto-add) |
 | Select | `position="popper"\|"item-aligned"` | `alignItemWithTrigger` boolean (on Positioner; wrappers expose it) | `position="popper"` -> `alignItemWithTrigger={false}`; `item-aligned` -> `alignItemWithTrigger` (default) |
-| TooltipProvider | `delayDuration`, `skipDelayDuration` | `delay`; skip-delay concept dropped | rename / remove |
-| Tooltip | `disableHoverableContent` | NO equivalent | remove; FLAG the behavior change in the report |
+| TooltipProvider | `delayDuration`, `skipDelayDuration` | `delay`, `timeout` | rename both; `timeout` preserves the skip-delay window |
+| Tooltip | `disableHoverableContent` | Root `disableHoverablePopup` | rename on the Tooltip Root |
 | Avatar.Image | `delayMs` | `delay` | rename |
 | ScrollArea | `type="always"\|"scroll"\|...` | dropped | remove |
 | Separator | `decorative` | dropped | remove |
@@ -34,7 +34,7 @@ check node_modules/@base-ui/react/**/*.d.ts, never guess.
 | Menubar | `loop` | `loopFocus` | rename |
 | ContextMenu.Root | `modal` | REMOVED | remove |
 | ContextMenu.Trigger | `disabled` | REMOVED | remove; gate the trigger yourself |
-| DropdownMenu/ContextMenu items | (Radix closed menu on select) | `closeOnClick` defaults FALSE on CheckboxItem/RadioItem | behavior delta: flag; add `closeOnClick` only if the user asks |
+| DropdownMenu/ContextMenu CheckboxItem/RadioItem | (Radix closed menu on select) | `closeOnClick` defaults FALSE | add `closeOnClick` to preserve Radix's default; omit it only when the user intentionally wants checked items to keep the menu open |
 | NavigationMenu | `delayDuration`(200), `skipDelayDuration`, `viewport` | `delay`(50) + `closeDelay`; viewport prop gone (Positioner handles it) | rename/remove; flag the 200->50 hover-delay feel change |
 | Popover / HoverCard | `openDelay`/`closeDelay` on Root | move to TRIGGER as `delay`/`closeDelay` | relocate props Root -> Trigger |
 | Dialog / AlertDialog | `onOpenAutoFocus` | `initialFocus` (element/ref-based, not event-based) | restructure: pass target instead of preventDefault handler |
