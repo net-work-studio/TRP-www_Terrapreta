@@ -24,7 +24,8 @@
 - `git diff --check`: passed for the migration changes.
 - `bun run check`: remains blocked by the pre-existing `biome.json` extension resolution failure for `ultracite/core` with installed Ultracite 7.9.3.
 
-## Legacy style flag
+## Registry configuration
 
-- `components.json` intentionally remains `style: "new-york"`. This legacy style has no `base-new-york` registry counterpart, so changing the style would restyle the application.
-- The shadcn CLI therefore continues to identify the registry base as Radix. Future `shadcn add` commands will deliver Radix variants; add Base UI components manually or choose a Base UI style migration explicitly.
+- `components.json` now uses `style: "base-maia"` so future shadcn additions resolve to Base UI Maia variants.
+- `bunx --bun shadcn@latest info --json` confirms `base: "base"`, Base UI documentation and registry links, and the resolved Maia preset.
+- Existing migrated wrappers were not overwritten or restyled; this configuration change only selects the registry source for future component operations.
