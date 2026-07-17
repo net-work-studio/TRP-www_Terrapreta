@@ -1,0 +1,35 @@
+src/components/ui/label.tsx
+  s_4b8c2bcd231bc3::t_b43d0e5c424ab8 12
+src/components/ui/dialog.tsx
+  s_4b8c2bcd231bc3::t_b43d0e5c424ab8 54
+.migration/dialog.md
+  s_4b8c2bcd231bc3::t_1a1350472c665f 8-9,24
+.migration/navigation-menu.md
+  s_4b8c2bcd231bc3::t_1a1350472c665f 3,10
+.migration/project.md
+  s_4b8c2bcd231bc3::t_1a1350472c665f 23
+.migration/label.md
+  s_4b8c2bcd231bc3::t_1a1350472c665f 9
+src/app/(frontend)/_sections/services.tsx
+  s_4b8c2bcd231bc3::t_b43d0e5c424ab8 4,38-39,51,54-64,66-67
+.migration/switch.md
+  s_4b8c2bcd231bc3::t_1a1350472c665f 3,10,12,29
+src/components/ui/navigation-menu.tsx
+  s_4b8c2bcd231bc3::t_b43d0e5c424ab8 91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "417c352680da48cf9405980c89665aaf9e327310",
+  "prompts": {},
+  "sessions": {
+    "s_4b8c2bcd231bc3": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f6c-179e-7ee2-82e7-966b68c3e560",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
