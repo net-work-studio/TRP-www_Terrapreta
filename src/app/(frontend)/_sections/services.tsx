@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +35,8 @@ function ServiceCard({
   shortDescription,
   slug,
 }: ServiceCardProps) {
+  const titleId = `service-${slug}-title`;
+
   return (
     <div className="relative flex aspect-3/2 w-full grid-cols-3 items-end gap-5 rounded bg-gray-600 p-7.5">
       <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/20" />
@@ -46,20 +48,23 @@ function ServiceCard({
         source={mainImage}
       />
 
-      <div className="z-10 flex items-baseline gap-5">
+      <div className="z-10 flex w-full items-baseline gap-5">
         <Dialog>
           <DialogTrigger
-            className="w-full"
-            nativeButton={false}
-            render={
-              <div className="flex h-fit w-full justify-between gap-5 md:items-center" />
-            }
-          >
-            <h3 className="text-lg">{name}</h3>
-            <Button size="icon" variant="outline">
+            aria-labelledby={titleId}
+            className="absolute inset-0 z-20 cursor-pointer rounded outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          />
+          <div className="pointer-events-none flex h-fit w-full justify-between gap-5 md:items-center">
+            <h3 className="text-lg" id={titleId}>
+              {name}
+            </h3>
+            <span
+              aria-hidden="true"
+              className={buttonVariants({ size: "icon", variant: "outline" })}
+            >
               <Plus />
-            </Button>
-          </DialogTrigger>
+            </span>
+          </div>
           <DialogContent className="container-article p-0!">
             <div className="space-y-1.5">
               <DialogHeader>

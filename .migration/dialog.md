@@ -5,8 +5,8 @@
 ## Changed
 
 - `src/components/ui/dialog.tsx:3` now imports `Dialog` from `@base-ui/react/dialog`; `Overlay` maps to `Backdrop`, `Content` maps to `Popup`, component prop types use Base UI part types, and enter/exit styles use Base UI transition attributes.
-- `src/components/ui/dialog.tsx:50` keeps the centered modal anatomy as `Portal > Backdrop + Popup`, with no Positioner.
-- `src/app/(frontend)/_sections/services.tsx:51` migrates the only consumer from Radix `asChild` to Base UI `render`, with `nativeButton={false}` for its rendered `<div>` trigger.
+- `src/components/ui/dialog.tsx:50` keeps the centered modal anatomy as `Portal > Backdrop + Popup`, with no Positioner, and transitions the longhand `scale` property together with opacity and transform.
+- `src/app/(frontend)/_sections/services.tsx:53` uses one full-card native Base UI trigger labelled by the service heading; the visible plus is an inert visual element, so each card has one control and one tab stop.
 - `.migration/dialog.md` records the migration, compatibility notes, and manual verification steps.
 - Leftover scan is clean: `grep -n "radix-ui\|@radix-ui" src/components/ui/dialog.tsx src/app/\(frontend\)/_sections/services.tsx` returned no matches.
 
@@ -21,7 +21,7 @@
 
 - Base UI's `onOpenChange` callback supplies a second event-details argument. Existing one-argument handlers remain compatible, but dismiss prevention now uses the event-details reason and `cancel()` API.
 - Base UI's Portal renders a `<div>` wrapper, whereas the Radix Portal did not add a wrapper element.
-- Open and close animations now use Base UI's starting/ending transition states instead of Radix state-driven keyframe utilities; the intended fade-and-scale effect is preserved.
+- Open and close animations now use Base UI's starting/ending transition states instead of Radix state-driven keyframe utilities; the intended fade-and-scale effect is preserved without a snapping scale change.
 
 ## Verify by hand - OK
 

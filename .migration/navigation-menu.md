@@ -1,13 +1,13 @@
 # navigation-menu
 
-2026-07-17, transformation engine for legacy `new-york`, validated against the official Base Nova registry shape; migrated successfully from Radix UI to Base UI while preserving the customized New York visual treatment.
+2026-07-17, transformation engine for legacy `new-york`, validated against the official Base Nova registry shape; migrated successfully from Radix UI to Base UI while preserving the customized New York visual treatment. TypeScript, 10 tests, the production build, and generated CSS inspection pass.
 
 ## Changed
 
 - `src/components/ui/navigation-menu.tsx:2` now imports Base UI's Navigation Menu namespace and uses native part prop types.
 - `src/components/ui/navigation-menu.tsx:8` removes the Radix-only `viewport` switch, forwards `align` to the shared positioner, and always renders Base UI's popup anatomy.
 - `src/components/ui/navigation-menu.tsx:62` rewrites trigger styling from Radix `data-state` hooks to Base UI's `data-popup-open` hook and removes unsupported trigger-disabled styling.
-- `src/components/ui/navigation-menu.tsx:86` replaces Radix motion attributes with Base UI activation-direction and starting/ending transition hooks.
+- `src/components/ui/navigation-menu.tsx:86` replaces Radix motion attributes with Base UI activation-direction and starting/ending transition hooks, using Tailwind's bracketed value syntax so all four directional selectors are emitted.
 - `src/components/ui/navigation-menu.tsx:100` replaces the Radix viewport wrapper with `Portal > Positioner > Popup > Viewport`, forwards all positioning props to the Positioner, and adopts Base UI popup size and transform-origin variables.
 - `src/components/ui/navigation-menu.tsx:143` keeps `NavigationMenuIndicator` as an inert visual compatibility wrapper because Base UI has no equivalent for Radix's active-trigger indicator.
 - `.migration/navigation-menu.md` records the API changes, behavior deltas, and manual QA expectations.

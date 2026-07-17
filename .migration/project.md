@@ -20,6 +20,7 @@
 - `bun run typecheck`: passed.
 - `bun test`: passed, 10 tests across 3 files.
 - `bun run build`: passed, including Sanity schema extraction and TypeGen; Next.js emitted its existing non-fatal `next/dynamic` client-rendering bailout while generating all 36 static pages.
+- Generated CSS inspection confirms the four navigation activation-direction selectors, Base UI disabled-peer selectors, and dialog scale transition property are present.
 - `git diff --check`: passed for the migration changes.
 - `bun run check`: remains blocked by the pre-existing `biome.json` extension resolution failure for `ultracite/core` with installed Ultracite 7.9.3.
 

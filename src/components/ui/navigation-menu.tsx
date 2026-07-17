@@ -88,7 +88,7 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "h-full w-auto p-2 pr-2.5 transition-[opacity,transform,translate] duration-300 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:data-activation-direction=left:translate-x-1/2 data-ending-style:data-activation-direction=right:-translate-x-1/2 data-starting-style:data-activation-direction=left:-translate-x-1/2 data-starting-style:data-activation-direction=right:translate-x-1/2 **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none",
+        "h-full w-auto p-2 pr-2.5 transition-[opacity,transform,translate] duration-300 ease-out data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:data-[activation-direction=left]:translate-x-1/2 data-ending-style:data-[activation-direction=right]:-translate-x-1/2 data-starting-style:data-[activation-direction=left]:-translate-x-1/2 data-starting-style:data-[activation-direction=right]:translate-x-1/2 **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none",
         className
       )}
       {...props}

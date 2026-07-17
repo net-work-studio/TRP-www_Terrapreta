@@ -6,6 +6,7 @@
 
 - `src/components/ui/label.tsx:1` removes the client boundary and `@radix-ui/react-label` dependency because the wrapper is now static native markup.
 - `src/components/ui/label.tsx:8` renders a native `<label>` and retains the existing classes, `data-slot`, `htmlFor`, ref support, and label semantics.
+- `src/components/ui/label.tsx:12` supports both native disabled peers and Base UI roots carrying `data-disabled`, preserving disabled label styling for controls such as Switch.
 - `.migration/label.md` records the migration and manual QA expectations.
 - Leftover scan is clean: `grep -n "radix-ui\|@radix-ui" src/components/ui/label.tsx` returns no matches.
 
