@@ -23,7 +23,7 @@
 - Base UI's Portal renders a `<div>` wrapper, whereas the Radix Portal did not add a wrapper element.
 - Open and close animations now use Base UI's starting/ending transition states instead of Radix state-driven keyframe utilities; the intended fade-and-scale effect is preserved.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open a service card by clicking its title row and confirm the dialog is centered with the backdrop visible.
 - Press Tab and Shift+Tab to confirm focus stays inside the open dialog.

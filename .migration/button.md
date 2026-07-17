@@ -27,7 +27,7 @@
 - No runtime behavior change is expected. Link-shaped controls remain links instead of receiving Base UI Button's forced `role="button"`; true actions render through the Base UI Button primitive.
 - The wrapper API no longer exposes Radix's `asChild` prop. All active consumers were migrated to the semantic `buttonVariants` link pattern.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open the home, footer, contacts, service, error, and not-found views; confirm each CTA matches its previous size, colors, spacing, hover state, and layout.
 - Tab through those CTAs and confirm links show the expected focus ring, navigate normally, and expose link semantics to assistive technology.

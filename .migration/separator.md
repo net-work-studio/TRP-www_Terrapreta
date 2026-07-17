@@ -19,7 +19,7 @@
 
 - Base UI separators are always semantic `role="separator"` elements. Radix's previous default `decorative={true}` behavior and the `decorative` consumer prop are no longer available.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Confirm horizontal separators remain one pixel high and span the available width.
 - Confirm vertical separators fill their container height and remain one pixel wide.
