@@ -1,0 +1,21 @@
+.migration/radio-group.md
+  s_43b19eb896e9de::t_16856d1e93a914 1-28
+src/components/ui/radio-group.tsx
+  s_43b19eb896e9de::t_16856d1e93a914 3-4,12,14,25,27,29,35,40-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5ae53d6b12a2c12d3fa8242314a1e8a92658ab14",
+  "prompts": {},
+  "sessions": {
+    "s_43b19eb896e9de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f4f-001e-7122-8f6e-caf271278fed",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
