@@ -48,13 +48,17 @@ function ServiceCard({
 
       <div className="z-10 flex items-baseline gap-5">
         <Dialog>
-          <DialogTrigger asChild className="w-full">
-            <div className="flex h-fit w-full justify-between gap-5 md:items-center">
-              <h3 className="text-lg">{name}</h3>
-              <Button size="icon" variant="outline">
-                <Plus />
-              </Button>
-            </div>
+          <DialogTrigger
+            className="w-full"
+            nativeButton={false}
+            render={
+              <div className="flex h-fit w-full justify-between gap-5 md:items-center" />
+            }
+          >
+            <h3 className="text-lg">{name}</h3>
+            <Button size="icon" variant="outline">
+              <Plus />
+            </Button>
           </DialogTrigger>
           <DialogContent className="container-article p-0!">
             <div className="space-y-1.5">
