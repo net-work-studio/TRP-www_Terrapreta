@@ -1,0 +1,19 @@
+.migration/project.md
+  s_43b19eb896e9de::t_b84e6fe28b1a5f 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "06f150dd65ee5f66fd7c812a4ddd3f55d9d8adb0",
+  "prompts": {},
+  "sessions": {
+    "s_43b19eb896e9de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f4f-001e-7122-8f6e-caf271278fed",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
