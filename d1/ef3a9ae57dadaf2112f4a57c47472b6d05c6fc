@@ -1,0 +1,57 @@
+src/components/ui/field.tsx
+  s_7df09b322931dc::t_b595eed8b4321e 118
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_7df09b322931dc::t_b595eed8b4321e 47
+.agents/skills/migrate-radix-to-base/menus.md
+  s_7df09b322931dc::t_7a6bc9d96cbbf4 12,399-401
+.agents/skills/shadcn/rules/chat.md
+  s_7df09b322931dc::t_08292f838b6dfc 156
+.agents/skills/shadcn/rules/forms.md
+  s_7df09b322931dc::t_08292f838b6dfc 94
+src/components/ui/navigation-menu.tsx
+  s_7df09b322931dc::t_0b5131768f138f 120-121,148,150,153,158-159
+src/app/(frontend)/layout.tsx
+  s_7df09b322931dc::t_738fe4d84fcdab 39,44
+.agents/skills/shadcn/customization.md
+  s_7df09b322931dc::t_d4f01e865e2e9a 119-120,174-184
+.agents/skills/migrate-radix-to-base/universal-patterns.md
+  s_7df09b322931dc::t_0f0d48830b3376 117-118,219-220
+.agents/skills/shadcn/rules/base-vs-radix.md
+  s_7df09b322931dc::t_2da69e7f9e002a 48,50-51,53,62,73-74
+.agents/skills/migrate-radix-to-base/consumer-props.md
+  s_7df09b322931dc::t_06d245778a1064 19,22-23,37
+.agents/skills/migrate-radix-to-base/SKILL.md
+  s_7df09b322931dc::t_320d6c4b533842 107-111,114-119
+src/components/ui/aspect-ratio.test.tsx
+  s_7df09b322931dc::t_738fe4d84fcdab 8,14
+src/components/shared/header.tsx
+  s_7df09b322931dc::t_738fe4d84fcdab 31,36,55-57
+.agents/skills/migrate-radix-to-base/form-controls.md
+  s_7df09b322931dc::t_d02bb9281141c8 342
+.agents/skills/migrate-radix-to-base/class-mapping.md
+  s_54dd30da502780::t_febf0872fec165 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d1ef3a9ae57dadaf2112f4a57c47472b6d05c6fc",
+  "prompts": {},
+  "sessions": {
+    "s_54dd30da502780": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6fcd-f292-7c70-896e-8499cb22f9c0",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_7df09b322931dc": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6fca-9ad3-74c2-bfed-b7d6fd7a8f77",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
