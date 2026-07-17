@@ -19,7 +19,7 @@
 - The rendered anatomy changes from Radix's wrapper and absolutely positioned inner element to one native `div` using CSS `aspect-ratio`. Selectors targeting Radix's internal `data-radix-aspect-ratio-wrapper` attribute will no longer match.
 - The component no longer creates a client boundary because the CSS-native implementation has no client-side behavior.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open the home, project, and journal views and confirm square, portrait, and landscape media retain their configured ratios.
 - Resize across mobile and desktop widths and confirm fill images still cover their containers without overflow.

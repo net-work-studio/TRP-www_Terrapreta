@@ -19,7 +19,7 @@
 
 None.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open a journal detail page and confirm the “Journal” breadcrumb navigates to `/journal`.
 - Tab to the breadcrumb link and confirm its focus and activation behavior are unchanged.

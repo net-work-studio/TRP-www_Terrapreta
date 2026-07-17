@@ -23,7 +23,7 @@
 
 - Polymorphic rendering now uses Base UI's `render` prop instead of Radix's `asChild` boolean. No current Badge consumer uses `asChild`, so existing rendered behavior is unchanged.
 
-## Verify by hand
+## Verify by hand - OK
 
 - Open a page-grid entry with a tag and confirm the secondary badge matches its previous appearance.
 - Render each badge variant and confirm its colors, border, spacing, and icon sizing.
