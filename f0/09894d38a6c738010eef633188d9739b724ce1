@@ -1,0 +1,21 @@
+.migration/separator.md
+  s_5000bd9446f161::t_60cea4a63b3be8 1-26
+src/components/ui/separator.tsx
+  s_5000bd9446f161::t_60cea4a63b3be8 3,11,13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "f009894d38a6c738010eef633188d9739b724ce1",
+  "prompts": {},
+  "sessions": {
+    "s_5000bd9446f161": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f36-f6c0-7c31-ba7f-78a209fd6bc6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
