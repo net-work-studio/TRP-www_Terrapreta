@@ -1,7 +1,7 @@
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { urlFor } from "@/sanity/lib/image";
 
 const heroImage =
@@ -20,13 +20,16 @@ export default function HomeHero() {
               Developing places for nature, people and climate
             </p>
           </hgroup>
-          <Button
-            asChild
-            className="opacity-100 starting:opacity-0 transition-opacity duration-1000"
-            variant={"brand"}
+          <Link
+            className={buttonVariants({
+              className:
+                "opacity-100 starting:opacity-0 transition-opacity duration-1000",
+              variant: "brand",
+            })}
+            href="#learn-more"
           >
-            <Link href="#learn-more">Learn More</Link>
-          </Button>
+            Learn More
+          </Link>
         </div>
         <div className="absolute right-0 bottom-0 left-0 z-10 flex animate-bounce flex-col items-center justify-center gap-2.5 pb-5 opacity-100 starting:opacity-0 transition-opacity duration-2000">
           <p>Scroll to learn more</p>

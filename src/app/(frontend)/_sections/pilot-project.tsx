@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import TagTitle from "@/components/ui/tag-title";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -41,11 +41,13 @@ export default function PilotProject() {
             that has grown there over several decades of abandonment.
           </p>
         </div>
-        <Button asChild>
-          <Link href="https://osservatorio-goccia.org/" target="_blank">
-            Explore the Pilot Project
-          </Link>
-        </Button>
+        <Link
+          className={buttonVariants()}
+          href="https://osservatorio-goccia.org/"
+          target="_blank"
+        >
+          Explore the Pilot Project
+        </Link>
       </div>
     </div>
   );

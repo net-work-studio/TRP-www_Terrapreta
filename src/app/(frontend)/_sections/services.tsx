@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -81,9 +81,12 @@ function ServiceCard({
             </div>
 
             <div className="p-5 pb-10 md:p-10">
-              <Button>
-                <Link href={`/services/${slug}`}>Discover more</Link>
-              </Button>
+              <Link
+                className={buttonVariants()}
+                href={`/services/${slug}`}
+              >
+                Discover more
+              </Link>
             </div>
           </DialogContent>
         </Dialog>
@@ -108,13 +111,14 @@ function ServicesContent({
             innovative projects. Our research-driven approach allows us to
             deliver transformative solutions at any scale.
           </p>
-          <Button
-            asChild
-            className="w-fit md:justify-self-end"
-            variant="default"
+          <Link
+            className={buttonVariants({
+              className: "w-fit md:justify-self-end",
+            })}
+            href="/discovery-call"
           >
-            <Link href="/discovery-call">Book a Discovery Call</Link>
-          </Button>
+            Book a Discovery Call
+          </Link>
         </div>
       </hgroup>
 

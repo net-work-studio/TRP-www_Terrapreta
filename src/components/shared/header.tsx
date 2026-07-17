@@ -2,7 +2,6 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logotype from "@/components/brand/logotype";
 import { Button } from "@/components/ui/button";
@@ -11,25 +10,18 @@ import NavigationMobile from "./navigation/navigation-mobile";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isHalfScrolled, setIsHalfScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
-  const isHomePage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
-
-      if (isHomePage) {
-        setIsHalfScrolled(window.scrollY > window.innerHeight * 0.5);
-      }
     };
 
     handleScroll();
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
+  }, []);
 
   // Block scroll when mobile menu is open
   useEffect(() => {
@@ -45,8 +37,6 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  const buttonVariant = isHomePage && !isHalfScrolled ? "default" : "brand";
-
   return (
     <div
       className={`fixed top-0 right-0 left-0 z-50 flex items-center justify-center py-4 transition-all duration-100 ${
@@ -61,9 +51,6 @@ export default function Header() {
         </Link>
         <NavigationDesktop />
         <div className="flex items-center md:hidden gap-4">
-          {/* <Button asChild size={"sm"} variant={buttonVariant}>
-            <Link href="/contacts">Contact Us</Link>
-          </Button> */}
           <Button
             className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
