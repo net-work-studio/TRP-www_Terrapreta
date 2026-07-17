@@ -1,0 +1,21 @@
+.migration/navigation-menu.md
+  s_43b19eb896e9de::t_009c09e11eb396 1-37
+src/components/ui/navigation-menu.tsx
+  s_43b19eb896e9de::t_009c09e11eb396 2,9,13-14,21,25,33,49,60,67,76,86,91,99,101-104,106,108-111,113,116-117,119-124,131,136,147,149,152,158,170
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "953e81f5c9a5e25d41f9efe23a3808c459fb3f81",
+  "prompts": {},
+  "sessions": {
+    "s_43b19eb896e9de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6f4f-001e-7122-8f6e-caf271278fed",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
