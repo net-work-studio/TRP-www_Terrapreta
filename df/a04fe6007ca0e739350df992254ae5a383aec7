@@ -1,0 +1,25 @@
+.migration/dialog.md
+  s_6e24913c57b66e::t_8e63945778d3d9 3,18
+  s_6e24913c57b66e::t_8a2a00dde5e311 1-2,4-17,19-32
+src/components/ui/dialog.tsx
+  s_6e24913c57b66e::t_60a346fb2a81c3 3,9,13,17,21,28,30,32,46,52,54,63,70,101,114
+src/app/(frontend)/_sections/services.tsx
+  s_6e24913c57b66e::t_4014f6192b2f1d 51-57
+  s_6e24913c57b66e::t_782ea581216206 58-61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "dfa04fe6007ca0e739350df992254ae5a383aec7",
+  "prompts": {},
+  "sessions": {
+    "s_6e24913c57b66e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f6eef-627d-7a42-89b7-db4885f08d7a",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
