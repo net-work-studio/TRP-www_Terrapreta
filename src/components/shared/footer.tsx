@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Mark from "@/components/brand/mark";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import SanityImage from "@/components/ui/sanity-image";
 import {
   type SanityFetchOptions,
@@ -26,9 +26,15 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
               {logos.length > 0 && (
                 <div className="flex flex-wrap items-center gap-4">{logos}</div>
               )}
-              <Button asChild className="w-fit" variant="outline">
-                <Link href="/contacts">Let's talk</Link>
-              </Button>
+              <Link
+                className={buttonVariants({
+                  className: "w-fit",
+                  variant: "outline",
+                })}
+                href="/contacts"
+              >
+                Let's talk
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-5">
