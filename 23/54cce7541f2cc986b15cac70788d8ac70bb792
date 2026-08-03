@@ -1,0 +1,21 @@
+src/sanity/schemaTypes/objects/projectTeamMemberObject.ts
+  s_2d5c8942c2030e::t_6d3796707121a4 1-46
+src/sanity/schemaTypes/objects/fundingProgrammeObject.ts
+  s_2d5c8942c2030e::t_312b7f7e185df4 1-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "2354cce7541f2cc986b15cac70788d8ac70bb792",
+  "prompts": {},
+  "sessions": {
+    "s_2d5c8942c2030e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc691-af02-7e32-9937-234346c23c7b",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
