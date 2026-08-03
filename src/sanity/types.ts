@@ -64,6 +64,19 @@ export type SeoObject = {
   twitterCard?: "summary_large_image" | "summary";
 };
 
+export type OrganizationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "organization";
+};
+
+export type ProjectTeamMember = {
+  _type: "projectTeamMember";
+  organization: OrganizationReference;
+  contribution: string;
+};
+
 export type PageReference = {
   _ref: string;
   _type: "reference";
@@ -173,6 +186,13 @@ export type RichTextContent = Array<
     } & EditorialImage)
 >;
 
+export type FundingProgramme = {
+  _type: "fundingProgramme";
+  name: string;
+  amount?: string;
+  url?: string;
+};
+
 export type EditorialImage = {
   _type: "editorialImage";
   asset: SanityImageAssetReference;
@@ -277,7 +297,6 @@ export type Organization = {
   _updatedAt: string;
   _rev: string;
   name: string;
-  type: "client" | "partner" | "sponsor";
   logoDark: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -398,20 +417,39 @@ export type Project = {
   location?: string;
   areaRestored?: string;
   interventionType?: string;
+  challenge?: string;
+  clients?: Array<
+    {
+      _key: string;
+    } & OrganizationReference
+  >;
+  roles?: Array<string>;
+  team?: Array<
+    {
+      _key: string;
+    } & ProjectTeamMember
+  >;
+  nbsApplied?: Array<string>;
+  fundingProgrammes?: Array<
+    {
+      _key: string;
+    } & FundingProgramme
+  >;
   shortDescription?: string;
   gridDimension?: GridDimensionObject;
   tag?: TagReference;
   pageContent?: RichTextContent;
-  relatedService?: ServiceReference;
-  relatedResearch?: ResearchReference;
+  relatedService?: Array<
+    {
+      _key: string;
+    } & ServiceReference
+  >;
+  relatedResearch?: Array<
+    {
+      _key: string;
+    } & ResearchReference
+  >;
   seo?: SeoObject;
-};
-
-export type OrganizationReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "organization";
 };
 
 export type CapabilityReference = {
@@ -624,6 +662,8 @@ export type AllSanitySchemaTypes =
   | Modules
   | SanityImageAssetReference
   | SeoObject
+  | OrganizationReference
+  | ProjectTeamMember
   | PageReference
   | AboutReference
   | JournalReference
@@ -634,6 +674,7 @@ export type AllSanitySchemaTypes =
   | LinkObject
   | GridDimensionObject
   | RichTextContent
+  | FundingProgramme
   | EditorialImage
   | TitleSlugObject
   | CompetitionObject
@@ -652,7 +693,6 @@ export type AllSanitySchemaTypes =
   | TagReference
   | Journal
   | Project
-  | OrganizationReference
   | CapabilityReference
   | Service
   | About
@@ -1094,7 +1134,7 @@ export type SERVICE_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECT_ITEM_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  mainImage{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  },  status,  location,  areaRestored,  interventionType,  shortDescription,  pageContent[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  relatedService->{    _id,    name,    slug  },  relatedResearch->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[_type == "project" && slug.current == $slug][0]{  _id,  name,  slug,  "publicationScope": coalesce(publicationScope, "full"),  mainImage{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  },  status,  location,  areaRestored,  interventionType,  challenge,  clients[]->{    _id,    name,    logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    }  },  roles,  team[]{    _key,    contribution,    organization->{      _id,      name,      logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }      }    }  },  nbsApplied,  fundingProgrammes[]{    _key,    name,    amount,    url  },  shortDescription,  pageContent[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": reference->slug.current,      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  relatedService[]->{    _id,    name,    slug  },  relatedResearch[]->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
 export type PROJECT_ITEM_QUERY_RESULT = {
   _id: string;
   name: string;
@@ -1123,6 +1163,61 @@ export type PROJECT_ITEM_QUERY_RESULT = {
   location: string | null;
   areaRestored: string | null;
   interventionType: string | null;
+  challenge: string | null;
+  clients: Array<{
+    _id: string;
+    name: string;
+    logoDark: {
+      _type: "image";
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+    };
+  }> | null;
+  roles: Array<string> | null;
+  team: Array<{
+    _key: string;
+    contribution: string;
+    organization: {
+      _id: string;
+      name: string;
+      logoDark: {
+        _type: "image";
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
+            } | null;
+          } | null;
+        } | null;
+      };
+    };
+  }> | null;
+  nbsApplied: Array<string> | null;
+  fundingProgrammes: Array<{
+    _key: string;
+    name: string;
+    amount: string | null;
+    url: string | null;
+  }> | null;
   shortDescription: string | null;
   pageContent: Array<
     | {
@@ -1196,15 +1291,15 @@ export type PROJECT_ITEM_QUERY_RESULT = {
         };
       }
   > | null;
-  relatedService: {
+  relatedService: Array<{
     _id: string;
     name: string;
     slug: Slug;
-  } | null;
-  relatedResearch: {
+  }> | null;
+  relatedResearch: Array<{
     _id: string;
     name: null;
-  } | null;
+  }> | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
@@ -1304,11 +1399,10 @@ export type CUSTOMERS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: ORGANIZATIONS_QUERY
-// Query: *[_type == "organization"]{  _id,  name,  type,  logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }  },}
+// Query: *[_type == "organization"]{  _id,  name,  logoDark{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }  },}
 export type ORGANIZATIONS_QUERY_RESULT = Array<{
   _id: string;
   name: string;
-  type: "client" | "partner" | "sponsor";
   logoDark: {
     _type: "image";
     hotspot: SanityImageHotspot | null;
@@ -1393,10 +1487,10 @@ declare module "@sanity/client" {
     '*[_type == "tag"] | order(name asc){\n  _id,\n  name,\n  slug\n}': TAGS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)] | order(name asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n}': SERVICES_QUERY_RESULT;
     '*[_type == "service" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SERVICE_QUERY_RESULT;
-    '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  shortDescription,\n  pageContent[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  relatedService->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
+    '*[_type == "project" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  status,\n  location,\n  areaRestored,\n  interventionType,\n  challenge,\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  roles,\n  team[]{\n    _key,\n    contribution,\n    organization->{\n      _id,\n      name,\n      logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n      }\n    }\n  },\n  nbsApplied,\n  fundingProgrammes[]{\n    _key,\n    name,\n    amount,\n    url\n  },\n  shortDescription,\n  pageContent[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": reference->slug.current,\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  relatedService[]->{\n    _id,\n    name,\n    slug\n  },\n  relatedResearch[]->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': PROJECT_ITEM_QUERY_RESULT;
     '*[_type == "unGoal"] | order(name asc){\n  _id,\n  name,\n  logoNegative{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  },\n  logoPositive{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  }\n}': UN_GOALS_QUERY_RESULT;
     '*[_type == "customer"] | order(name asc){\n  _id,\n  name,\n  shortDescription,\n  mainImage{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  }\n}': CUSTOMERS_QUERY_RESULT;
-    '*[_type == "organization"]{\n  _id,\n  name,\n  type,\n  logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;
+    '*[_type == "organization"]{\n  _id,\n  name,\n  logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n  },\n}': ORGANIZATIONS_QUERY_RESULT;
     '*[\n    _type == "project"\n    && defined(slug.current)\n    && coalesce(publicationScope, "full") == "full"\n  ] | order(_updatedAt desc) [0...100]{\n    "slug": slug.current\n  }': PROJECT_SLUGS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': JOURNAL_SLUGS_QUERY_RESULT;
     '*[_type == "service" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}': SERVICE_SLUGS_QUERY_RESULT;
