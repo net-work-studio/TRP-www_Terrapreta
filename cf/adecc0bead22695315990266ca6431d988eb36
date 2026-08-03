@@ -1,0 +1,50 @@
+src/sanity/extract.json
+  s_2d5c8942c2030e::t_3a3ff3cecf18e8 2439-2454,2461-2476
+  s_2d5c8942c2030e::t_a003e20a4a5c47 289,291-349,975,2312-2378,2401
+  s_2d5c8942c2030e::t_85e5d66ed54f2e 290,976-1011,2379-2400,2402-2404
+CONTEXT.md
+  s_2d5c8942c2030e::t_398e388de1a057 63-66
+  s_2d5c8942c2030e::t_853780ea5236c3 67-70
+  s_2d5c8942c2030e::t_687aae065dae6f 59-62
+  s_2d5c8942c2030e::t_50194b181cfe14 71-74
+  s_2d5c8942c2030e::t_a04f24c939f3ee 56-57
+  s_2d5c8942c2030e::t_13be8406d51a64 51-55,58
+src/sanity/schemaTypes/documents/organizationDoc.ts
+  s_2d5c8942c2030e::t_6d3796707121a4 21,30
+src/sanity/types.ts
+  s_2d5c8942c2030e::t_85e5d66ed54f2e 189-195,433-437,677,1137,1215-1220,1490
+  s_2d5c8942c2030e::t_3a3ff3cecf18e8 442-451,1294,1298-1299,1302
+  s_2d5c8942c2030e::t_a003e20a4a5c47 67-79,420-432,665-666,1166-1214,1402,1493
+src/sanity/lib/queries.ts
+  s_2d5c8942c2030e::t_6d3796707121a4 244-264
+  s_2d5c8942c2030e::t_d3c8501f01ccff 280
+  s_2d5c8942c2030e::t_312b7f7e185df4 265-270
+  s_2d5c8942c2030e::t_eefe5fc1967f80 275
+package.json
+  s_2d5c8942c2030e::t_f057b0a5d5e8f3 19
+src/sanity/schemaTypes/documents/projectDoc.ts
+  s_2d5c8942c2030e::t_d3c8501f01ccff 289,293-301
+  s_2d5c8942c2030e::t_312b7f7e185df4 235,237-244
+  s_2d5c8942c2030e::t_6d3796707121a4 4,149-202,207-234,236
+  s_2d5c8942c2030e::t_f9111c27995bce 203-206
+  s_2d5c8942c2030e::t_eefe5fc1967f80 274,276,278-286
+src/sanity/schemaTypes/index.ts
+  s_2d5c8942c2030e::t_6d3796707121a4 31,65
+  s_2d5c8942c2030e::t_312b7f7e185df4 28,61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "cfadecc0bead22695315990266ca6431d988eb36",
+  "prompts": {},
+  "sessions": {
+    "s_2d5c8942c2030e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc691-af02-7e32-9937-234346c23c7b",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
