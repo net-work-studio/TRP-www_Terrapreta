@@ -33,7 +33,7 @@ export const organizationDoc = defineType({
   preview: {
     select: {
       title: "name",
-      media: "logoDark",
+      media: "logoLight",
     },
   },
 });
