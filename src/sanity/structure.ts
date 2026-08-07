@@ -15,11 +15,12 @@ import {
   User,
   WholeWord,
 } from "lucide-react";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { structureTool } from "sanity/structure";
 import { group, singleton } from "./lib/builders";
 
 export const structure = structureTool({
-  structure: (S) =>
+  structure: (S, context) =>
     S.list()
       .title("Content")
       .items([
@@ -28,10 +29,20 @@ export const structure = structureTool({
 
         S.documentTypeListItem("page").title("All Pages").icon(FileStack),
         S.divider(),
-        S.documentTypeListItem("project").title("Projects").icon(Hammer),
-        S.documentTypeListItem("service")
-          .title("Services")
-          .icon(HeartHandshake),
+        orderableDocumentListDeskItem({
+          type: "project",
+          title: "Projects",
+          icon: Hammer,
+          S,
+          context,
+        }),
+        orderableDocumentListDeskItem({
+          type: "service",
+          title: "Services",
+          icon: HeartHandshake,
+          S,
+          context,
+        }),
         S.divider(),
 
         group(S, "Company", [

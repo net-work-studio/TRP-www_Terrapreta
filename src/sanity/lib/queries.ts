@@ -86,7 +86,7 @@ export const SITE_SETTINGS_QUERY =
 }`);
 
 export const PROJECTS_QUERY =
-  defineQuery(`*[_type == "project" && defined(slug.current)] {
+  defineQuery(`*[_type == "project" && defined(slug.current)] | order(orderRank asc) {
   _id,
   name,
   slug,
@@ -171,7 +171,7 @@ export const TAGS_QUERY = defineQuery(`*[_type == "tag"] | order(name asc){
 }`);
 
 export const SERVICES_QUERY =
-  defineQuery(`*[_type == "service" && defined(slug.current)] | order(name asc){
+  defineQuery(`*[_type == "service" && defined(slug.current)] | order(orderRank asc){
   _id,
   name,
   slug,

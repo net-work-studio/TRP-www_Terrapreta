@@ -6,7 +6,7 @@ export default function NavigationDesktop() {
     <nav className="hidden items-center space-x-6 md:flex">
       {navigationData.map((item) => (
         <Link
-          className="font-medium text-foreground text-base transition-colors hover:text-primary"
+          className="font-medium text-foreground text-sm transition-colors hover:text-primary"
           href={item.href}
           key={item.href}
         >

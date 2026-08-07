@@ -48,6 +48,14 @@ _Avoid_: Competition collection, award
 The optional year an editor considers most relevant to presenting a project, typically its completion year or the year its competition result was announced.
 _Avoid_: Mandatory start year
 
+**Project sequence**:
+The editor-controlled global order in which projects appear on the Projects overview. It includes both full and overview-only projects.
+_Avoid_: Publication date, realization status, grid order
+
+**Service sequence**:
+The editor-controlled global order in which services appear wherever the service collection is presented.
+_Avoid_: Alphabetical order, publication date
+
 **Organization**:
 A named external entity that can participate in one or more projects in different capacities.
 _Avoid_: Client or partner as an intrinsic organization type

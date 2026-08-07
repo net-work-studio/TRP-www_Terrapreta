@@ -2,6 +2,7 @@ import { Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import ArticleContent from "@/components/shared/article-content";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -165,12 +166,12 @@ function ProjectPageContent({
           )}
         </ul>
         {projectItem.pageContent && (
-          <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
+          <ArticleContent className="text-pretty">
             <PortableText
               components={portableTextComponents}
               value={projectItem.pageContent}
             />
-          </section>
+          </ArticleContent>
         )}
       </div>
 

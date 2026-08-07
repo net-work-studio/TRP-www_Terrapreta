@@ -7,6 +7,11 @@ import { defineArrayMember, defineField } from "sanity";
  */
 export const richTextBlock = defineArrayMember({
   type: "block",
+  styles: [
+    { title: "Heading 2 (2xl)", value: "h2" },
+    { title: "Heading 3 (xl)", value: "h3" },
+    { title: "Heading 4 (xl)", value: "h4" },
+  ],
   marks: {
     annotations: [
       {

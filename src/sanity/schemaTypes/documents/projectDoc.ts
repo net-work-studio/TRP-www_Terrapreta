@@ -1,6 +1,10 @@
 import { DatabaseIcon } from "@sanity/icons/Database";
 import { LinkIcon } from "@sanity/icons/Link";
 import { MasterDetailIcon } from "@sanity/icons/MasterDetail";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
@@ -33,6 +37,7 @@ export const projectDoc = defineType({
   title: "Project",
   icon: MasterDetailIcon,
   groups: projectGroups,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
       type: "string",
@@ -312,6 +317,7 @@ export const projectDoc = defineType({
         twitterCard: "summary_large_image",
       },
     }),
+    orderRankField({ type: "project", newItemPosition: "before" }),
   ],
   preview: {
     select: {

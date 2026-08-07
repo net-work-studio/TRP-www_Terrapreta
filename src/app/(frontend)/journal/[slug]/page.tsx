@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import ArticleContent from "@/components/shared/article-content";
 import BreadcrumbCustom from "@/components/shared/breadcrumb-custom";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -157,12 +158,12 @@ function JournalPageContent({
 
       <div className="container-article space-y-4 py-20">
         {journalItem.contentObject && (
-          <section className="mx-auto max-w-prose space-y-7.5 text-lg">
+          <ArticleContent>
             <PortableText
               components={portableTextComponents}
               value={journalItem.contentObject}
             />
-          </section>
+          </ArticleContent>
         )}
       </div>
 
