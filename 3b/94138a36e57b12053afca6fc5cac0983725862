@@ -1,0 +1,68 @@
+package.json
+  s_76ac128fdb2d0b::t_8034fa03df676e 28
+CONTEXT.md
+  s_76ac128fdb2d0b::t_b9934119770f28 51-54
+  s_76ac128fdb2d0b::t_6741c77409cb2b 55-58
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_5767c5f4c662ca::t_f7dfe2cea0c2c4 4,161,166
+src/components/ui/portable-image.tsx
+  s_a302916695934b::t_a9b2dac8fa7006 57
+src/sanity/structure.ts
+  s_76ac128fdb2d0b::t_6741c77409cb2b 39-45
+  s_76ac128fdb2d0b::t_b9934119770f28 18,23,32-38
+src/sanity/lib/queries.ts
+  s_76ac128fdb2d0b::t_b9934119770f28 89
+  s_76ac128fdb2d0b::t_6741c77409cb2b 174
+src/sanity/schemaTypes/helpers/richTextBlock.ts
+  s_5767c5f4c662ca::t_9c058f9e031090 10-12,14
+  s_5767c5f4c662ca::t_11a45402bc886c 13
+src/sanity/types.ts
+  s_76ac128fdb2d0b::t_31048fd677cdf3 453,740,1459
+  s_5767c5f4c662ca::t_0b0f1b6b78b81b 495,948,1463
+  s_5767c5f4c662ca::t_5e312e9c13670b 158,845,987,1210
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_5767c5f4c662ca::t_f7dfe2cea0c2c4 5,169,174
+src/components/ui/portable-text-components.tsx
+  s_5767c5f4c662ca::t_11a45402bc886c 34
+  s_5767c5f4c662ca::t_9c058f9e031090 3-6,31-33,35
+src/sanity/extract.json
+  s_76ac128fdb2d0b::t_31048fd677cdf3 2471-2477,2679-2685
+src/sanity/schemaTypes/documents/serviceDoc.ts
+  s_76ac128fdb2d0b::t_6741c77409cb2b 3-6,30,142
+src/sanity/schemaTypes/documents/projectDoc.ts
+  s_76ac128fdb2d0b::t_b9934119770f28 4-7,40,320
+bun.lock
+  s_76ac128fdb2d0b::t_3161166fd063a2 13,475-476,833-834,1209-1210,1623-1624,1877-1878,1975-1976,2079-2080
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "3b94138a36e57b12053afca6fc5cac0983725862",
+  "prompts": {},
+  "sessions": {
+    "s_5767c5f4c662ca": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd24c-5ec7-7620-9d39-f96c75cc118b",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_76ac128fdb2d0b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd245-8669-78b1-bfdd-88761b79e119",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_a302916695934b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd26d-3cff-7192-845b-a25059fbec54",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
