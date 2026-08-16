@@ -1,7 +1,11 @@
 import { DatabaseIcon } from "@sanity/icons/Database";
 import { LinkIcon } from "@sanity/icons/Link";
 import { MasterDetailIcon } from "@sanity/icons/MasterDetail";
-import { defineField, defineType } from "sanity";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
 const [metaGroup, contentGroup, seoGroup] = groups;
@@ -33,6 +37,7 @@ export const projectDoc = defineType({
   title: "Project",
   icon: MasterDetailIcon,
   groups: projectGroups,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
       type: "string",
@@ -148,6 +153,102 @@ export const projectDoc = defineType({
     }),
     defineField({
       type: "text",
+      name: "challenge",
+      group: "data",
+      description:
+        "Summarize the condition or problem the project was created to address.",
+      rows: 3,
+      validation: (rule) => [
+        rule
+          .max(400)
+          .warning("Keep the challenge under 400 characters for concise display."),
+      ],
+    }),
+    defineField({
+      type: "array",
+      name: "clients",
+      group: "data",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "organization" }],
+        }),
+      ],
+      validation: (rule) => [
+        rule.unique().error("Add each client only once."),
+      ],
+    }),
+    defineField({
+      type: "array",
+      name: "roles",
+      group: "data",
+      description:
+        "Add one plain-text statement for each of Terrapreta's roles in the project.",
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => [
+            rule.required().error("Enter a role or remove the empty item."),
+            rule
+              .max(240)
+              .warning("Keep each role under 240 characters for concise display."),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      type: "array",
+      name: "team",
+      group: "data",
+      description:
+        "Add each contributing organization once and summarize everything it did.",
+      of: [defineArrayMember({ type: "projectTeamMember" })],
+      validation: (rule) => [
+        rule.custom((members) => {
+          const teamMembers = (members ?? []) as {
+            organization?: { _ref?: string };
+          }[];
+          const organizationIds = teamMembers
+            .map((member) => member?.organization?._ref)
+            .filter(Boolean);
+          return new Set(organizationIds).size === organizationIds.length
+            ? true
+            : "Add each team organization only once and combine its contributions.";
+        }),
+      ],
+    }),
+    defineField({
+      type: "array",
+      name: "nbsApplied",
+      title: "NbS Applied",
+      group: "data",
+      description:
+        "List the nature-based solutions applied in this project using concise names.",
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => [
+            rule
+              .required()
+              .error("Enter a nature-based solution or remove the empty item."),
+            rule
+              .max(100)
+              .warning("Keep each solution name under 100 characters."),
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      type: "array",
+      name: "fundingProgrammes",
+      title: "Funding / Programmes",
+      group: "data",
+      description:
+        "Add the funding sources or programmes associated with this project.",
+      of: [defineArrayMember({ type: "fundingProgramme" })],
+    }),
+    defineField({
+      type: "text",
       name: "shortDescription",
       title: "Short Description",
       group: "content",
@@ -175,18 +276,34 @@ export const projectDoc = defineType({
       group: "content",
     }),
     defineField({
-      type: "reference",
+      type: "array",
       name: "relatedService",
-      title: "Related Service",
+      title: "Related Services",
       group: "related",
-      to: [{ type: "service" }],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "service" }],
+        }),
+      ],
+      validation: (rule) => [
+        rule.unique().error("Add each related service only once."),
+      ],
     }),
     defineField({
-      type: "reference",
+      type: "array",
       name: "relatedResearch",
       title: "Related Research",
       group: "related",
-      to: [{ type: "research" }],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "research" }],
+        }),
+      ],
+      validation: (rule) => [
+        rule.unique().error("Add each related research item only once."),
+      ],
     }),
     defineField({
       type: "seoObject",
@@ -200,6 +317,7 @@ export const projectDoc = defineType({
         twitterCard: "summary_large_image",
       },
     }),
+    orderRankField({ type: "project", newItemPosition: "before" }),
   ],
   preview: {
     select: {

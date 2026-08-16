@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { stegaClean, type PortableTextComponents } from "next-sanity";
+import {
+  PortableTextHeadingFour,
+  PortableTextHeadingThree,
+  PortableTextHeadingTwo,
+} from "./portable-text-headings";
 import { PortableImage } from "./portable-image";
 
 /**
@@ -24,6 +29,11 @@ function getPathForType(type: string): string {
  * Use this across all pages that render Portable Text content.
  */
 export const portableTextComponents: PortableTextComponents = {
+  block: {
+    h2: PortableTextHeadingTwo,
+    h3: PortableTextHeadingThree,
+    h4: PortableTextHeadingFour,
+  },
   types: {
     editorialImage: PortableImage,
   },

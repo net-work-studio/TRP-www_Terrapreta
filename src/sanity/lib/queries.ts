@@ -86,7 +86,10 @@ export const SITE_SETTINGS_QUERY =
 }`);
 
 export const PROJECTS_QUERY =
-  defineQuery(`*[_type == "project" && defined(slug.current)] {
+  defineQuery(`*[
+  _type == "project"
+  && defined(slug.current)
+] | order(orderRank asc) {
   _id,
   name,
   slug,
@@ -171,7 +174,10 @@ export const TAGS_QUERY = defineQuery(`*[_type == "tag"] | order(name asc){
 }`);
 
 export const SERVICES_QUERY =
-  defineQuery(`*[_type == "service" && defined(slug.current)] | order(name asc){
+  defineQuery(`*[
+  _type == "service"
+  && defined(slug.current)
+] | order(orderRank asc){
   _id,
   name,
   slug,
@@ -241,18 +247,36 @@ ${EDITORIAL_IMAGE_PROJECTION}
   location,
   areaRestored,
   interventionType,
+  challenge,
+  clients[]->{
+    _id,
+    name,
+    logoDark{
+${IMAGE_FIELD_PROJECTION}
+    }
+  },
+  roles,
+  team[]{
+    _key,
+    contribution,
+    organization->{
+      _id,
+      name,
+      logoDark{
+${IMAGE_FIELD_PROJECTION}
+      }
+    }
+  },
+  nbsApplied,
+  fundingProgrammes[]{
+    _key,
+    name,
+    amount,
+    url
+  },
   shortDescription,
   pageContent[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}
-  },
-  relatedService->{
-    _id,
-    name,
-    slug
-  },
-  relatedResearch->{
-    _id,
-    name
   },
   seo{
     metaTitle,
@@ -302,7 +326,6 @@ ${IMAGE_FIELD_PROJECTION}
 export const ORGANIZATIONS_QUERY = defineQuery(`*[_type == "organization"]{
   _id,
   name,
-  type,
   logoDark{
 ${IMAGE_FIELD_PROJECTION}
   },

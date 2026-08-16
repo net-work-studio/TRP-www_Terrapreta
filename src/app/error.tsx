@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Mark from "@/components/brand/mark";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function ErrorPage({
   error,
@@ -37,9 +37,12 @@ export default function ErrorPage({
           <Button onClick={reset} size="lg">
             Try Again
           </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/">Go to Homepage</Link>
-          </Button>
+          <Link
+            className={buttonVariants({ size: "lg", variant: "outline" })}
+            href="/"
+          >
+            Go to Homepage
+          </Link>
         </div>
 
         <nav className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-stone-400">

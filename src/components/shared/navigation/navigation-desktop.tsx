@@ -3,7 +3,7 @@ import { navigationData } from "@/lib/navigation";
 
 export default function NavigationDesktop() {
   return (
-    <nav className="hidden items-center space-x-8 md:flex">
+    <nav className="hidden items-center space-x-6 md:flex">
       {navigationData.map((item) => (
         <Link
           className="font-medium text-foreground text-sm transition-colors hover:text-primary"

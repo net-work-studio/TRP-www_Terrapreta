@@ -1,22 +1,20 @@
-import { Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import ArticleContent from "@/components/shared/article-content";
+import BreadcrumbCustom from "@/components/shared/breadcrumb-custom";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
+import {
+  cleanCommaList,
+  cleanOptionalString,
+  type StegaAware,
+} from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -40,12 +38,38 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
+const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+  year: "numeric",
+});
+
+function cleanPublishingDate(value: string | null) {
+  const publishingDate = cleanOptionalString(value);
+
+  if (!publishingDate || Number.isNaN(new Date(publishingDate).getTime())) {
+    return null;
+  }
+
+  return publishingDate;
+}
+
+function formatPublishingDate(value: string | null) {
+  const publishingDate = cleanPublishingDate(value);
+
+  return publishingDate
+    ? JOURNAL_DATE_FORMATTER.format(new Date(publishingDate))
+    : null;
+}
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
     query: JOURNAL_SLUGS_QUERY,
   });
-  return data ?? [];
+  // Cache Components requires at least one build-time param. The placeholder
+  // matches no document and is handled by the route's notFound() branch.
+  return data?.length ? data : [{ slug: "__placeholder__" }];
 }
 
 export async function generateMetadata({
@@ -75,6 +99,8 @@ export async function generateMetadata({
     });
   }
 
+  const publishingDate = cleanPublishingDate(journalItem.publishingDate);
+
   return generateMetadataHelper({
     title: journalItem.seo?.metaTitle || journalItem.name,
     description:
@@ -84,7 +110,7 @@ export async function generateMetadata({
     image: journalItem.seo?.ogImage ?? journalItem.mainImage ?? undefined,
     url: `/journal/${slug}`,
     type: "article",
-    publishedTime: journalItem.publishingDate ?? undefined,
+    publishedTime: publishingDate ?? undefined,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
     robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
@@ -100,7 +126,7 @@ function JournalPageContent({
   journalItem,
   slug,
 }: {
-  journalItem: NonNullable<JOURNAL_ITEM_QUERY_RESULT>;
+  journalItem: StegaAware<NonNullable<JOURNAL_ITEM_QUERY_RESULT>>;
   slug: string;
 }) {
   if (!hasSanityImage(journalItem.mainImage)) {
@@ -110,37 +136,31 @@ function JournalPageContent({
   const schemaType =
     cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
   const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
+  const publishingDateValue = cleanPublishingDate(journalItem.publishingDate);
+  const publishingDate = formatPublishingDate(journalItem.publishingDate);
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/journal">Journal</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/journal">
-                {journalItem.tag?.name}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <h1 className="text-3xl tracking-tight md:text-4xl lg:text-5xl">
+      <header className="flex translate-y-0 flex-col items-center justify-center gap-5 space-y-5 pb-5 text-balance text-center opacity-100 transition-all duration-400 starting:translate-y-2 starting:opacity-0">
+        <BreadcrumbCustom tag={journalItem.tag?.name} />
+        <h1 className="text-4xl tracking-tight md:text-5xl lg:text-6xl">
           {journalItem.name}
         </h1>
-        <p className="max-w-[70ch] text-pretty text-lg text-stone-400 md:text-xl lg:text-2xl">
-          {journalItem.shortDescription}
-        </p>
-      </hgroup>
+        {publishingDate ? (
+          <p className="text-base text-muted-foreground">
+            <time dateTime={publishingDateValue ?? undefined}>
+              {publishingDate}
+            </time>
+          </p>
+        ) : null}
+      </header>
 
       <AspectRatio
-        className="relative blur-none starting:blur-xl transition-all duration-400"
+        className="relative blur-none transition-all duration-400 starting:blur-xl"
         ratio={ASPECT_RATIO}
       >
         <SanityImage
-          alt={journalItem.name || ""}
+          alt={journalItem.mainImage.altContent || journalItem.name || ""}
           className="z-0 h-full w-full object-cover"
           fill
           priority
@@ -151,29 +171,13 @@ function JournalPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        <ul className="flex items-center gap-2 text-lg text-muted-foreground">
-          <li>{journalItem.location}</li>
-          <Minus size={16} />
-          <li>
-            {journalItem.publishingDate
-              ? new Date(journalItem.publishingDate).toLocaleDateString(
-                  undefined,
-                  {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }
-                )
-              : ""}
-          </li>
-        </ul>
         {journalItem.contentObject && (
-          <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
+          <ArticleContent>
             <PortableText
               components={portableTextComponents}
               value={journalItem.contentObject}
             />
-          </section>
+          </ArticleContent>
         )}
       </div>
 
@@ -184,8 +188,8 @@ function JournalPageContent({
           "@type": schemaType,
           headline: journalItem.name,
           description: journalItem.shortDescription,
-          ...(journalItem.publishingDate && {
-            datePublished: journalItem.publishingDate,
+          ...(publishingDateValue && {
+            datePublished: publishingDateValue,
           }),
           ...(hasSanityImage(journalItem.mainImage) && {
             image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),

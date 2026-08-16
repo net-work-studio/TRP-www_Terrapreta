@@ -47,3 +47,43 @@ _Avoid_: Competition collection, award
 **Project year**:
 The optional year an editor considers most relevant to presenting a project, typically its completion year or the year its competition result was announced.
 _Avoid_: Mandatory start year
+
+**Project sequence**:
+The editor-controlled global order in which projects appear on the Projects overview. It includes both full and overview-only projects.
+_Avoid_: Publication date, realization status, grid order
+
+**Service sequence**:
+The editor-controlled global order in which services appear wherever the service collection is presented.
+_Avoid_: Alphabetical order, publication date
+
+**Organization**:
+A named external entity that can participate in one or more projects in different capacities.
+_Avoid_: Client or partner as an intrinsic organization type
+
+**Project role**:
+An account of Terrapreta's responsibility or position within a specific project, such as acting as the main partner of a municipality for development of a restoration project. A project may record multiple roles.
+_Avoid_: Capability, organization type
+
+**Project team member**:
+An organization that contributed to a project, recorded once per project together with a concise account of all its contributions.
+_Avoid_: Repeating an organization once for each contribution
+
+**Project client**:
+An organization that commissioned or received a project's work. A project client may also be a project team member when it made an active contribution.
+_Avoid_: Treating client and team member as mutually exclusive
+
+**Project challenge**:
+A concise, public-facing summary of the condition or problem a project addresses.
+_Avoid_: Internal editorial note, full project narrative
+
+**Applied nature-based solution**:
+A named nature-based intervention used in a project. A project may apply multiple solutions, recorded in straightforward editorial language rather than as a browsing taxonomy.
+_Avoid_: Capability, project challenge
+
+**Journal entry**:
+A dated editorial article published in the Journal and classified by a tag.
+_Avoid_: Tag, journal page
+
+**Journal tag**:
+A taxonomy label that classifies journal entries and can narrow the Journal collection without defining website hierarchy.
+_Avoid_: Breadcrumb, section

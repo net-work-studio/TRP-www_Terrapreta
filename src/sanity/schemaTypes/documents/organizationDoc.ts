@@ -15,24 +15,10 @@ export const organizationDoc = defineType({
       ],
     }),
     defineField({
-      type: "string",
-      name: "type",
-      validation: (rule) => [
-        rule.required().error("Choose the organization type."),
-      ],
-      options: {
-        list: [
-          { title: "Client", value: "client" },
-          { title: "Partner", value: "partner" },
-          { title: "Sponsor", value: "sponsor" },
-        ],
-        layout: "radio",
-      },
-    }),
-    defineField({
       type: "image",
       name: "logoDark",
       title: "Logo White",
+      options: { hotspot: true },
       validation: (rule) => [
         rule.required().error("Add the logo used on dark backgrounds."),
       ],
@@ -41,13 +27,13 @@ export const organizationDoc = defineType({
       type: "image",
       name: "logoLight",
       title: "Logo Black",
+      options: { hotspot: true },
     }),
   ],
   preview: {
     select: {
       title: "name",
-      subtitle: "type",
-      media: "logoDark",
+      media: "logoLight",
     },
   },
 });

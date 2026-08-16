@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Mark from "@/components/brand/mark";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 
 export const metadata: Metadata = generateMetadataHelper({
@@ -32,12 +32,15 @@ export default function NotFoundPage() {
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Button asChild size="lg">
-            <Link href="/">Go to Homepage</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href="/contacts">Contact Us</Link>
-          </Button>
+          <Link className={buttonVariants({ size: "lg" })} href="/">
+            Go to Homepage
+          </Link>
+          <Link
+            className={buttonVariants({ size: "lg", variant: "outline" })}
+            href="/contacts"
+          >
+            Contact Us
+          </Link>
         </div>
 
         <nav className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-stone-400">

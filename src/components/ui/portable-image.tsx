@@ -54,7 +54,7 @@ export function PortableImage({ value }: PortableImageProps) {
   }
 
   return (
-    <figure className="my-8">
+    <figure className="relative left-1/2 my-8 w-220 max-w-[calc(100vw-2rem)] -translate-x-1/2">
       <AspectRatio className="relative" ratio={targetAspectRatio}>
         <SanityImage
           alt={value.caption || "Body content image"}

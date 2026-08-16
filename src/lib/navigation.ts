@@ -25,6 +25,11 @@ export const navigationData: NavigationItem[] = [
     href: "/journal",
     description: "Latest updates and insights",
   },
+  {
+    label: "Contact",
+    href: "/contacts",
+    description: "",
+  },
   /*   {
     label: "About",
     href: "/about",

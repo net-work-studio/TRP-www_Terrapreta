@@ -1,6 +1,7 @@
 import Link from "next/link";
+import type { StegaBranded } from "next-sanity";
 import Mark from "@/components/brand/mark";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import SanityImage from "@/components/ui/sanity-image";
 import {
   type SanityFetchOptions,
@@ -8,6 +9,12 @@ import {
 } from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
 import type { UN_GOALS_QUERY_RESULT } from "@/sanity/types";
+
+type UnGoal = StegaBranded<UN_GOALS_QUERY_RESULT>[number];
+type UnGoalLogo = NonNullable<UnGoal["logoNegative"]>;
+type UnGoalWithLogo = UnGoal & {
+  logoNegative: UnGoalLogo & { asset: NonNullable<UnGoalLogo["asset"]> };
+};
 
 function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
   return (
@@ -26,9 +33,15 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
               {logos.length > 0 && (
                 <div className="flex flex-wrap items-center gap-4">{logos}</div>
               )}
-              <Button asChild className="w-fit" variant="outline">
-                <Link href="/contacts">Let's talk</Link>
-              </Button>
+              <Link
+                className={buttonVariants({
+                  className: "w-fit",
+                  variant: "outline",
+                })}
+                href="/contacts"
+              >
+                Let's talk
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-5">
@@ -147,11 +160,7 @@ export default async function Footer({
   const unGoalLogos =
     unGoals
       ?.filter(
-        (
-          goal
-        ): goal is UN_GOALS_QUERY_RESULT[number] & {
-          logoNegative: { asset: { url: string } };
-        } =>
+        (goal): goal is UnGoalWithLogo =>
           Boolean(
             goal.logoNegative?.asset?.url &&
               goal.logoNegative.asset.url !== null

@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -18,7 +19,14 @@ export function CopyLink({ className }: CopyLinkButtonProps) {
   };
 
   return (
-    <Button className={className} onClick={handleCopyLink} variant="link">
+    <Button
+      className={className}
+      onClick={handleCopyLink}
+      size="sm"
+      type="button"
+      variant="outline"
+    >
+      <Link aria-hidden="true" />
       Copy link
     </Button>
   );

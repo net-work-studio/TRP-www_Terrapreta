@@ -1,5 +1,9 @@
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
 import { LinkIcon } from "@sanity/icons/Link";
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
@@ -23,6 +27,7 @@ export const serviceDoc = defineType({
   title: "Service",
   icon: DocumentTextIcon,
   groups: serviceGroups,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
       type: "string",
@@ -134,6 +139,7 @@ export const serviceDoc = defineType({
         twitterCard: "summary_large_image",
       },
     }),
+    orderRankField({ type: "service", newItemPosition: "before" }),
   ],
   preview: {
     select: {

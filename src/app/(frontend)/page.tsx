@@ -6,7 +6,7 @@ import {
   SoilHealthJsonLd,
 } from "@/components/shared/domain-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
@@ -107,9 +107,9 @@ export default function Home() {
           <Logos />
           {/* <ContactForm /> */}
           <div className="flex w-full items-center justify-center">
-            <Button asChild>
-              <Link href="/contacts">Get in contact</Link>
-            </Button>
+            <Link className={buttonVariants()} href="/contacts">
+              Get in contact
+            </Link>
           </div>
         </SectionWrapper>
       </div>

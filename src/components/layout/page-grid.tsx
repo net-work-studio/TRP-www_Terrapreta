@@ -3,34 +3,34 @@ import { stegaClean } from "next-sanity";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
+import type { StegaAware } from "@/lib/sanity-stega";
 import { cn } from "@/lib/utils";
 import {
   hasSanityImage,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
 import type {
-  JOURNAL_QUERY_RESULT,
-  PROJECTS_QUERY_RESULT,
   Slug,
 } from "@/sanity/types";
 
-type GridItemProps = Partial<
-  Omit<JOURNAL_QUERY_RESULT[0] | PROJECTS_QUERY_RESULT[0], "slug">
-> & {
+type GridItemProps = {
   _id: string;
-  name: string | null;
-  shortDescription: string | null;
+  name: StegaAware<string> | null;
+  shortDescription: StegaAware<string> | null;
   mainImage: SanityImageSourceInput;
+  gridDimension?: {
+    prominence: StegaAware<"featured" | "standard">;
+  } | null;
   isFeatured?: boolean;
   isInteractive?: boolean;
-  publishingDate?: string | null;
-  publicationScope?: string | null;
+  publishingDate?: StegaAware<string> | null;
+  publicationScope?: StegaAware<string> | null;
   slug: string;
-  tag?: { _id: string; name: string | null } | null;
+  tag?: { _id: string; name: StegaAware<string> | null } | null;
 };
 
 type GridItemInput = Omit<GridItemProps, "slug"> & {
-  slug: Slug | null | string;
+  slug: StegaAware<Slug> | null | string;
 };
 
 const IMAGE_QUALITY = 75;
@@ -42,10 +42,10 @@ function getSlugValue(slug: GridItemInput["slug"]): string | null {
   }
 
   if (typeof slug === "string") {
-    return slug;
+    return stegaClean(slug);
   }
 
-  return slug.current || null;
+  return stegaClean(slug.current) || null;
 }
 
 function GridItem({
@@ -61,6 +61,9 @@ function GridItem({
     return null;
   }
 
+  const publishingDateValue = publishingDate
+    ? stegaClean(publishingDate)
+    : undefined;
   const className = cn(
     "h-fit space-y-2.5",
     isInteractive && "group",
@@ -83,15 +86,15 @@ function GridItem({
         />
       </AspectRatio>
       <hgroup className="space-y-2">
-        {(tag?.name || publishingDate) && (
+        {(tag?.name || publishingDateValue) && (
           <span className="flex items-center gap-2.5">
             {tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
-            {publishingDate && (
+            {publishingDateValue && (
               <time
                 className="text-muted-foreground text-sm"
-                dateTime={publishingDate}
+                dateTime={publishingDateValue}
               >
-                {new Date(publishingDate).toLocaleDateString(undefined, {
+                {new Date(publishingDateValue).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
@@ -132,7 +135,9 @@ export default function PageGrid({
           <GridItem
             key={item._id}
             {...item}
-            isFeatured={item.gridDimension?.prominence === "featured"}
+            isFeatured={
+              stegaClean(item.gridDimension?.prominence) === "featured"
+            }
             isInteractive={
               Boolean(slugValue) &&
               stegaClean(item.publicationScope) !== "overview"

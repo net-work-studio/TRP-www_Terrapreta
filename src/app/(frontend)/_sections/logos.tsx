@@ -1,4 +1,3 @@
-import { Ticker } from "motion-plus/react";
 import SanityImage from "@/components/ui/sanity-image";
 import {
   getSanityRequestState,
@@ -56,7 +55,14 @@ function LogosContent({
       <div className="relative w-full">
         <div className="absolute top-0 left-0 z-10 h-full w-24 bg-linear-to-r from-stone-900 to-transparent" />
         <div className="absolute top-0 right-0 z-10 h-full w-24 bg-linear-to-l from-stone-900 to-transparent" />
-        <Ticker hoverFactor={0.8} items={logoItems} />
+        <div className="overflow-hidden">
+          <div className="flex w-max hover:[animation-duration:37.5s] motion-reduce:transform-none motion-reduce:animate-none animate-logo-ticker">
+            <div className="flex shrink-0">{logoItems}</div>
+            <div aria-hidden="true" className="flex shrink-0">
+              {logoItems}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

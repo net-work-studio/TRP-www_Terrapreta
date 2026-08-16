@@ -2,6 +2,7 @@ import { Minus } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import ArticleContent from "@/components/shared/article-content";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -15,7 +16,11 @@ import { portableTextComponents } from "@/components/ui/portable-text-components
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
+import {
+  cleanCommaList,
+  cleanOptionalString,
+  type StegaAware,
+} from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -104,7 +109,7 @@ function ProjectPageContent({
   projectItem,
   slug,
 }: {
-  projectItem: NonNullable<PROJECT_ITEM_QUERY_RESULT>;
+  projectItem: StegaAware<NonNullable<PROJECT_ITEM_QUERY_RESULT>>;
   slug: string;
 }) {
   if (!hasSanityImage(projectItem.mainImage)) {
@@ -151,7 +156,7 @@ function ProjectPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        <ul className="flex items-center gap-2 text-lg text-muted-foreground">
+        <ul className="flex items-center hidden gap-2 text-lg text-muted-foreground">
           {projectItem.location && (
             <>
               <li>{projectItem.location}</li>
@@ -165,12 +170,12 @@ function ProjectPageContent({
           )}
         </ul>
         {projectItem.pageContent && (
-          <section className="space-y-7.5 text-pretty text-lg md:text-xl lg:text-2xl">
+          <ArticleContent className="text-pretty">
             <PortableText
               components={portableTextComponents}
               value={projectItem.pageContent}
             />
-          </section>
+          </ArticleContent>
         )}
       </div>
 
@@ -217,7 +222,8 @@ async function CachedProjectPage({
 
   if (
     !projectItem ||
-    (projectItem.publicationScope === "overview" && !isDraftMode)
+    (cleanOptionalString(projectItem.publicationScope) === "overview" &&
+      !isDraftMode)
   ) {
     notFound();
   }

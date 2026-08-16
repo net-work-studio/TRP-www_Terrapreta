@@ -4,11 +4,15 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
+import {
+  cleanCommaList,
+  cleanOptionalString,
+  type StegaAware,
+} from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -89,7 +93,7 @@ function ServicePageContent({
   service,
   slug,
 }: {
-  service: NonNullable<SERVICE_QUERY_RESULT>;
+  service: StegaAware<NonNullable<SERVICE_QUERY_RESULT>>;
   slug: string;
 }) {
   const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";
@@ -106,9 +110,9 @@ function ServicePageContent({
                 {service.shortDescription}
               </p>
             </hgroup>
-            <Button>
-              <Link href="/contacts">Book a Discovery Call</Link>
-            </Button>
+            <Link className={buttonVariants()} href="/contacts">
+              Book a Discovery Call
+            </Link>
           </div>
           <div className="container-site relative aspect-3/2 rounded-md">
             {hasSanityImage(service.mainImage) && (
