@@ -1,0 +1,25 @@
+src/components/ui/copy-link.tsx
+  s_a908b9f7d58e61::t_0bd4bef6a8a397 3,22-23
+  s_a908b9f7d58e61::t_52870c16ebebf7 24
+src/components/ui/social-share.tsx
+  s_a908b9f7d58e61::t_d1ffa74bd6880b 40
+  s_a908b9f7d58e61::t_0bd4bef6a8a397 1-2,5-9,11-26,38-39,41-49,51-57,59-61
+  s_a908b9f7d58e61::t_152c45b2f7123e 3,10,29-36,50
+  s_a908b9f7d58e61::t_38d1af1ae7123b 58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c547a394e1968cb0f94b8c0c2a0706960c0dcb78",
+  "prompts": {},
+  "sessions": {
+    "s_a908b9f7d58e61": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a00aa5-4f3f-7560-8434-a43ee00570ea",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
