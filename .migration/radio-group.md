@@ -12,7 +12,7 @@
 ## Left alone
 
 - `src/components/ui/field.tsx` only styles the radio group's existing `data-slot` marker and requires no API changes.
-- `components.json`, `package.json`, and `bun.lock` retain their Radix configuration and dependency until the final Radix wrapper is migrated.
+- The final migration removed Radix dependencies and updated `components.json` to the Base UI registry configuration.
 - The draft-mode file move and dialog manual-QA note were already in progress and were not included in this component migration.
 
 ## Behavior changes

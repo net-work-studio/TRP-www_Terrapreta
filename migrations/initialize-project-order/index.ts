@@ -4,6 +4,7 @@ import { at, defineMigration, patch, set } from "sanity/migrate";
 type ProjectDocument = {
   _createdAt?: string;
   _id: string;
+  orderRank?: string;
   year?: number;
 };
 
@@ -15,7 +16,6 @@ type ProjectGroup = {
 export default defineMigration({
   title: "Initialize project order",
   documentTypes: ["project"],
-  filter: "!defined(orderRank)",
   async *migrate(documents) {
     const projectsById = new Map<string, ProjectDocument[]>();
 
@@ -50,10 +50,19 @@ export default defineMigration({
     let rank = LexoRank.min();
 
     for (const project of projects) {
-      rank = rank.genNext().genNext();
+      const existingRank = project.documents.find(
+        (document) => document.orderRank !== undefined,
+      )?.orderRank;
+      const orderRank = existingRank ?? rank.genNext().genNext().toString();
+
+      if (existingRank === undefined) {
+        rank = LexoRank.parse(orderRank);
+      }
 
       for (const document of project.documents) {
-        yield patch(document._id, at("orderRank", set(rank.toString())));
+        if (document.orderRank === undefined) {
+          yield patch(document._id, at("orderRank", set(orderRank)));
+        }
       }
     }
   },

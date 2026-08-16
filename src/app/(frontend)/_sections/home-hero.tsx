@@ -23,7 +23,7 @@ export default function HomeHero() {
           <Link
             className={buttonVariants({
               className:
-                "opacity-100 starting:opacity-0 transition-opacity duration-1000",
+                "opacity-100 transition-opacity duration-1000 starting:opacity-0",
               variant: "brand",
             })}
             href="#learn-more"

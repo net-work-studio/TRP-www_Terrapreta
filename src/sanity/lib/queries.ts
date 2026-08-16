@@ -86,7 +86,10 @@ export const SITE_SETTINGS_QUERY =
 }`);
 
 export const PROJECTS_QUERY =
-  defineQuery(`*[_type == "project" && defined(slug.current)] | order(orderRank asc) {
+  defineQuery(`*[
+  _type == "project"
+  && defined(slug.current)
+] | order(orderRank asc) {
   _id,
   name,
   slug,
@@ -171,7 +174,10 @@ export const TAGS_QUERY = defineQuery(`*[_type == "tag"] | order(name asc){
 }`);
 
 export const SERVICES_QUERY =
-  defineQuery(`*[_type == "service" && defined(slug.current)] | order(orderRank asc){
+  defineQuery(`*[
+  _type == "service"
+  && defined(slug.current)
+] | order(orderRank asc){
   _id,
   name,
   slug,
@@ -271,15 +277,6 @@ ${IMAGE_FIELD_PROJECTION}
   shortDescription,
   pageContent[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}
-  },
-  relatedService[]->{
-    _id,
-    name,
-    slug
-  },
-  relatedResearch[]->{
-    _id,
-    name
   },
   seo{
     metaTitle,

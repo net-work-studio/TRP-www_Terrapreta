@@ -159,7 +159,7 @@ documented publicly; reports must match it):
 
 <every file touched, with what changed and why; include file:line for
 anything notable. Confirm the leftover scan is clean:
-grep -n "radix-ui\|@radix-ui" on this component's files>
+grep -n "radix-ui\|@radix-ui\|IconPlaceholder" on this component's files>
 
 ## Left alone
 

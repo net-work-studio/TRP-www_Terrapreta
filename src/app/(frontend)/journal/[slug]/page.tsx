@@ -41,15 +41,22 @@ const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   year: "numeric",
 });
 
-function formatPublishingDate(value: string | null) {
-  if (!value) {
+function cleanPublishingDate(value: string | null) {
+  const publishingDate = cleanOptionalString(value);
+
+  if (!publishingDate || Number.isNaN(new Date(publishingDate).getTime())) {
     return null;
   }
 
-  const date = new Date(value);
-  return Number.isNaN(date.getTime())
-    ? null
-    : JOURNAL_DATE_FORMATTER.format(date);
+  return publishingDate;
+}
+
+function formatPublishingDate(value: string | null) {
+  const publishingDate = cleanPublishingDate(value);
+
+  return publishingDate
+    ? JOURNAL_DATE_FORMATTER.format(new Date(publishingDate))
+    : null;
 }
 
 export async function generateStaticParams() {
@@ -88,6 +95,8 @@ export async function generateMetadata({
     });
   }
 
+  const publishingDate = cleanPublishingDate(journalItem.publishingDate);
+
   return generateMetadataHelper({
     title: journalItem.seo?.metaTitle || journalItem.name,
     description:
@@ -97,7 +106,7 @@ export async function generateMetadata({
     image: journalItem.seo?.ogImage ?? journalItem.mainImage ?? undefined,
     url: `/journal/${slug}`,
     type: "article",
-    publishedTime: journalItem.publishingDate ?? undefined,
+    publishedTime: publishingDate ?? undefined,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
     robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
@@ -123,6 +132,7 @@ function JournalPageContent({
   const schemaType =
     cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
   const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
+  const publishingDateValue = cleanPublishingDate(journalItem.publishingDate);
   const publishingDate = formatPublishingDate(journalItem.publishingDate);
 
   return (
@@ -134,7 +144,7 @@ function JournalPageContent({
         </h1>
         {publishingDate ? (
           <p className="text-base text-muted-foreground">
-            <time dateTime={journalItem.publishingDate ?? undefined}>
+            <time dateTime={publishingDateValue ?? undefined}>
               {publishingDate}
             </time>
           </p>
@@ -142,7 +152,7 @@ function JournalPageContent({
       </header>
 
       <AspectRatio
-        className="relative blur-none starting:blur-xl transition-all duration-400"
+        className="relative blur-none transition-all duration-400 starting:blur-xl"
         ratio={ASPECT_RATIO}
       >
         <SanityImage
@@ -174,8 +184,8 @@ function JournalPageContent({
           "@type": schemaType,
           headline: journalItem.name,
           description: journalItem.shortDescription,
-          ...(journalItem.publishingDate && {
-            datePublished: journalItem.publishingDate,
+          ...(publishingDateValue && {
+            datePublished: publishingDateValue,
           }),
           ...(hasSanityImage(journalItem.mainImage) && {
             image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),

@@ -76,8 +76,8 @@ npx shadcn@latest apply --preset nova
 # Preserve existing components instead.
 npx shadcn@latest init --preset nova --force --no-reinstall
 
-# Use a custom theme URL.
-npx shadcn@latest apply --preset "https://ui.shadcn.com/init?base=radix&style=nova&theme=blue&..."
+# Get the complete custom preset URL for a code; do not hand-author URL parameters.
+npx shadcn@latest preset url a2r6bw
 ```
 
 Or edit CSS variables directly in `globals.css`.
@@ -170,6 +170,8 @@ warning: "bg-warning text-warning-foreground hover:bg-warning/90",
 
 Compose shadcn/ui primitives into higher-level components:
 
+**Radix:** `asChild` composes the trigger with the supplied child.
+
 ```tsx
 export function ConfirmDialog({
   title,
@@ -198,6 +200,14 @@ export function ConfirmDialog({
     </AlertDialog>
   )
 }
+```
+
+**Base:** `render` composes the trigger with the element it should render.
+
+```tsx
+<AlertDialogTrigger render={<Button />}>
+  {children}
+</AlertDialogTrigger>
 ```
 
 ---

@@ -41,7 +41,11 @@ Radix uses `asChild` to replace the default element. Base uses `render`. Don't w
 <DialogTrigger render={<Button />}>Open</DialogTrigger>
 ```
 
-This applies to all trigger and close components: `DialogTrigger`, `SheetTrigger`, `AlertDialogTrigger`, `DropdownMenuTrigger`, `PopoverTrigger`, `TooltipTrigger`, `CollapsibleTrigger`, `DialogClose`, `SheetClose`, `NavigationMenuLink`, `BreadcrumbLink`, `SidebarMenuButton`, `Badge`, `Item`.
+This applies to trigger and close components: `DialogTrigger`, `SheetTrigger`, `AlertDialogTrigger`, `DropdownMenuTrigger`, `PopoverTrigger`, `TooltipTrigger`, `CollapsibleTrigger`, `DialogClose`, `SheetClose`.
+
+For composition rather than trigger/close replacement, use `NavigationMenuLink`,
+`BreadcrumbLink`, `SidebarMenuButton`, `Badge`, and `Item` according to their
+component APIs.
 
 ---
 
@@ -98,14 +102,13 @@ When a trigger's `render` target is not a native button, set
 
 ```tsx
 const items = [
-  { label: "Select a fruit", value: null },
   { label: "Apple", value: "apple" },
   { label: "Banana", value: "banana" },
 ]
 
 <Select items={items}>
   <SelectTrigger>
-    <SelectValue />
+    <SelectValue placeholder="Select a fruit" />
   </SelectTrigger>
   <SelectContent>
     <SelectGroup>
@@ -133,7 +136,7 @@ const items = [
 </Select>
 ```
 
-**Placeholder.** Base uses a `{ value: null }` item in the items array. Radix uses `<SelectValue placeholder="...">`.
+**Placeholder.** Both Base and Radix use `<SelectValue placeholder="...">`.
 
 **Content positioning.** Base uses `alignItemWithTrigger`. Radix uses `position`.
 

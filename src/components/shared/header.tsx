@@ -37,6 +37,22 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const desktopBreakpoint = window.matchMedia("(min-width: 768px)");
+    const closeMenuOnDesktop = () => {
+      if (desktopBreakpoint.matches) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    closeMenuOnDesktop();
+    desktopBreakpoint.addEventListener("change", closeMenuOnDesktop);
+
+    return () => {
+      desktopBreakpoint.removeEventListener("change", closeMenuOnDesktop);
+    };
+  }, []);
+
   return (
     <div
       className={`fixed top-0 right-0 left-0 z-50 flex items-center justify-center py-4 transition-all duration-100 ${

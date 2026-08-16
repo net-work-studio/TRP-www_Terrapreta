@@ -205,9 +205,9 @@ export const projectDoc = defineType({
       of: [defineArrayMember({ type: "projectTeamMember" })],
       validation: (rule) => [
         rule.custom((members) => {
-          const teamMembers = (members ?? []) as Array<{
+          const teamMembers = (members ?? []) as {
             organization?: { _ref?: string };
-          }>;
+          }[];
           const organizationIds = teamMembers
             .map((member) => member?.organization?._ref)
             .filter(Boolean);

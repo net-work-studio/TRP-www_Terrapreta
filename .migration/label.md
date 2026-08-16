@@ -14,7 +14,7 @@
 
 - `src/components/ui/field.tsx` keeps importing the stable `Label` wrapper API; no consumer prop changes were required.
 - Other Radix wrappers are unrelated to this component and were not touched.
-- The typecheck baseline remains blocked only by the pre-existing `@/components/disable-draft-mode` import after that file was moved outside this migration's scope.
+- `bun run typecheck` passed in the final project verification.
 
 ## Behavior changes
 

@@ -1,13 +1,17 @@
 # Class-string rewrites (layer 2)
 
-Apply these across ALL class strings (className, cva definitions, cn calls),
-including app code. They are safe, mechanical rewrites.
+Apply these across class strings (className, cva definitions, cn calls),
+including app code, only after identifying the Base UI part that emits the
+target state attribute. Open-state rewrites are part-specific, not blanket
+mechanical substitutions.
 
 ## Data-attribute selectors
 
 | Radix pattern | Base UI pattern |
 |---|---|
-| `data-[state=open]:` | `data-open:` |
+| `data-[state=open]:` on a part that emits open state (for example, a panel, popup, or positioner) | `data-open:` |
+| accordion / collapsible Trigger `data-[state=open]:` | `data-panel-open:` |
+| Menu, Select, NavigationMenu, or submenu Trigger `data-[state=open]:` | `data-popup-open:` |
 | `data-[state=closed]:` | `data-closed:` |
 | `data-[state=checked]:` | `data-checked:` |
 | `data-[state=unchecked]:` | `data-unchecked:` |
@@ -16,8 +20,7 @@ including app code. They are safe, mechanical rewrites.
 | `data-[highlighted]:` | `data-highlighted:` (unchanged) |
 | `data-[disabled]:` | `data-disabled:` (unchanged) |
 | `data-[side=...]:` | `data-[side=...]:` (unchanged, still parameterized) |
-| `group-data-[state=open]` / `peer-data-[state=open]` | `group-data-open` / `peer-data-open` |
-| submenu trigger open marker `data-[state=open]:` | `data-popup-open:` |
+| `group-data-[state=open]` / `peer-data-[state=open]` | Match the emitting group/peer part: `group-data-open` / `peer-data-open`, `*-data-panel-open`, or `*-data-popup-open`. |
 
 ## Animation idiom
 

@@ -26,7 +26,7 @@ All radix-ui exports, classified for migration:
 | Label | none | missing: native `<label>` (Field.Label inside forms) |
 | Menubar | Menubar + Menu | restructured (menubar root only; menus delegate to Menu) |
 | NavigationMenu | Navigation Menu | heavily restructured (Viewport -> Positioner/Popup/Viewport, Indicator->Icon) |
-| Popover | Popover | positioner model (Anchor dropped; verify vs docs) |
+| Popover | Popover | positioner model (Anchor -> Positioner `anchor`) |
 | Progress | Progress | restructured (new Track/Label/Value parts, no manual transform) |
 | RadioGroup | Radio Group + Radio | restructured (Item -> Radio.Root, two subpath imports) |
 | ScrollArea | Scroll Area | direct (Scrollbar/Thumb renames) |
@@ -100,7 +100,11 @@ One subpath per component either way.
   (dialog/alert-dialog) use Popup WITHOUT a Positioner.
 
 ### Data attributes / class hooks
-- `data-[state=open]` -> `data-open`; `data-[state=closed]` -> `data-closed`.
+- Use `data-[state=open]` -> `data-open` only on target parts that emit it
+  (such as panels, popups, and positioners); `data-[state=closed]` maps to
+  `data-closed` on those same parts.
+- Accordion and Collapsible Triggers use `data-panel-open`. Menu, Select,
+  NavigationMenu, and submenu Triggers use `data-popup-open`.
 - Enter/exit animations: `data-[state=open]:animate-in` /
   `data-[state=closed]:animate-out` -> `data-starting-style:*` /
   `data-ending-style:*` (transition-based, not keyframes).
@@ -146,7 +150,7 @@ One subpath per component either way.
 | nav-menu `Viewport` | `Positioner > Popup > Viewport` |
 | hover-card `HoverCard*` | `PreviewCard*` |
 | radio-group `Item` / `Indicator` | `Radio.Root` / `Radio.Indicator` |
-| popover `Anchor` | dropped (verify against docs) |
+| popover `Anchor` | `Positioner.anchor` (defaults to the Trigger when omitted) |
 | alert-dialog `Cancel` / `Action` | `Close` / dropped (plain Button) |
 | separator `decorative` prop | dropped |
 | Label primitive | native `<label>` |
@@ -176,8 +180,10 @@ Root gains `modal`, `snapPoints`, `swipeDirection` (default "down"),
 context provider in our wrapper. This is a vaul migration, not radix.
 
 ### popover / tooltip / hover-card
-Portal > Positioner > Popup. Popover: Anchor dropped, Title is now a real
-primitive part. Tooltip: Provider `delayDuration` -> `delay`; Content gains
+Portal > Positioner > Popup. Popover: replace a custom Anchor with the
+resolved anchor element or ref on `Positioner.anchor`; omitting `anchor` keeps
+the default Trigger anchor. Title is now a real primitive part. Tooltip:
+Provider `delayDuration` -> `delay`; Content gains
 side/align/alignOffset; default sideOffset 0 -> 4; Arrow gets explicit
 per-side positioning classes. HoverCard: primitive renamed PreviewCard
 (public wrapper names stay HoverCard*).
@@ -225,8 +231,9 @@ removed; `align` forwarded to Positioner. New `data-instant`,
 
 ## Doc-validation TODOs (before specs are final)
 
-1. Popover Anchor: confirm Base UI has no anchor equivalent (Positioner may
-   accept an `anchor` prop; our wrapper simply dropped the part).
+1. Popover Anchor: verify every custom Anchor is forwarded as its resolved
+   element or ref through `Positioner.anchor`; without one, Positioner anchors
+   to the Trigger.
 2. Callback signatures: radix `onOpenChange(open)` vs Base UI
    `onOpenChange(open, event, reason)` style differences; wrappers pass
    through so the pair diff cannot see them. Check per primitive.

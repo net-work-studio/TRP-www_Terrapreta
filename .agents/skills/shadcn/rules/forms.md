@@ -5,7 +5,7 @@
 - Forms use FieldGroup + Field
 - InputGroup requires InputGroupInput/InputGroupTextarea
 - Buttons inside inputs use InputGroup + InputGroupAddon
-- Option sets (2–7 choices) use ToggleGroup
+- Option sets (2–5 choices) use ToggleGroup
 - FieldSet + FieldLegend for grouping related fields
 - Field validation and disabled states
 
@@ -100,7 +100,7 @@ import { InputGroup, InputGroupInput, InputGroupAddon } from "@/components/ui/in
 
 ---
 
-## Option sets (2–7 choices) use ToggleGroup
+## Option sets (2–5 choices) use ToggleGroup
 
 Don't manually loop `Button` components with active state.
 
@@ -162,7 +162,7 @@ Use `FieldSet` + `FieldLegend` for related checkboxes, radios, or switches — n
   <FieldGroup className="gap-3">
     <Field orientation="horizontal">
       <Checkbox id="dark" />
-      <FieldLabel htmlFor="dark" className="font-normal">Dark mode</FieldLabel>
+      <FieldLabel htmlFor="dark">Dark mode</FieldLabel>
     </Field>
   </FieldGroup>
 </FieldSet>

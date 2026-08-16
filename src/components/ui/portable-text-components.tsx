@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { stegaClean, type PortableTextComponents } from "next-sanity";
 import {
+  PortableTextHeadingFour,
   PortableTextHeadingThree,
   PortableTextHeadingTwo,
 } from "./portable-text-headings";
@@ -31,7 +32,7 @@ export const portableTextComponents: PortableTextComponents = {
   block: {
     h2: PortableTextHeadingTwo,
     h3: PortableTextHeadingThree,
-    h4: PortableTextHeadingThree,
+    h4: PortableTextHeadingFour,
   },
   types: {
     editorialImage: PortableImage,

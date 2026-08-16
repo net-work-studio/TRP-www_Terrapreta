@@ -10,7 +10,7 @@ Cross-cutting rules (apply to every part below):
 | --- | --- |
 | `asChild` (`boolean`, `false`) | `render` (`ReactElement \| ((props: HTMLProps, state) => ReactElement)`). No merge-onto-child boolean; pass the element or a function. |
 | `dir` (`"ltr" \| "rtl"`) on roots | Dropped everywhere. Base UI reads direction from `<DirectionProvider>` (`@base-ui/react/direction-provider`) or the DOM `dir` attribute. |
-| `forceMount` (`boolean`) | `keepMounted` (`boolean`, `false`) on `Portal` / indicator parts. Same use case (animation/SEO), presence is CSS-driven via `data-starting-style` / `data-ending-style` instead of Radix `data-state` + forced mount. |
+| `forceMount` (`boolean`) | `keepMounted` (`boolean`, `false`) on `Portal` / indicator parts. For NavigationMenu, map `Content.forceMount` to `Content.keepMounted`, `Viewport.forceMount` to `Portal.keepMounted`, and `Indicator.forceMount` to no prop because `Icon` is always rendered. Same use case (animation/SEO), presence is CSS-driven via `data-starting-style` / `data-ending-style` instead of Radix `data-state` + forced mount. |
 | `onEscapeKeyDown` / `onPointerDownOutside` / `onFocusOutside` / `onInteractOutside` (content parts) | Dropped as separate props. Use `onOpenChange(open, eventDetails)` on the Root and branch on `eventDetails.reason` (`'escape-key'`, `'outside-press'`, `'focus-out'`, ...). Call `eventDetails.cancel()` to prevent the close (replaces `event.preventDefault()`). |
 | `onSelect` on items (`(event: Event) => void`; `event.preventDefault()` keeps menu open) | `onClick` (`(event: BaseUIEvent<React.MouseEvent<HTMLDivElement>>) => void`) plus `closeOnClick` (`boolean`) to control whether the menu closes. |
 | `textValue` on items (`string`, typeahead) | `label` (`string`). |

@@ -14,7 +14,7 @@
 ## Left alone
 
 - `src/components/shared/contact-form.tsx` continues to pass only `id="newsletter"`; Base UI applies that ID to the hidden input, so its existing label association remains valid without a call-site change.
-- `components.json`, `package.json`, and `bun.lock` retain their Radix configuration and dependency until the final Radix wrapper is migrated.
+- The final migration removed Radix dependencies and updated `components.json` to the Base UI registry configuration.
 - The draft-mode file move and dialog manual-QA note were already in progress and were not included in this component migration.
 
 ## Behavior changes

@@ -5,6 +5,7 @@ type ServiceDocument = {
   _createdAt?: string;
   _id: string;
   name?: string;
+  orderRank?: string;
 };
 
 type ServiceGroup = {
@@ -15,7 +16,6 @@ type ServiceGroup = {
 export default defineMigration({
   title: "Initialize service order",
   documentTypes: ["service"],
-  filter: "!defined(orderRank)",
   async *migrate(documents) {
     const servicesById = new Map<string, ServiceDocument[]>();
 
@@ -49,10 +49,19 @@ export default defineMigration({
     let rank = LexoRank.min();
 
     for (const service of services) {
-      rank = rank.genNext().genNext();
+      const existingRank = service.documents.find(
+        (document) => document.orderRank !== undefined,
+      )?.orderRank;
+      const orderRank = existingRank ?? rank.genNext().genNext().toString();
+
+      if (existingRank === undefined) {
+        rank = LexoRank.parse(orderRank);
+      }
 
       for (const document of service.documents) {
-        yield patch(document._id, at("orderRank", set(rank.toString())));
+        if (document.orderRank === undefined) {
+          yield patch(document._id, at("orderRank", set(orderRank)));
+        }
       }
     }
   },

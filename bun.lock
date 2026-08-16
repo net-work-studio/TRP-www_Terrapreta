@@ -17,7 +17,7 @@
         "embla-carousel-react": "^8.6.0",
         "lucide-react": "^1.28.0",
         "motion": "^12.43.0",
-        "motion-plus": "https://api.motion.dev/registry?package=motion-plus&version=2.0.0-alpha.4&token=1ed6016587936dcc477527fbfad19c75d950ee338cbbae69c986127870766827",
+        "motion-plus": "npm:@motionplus/core@^2.12.0",
         "next": "16.2.12",
         "next-plausible": "^4.0.0",
         "next-sanity": "^13.2.3",
@@ -1716,7 +1716,7 @@
 
     "motion-dom": ["motion-dom@12.43.0", "", { "dependencies": { "motion-utils": "^12.39.0" } }, "sha512-azKON4d9S65PEoFUiQTMTgPheEmzf2QngdRc50AKfJp9Q9mmcBVw22c8eMq9k8kxOFHdL7+WZY7N/5F/lwiDag=="],
 
-    "motion-plus": ["motion-plus@https://api.motion.dev/registry?package=motion-plus&version=2.0.0-alpha.4&token=1ed6016587936dcc477527fbfad19c75d950ee338cbbae69c986127870766827", { "dependencies": { "motion": "^12.23.24", "motion-plus-dom": "^2.0.0-alpha.4", "motion-utils": "^12.23.6" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" }, "optionalPeers": ["react", "react-dom"] }],
+    "motion-plus": ["motion-plus@npm:@motionplus/core@^2.12.0", { "dependencies": { "motion": "^12.23.24", "motion-plus-dom": "^2.0.0-alpha.4", "motion-utils": "^12.23.6" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" }, "optionalPeers": ["react", "react-dom"] }],
 
     "motion-plus-dom": ["motion-plus-dom@2.0.2", "", { "dependencies": { "motion": "^12.23.24", "motion-dom": "^12.23.23", "motion-utils": "^12.23.6" } }, "sha512-0NbPge5o89jqu1ArhdSTZYj0clM1bepIMhkUrpVvXhJPg+FOwH5RWv6B+7tuYF8uOGFCFoesK+rNX1OX3B96Iw=="],
 

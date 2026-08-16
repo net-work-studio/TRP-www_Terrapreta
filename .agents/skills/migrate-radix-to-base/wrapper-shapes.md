@@ -48,15 +48,15 @@ stable part. Golden default: `alignOffset = 0`, `sideOffset = 4`.
 Compose the PUBLIC Content wrapper, do not rebuild from primitives:
 
 ```tsx
-function DropdownMenuSubContent(props) {
+function DropdownMenuSubContent({ className, ...props }) {
   return (
     <DropdownMenuContent
       align="start"
       alignOffset={-3}
       side="right"
       sideOffset={0}
-      className={cn("w-auto", props.className)}
       {...props}
+      className={cn("w-auto", className)}
     />
   )
 }
