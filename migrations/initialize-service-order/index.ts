@@ -46,20 +46,34 @@ export default defineMigration({
         ),
     );
 
+    const canonicalRanks = services.map((service) =>
+      service.documents
+        .flatMap((document) =>
+          document.orderRank === undefined ? [] : [document.orderRank],
+        )
+        .sort((first, second) =>
+          LexoRank.parse(first).compareTo(LexoRank.parse(second)),
+        )[0],
+    );
     let rank = LexoRank.min();
 
-    for (const service of services) {
-      const existingRank = service.documents.find(
-        (document) => document.orderRank !== undefined,
-      )?.orderRank;
-      const orderRank = existingRank ?? rank.genNext().genNext().toString();
+    for (const [index, service] of services.entries()) {
+      const existingRank = canonicalRanks[index];
+      const nextRank = canonicalRanks
+        .slice(index + 1)
+        .find((candidate) => candidate !== undefined);
+      const orderRank =
+        existingRank ??
+        (nextRank !== undefined && rank.compareTo(LexoRank.parse(nextRank)) < 0
+          ? rank.between(LexoRank.parse(nextRank))
+          : rank.genNext().genNext()
+        ).toString();
 
-      if (existingRank === undefined) {
-        rank = LexoRank.parse(orderRank);
-      }
+      canonicalRanks[index] = orderRank;
+      rank = LexoRank.parse(orderRank);
 
       for (const document of service.documents) {
-        if (document.orderRank === undefined) {
+        if (document.orderRank !== orderRank) {
           yield patch(document._id, at("orderRank", set(orderRank)));
         }
       }

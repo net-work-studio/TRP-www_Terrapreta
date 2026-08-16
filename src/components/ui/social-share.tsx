@@ -49,6 +49,7 @@ export default function SocialShare() {
               key={label}
               onClick={() => handleShare(getHref)}
               size="sm"
+              type="button"
               variant="outline"
             >
               <Icon aria-hidden="true" />

@@ -19,8 +19,13 @@ export function CopyLink({ className }: CopyLinkButtonProps) {
   };
 
   return (
-    <Button className={className} size="sm"
-    variant="outline" onClick={handleCopyLink} >
+    <Button
+      className={className}
+      onClick={handleCopyLink}
+      size="sm"
+      type="button"
+      variant="outline"
+    >
       <Link aria-hidden="true" />
       Copy link
     </Button>

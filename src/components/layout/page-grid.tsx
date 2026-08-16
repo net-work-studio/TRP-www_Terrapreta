@@ -61,6 +61,9 @@ function GridItem({
     return null;
   }
 
+  const publishingDateValue = publishingDate
+    ? stegaClean(publishingDate)
+    : undefined;
   const className = cn(
     "h-fit space-y-2.5",
     isInteractive && "group",
@@ -83,15 +86,15 @@ function GridItem({
         />
       </AspectRatio>
       <hgroup className="space-y-2">
-        {(tag?.name || publishingDate) && (
+        {(tag?.name || publishingDateValue) && (
           <span className="flex items-center gap-2.5">
             {tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
-            {publishingDate && (
+            {publishingDateValue && (
               <time
                 className="text-muted-foreground text-sm"
-                dateTime={publishingDate}
+                dateTime={publishingDateValue}
               >
-              {new Date(stegaClean(publishingDate)).toLocaleDateString(undefined, {
+                {new Date(publishingDateValue).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
