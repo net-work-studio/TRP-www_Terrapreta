@@ -53,11 +53,7 @@ export type SeoObject = {
   robotsIndex?: "index" | "noindex";
   robotsFollow?: "follow" | "nofollow";
   schemaType?:
-    | "Organization"
-    | "Service"
-    | "Project"
-    | "Article"
-    | "LocalBusiness";
+    "Organization" | "Service" | "Project" | "Article" | "LocalBusiness";
   customSchema?: CustomSchema;
   ogTitle?: string;
   ogDescription?: string;

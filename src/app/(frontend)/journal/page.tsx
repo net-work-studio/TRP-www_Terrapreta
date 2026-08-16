@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import type { StegaAware } from "@/lib/sanity-stega";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -18,7 +19,11 @@ export const metadata: Metadata = generateMetadataHelper({
   url: "/journal",
 });
 
-function JournalContent({ journal }: { journal: JOURNAL_QUERY_RESULT | null }) {
+function JournalContent({
+  journal,
+}: {
+  journal: StegaAware<JOURNAL_QUERY_RESULT> | null;
+}) {
   const validJournal =
     journal?.filter(
       (item): item is typeof item & { slug: { current: string } } =>

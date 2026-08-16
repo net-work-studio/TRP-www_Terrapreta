@@ -1,4 +1,10 @@
-import { stegaClean } from "next-sanity";
+import {
+  stegaClean,
+  type StegaBranded,
+  type StegaCleaned,
+} from "next-sanity";
+
+export type StegaAware<T> = StegaBranded<T> | StegaCleaned<T>;
 
 export function cleanOptionalString(
   value: string | null | undefined

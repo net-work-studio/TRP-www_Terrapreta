@@ -8,7 +8,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { cleanCommaList, cleanOptionalString } from "@/lib/sanity-stega";
+import {
+  cleanCommaList,
+  cleanOptionalString,
+  type StegaAware,
+} from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -89,7 +93,7 @@ function ServicePageContent({
   service,
   slug,
 }: {
-  service: NonNullable<SERVICE_QUERY_RESULT>;
+  service: StegaAware<NonNullable<SERVICE_QUERY_RESULT>>;
   slug: string;
 }) {
   const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";

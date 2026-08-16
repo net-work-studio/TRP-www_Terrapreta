@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import type { StegaAware } from "@/lib/sanity-stega";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -21,7 +22,7 @@ export const metadata: Metadata = generateMetadataHelper({
 function ProjectsContent({
   projects,
 }: {
-  projects: PROJECTS_QUERY_RESULT | null;
+  projects: StegaAware<PROJECTS_QUERY_RESULT> | null;
 }) {
   return (
     <>

@@ -25,6 +25,13 @@
   --text-lg--line-height: calc(1.75 / 1.2);
   --text-xl--line-height: calc(1.75 / 1.3);
   --text-5xl--line-height: 1.2;
+  --animate-logo-ticker: logo-ticker 30s linear infinite;
+}
+
+@keyframes logo-ticker {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @theme inline {
