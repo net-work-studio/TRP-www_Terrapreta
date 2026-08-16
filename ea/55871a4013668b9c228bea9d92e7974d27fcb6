@@ -1,0 +1,32 @@
+migrations/initialize-order.test.ts
+  s_9aa30152a7bee0::t_6c2dc645a5a8b3 3,85-158
+migrations/initialize-service-order/index.ts
+  s_9aa30152a7bee0::t_31eee46adc9ae0 54-56
+  s_9aa30152a7bee0::t_6c2dc645a5a8b3 49-53,57,60-70,72-73,76
+.agents/skills/shadcn/cli.md
+  s_9aa30152a7bee0::t_b36c9f63ac4954 5,7,23,45,50,68,71,95,98,101,104,107,110,113,116,127,136,139,156,160-161,166,171,189,194,239,244,285-289,292,298-300
+.agents/skills/shadcn/SKILL.md
+  s_9aa30152a7bee0::t_b36c9f63ac4954 5,12,17,20,24,55,86-87,161,167,170,173,177,179-182,186-191,198-199,210-211,214-215,218-219,222-225,228-232,235-238,241-244,247-251,254,257-258
+src/components/ui/social-share.tsx
+  s_9aa30152a7bee0::t_d190c92aa2cbfc 52
+src/components/layout/page-grid.tsx
+  s_9aa30152a7bee0::t_d190c92aa2cbfc 64-66,89,92,95,97
+src/components/ui/copy-link.tsx
+  s_9aa30152a7bee0::t_d190c92aa2cbfc 22-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "ea55871a4013668b9c228bea9d92e7974d27fcb6",
+  "prompts": {},
+  "sessions": {
+    "s_9aa30152a7bee0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a00aec-f5c2-7e72-b4a5-e4338226d008",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
