@@ -1,0 +1,94 @@
+.migration/label.md
+  s_450fbf190d3670::t_cbfb2f859124dc 17
+src/components/ui/portable-text-components.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 4,35
+src/components/shared/header.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 40-55
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 44-47,51-59,98-99,109,135,147,155,187-188
+.agents/skills/shadcn/rules/forms.md
+  s_450fbf190d3670::t_78b4617f42c37b 8,103,165
+migrations/initialize-service-order/index.ts
+  s_450fbf190d3670::t_8ebd713b59e379 53,62
+  s_450fbf190d3670::t_c5efdbeef177cc 57
+  s_450fbf190d3670::t_e907d135dc12fd 8,52,54-56,58-59,63-64
+.agents/skills/migrate-radix-to-base/class-mapping.md
+  s_450fbf190d3670::t_cbfb2f859124dc 3-6,12-14,23
+.agents/skills/shadcn/customization.md
+  s_450fbf190d3670::t_78b4617f42c37b 79-80,205-210
+  s_450fbf190d3670::t_1ad671dcc5483d 173
+  s_450fbf190d3670::t_7dab523529d79a 174,211-212
+.agents/skills/migrate-radix-to-base/menus.md
+  s_450fbf190d3670::t_cbfb2f859124dc 13
+.npmrc
+  s_450fbf190d3670::t_bf67bfacd5dd0c 1-2
+.agents/skills/shadcn/cli.md
+  s_450fbf190d3670::t_1ad671dcc5483d 173
+  s_450fbf190d3670::t_e02887b87cbd51 7
+  s_450fbf190d3670::t_78b4617f42c37b 5,11-12,30-31,41,58,127,282-292
+migrations/convert-project-related-references.test.ts
+  s_450fbf190d3670::t_debdd65764533a 1,5-29,70-71
+  s_450fbf190d3670::t_da30028c3fe709 2-4,30-69
+src/sanity/lib/queries.ts
+  s_450fbf190d3670::t_e907d135dc12fd 89-92,177-180
+migrations/initialize-order.test.ts
+  s_450fbf190d3670::t_849972518afc8d 2
+  s_450fbf190d3670::t_debdd65764533a 1,3-19,23-26,28-84
+  s_450fbf190d3670::t_7df114765fd041 20-22
+  s_450fbf190d3670::t_7375ece96696e3 27
+migrations/initialize-project-order/index.ts
+  s_450fbf190d3670::t_c5efdbeef177cc 58
+  s_450fbf190d3670::t_8ebd713b59e379 54,63
+  s_450fbf190d3670::t_e907d135dc12fd 7,53,55-57,59-60,64-65
+src/sanity/types.ts
+  s_450fbf190d3670::t_f72829012b41cd 740,948,1121,1450,1454,1456
+.migration/radio-group.md
+  s_450fbf190d3670::t_cbfb2f859124dc 15
+.agents/skills/migrate-radix-to-base/SKILL.md
+  s_450fbf190d3670::t_cbfb2f859124dc 162
+.agents/skills/migrate-radix-to-base/universal-patterns.md
+  s_450fbf190d3670::t_cbfb2f859124dc 29,103-107,153,183-186,234-236
+.agents/skills/shadcn/rules/base-vs-radix.md
+  s_450fbf190d3670::t_78b4617f42c37b 44-48,111,139
+.migration/separator.md
+  s_450fbf190d3670::t_cbfb2f859124dc 16
+src/components/ui/portable-text-headings.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 8-11,18-21,24-32
+  s_450fbf190d3670::t_8172f50dc4e537 33
+src/app/(frontend)/_sections/home-hero.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 26
+migrations/convert-project-related-references/index.ts
+  s_450fbf190d3670::t_debdd65764533a 1-54
+.agents/skills/migrate-radix-to-base/wrapper-shapes.md
+  s_450fbf190d3670::t_cbfb2f859124dc 51,59
+.migration/switch.md
+  s_450fbf190d3670::t_cbfb2f859124dc 17
+.agents/skills/shadcn/rules/styling.md
+  s_450fbf190d3670::t_78b4617f42c37b 10-11,109,123
+src/sanity/schemaTypes/documents/projectDoc.ts
+  s_450fbf190d3670::t_e907d135dc12fd 208,210
+src/components/ui/field.tsx
+  s_450fbf190d3670::t_bba7564fb1cbbb 118
+package.json
+  s_450fbf190d3670::t_bf67bfacd5dd0c 35
+.agents/skills/shadcn/SKILL.md
+  s_450fbf190d3670::t_78b4617f42c37b 5,12,48
+bun.lock
+  s_450fbf190d3670::t_e0c830c01c56b7 20,1719
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "cbbb91914efe94dce8cca8ef3e22f063ac3f4c74",
+  "prompts": {},
+  "sessions": {
+    "s_450fbf190d3670": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a00a9b-d237-79c2-b70f-027b9867a2e3",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
