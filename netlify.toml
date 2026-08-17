@@ -10,12 +10,6 @@ to = "https://terrapreta.it/:splat"
 status = 308
 force = true
 
-[[redirects]]
-from = "https://terrapreta.it/projects/osservatorio-la-goccia"
-to = "https://terrapreta.it/projects/la-goccia-urban-forest"
-status = 308
-force = true
-
 [build]
 command = "bun install --frozen-lockfile && bun run build"
 publish = ".next"
