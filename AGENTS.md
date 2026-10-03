@@ -234,3 +234,17 @@ Sanity CLI provides many ways to interact with Sanity projects, datasets and sea
 - To understand Sanity product features search the documentation with `npx sanity docs search "<query>"`
 - To see available OpenAPI endpoints for a project, run `npx sanity openapi list`
 - To see available CLI commands, run `npx sanity --help`
+
+## Agent skills
+
+### Issue tracker
+
+Issues for this repo live in the Linear project TRP-www_Terrapreta (team Work / NWS). Use the connected Linear tools. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the default labels `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, and `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout: read root `CONTEXT.md` and relevant records in `docs/adr/`. See `docs/agents/domain.md`.
