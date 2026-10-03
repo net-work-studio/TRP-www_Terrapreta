@@ -1,0 +1,25 @@
+AGENTS.md
+  s_0a9f2efb29493a::t_6a37e10ba0e8ff 236-250
+docs/agents/domain.md
+  s_0a9f2efb29493a::t_8da7160d58f3c6 1-33
+docs/agents/issue-tracker.md
+  s_0a9f2efb29493a::t_ffda434d346f75 1-5
+docs/agents/triage-labels.md
+  s_0a9f2efb29493a::t_4ebd1cc0c1fb49 1-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3fc3298f924ad08f98d52f8b50188952626eb0f4",
+  "prompts": {},
+  "sessions": {
+    "s_0a9f2efb29493a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100f4-50be-7970-b216-b00f9c5ccfd5",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
