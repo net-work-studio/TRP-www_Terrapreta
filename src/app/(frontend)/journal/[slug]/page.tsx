@@ -160,7 +160,7 @@ function JournalPageContent({
           alt={journalItem.mainImage.altContent || journalItem.name || ""}
           className="z-0 h-full w-full object-cover"
           fill
-          priority
+          preload
           quality={IMAGE_QUALITY}
           sizes="100vw"
           source={journalItem.mainImage}

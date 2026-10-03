@@ -11,7 +11,10 @@ import {
 
 type SanityImageProps = {
   source: SanityImageSourceInput;
-} & Partial<Omit<ComponentProps<typeof Image>, "src">>;
+} & Partial<
+  Omit<ComponentProps<typeof Image>, "src" | "fill" | "sizes" | "priority">
+> &
+  ({ fill: true; sizes: string } | { fill?: false; sizes?: string });
 
 export default function SanityImage({
   source,
@@ -21,7 +24,7 @@ export default function SanityImage({
   fill,
   sizes,
   className,
-  priority,
+  preload,
   quality = 75,
   ...props
 }: SanityImageProps) {
@@ -44,9 +47,9 @@ export default function SanityImage({
         {...blurProps}
         className={cn("object-cover", className)}
         fill
-        priority={priority}
+        preload={preload}
         quality={quality}
-        sizes={sizes ?? "100vw"}
+        sizes={sizes}
         src={url}
         {...props}
       />
@@ -59,7 +62,7 @@ export default function SanityImage({
       {...blurProps}
       className={cn("object-cover", className)}
       height={height}
-      priority={priority}
+      preload={preload}
       quality={quality}
       sizes={sizes}
       src={url}
