@@ -20,7 +20,6 @@ const builder = createImageUrlBuilder({ projectId, dataset });
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
 
-const DEFAULT_FILL_WIDTH = 1920;
 const DEFAULT_IMAGE_QUALITY = 75;
 
 export function urlForImage(
@@ -38,7 +37,6 @@ export function urlForImage(
 export function getSanityImageUrl(
   source: SanityImageSourceInput,
   options?: {
-    fill?: boolean;
     width?: number;
     height?: number;
     quality?: number;
@@ -50,20 +48,14 @@ export function getSanityImageUrl(
     return null;
   }
 
-  const quality = options?.quality ?? DEFAULT_IMAGE_QUALITY;
-
-  if (options?.fill) {
-    return imageBuilder
-      .width(DEFAULT_FILL_WIDTH)
-      .quality(quality)
-      .auto("format")
-      .url();
+  if (!options) {
+    return imageBuilder.url();
   }
 
   return imageBuilder
-    .width(options?.width ?? 800)
-    .height(options?.height ?? 600)
-    .quality(quality)
+    .width(options.width ?? 800)
+    .height(options.height ?? 600)
+    .quality(options.quality ?? DEFAULT_IMAGE_QUALITY)
     .auto("format")
     .url();
 }

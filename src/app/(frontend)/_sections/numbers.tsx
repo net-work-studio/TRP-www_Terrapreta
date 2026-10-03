@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
-import { urlFor } from "@/sanity/lib/image";
 
 interface NumberCardProps {
   title: string;
@@ -17,17 +16,10 @@ function NumberCard({ title, description, image }: NumberCardProps) {
         <AspectRatio className="relative w-full rounded" ratio={5 / 4}>
           <Image
             alt="Why? Our Soil needs help."
-            blurDataURL={urlFor(image)
-              .width(24)
-              .height(24)
-              .quality(5)
-              .auto("format")
-              .url()}
             className="h-full w-full rounded object-cover object-center"
             fill
-            placeholder="blur"
             quality={75}
-            src={urlFor(image).quality(75).auto("format").url()}
+            src={image}
           />
         </AspectRatio>
       </div>

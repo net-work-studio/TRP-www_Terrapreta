@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { urlFor } from "@/sanity/lib/image";
 
 const contactFormImage =
   "https://cdn.sanity.io/images/wj2okvbq/production/56c1a946530b461cc495221f15c4ae771e0b4297-1600x2397.webp";
@@ -22,17 +21,10 @@ export default function ContactForm() {
       <AspectRatio className="relative w-full" ratio={1 / 1}>
         <Image
           alt="Contact Form"
-          blurDataURL={urlFor(contactFormImage)
-            .width(24)
-            .height(24)
-            .quality(5)
-            .auto("format")
-            .url()}
           className="h-full w-full object-cover object-center"
           fill
-          placeholder="blur"
           quality={75}
-          src={urlFor(contactFormImage).quality(75).auto("format").url()}
+          src={contactFormImage}
         />
       </AspectRatio>
       <form className="w-full" method="POST" name="contact">
