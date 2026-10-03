@@ -1,0 +1,25 @@
+src/app/(frontend)/_sections/customers.tsx
+  s_d2b7ee00fda48a::t_de210a940f55be 74
+src/app/(frontend)/services/[slug]/page.tsx
+  s_d2b7ee00fda48a::t_967ec9e74cf77f 121
+src/components/layout/page-grid.tsx
+  s_d2b7ee00fda48a::t_5de9281d60870f 82-86
+src/components/ui/portable-image.tsx
+  s_d2b7ee00fda48a::t_8bf1c769819cad 64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "80796f9d3df975c7cfe2bbb259833b31e61abb10",
+  "prompts": {},
+  "sessions": {
+    "s_d2b7ee00fda48a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016b-da21-7d40-beed-8450c8b3c203",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
