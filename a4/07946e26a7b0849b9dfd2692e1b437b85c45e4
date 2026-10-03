@@ -1,0 +1,43 @@
+next.config.ts
+  s_31023877b7f3fb::t_fabce4e5fb92df 57-58
+src/app/(frontend)/_sections/home-hero.tsx
+  s_31023877b7f3fb::t_54fdb6b1f2effa 45
+src/app/(frontend)/_sections/numbers.tsx
+  s_31023877b7f3fb::t_3336c7ef76d283 22
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_31023877b7f3fb::t_87a0bcf5005e32 20
+src/components/shared/contact-form.tsx
+  s_31023877b7f3fb::t_5fbbd635851f51 27
+src/components/ui/sanity-image.tsx
+  s_31023877b7f3fb::t_f1970f07b68d30 28
+src/sanity/lib/image-loader.test.ts
+  s_44147d484a7477::t_c153d6b4018ffd 1-85
+src/sanity/lib/image-loader.ts
+  s_31023877b7f3fb::t_c2c9a88e6039fb 1-20
+src/sanity/lib/image.ts
+  s_31023877b7f3fb::t_078de686d3e112 51-52,56-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "a407946e26a7b0849b9dfd2692e1b437b85c45e4",
+  "prompts": {},
+  "sessions": {
+    "s_31023877b7f3fb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100f3-94cc-7e60-9203-425b8743b1f4",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_44147d484a7477": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100f6-1baf-7b02-b8bb-2a42dc636546",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
