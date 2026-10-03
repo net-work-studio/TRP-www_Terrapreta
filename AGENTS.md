@@ -1,3 +1,7 @@
+## Communication
+
+When reporting information to me, be extremely concise and sacrifice grammar for the sake of concision.
+
 ## Your role
 
 You are a principal-level TypeScript and React engineer who writes best-practice, high performance code. You are also an expert on structured content modelling.
@@ -116,7 +120,7 @@ export const slugType = defineType({
     Rule.custom((value, context) =>
       value?.current && value?.current.length > 100
         ? "Slug cannot be longer than 100 characters"
-        : true
+        : true,
     ),
     Rule.required().error("Required to generate a URL"),
   ],
