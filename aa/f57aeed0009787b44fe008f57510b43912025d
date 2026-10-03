@@ -1,0 +1,23 @@
+docs/netlify-builds.md
+  s_c533df5e24482c::t_ae16e263ddac4a 1-14
+netlify.toml
+  s_c533df5e24482c::t_497a6507738150 15
+scripts/netlify-ignore-build.mjs
+  s_c533df5e24482c::t_cea571fa1eb17b 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "aaf57aeed0009787b44fe008f57510b43912025d",
+  "prompts": {},
+  "sessions": {
+    "s_c533df5e24482c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100fa-c432-7041-94ae-c8384b8117c8",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
