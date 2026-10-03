@@ -1,0 +1,40 @@
+src/app/(frontend)/_sections/context.tsx
+  h_75f73f9fd69b93 30,40,50,60
+src/app/(frontend)/_sections/numbers.tsx
+  h_75f73f9fd69b93 22
+src/app/(frontend)/_sections/pilot-project.tsx
+  h_75f73f9fd69b93 20
+src/app/(frontend)/_sections/services.tsx
+  h_75f73f9fd69b93 48
+src/app/(frontend)/_sections/soil-revolution.tsx
+  h_75f73f9fd69b93 30
+src/app/(frontend)/_sections/customers.tsx
+  s_d2b7ee00fda48a::t_de210a940f55be 74
+src/app/(frontend)/services/[slug]/page.tsx
+  s_d2b7ee00fda48a::t_967ec9e74cf77f 121
+src/components/layout/page-grid.tsx
+  s_d2b7ee00fda48a::t_5de9281d60870f 82-86
+src/components/ui/portable-image.tsx
+  s_d2b7ee00fda48a::t_8bf1c769819cad 64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "6ad19f59fc6b66c46a22fef2b2434b3c8df35e82",
+  "prompts": {},
+  "humans": {
+    "h_75f73f9fd69b93": {
+      "author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_d2b7ee00fda48a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016b-da21-7d40-beed-8450c8b3c203",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
