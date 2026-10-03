@@ -26,6 +26,7 @@ function SoilCard({ title, image, description }: SoilCardProps) {
           className="h-full w-full rounded-md object-cover"
           fill
           quality={75}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           src={image}
         />
       </AspectRatio>
