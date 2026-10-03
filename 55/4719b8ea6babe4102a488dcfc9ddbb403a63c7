@@ -1,0 +1,19 @@
+src/components/shared/footer.tsx
+  s_0863c596ed2eda::t_a3460a7ef16533 110,114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "554719b8ea6babe4102a488dcfc9ddbb403a63c7",
+  "prompts": {},
+  "sessions": {
+    "s_0863c596ed2eda": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100f2-b9fa-7672-be00-db1be9283afb",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
