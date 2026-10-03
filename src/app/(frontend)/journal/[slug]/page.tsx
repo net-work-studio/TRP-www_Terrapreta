@@ -26,10 +26,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import {
-  JOURNAL_ITEM_QUERY,
-  JOURNAL_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
+import { JOURNAL_ITEM_QUERY, JOURNAL_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 type SlugPageProps = {
@@ -141,7 +138,7 @@ function JournalPageContent({
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <header className="flex translate-y-0 flex-col items-center justify-center gap-5 space-y-5 pb-5 text-balance text-center opacity-100 transition-all duration-400 starting:translate-y-2 starting:opacity-0">
+      <header className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 space-y-5 text-balance pb-5 text-center opacity-100 starting:opacity-0 transition-all duration-400">
         <BreadcrumbCustom tag={journalItem.tag?.name} />
         <h1 className="text-4xl tracking-tight md:text-5xl lg:text-6xl">
           {journalItem.name}
@@ -156,7 +153,7 @@ function JournalPageContent({
       </header>
 
       <AspectRatio
-        className="relative blur-none transition-all duration-400 starting:blur-xl"
+        className="relative blur-none starting:blur-xl transition-all duration-400"
         ratio={ASPECT_RATIO}
       >
         <SanityImage
@@ -171,7 +168,7 @@ function JournalPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        {journalItem.contentObject && (
+        {!!journalItem.contentObject && (
           <ArticleContent>
             <PortableText
               components={portableTextComponents}
@@ -240,9 +237,7 @@ async function CachedJournalPage({
   return <JournalPageContent journalItem={journalItem} slug={slug} />;
 }
 
-async function DynamicJournalPage({
-  params,
-}: SlugPageProps) {
+async function DynamicJournalPage({ params }: SlugPageProps) {
   const [{ slug }, { fetchOptions }] = await Promise.all([
     params,
     getSanityRequestState(),

@@ -65,7 +65,7 @@ export function PortableImage({ value }: PortableImageProps) {
           source={value}
         />
       </AspectRatio>
-      {value.caption && (
+      {!!value.caption && (
         <figcaption className="mt-2 text-stone-400 text-xs">
           {value.caption}
         </figcaption>

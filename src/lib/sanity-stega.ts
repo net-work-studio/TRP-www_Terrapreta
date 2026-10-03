@@ -1,8 +1,4 @@
-import {
-  stegaClean,
-  type StegaBranded,
-  type StegaCleaned,
-} from "next-sanity";
+import { type StegaBranded, type StegaCleaned, stegaClean } from "next-sanity";
 
 export type StegaAware<T> = StegaBranded<T> | StegaCleaned<T>;
 

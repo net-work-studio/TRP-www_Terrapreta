@@ -90,6 +90,3 @@ export const isActivePath = (currentPath: string, href: string): boolean => {
   }
   return currentPath.startsWith(href);
 };
-
-// Default export
-export default navigationData;

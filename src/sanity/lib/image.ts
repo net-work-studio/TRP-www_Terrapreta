@@ -1,16 +1,13 @@
+import type { ImageUrlBuilder, SanityImageSource } from "@sanity/image-url";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import type { ImageUrlBuilder } from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url";
 
 import { dataset, projectId } from "../env";
 import {
-  getBlurDataUrl,
-  getSanityImageAlt,
   getSanityImageField,
-  hasSanityImage,
   type SanityImageSourceInput,
 } from "./image-source";
 
+// biome-ignore lint/performance/noBarrelFile: Keep image metadata and URL helpers available through the shared image API.
 export {
   getBlurDataUrl,
   getSanityImageAlt,
@@ -21,9 +18,7 @@ export {
 
 const builder = createImageUrlBuilder({ projectId, dataset });
 
-export const urlFor = (source: SanityImageSource) => {
-  return builder.image(source);
-};
+export const urlFor = (source: SanityImageSource) => builder.image(source);
 
 const DEFAULT_FILL_WIDTH = 1920;
 const DEFAULT_IMAGE_QUALITY = 75;
@@ -33,7 +28,7 @@ export function urlForImage(
 ): ImageUrlBuilder | null {
   const imageField = getSanityImageField(source);
 
-  if (!imageField?.asset?._id && !imageField?.asset?.url) {
+  if (!(imageField?.asset?._id || imageField?.asset?.url)) {
     return null;
   }
 

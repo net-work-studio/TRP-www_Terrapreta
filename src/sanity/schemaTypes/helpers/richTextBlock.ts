@@ -66,9 +66,7 @@ export const richTextBlock = defineArrayMember({
               { type: "about" },
             ],
             validation: (rule) => [
-              rule
-                .required()
-                .error("Choose the document this link points to."),
+              rule.required().error("Choose the document this link points to."),
             ],
           }),
         ],

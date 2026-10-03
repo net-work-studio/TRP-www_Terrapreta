@@ -9,11 +9,7 @@ import {
 import { ORGANIZATIONS_QUERY } from "@/sanity/lib/queries";
 import type { ORGANIZATIONS_QUERY_RESULT } from "@/sanity/types";
 
-function LogosContent({
-  logos,
-}: {
-  logos: ORGANIZATIONS_QUERY_RESULT | null;
-}) {
+function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
   const logoItems =
     logos
       ?.filter(
@@ -56,7 +52,7 @@ function LogosContent({
         <div className="absolute top-0 left-0 z-10 h-full w-24 bg-linear-to-r from-stone-900 to-transparent" />
         <div className="absolute top-0 right-0 z-10 h-full w-24 bg-linear-to-l from-stone-900 to-transparent" />
         <div className="overflow-hidden">
-          <div className="flex w-max hover:[animation-duration:37.5s] motion-reduce:transform-none motion-reduce:animate-none animate-logo-ticker">
+          <div className="flex w-max animate-logo-ticker motion-reduce:transform-none motion-reduce:animate-none hover:[animation-duration:37.5s]">
             <div className="flex shrink-0">{logoItems}</div>
             <div aria-hidden="true" className="flex shrink-0">
               {logoItems}
@@ -85,7 +81,7 @@ async function DynamicLogos() {
   return <CachedLogos {...fetchOptions} />;
 }
 
-export default async function Logos() {
+export default function Logos() {
   return renderSanityCacheBoundary({
     draft: <DynamicLogos />,
     fallback: <LogosContent logos={null} />,

@@ -44,7 +44,7 @@ export const directory = (
         .filter(
           `
 						string::startsWith(metadata.slug.current, $path)
-						${maxLevel !== undefined ? `&& count(string::split(metadata.slug.current, '/')) <= ${maxLevel + 1}` : ""}
+						${maxLevel === undefined ? "" : `&& count(string::split(metadata.slug.current, '/')) <= ${maxLevel + 1}`}
 					`
         )
         .params({ path: `${path}/` })

@@ -10,9 +10,7 @@ export const unGoalDoc = defineType({
     defineField({
       type: "string",
       name: "name",
-      validation: (rule) => [
-        rule.required().error("A UN goal needs a name."),
-      ],
+      validation: (rule) => [rule.required().error("A UN goal needs a name.")],
     }),
     defineField({
       type: "image",

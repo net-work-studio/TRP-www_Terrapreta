@@ -32,10 +32,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import {
-  PROJECT_ITEM_QUERY,
-  PROJECT_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
+import { PROJECT_ITEM_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECT_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 type SlugPageProps = {
@@ -116,7 +113,8 @@ function ProjectPageContent({
     notFound();
   }
 
-  const schemaType = cleanOptionalString(projectItem.seo?.schemaType) || "Project";
+  const schemaType =
+    cleanOptionalString(projectItem.seo?.schemaType) || "Project";
   const statusLabel = projectItem.status
     ? cleanOptionalString(projectItem.status)?.replaceAll("-", " ")
     : undefined;
@@ -156,20 +154,18 @@ function ProjectPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        <ul className="flex items-center hidden gap-2 text-lg text-muted-foreground">
-          {projectItem.location && (
+        <ul className="flex hidden items-center gap-2 text-lg text-muted-foreground">
+          {!!projectItem.location && (
             <>
               <li>{projectItem.location}</li>
-              {projectItem.status && <Minus size={16} />}
+              {!!projectItem.status && <Minus size={16} />}
             </>
           )}
-          {projectItem.status && (
-            <li className="capitalize">
-              {statusLabel}
-            </li>
+          {!!projectItem.status && (
+            <li className="capitalize">{statusLabel}</li>
           )}
         </ul>
-        {projectItem.pageContent && (
+        {!!projectItem.pageContent && (
           <ArticleContent className="text-pretty">
             <PortableText
               components={portableTextComponents}
@@ -231,9 +227,7 @@ async function CachedProjectPage({
   return <ProjectPageContent projectItem={projectItem} slug={slug} />;
 }
 
-async function DynamicProjectPage({
-  params,
-}: SlugPageProps) {
+async function DynamicProjectPage({ params }: SlugPageProps) {
   const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
     params,
     getSanityRequestState(),
@@ -274,9 +268,7 @@ function ProjectPageFallback() {
   );
 }
 
-export default async function Page({
-  params,
-}: SlugPageProps) {
+export default async function Page({ params }: SlugPageProps) {
   return renderSanityCacheBoundary({
     draft: <DynamicProjectPage params={params} />,
     fallback: <ProjectPageFallback />,

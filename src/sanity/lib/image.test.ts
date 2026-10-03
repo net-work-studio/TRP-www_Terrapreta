@@ -21,8 +21,6 @@ describe("Sanity images", () => {
 
     expect(hasSanityImage(directImage)).toBe(true);
     expect(getSanityImageAlt(directImage)).toBe("Restored urban soil");
-    expect(getBlurDataUrl(directImage)).toBe(
-      "data:image/jpeg;base64,example"
-    );
+    expect(getBlurDataUrl(directImage)).toBe("data:image/jpeg;base64,example");
   });
 });

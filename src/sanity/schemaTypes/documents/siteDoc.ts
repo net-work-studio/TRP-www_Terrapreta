@@ -24,7 +24,8 @@ export const siteDoc = defineType({
       name: "seo",
       title: "Site SEO Defaults",
       group: "seo",
-      description: "Default SEO settings used across the site and for the homepage",
+      description:
+        "Default SEO settings used across the site and for the homepage",
     }),
   ],
   preview: {

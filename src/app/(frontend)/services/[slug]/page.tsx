@@ -24,10 +24,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import {
-  SERVICE_QUERY,
-  SERVICE_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
+import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { SERVICE_QUERY_RESULT } from "@/sanity/types";
 
 type ServiceClient = NonNullable<
@@ -129,7 +126,7 @@ function ServicePageContent({
       </div>
 
       <article className="container-article container-site space-y-20 py-20">
-        {service.clients && (
+        {!!service.clients && (
           <div className="flex flex-col items-start justify-center">
             <h3 className="text-2xl">Our Clients</h3>
             <div className="flex flex-row items-center justify-center gap-5">
@@ -185,7 +182,7 @@ function ServicePageContent({
         </div>
 
         <div className="flex flex-col items-start justify-center space-y-5 text-lg md:text-xl lg:text-2xl">
-          {service.content && (
+          {!!service.content && (
             <PortableText
               components={portableTextComponents}
               value={service.content}
@@ -275,9 +272,7 @@ async function CachedServicePage({
   return <ServicePageContent service={service} slug={slug} />;
 }
 
-async function DynamicServicePage({
-  params,
-}: SlugPageProps) {
+async function DynamicServicePage({ params }: SlugPageProps) {
   const [{ slug }, { fetchOptions }] = await Promise.all([
     params,
     getSanityRequestState(),
@@ -310,9 +305,7 @@ function ServicePageFallback() {
   );
 }
 
-export default async function Page({
-  params,
-}: SlugPageProps) {
+export default async function Page({ params }: SlugPageProps) {
   return renderSanityCacheBoundary({
     draft: <DynamicServicePage params={params} />,
     fallback: <ServicePageFallback />,
