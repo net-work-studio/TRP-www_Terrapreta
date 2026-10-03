@@ -1,0 +1,50 @@
+src/components/shared/navigation/navigation-mobile.tsx
+  s_15d63ed069d5c8::t_4f8f400592dfc8 15
+src/app/globals.css
+  s_15d63ed069d5c8::t_ee18031980a652 4-35,39
+  s_15d63ed069d5c8::t_be2e121466fb7b 206-209
+src/components/ui/navigation-menu.tsx
+  s_15d63ed069d5c8::t_18a46f98f27b20 59
+src/components/shared/navigation/navigation-desktop.tsx
+  s_15d63ed069d5c8::t_f337010cea6609 9
+src/components/ui/input.tsx
+  s_15d63ed069d5c8::t_40553c75570008 9
+src/components/ui/button.tsx
+  s_15d63ed069d5c8::t_6e98ded46c4bfc 7
+src/app/(frontend)/_sections/soil-revolution.tsx
+  s_15d63ed069d5c8::t_bd06b6c7f92680 33
+src/components/ui/breadcrumb.tsx
+  s_15d63ed069d5c8::t_ba412eceb8efc3 57
+src/app/(frontend)/_sections/services.tsx
+  s_15d63ed069d5c8::t_527f2694e8f21a 82
+src/components/ui/portable-text-headings.tsx
+  s_15d63ed069d5c8::t_3ef93ce4c56320 10,20,30
+src/components/ui/label.tsx
+  s_15d63ed069d5c8::t_a282ca943a7faf 14
+src/app/layout.tsx
+  s_15d63ed069d5c8::t_7a80f0df9c13c4 42-55,57
+src/components/ui/badge.tsx
+  s_15d63ed069d5c8::t_687c78b7668a38 8
+src/app/(frontend)/impressum/page.tsx
+  s_15d63ed069d5c8::t_9c6c22731e368a 25,36,47,54,59,64
+src/components/ui/dialog.tsx
+  s_15d63ed069d5c8::t_0b1524f6e7b817 101
+src/components/ui/field.tsx
+  s_15d63ed069d5c8::t_31bee02f72788d 31,132,145,226
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "a9c63d32e4f82a6950b97a0df19e4d6c85b15159",
+  "prompts": {},
+  "sessions": {
+    "s_15d63ed069d5c8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016c-aba0-7ad0-b7a5-649617a897d8",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
