@@ -121,7 +121,7 @@ function ServicesContent({
             className={buttonVariants({
               className: "w-fit md:justify-self-end",
             })}
-            href="/discovery-call"
+            href="/contacts"
           >
             Book a Discovery Call
           </Link>
