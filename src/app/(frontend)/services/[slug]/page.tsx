@@ -118,6 +118,7 @@ function ServicePageContent({
                 className="z-0 aspect-4/5 h-full w-full rounded-md object-cover object-center"
                 fill
                 quality={75}
+                sizes="(min-width: 1024px) 60vw, 100vw"
                 source={service.mainImage}
               />
             )}

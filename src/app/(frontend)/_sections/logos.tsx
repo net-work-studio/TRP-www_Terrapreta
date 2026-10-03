@@ -32,7 +32,6 @@ function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
             className="h-12 w-auto object-contain"
             height={48}
             quality={75}
-            sizes="20vw"
             source={logo.logoDark}
             width={120}
           />

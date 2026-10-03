@@ -71,7 +71,7 @@ function CustomersContent({
                   className="rounded object-cover"
                   fill
                   quality={75}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   source={customer.mainImage}
                   style={{
                     objectPosition: getObjectPosition(
