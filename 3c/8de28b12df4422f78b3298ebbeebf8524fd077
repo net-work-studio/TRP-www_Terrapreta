@@ -1,0 +1,21 @@
+src/app/(frontend)/layout.tsx
+  s_19024a87ffd98f::t_9eb0dcb86d0813 4,38
+src/lib/draft-mode-tools.tsx
+  s_19024a87ffd98f::t_29f13d7e06d236 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3c8de28b12df4422f78b3298ebbeebf8524fd077",
+  "prompts": {},
+  "sessions": {
+    "s_19024a87ffd98f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a100f1-fdbf-7a10-a488-43616bef4b04",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
