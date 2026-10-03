@@ -54,6 +54,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   cacheLife: { default: sanity },
   images: {
+    loader: "custom",
+    loaderFile: "./src/sanity/lib/image-loader.ts",
     remotePatterns: [
       {
         protocol: "https",

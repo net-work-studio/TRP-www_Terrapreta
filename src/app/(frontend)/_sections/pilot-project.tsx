@@ -3,7 +3,6 @@ import Link from "next/link";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { buttonVariants } from "@/components/ui/button";
 import TagTitle from "@/components/ui/tag-title";
-import { urlFor } from "@/sanity/lib/image";
 
 const pilotProjectImage =
   "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp";
@@ -15,17 +14,10 @@ export default function PilotProject() {
         <AspectRatio ratio={5 / 4}>
           <Image
             alt="Pilot Project Image"
-            blurDataURL={urlFor(pilotProjectImage)
-              .width(24)
-              .height(24)
-              .quality(5)
-              .auto("format")
-              .url()}
             className="h-full w-full rounded object-cover object-center"
             fill
-            placeholder="blur"
             quality={75}
-            src={urlFor(pilotProjectImage).quality(75).auto("format").url()}
+            src={pilotProjectImage}
           />
         </AspectRatio>
       </div>

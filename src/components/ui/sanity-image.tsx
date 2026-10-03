@@ -25,12 +25,7 @@ export default function SanityImage({
   quality = 75,
   ...props
 }: SanityImageProps) {
-  const url = getSanityImageUrl(source, {
-    fill: Boolean(fill),
-    width: Number(width),
-    height: Number(height),
-    quality: Number(quality),
-  });
+  const url = getSanityImageUrl(source);
 
   if (!url) {
     return null;
