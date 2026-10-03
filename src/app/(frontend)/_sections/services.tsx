@@ -77,7 +77,7 @@ function ServiceCard({
                       className="h-full w-full rounded object-cover object-center"
                       fill
                       quality={75}
-                      sizes="(min-width: 640px) 512px, 100vw"
+                      sizes="(min-width: 864px) 864px, 100vw"
                       source={mainImage}
                     />
                   </AspectRatio>
