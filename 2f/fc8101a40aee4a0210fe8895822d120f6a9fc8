@@ -1,0 +1,19 @@
+src/components/layout/page-grid.tsx
+  s_15d63ed069d5c8::t_25a6423fd3fdb5 68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "2ffc8101a40aee4a0210fe8895822d120f6a9fc8",
+  "prompts": {},
+  "sessions": {
+    "s_15d63ed069d5c8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016c-aba0-7ad0-b7a5-649617a897d8",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
