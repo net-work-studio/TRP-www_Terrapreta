@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import localFont from "next/font/local";
 import PlausibleProvider from "next-plausible";
 import type { ScriptHTMLAttributes } from "react";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -16,32 +15,6 @@ const LEGACY_PLAUSIBLE_SCRIPT_PROPS: LegacyPlausibleScriptProps = {
   "data-domain": "terrapreta.it",
   "data-api": "/api/event",
 };
-
-const sans = localFont({
-  variable: "--font-sans",
-  src: [
-    {
-      path: "../../public/fonts/ABCMarfa-Light.woff2",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/ABCMarfa-LightItalic.woff2",
-      weight: "300",
-      style: "italic",
-    },
-    {
-      path: "../../public/fonts/ABCMarfa-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/ABCMarfa-BoldItalic.woff2",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-});
 
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 
@@ -66,10 +39,22 @@ export default function RootLayout({
     >
       <head>
         <meta content="Terrapreta" name="apple-mobile-web-app-title" />
+        <link
+          as="font"
+          crossOrigin="anonymous"
+          href="/fonts/ABCMarfa-Light.woff2"
+          rel="preload"
+          type="font/woff2"
+        />
+        <link
+          as="font"
+          crossOrigin="anonymous"
+          href="/fonts/ABCMarfa-Bold.woff2"
+          rel="preload"
+          type="font/woff2"
+        />
       </head>
-      <body
-        className={`${sans.variable} flex h-screen flex-col justify-between bg-stone-950 font-sans font-settings text-stone-50 antialiased`}
-      >
+      <body className="flex h-screen flex-col justify-between bg-stone-950 font-light font-sans text-stone-50 antialiased">
         <JsonLd
           data={{
             "@context": "https://schema.org",

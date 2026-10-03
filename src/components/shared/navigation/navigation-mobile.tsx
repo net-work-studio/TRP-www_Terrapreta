@@ -12,7 +12,7 @@ export default function NavigationMobile({
     <nav className="flex flex-col space-y-4 md:hidden">
       {navigationData.map((item) => (
         <Link
-          className="py-2 font-medium text-2xl text-foreground transition-colors hover:text-primary"
+          className="py-2 font-light text-2xl text-foreground transition-colors hover:text-primary"
           href={item.href}
           key={item.href}
           onClick={onLinkClick}
