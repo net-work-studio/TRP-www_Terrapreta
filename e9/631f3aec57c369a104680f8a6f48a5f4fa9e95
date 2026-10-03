@@ -1,0 +1,25 @@
+src/app/(frontend)/_sections/home-hero.tsx
+  s_15d63ed069d5c8::t_704068526fda40 42
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_15d63ed069d5c8::t_933b7a2cdde912 163
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_15d63ed069d5c8::t_5a0d0ace6bd4ed 149
+src/components/ui/sanity-image.tsx
+  s_15d63ed069d5c8::t_ee5c89dcca3282 14-17,27,50,52,65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e9631f3aec57c369a104680f8a6f48a5f4fa9e95",
+  "prompts": {},
+  "sessions": {
+    "s_15d63ed069d5c8": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016c-aba0-7ad0-b7a5-649617a897d8",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
