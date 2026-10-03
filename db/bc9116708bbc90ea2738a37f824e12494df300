@@ -1,0 +1,22 @@
+src/app/(frontend)/_sections/context.tsx
+  h_75f73f9fd69b93 30,40,50,60
+src/app/(frontend)/_sections/numbers.tsx
+  h_75f73f9fd69b93 22
+src/app/(frontend)/_sections/pilot-project.tsx
+  h_75f73f9fd69b93 20
+src/app/(frontend)/_sections/services.tsx
+  h_75f73f9fd69b93 48,80
+src/app/(frontend)/_sections/soil-revolution.tsx
+  h_75f73f9fd69b93 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "dbbc9116708bbc90ea2738a37f824e12494df300",
+  "prompts": {},
+  "humans": {
+    "h_75f73f9fd69b93": {
+      "author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
