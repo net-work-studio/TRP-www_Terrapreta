@@ -85,8 +85,7 @@ export const SITE_SETTINGS_QUERY =
   }
 }`);
 
-export const PROJECTS_QUERY =
-  defineQuery(`*[
+export const PROJECTS_QUERY = defineQuery(`*[
   _type == "project"
   && defined(slug.current)
 ] | order(orderRank asc) {
@@ -173,8 +172,7 @@ export const TAGS_QUERY = defineQuery(`*[_type == "tag"] | order(name asc){
   slug
 }`);
 
-export const SERVICES_QUERY =
-  defineQuery(`*[
+export const SERVICES_QUERY = defineQuery(`*[
   _type == "service"
   && defined(slug.current)
 ] | order(orderRank asc){

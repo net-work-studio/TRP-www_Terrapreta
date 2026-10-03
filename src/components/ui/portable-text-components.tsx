@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { stegaClean, type PortableTextComponents } from "next-sanity";
+import { type PortableTextComponents, stegaClean } from "next-sanity";
+import { PortableImage } from "./portable-image";
 import {
   PortableTextHeadingFour,
   PortableTextHeadingThree,
   PortableTextHeadingTwo,
 } from "./portable-text-headings";
-import { PortableImage } from "./portable-image";
 
 /**
  * Map document types to their URL paths

@@ -90,10 +90,7 @@ function ServiceCard({
             </div>
 
             <div className="p-5 pb-10 md:p-10">
-              <Link
-                className={buttonVariants()}
-                href={`/services/${slug}`}
-              >
+              <Link className={buttonVariants()} href={`/services/${slug}`}>
                 Discover more
               </Link>
             </div>
@@ -180,7 +177,7 @@ async function DynamicServices() {
   return <CachedServices {...fetchOptions} />;
 }
 
-export default async function Services() {
+export default function Services() {
   return renderSanityCacheBoundary({
     draft: <DynamicServices />,
     fallback: <ServicesContent services={null} />,

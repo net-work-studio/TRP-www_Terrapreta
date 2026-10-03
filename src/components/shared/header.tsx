@@ -66,7 +66,7 @@ export default function Header() {
           <Logotype />
         </Link>
         <NavigationDesktop />
-        <div className="flex items-center md:hidden gap-4">
+        <div className="flex items-center gap-4 md:hidden">
           <Button
             aria-label={
               isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
@@ -86,7 +86,7 @@ export default function Header() {
       </header>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
+      {!!isMobileMenuOpen && (
         <div className="fixed inset-0 z-10 bg-stone-950 md:hidden">
           <div className="p-5 pt-24">
             <NavigationMobile onLinkClick={() => setIsMobileMenuOpen(false)} />

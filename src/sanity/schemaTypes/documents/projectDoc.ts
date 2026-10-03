@@ -54,7 +54,9 @@ export const projectDoc = defineType({
       title: "Slug",
       group: "meta",
       validation: (rule) => [
-        rule.required().error("A slug is required to generate the project URL."),
+        rule
+          .required()
+          .error("A slug is required to generate the project URL."),
       ],
       options: {
         source: "name",
@@ -71,7 +73,7 @@ export const projectDoc = defineType({
         rule.custom((value) =>
           value === undefined || value === "full" || value === "overview"
             ? true
-            : "Choose full project or overview only.",
+            : "Choose full project or overview only."
         ),
       ],
       options: {
@@ -111,7 +113,7 @@ export const projectDoc = defineType({
           value === "in-progress" ||
           value === "completed"
             ? true
-            : "Choose in progress or completed.",
+            : "Choose in progress or completed."
         ),
       ],
     }),
@@ -161,7 +163,9 @@ export const projectDoc = defineType({
       validation: (rule) => [
         rule
           .max(400)
-          .warning("Keep the challenge under 400 characters for concise display."),
+          .warning(
+            "Keep the challenge under 400 characters for concise display."
+          ),
       ],
     }),
     defineField({
@@ -174,9 +178,7 @@ export const projectDoc = defineType({
           to: [{ type: "organization" }],
         }),
       ],
-      validation: (rule) => [
-        rule.unique().error("Add each client only once."),
-      ],
+      validation: (rule) => [rule.unique().error("Add each client only once.")],
     }),
     defineField({
       type: "array",
@@ -191,7 +193,9 @@ export const projectDoc = defineType({
             rule.required().error("Enter a role or remove the empty item."),
             rule
               .max(240)
-              .warning("Keep each role under 240 characters for concise display."),
+              .warning(
+                "Keep each role under 240 characters for concise display."
+              ),
           ],
         }),
       ],
@@ -255,7 +259,9 @@ export const projectDoc = defineType({
       validation: (rule) => [
         rule
           .max(220)
-          .warning("Keep project summaries under 220 characters for cards and SEO."),
+          .warning(
+            "Keep project summaries under 220 characters for cards and SEO."
+          ),
       ],
     }),
     defineField({

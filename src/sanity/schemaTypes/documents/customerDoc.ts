@@ -10,9 +10,7 @@ export const customerDoc = defineType({
     defineField({
       type: "string",
       name: "name",
-      validation: (rule) => [
-        rule.required().error("A customer needs a name."),
-      ],
+      validation: (rule) => [rule.required().error("A customer needs a name.")],
     }),
     defineField({
       type: "image",

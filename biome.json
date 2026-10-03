@@ -1,14 +1,27 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/next", "ultracite/react"],
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/next",
+    "ultracite/biome/react"
+  ],
   "files": {
     "includes": [
-      "**",
+      "!**/.agents",
       "!*sanity.cli.ts",
       "!**/.next",
       "!**/sanity/types.ts",
       "!**/src/app/admin"
     ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedKeys": "off",
+        "useSortedInterfaceMembers": "off",
+        "useSortedProperties": "off"
+      }
+    }
   },
   "linter": {
     "rules": {
@@ -18,10 +31,12 @@
         "noConsole": "warn"
       },
       "style": {
+        "useConsistentTypeDefinitions": "off",
         "noMagicNumbers": "off",
         "useFilenamingConvention": "off"
       },
       "performance": {
+        "noJsxPropsBind": "off",
         "noNamespaceImport": "off"
       },
       "correctness": {

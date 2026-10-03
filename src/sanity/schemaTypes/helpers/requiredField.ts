@@ -1,6 +1,6 @@
 type RequiredRule<TRule> = {
-  error(message: string): TRule;
-  required(): TRule;
+  error: (message: string) => TRule;
+  required: () => TRule;
 };
 
 export function requiredField(message: string) {

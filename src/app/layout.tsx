@@ -2,7 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
 import PlausibleProvider from "next-plausible";
+import type { ScriptHTMLAttributes } from "react";
 import { JsonLd } from "@/components/shared/json-ld";
+
+interface LegacyPlausibleScriptProps
+  extends ScriptHTMLAttributes<HTMLScriptElement> {
+  "data-domain": string;
+  "data-api": string;
+}
+
+// The self-hosted legacy tracker still reads attributes instead of init options.
+const LEGACY_PLAUSIBLE_SCRIPT_PROPS: LegacyPlausibleScriptProps = {
+  "data-domain": "terrapreta.it",
+  "data-api": "/api/event",
+};
 
 const sans = localFont({
   variable: "--font-sans",
@@ -94,7 +107,9 @@ export default function RootLayout({
             },
           }}
         />
-        <PlausibleProvider>{children}</PlausibleProvider>
+        <PlausibleProvider scriptProps={LEGACY_PLAUSIBLE_SCRIPT_PROPS}>
+          {children}
+        </PlausibleProvider>
       </body>
     </html>
   );

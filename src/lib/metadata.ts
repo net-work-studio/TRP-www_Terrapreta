@@ -95,7 +95,8 @@ export function generateMetadata({
   isDraftMode,
 }: GenerateMetadataOptions): Metadata {
   // Use site settings as fallbacks with hardcoded values as last resort
-  const siteName = siteSettings?.seo?.metaTitle || siteSettings?.name || SITE_DEFAULTS.name;
+  const siteName =
+    siteSettings?.seo?.metaTitle || siteSettings?.name || SITE_DEFAULTS.name;
   const defaultDescription =
     siteSettings?.seo?.metaDescription || SITE_DEFAULTS.description;
   const defaultImage = siteSettings?.seo?.ogImage || null;
@@ -107,7 +108,9 @@ export function generateMetadata({
     "summary_large_image";
 
   const fullTitle =
-    title.includes("—") || title === siteName ? title : `${title} — ${siteName}`;
+    title.includes("—") || title === siteName
+      ? title
+      : `${title} — ${siteName}`;
   const pageUrl = url
     ? `${SITE_DEFAULTS.baseUrl}${url}`
     : SITE_DEFAULTS.baseUrl;

@@ -22,9 +22,11 @@ export default function PageHeader({
           : "items-start justify-start"
       )}
     >
-      <h1 className="font-light tracking-tight text-3xl md:text-4xl lg:text-5xl">{title}</h1>
-      {description && (
-        <p className="text-xl text-muted-foreground">{description}</p>
+      <h1 className="font-light text-3xl tracking-tight md:text-4xl lg:text-5xl">
+        {title}
+      </h1>
+      {!!description && (
+        <p className="text-muted-foreground text-xl">{description}</p>
       )}
       {children}
     </hgroup>

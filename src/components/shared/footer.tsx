@@ -3,10 +3,7 @@ import type { StegaBranded } from "next-sanity";
 import Mark from "@/components/brand/mark";
 import { buttonVariants } from "@/components/ui/button";
 import SanityImage from "@/components/ui/sanity-image";
-import {
-  type SanityFetchOptions,
-  sanityFetch,
-} from "@/sanity/lib/live";
+import { type SanityFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
 import type { UN_GOALS_QUERY_RESULT } from "@/sanity/types";
 
@@ -159,12 +156,10 @@ export default async function Footer({
 
   const unGoalLogos =
     unGoals
-      ?.filter(
-        (goal): goal is UnGoalWithLogo =>
-          Boolean(
-            goal.logoNegative?.asset?.url &&
-              goal.logoNegative.asset.url !== null
-          )
+      ?.filter((goal): goal is UnGoalWithLogo =>
+        Boolean(
+          goal.logoNegative?.asset?.url && goal.logoNegative.asset.url !== null
+        )
       )
       .map((goal) => (
         <SanityImage

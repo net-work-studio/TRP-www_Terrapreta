@@ -15,15 +15,16 @@ type OrderedDocument = {
 
 async function collectMutations(
   migration: typeof projectMigration | typeof serviceMigration,
-  documents: OrderedDocument[],
+  documents: OrderedDocument[]
 ) {
+  // biome-ignore lint/suspicious/useAwait: The migration requires an async document stream.
   async function* getDocuments() {
     for (const document of documents) {
       yield document as SanityDocument;
     }
   }
 
-  const mutations = [];
+  const mutations: unknown[] = [];
 
   for await (const mutation of migration.migrate(getDocuments)) {
     mutations.push(mutation);

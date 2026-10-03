@@ -3,6 +3,8 @@ import migration, {
   toReferenceArray,
 } from "./convert-project-related-references";
 
+const REFERENCE_KEY_PATTERN = /^[a-f0-9]{32}$/;
+
 describe("toReferenceArray", () => {
   test("converts scalar references to keyed array members", () => {
     const references = toReferenceArray({
@@ -13,7 +15,7 @@ describe("toReferenceArray", () => {
 
     expect(references).toEqual([
       {
-        _key: expect.stringMatching(/^[a-f0-9]{32}$/),
+        _key: expect.stringMatching(REFERENCE_KEY_PATTERN),
         _ref: "service-1",
         _type: "reference",
         _weak: true,
@@ -30,14 +32,12 @@ describe("toReferenceArray", () => {
   });
 
   test("retains both relationship links when migrating a project", () => {
-    const patches = migration.migrate.document?.(
-      {
-        _id: "project-1",
-        _type: "project",
-        relatedResearch: { _ref: "research-1", _type: "reference" },
-        relatedService: { _ref: "service-1", _type: "reference" },
-      } as never,
-    );
+    const patches = migration.migrate.document?.({
+      _id: "project-1",
+      _type: "project",
+      relatedResearch: { _ref: "research-1", _type: "reference" },
+      relatedService: { _ref: "service-1", _type: "reference" },
+    } as never);
 
     expect(patches).toMatchObject([
       {
@@ -45,7 +45,7 @@ describe("toReferenceArray", () => {
           type: "set",
           value: [
             {
-              _key: expect.stringMatching(/^[a-f0-9]{32}$/),
+              _key: expect.stringMatching(REFERENCE_KEY_PATTERN),
               _ref: "service-1",
               _type: "reference",
             },
@@ -58,7 +58,7 @@ describe("toReferenceArray", () => {
           type: "set",
           value: [
             {
-              _key: expect.stringMatching(/^[a-f0-9]{32}$/),
+              _key: expect.stringMatching(REFERENCE_KEY_PATTERN),
               _ref: "research-1",
               _type: "reference",
             },

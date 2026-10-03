@@ -19,7 +19,9 @@ export const glossaryDoc = defineType({
       name: "slug",
       title: "Slug",
       validation: (rule) => [
-        rule.required().error("A slug is required to generate the glossary URL."),
+        rule
+          .required()
+          .error("A slug is required to generate the glossary URL."),
       ],
       options: {
         source: "name",
@@ -37,7 +39,9 @@ export const glossaryDoc = defineType({
       validation: (rule) => [
         rule
           .max(300)
-          .warning("Keep glossary definitions under 300 characters for scanning."),
+          .warning(
+            "Keep glossary definitions under 300 characters for scanning."
+          ),
       ],
     }),
   ],

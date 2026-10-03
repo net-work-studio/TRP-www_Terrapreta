@@ -1,7 +1,7 @@
 import { createClient } from "@sanity/client";
 import type { NextConfig } from "next";
-import { sanity } from "next-sanity/live/cache-life";
 import { withPlausibleProxy } from "next-plausible";
+import { sanity } from "next-sanity/live/cache-life";
 import { apiVersion } from "./src/sanity/env";
 import { REDIRECTS_QUERY } from "./src/sanity/lib/queries";
 
@@ -28,11 +28,14 @@ const sanityClient = createClient({
 // Fetch CMS-managed redirects from Sanity
 async function getSanityRedirects(): Promise<NextRedirect[]> {
   try {
-    const redirects = await sanityClient.fetch<SanityRedirect[]>(REDIRECTS_QUERY);
+    const redirects =
+      await sanityClient.fetch<SanityRedirect[]>(REDIRECTS_QUERY);
 
     return (redirects ?? [])
       .filter(
-        (redirect): redirect is SanityRedirect & {
+        (
+          redirect
+        ): redirect is SanityRedirect & {
           destination: string;
           source: string;
         } => Boolean(redirect.source && redirect.destination)

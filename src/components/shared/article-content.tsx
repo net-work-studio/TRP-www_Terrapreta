@@ -11,10 +11,7 @@ export default function ArticleContent({
 }: ArticleContentProps) {
   return (
     <section
-      className={cn(
-        "mx-auto max-w-[52ch] space-y-7.5 text-lg",
-        className
-      )}
+      className={cn("mx-auto max-w-[52ch] space-y-7.5 text-lg", className)}
     >
       {children}
     </section>

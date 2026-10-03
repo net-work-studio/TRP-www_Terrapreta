@@ -1,3 +1,4 @@
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import {
   ArrowRightLeft,
   Building,
@@ -15,7 +16,6 @@ import {
   User,
   WholeWord,
 } from "lucide-react";
-import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { structureTool } from "sanity/structure";
 import { group, singleton } from "./lib/builders";
 

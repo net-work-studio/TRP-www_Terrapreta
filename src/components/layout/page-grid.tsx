@@ -9,9 +9,7 @@ import {
   hasSanityImage,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
-import type {
-  Slug,
-} from "@/sanity/types";
+import type { Slug } from "@/sanity/types";
 
 type GridItemProps = {
   _id: string;
@@ -86,10 +84,10 @@ function GridItem({
         />
       </AspectRatio>
       <hgroup className="space-y-2">
-        {(tag?.name || publishingDateValue) && (
+        {!!(tag?.name || publishingDateValue) && (
           <span className="flex items-center gap-2.5">
-            {tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
-            {publishingDateValue && (
+            {!!tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
+            {!!publishingDateValue && (
               <time
                 className="text-muted-foreground text-sm"
                 dateTime={publishingDateValue}

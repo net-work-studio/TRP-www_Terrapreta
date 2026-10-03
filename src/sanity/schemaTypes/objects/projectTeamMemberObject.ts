@@ -19,13 +19,16 @@ export const projectTeamMemberObject = defineType({
     defineField({
       type: "text",
       name: "contribution",
-      description: "Briefly describe what this organization did on the project.",
+      description:
+        "Briefly describe what this organization did on the project.",
       rows: 3,
       validation: (rule) => [
         rule.required().error("Describe what this organization contributed."),
         rule
           .max(240)
-          .warning("Keep the contribution under 240 characters for concise display."),
+          .warning(
+            "Keep the contribution under 240 characters for concise display."
+          ),
       ],
     }),
   ],
