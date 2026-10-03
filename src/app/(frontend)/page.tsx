@@ -72,11 +72,6 @@ export default function Home() {
           name: "Terrapreta",
           url: baseUrl,
           description: "Soil-based solutions for ecosystem regeneration",
-          potentialAction: {
-            "@type": "SearchAction",
-            target: `${baseUrl}/search?q={search_term_string}`,
-            "query-input": "required name=search_term_string",
-          },
         }}
         id="website-json-ld"
       />
