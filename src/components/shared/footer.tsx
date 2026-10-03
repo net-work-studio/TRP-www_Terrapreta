@@ -107,17 +107,11 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col gap-5 opacity-0">
+          <div className="flex flex-col gap-5">
             <h3 className="text-stone-400">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="">Impressum</Link>
-              </li>
-              <li>
-                <Link href="">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link href="">Cookie Policy</Link>
+                <Link href="/impressum">Impressum</Link>
               </li>
             </ul>
           </div>
