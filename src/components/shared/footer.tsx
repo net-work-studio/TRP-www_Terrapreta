@@ -162,7 +162,6 @@ export default async function Footer({
           height={144}
           key={goal._id}
           quality={75}
-          sizes="20vw"
           source={goal.logoNegative}
           width={160}
         />

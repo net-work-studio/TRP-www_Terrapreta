@@ -61,7 +61,7 @@ export function PortableImage({ value }: PortableImageProps) {
           className="z-0 h-full w-full object-cover"
           fill
           quality={IMAGE_QUALITY}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+          sizes="(min-width: 912px) 880px, 100vw"
           source={value}
         />
       </AspectRatio>

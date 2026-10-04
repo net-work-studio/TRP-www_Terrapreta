@@ -12,6 +12,7 @@ export {
   getBlurDataUrl,
   getSanityImageAlt,
   getSanityImageField,
+  getSanityImageWidthForHeight,
   hasSanityImage,
   type SanityImageSourceInput,
 } from "./image-source";
