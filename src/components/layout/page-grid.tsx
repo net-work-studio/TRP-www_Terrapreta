@@ -65,7 +65,7 @@ function GridItem({
   const className = cn(
     "h-fit space-y-2.5",
     isInteractive && "group",
-    isFeatured ? "col-span-2" : "col-span-1"
+    isFeatured ? "md:col-span-2" : "col-span-1"
   );
   const content = (
     <>
