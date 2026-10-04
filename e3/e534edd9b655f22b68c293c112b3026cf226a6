@@ -1,0 +1,28 @@
+src/components/ui/portable-text-components.tsx
+  s_18f453068005f6::t_3b9f1796a814a3 13-23,61-64
+src/sanity/schemaTypes/helpers/richTextBlock.ts
+  s_18f453068005f6::t_93deadf5d86f2a 60
+  s_18f453068005f6::t_3b9f1796a814a3 58-59,61-65
+src/sanity/lib/queries.ts
+  s_18f453068005f6::t_3b9f1796a814a3 52-56
+src/sanity/extract.json
+  s_18f453068005f6::t_6b3e41b6aaa7e7 1836-1923,1977,1990,2026,2034,2037-2060,2096-2162,2331,2344,2365,2369,2381,2384-2385,2389,2392-2393,2396-2500
+src/sanity/types.ts
+  s_18f453068005f6::t_2b8903419d51da 164,337-354,365,367,373-379,388-399,428-439,681-682,684,686,689,803,843-844,959,978-979,1096,1194-1195,1419,1422-1423
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e3e534edd9b655f22b68c293c112b3026cf226a6",
+  "prompts": {},
+  "sessions": {
+    "s_18f453068005f6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a107f7-1adc-70b0-a02a-1c1213a3bb54",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
