@@ -71,19 +71,25 @@ export default function Header() {
             </DialogTrigger>
             <DialogContent
               className="inset-0 h-dvh max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-stone-950 p-5 pt-24 shadow-none transition-opacity data-ending-style:scale-100 data-starting-style:scale-100 sm:max-w-none md:hidden"
+              overlayClassName="md:hidden"
               showCloseButton={false}
             >
               <DialogTitle className="sr-only">Mobile menu</DialogTitle>
-              <DialogClose
-                className={buttonVariants({
-                  className: "absolute top-4 right-5",
-                  size: "icon",
-                  variant: "ghost",
-                })}
-              >
-                <X aria-hidden="true" className="h-4 w-4" />
-                <span className="sr-only">Close mobile menu</span>
-              </DialogClose>
+              <div className="container-site absolute inset-x-0 top-4 flex items-center justify-between">
+                <Link
+                  className="h-7 w-fit pt-1"
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Logotype />
+                </Link>
+                <DialogClose
+                  className={buttonVariants({ size: "icon", variant: "ghost" })}
+                >
+                  <X aria-hidden="true" className="h-4 w-4" />
+                  <span className="sr-only">Close mobile menu</span>
+                </DialogClose>
+              </div>
               <NavigationMobile
                 onLinkClick={() => setIsMobileMenuOpen(false)}
                 pathname={pathname}
