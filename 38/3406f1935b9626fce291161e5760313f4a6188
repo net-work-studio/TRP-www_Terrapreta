@@ -1,0 +1,19 @@
+src/components/shared/header.tsx
+  s_75cdfd86582c0c::t_ada02145c475f2 73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "383406f1935b9626fce291161e5760313f4a6188",
+  "prompts": {},
+  "sessions": {
+    "s_75cdfd86582c0c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016c-5d2b-76f0-9b3b-c892d3faa1cf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
