@@ -1,9 +1,42 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "ABC Marfa";
+  src: url("/fonts/ABCMarfa-Light.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ABC Marfa";
+  src: url("/fonts/ABCMarfa-LightItalic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ABC Marfa";
+  src: url("/fonts/ABCMarfa-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ABC Marfa";
+  src: url("/fonts/ABCMarfa-BoldItalic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --font-sans: "ABC Marfa", Arial, sans-serif;
   --site-width: 1536px; /*  1280px;  */ /* 1728px */
   --article-width: 864px;
   --container-padding: 2rem;
@@ -37,7 +70,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -162,11 +194,6 @@
     width: 100%;
   }
 
-  .font-settings {
-    font-feature-settings: "ss01" on;
-    font-variant-alternates: stylistic(ss01);
-  }
-
   .circled-number {
     font-feature-settings: "ss02" 1;
   }
@@ -175,6 +202,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  strong,
+  b {
+    font-weight: 700;
   }
   body {
     @apply bg-background text-foreground;

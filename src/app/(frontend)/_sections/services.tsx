@@ -79,7 +79,7 @@ function ServiceCard({
                       source={mainImage}
                     />
                   </AspectRatio>
-                  <DialogTitle className="px-5 text-left font-normal text-2xl text-stone-50 md:px-10 md:text-3xl">
+                  <DialogTitle className="px-5 text-left font-light text-2xl text-stone-50 md:px-10 md:text-3xl">
                     {name}
                   </DialogTitle>
                 </div>

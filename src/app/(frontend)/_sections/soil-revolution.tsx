@@ -30,7 +30,7 @@ function SoilCard({ title, image, description }: SoilCardProps) {
         />
       </AspectRatio>
       <div className="space-y-1">
-        <h3 className="text-balance font-medium text-xl">{title}</h3>
+        <h3 className="text-balance font-light text-xl">{title}</h3>
         <p className="text-lg text-stone-400">{description}</p>
       </div>
     </div>

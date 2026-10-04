@@ -28,7 +28,7 @@ function FieldLegend({
   return (
     <legend
       className={cn(
-        "mb-3 font-medium",
+        "mb-3 font-light",
         "data-[variant=legend]:text-base",
         "data-[variant=label]:text-sm",
         className
@@ -129,7 +129,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "flex w-fit items-center gap-2 font-medium text-sm leading-snug group-data-[disabled=true]/field:opacity-50",
+        "flex w-fit items-center gap-2 font-light text-sm leading-snug group-data-[disabled=true]/field:opacity-50",
         className
       )}
       data-slot="field-label"
@@ -142,7 +142,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       className={cn(
-        "font-normal text-muted-foreground text-sm leading-normal group-has-[[data-orientation=horizontal]]/field:text-balance",
+        "font-light text-muted-foreground text-sm leading-normal group-has-[[data-orientation=horizontal]]/field:text-balance",
         "nth-last-2:-mt-1 last:mt-0 [[data-variant=legend]+&]:-mt-1.5",
         "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
         className
@@ -223,7 +223,7 @@ function FieldError({
 
   return (
     <div
-      className={cn("font-normal text-destructive text-sm", className)}
+      className={cn("font-light text-destructive text-sm", className)}
       data-slot="field-error"
       role="alert"
       {...props}

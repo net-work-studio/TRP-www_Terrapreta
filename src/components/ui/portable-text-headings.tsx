@@ -7,7 +7,7 @@ export function PortableTextHeadingTwo({ children }: PortableTextHeadingProps) {
     return null;
   }
 
-  return <h2 className="font-medium text-2xl">{children}</h2>;
+  return <h2 className="font-light text-2xl">{children}</h2>;
 }
 
 export function PortableTextHeadingThree({
@@ -17,7 +17,7 @@ export function PortableTextHeadingThree({
     return null;
   }
 
-  return <h3 className="font-medium text-xl">{children}</h3>;
+  return <h3 className="font-light text-xl">{children}</h3>;
 }
 
 export function PortableTextHeadingFour({
@@ -27,5 +27,5 @@ export function PortableTextHeadingFour({
     return null;
   }
 
-  return <h4 className="font-medium text-lg">{children}</h4>;
+  return <h4 className="font-light text-lg">{children}</h4>;
 }
