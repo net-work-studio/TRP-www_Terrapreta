@@ -2,6 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logotype from "@/components/brand/logotype";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import NavigationDesktop from "./navigation/navigation-desktop";
 import NavigationMobile from "./navigation/navigation-mobile";
 
 export default function Header() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -19,7 +21,7 @@ export default function Header() {
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -65,7 +67,7 @@ export default function Header() {
         <Link className="h-7 w-fit pt-1" href="/">
           <Logotype />
         </Link>
-        <NavigationDesktop />
+        <NavigationDesktop pathname={pathname} />
         <div className="flex items-center gap-4 md:hidden">
           <Button
             aria-label={
@@ -89,7 +91,10 @@ export default function Header() {
       {!!isMobileMenuOpen && (
         <div className="fixed inset-0 z-10 bg-stone-950 md:hidden">
           <div className="p-5 pt-24">
-            <NavigationMobile onLinkClick={() => setIsMobileMenuOpen(false)} />
+            <NavigationMobile
+              onLinkClick={() => setIsMobileMenuOpen(false)}
+              pathname={pathname}
+            />
           </div>
         </div>
       )}
