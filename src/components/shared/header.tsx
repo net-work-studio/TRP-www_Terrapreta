@@ -70,7 +70,7 @@ export default function Header() {
               <Menu aria-hidden="true" className="h-4 w-4" />
             </DialogTrigger>
             <DialogContent
-              className="inset-0 h-dvh max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-stone-950 p-5 pt-24 shadow-none sm:max-w-none md:hidden"
+              className="inset-0 h-dvh max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-stone-950 p-5 pt-24 shadow-none transition-opacity data-ending-style:scale-100 data-starting-style:scale-100 sm:max-w-none md:hidden"
               showCloseButton={false}
             >
               <DialogTitle className="sr-only">Mobile menu</DialogTitle>
