@@ -146,7 +146,7 @@ function ProjectPageContent({
           alt={projectItem.name || ""}
           className="z-0 h-full w-full object-cover"
           fill
-          priority
+          preload
           quality={IMAGE_QUALITY}
           sizes="100vw"
           source={projectItem.mainImage}

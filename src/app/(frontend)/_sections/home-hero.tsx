@@ -39,7 +39,7 @@ export default function HomeHero() {
           alt="Hero"
           className="z-0 h-full w-full object-cover"
           fill
-          priority
+          preload
           quality={75}
           sizes="100vw"
           src={heroImage}
