@@ -1,0 +1,25 @@
+src/app/(frontend)/_sections/logos.tsx
+  s_1c31ff1d6780f1::t_c46145cefbe5c1 2,13-14,36,39-41
+src/sanity/lib/image-dimensions.test.ts
+  s_1c31ff1d6780f1::t_6dd2b8ea275dff 1-109
+src/sanity/lib/image-source.ts
+  s_1c31ff1d6780f1::t_b1d313fd28f125 73-110
+src/sanity/lib/image.ts
+  s_1c31ff1d6780f1::t_6b52d4ed0c28fa 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "90f6b918c7fbb5c468a6fdb7269d6d2638f08316",
+  "prompts": {},
+  "sessions": {
+    "s_1c31ff1d6780f1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1016e-8a46-7ef2-a1ad-10c5ae86abce",
+        "model": "unknown"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
