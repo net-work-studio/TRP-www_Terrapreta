@@ -2,8 +2,9 @@ import Image, { type StaticImageData } from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
 
+// Center-crop the landscape source to the card's 4:5 frame before resizing.
 const designCover =
-  "https://cdn.sanity.io/images/wj2okvbq/production/c3e88b5e56a22300b4add544c008ffb4e89674eb-1200x857.webp";
+  "https://cdn.sanity.io/images/wj2okvbq/production/c3e88b5e56a22300b4add544c008ffb4e89674eb-1200x857.webp?rect=258,1,684,855";
 
 const analyzeCover =
   "https://cdn.sanity.io/images/wj2okvbq/production/5dd442374b3c7dc8c8a8e2b2f4cd60da8627d824-1200x1798.webp";
@@ -26,6 +27,7 @@ function SoilCard({ title, image, description }: SoilCardProps) {
           className="h-full w-full rounded-md object-cover"
           fill
           quality={75}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           src={image}
         />
       </AspectRatio>

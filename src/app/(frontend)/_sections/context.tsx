@@ -27,6 +27,7 @@ export default function Context() {
             className="rounded object-cover"
             fill
             quality={75}
+            sizes="25vw"
             src="https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp"
           />
         </AspectRatio>
@@ -36,6 +37,7 @@ export default function Context() {
             className="rounded object-cover"
             fill
             quality={75}
+            sizes="25vw"
             src="https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp"
           />
         </AspectRatio>
@@ -45,6 +47,7 @@ export default function Context() {
             className="rounded object-cover"
             fill
             quality={75}
+            sizes="25vw"
             src="https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp"
           />
         </AspectRatio>
@@ -54,6 +57,7 @@ export default function Context() {
             className="rounded object-cover"
             fill
             quality={75}
+            sizes="25vw"
             src="https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp"
           />
         </AspectRatio>
