@@ -5,7 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logotype from "@/components/brand/logotype";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import NavigationDesktop from "./navigation/navigation-desktop";
 import NavigationMobile from "./navigation/navigation-mobile";
 
@@ -24,20 +31,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Block scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    // Cleanup on unmount
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const desktopBreakpoint = window.matchMedia("(min-width: 768px)");
@@ -69,35 +62,42 @@ export default function Header() {
         </Link>
         <NavigationDesktop pathname={pathname} />
         <div className="flex items-center gap-4 md:hidden">
-          <Button
-            aria-label={
-              isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
-            }
-            className="md:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            size="icon"
-            variant="ghost"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-4 w-4" />
-            ) : (
-              <Menu className="h-4 w-4" />
-            )}
-          </Button>
+          <Dialog onOpenChange={setIsMobileMenuOpen} open={isMobileMenuOpen}>
+            <DialogTrigger
+              aria-label="Open mobile menu"
+              className={buttonVariants({ size: "icon", variant: "ghost" })}
+            >
+              <Menu aria-hidden="true" className="h-4 w-4" />
+            </DialogTrigger>
+            <DialogContent
+              className="inset-0 h-dvh max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-stone-950 p-5 pt-24 shadow-none transition-opacity data-ending-style:scale-100 data-starting-style:scale-100 sm:max-w-none md:hidden"
+              overlayClassName="md:hidden"
+              showCloseButton={false}
+            >
+              <DialogTitle className="sr-only">Mobile menu</DialogTitle>
+              <div className="container-site absolute inset-x-0 top-4 flex items-center justify-between">
+                <Link
+                  className="h-7 w-fit pt-1"
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Logotype />
+                </Link>
+                <DialogClose
+                  className={buttonVariants({ size: "icon", variant: "ghost" })}
+                >
+                  <X aria-hidden="true" className="h-4 w-4" />
+                  <span className="sr-only">Close mobile menu</span>
+                </DialogClose>
+              </div>
+              <NavigationMobile
+                onLinkClick={() => setIsMobileMenuOpen(false)}
+                pathname={pathname}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </header>
-
-      {/* Mobile Menu */}
-      {!!isMobileMenuOpen && (
-        <div className="fixed inset-0 z-10 bg-stone-950 md:hidden">
-          <div className="p-5 pt-24">
-            <NavigationMobile
-              onLinkClick={() => setIsMobileMenuOpen(false)}
-              pathname={pathname}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }
