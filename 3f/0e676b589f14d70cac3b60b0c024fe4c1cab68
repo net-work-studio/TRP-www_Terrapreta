@@ -1,0 +1,21 @@
+src/components/features/calendar-stefano.tsx
+  s_748f8a08e82454::t_c4f5db9f294582 3-18,20-22,24-40,42,46-51
+src/components/features/calendar-stefano-embed.tsx
+  s_748f8a08e82454::t_c4f5db9f294582 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3f0e676b589f14d70cac3b60b0c024fe4c1cab68",
+  "prompts": {},
+  "sessions": {
+    "s_748f8a08e82454": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a107f7-c1c7-7120-a6aa-414bb87e041e",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
