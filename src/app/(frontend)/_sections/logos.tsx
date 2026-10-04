@@ -1,4 +1,5 @@
 import SanityImage from "@/components/ui/sanity-image";
+import { getSanityImageWidthForHeight } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -8,6 +9,8 @@ import {
 } from "@/sanity/lib/live";
 import { ORGANIZATIONS_QUERY } from "@/sanity/lib/queries";
 import type { ORGANIZATIONS_QUERY_RESULT } from "@/sanity/types";
+
+const LOGO_HEIGHT = 48;
 
 function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
   const logoItems =
@@ -30,10 +33,12 @@ function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
           <SanityImage
             alt={logo.name}
             className="h-12 w-auto object-contain"
-            height={48}
+            height={LOGO_HEIGHT}
             quality={75}
             source={logo.logoDark}
-            width={120}
+            width={
+              getSanityImageWidthForHeight(logo.logoDark, LOGO_HEIGHT) ?? 120
+            }
           />
         </div>
       )) || [];
