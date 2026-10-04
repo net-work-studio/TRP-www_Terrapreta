@@ -1,0 +1,42 @@
+src/components/shared/breadcrumb-json-ld.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 2,18
+src/app/sitemap.ts
+  s_81c33b3a9e8843::t_9cd97044fc5503 2,11
+scripts/netlify-ignore-build.mjs
+  s_81c33b3a9e8843::t_626b1bfafa6b51 7,14-17,22-30,37-39
+  s_81c33b3a9e8843::t_2a75ab68d04182 4,13
+src/app/layout.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 6,16,33,91
+src/app/(frontend)/services/[slug]/page.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 10,212
+src/app/(frontend)/contacts/page.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 2,6,24,26-29
+src/app/(frontend)/page.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 10,72
+src/components/shared/footer.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 6,102
+src/app/(frontend)/impressum/page.tsx
+  s_81c33b3a9e8843::t_9cd97044fc5503 2,4,28-30,37-39
+src/app/robots.ts
+  s_81c33b3a9e8843::t_9cd97044fc5503 2,13
+src/lib/constants.ts
+  s_81c33b3a9e8843::t_9cd97044fc5503 12-15
+bun.lock
+  s_81c33b3a9e8843::t_ae6bbd886c8185 1296,1598,1600,1602
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b635f90cdbcf8a3763f5dbd916fb5e7a005cb34f",
+  "prompts": {},
+  "sessions": {
+    "s_81c33b3a9e8843": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a107f7-910f-76f1-9e15-ede9f40efe98",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
