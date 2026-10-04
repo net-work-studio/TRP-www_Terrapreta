@@ -1,0 +1,23 @@
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_c6aecbf9064cf7::t_f5463bc862a919 12
+src/lib/journal-date.ts
+  s_c6aecbf9064cf7::t_f5463bc862a919 1-26
+src/components/layout/page-grid.tsx
+  s_c6aecbf9064cf7::t_f5463bc862a919 6,63-64,99
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1f7268c406cb74bb50e5e6489eceeea13211a68f",
+  "prompts": {},
+  "sessions": {
+    "s_c6aecbf9064cf7": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a107f7-4cc0-7960-b683-d2322edf3775",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
