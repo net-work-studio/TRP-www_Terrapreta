@@ -49,7 +49,11 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     href,
     blank,
     _type == "internalLink" => {
-      "slug": reference->slug.current,
+      "slug": select(
+        reference->_type == "project"
+          && coalesce(reference->publicationScope, "full") != "full" => null,
+        reference->slug.current
+      ),
       "type": reference->_type
     }
   },

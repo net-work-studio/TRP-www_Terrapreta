@@ -55,16 +55,14 @@ export const richTextBlock = defineArrayMember({
           defineField({
             name: "reference",
             type: "reference",
-            title: "Reference",
-            to: [
-              { type: "page" },
-              { type: "journal" },
-              { type: "project" },
-              { type: "service" },
-              { type: "research" },
-              { type: "press" },
-              { type: "about" },
-            ],
+            description:
+              "Link to a journal entry, service, or project with a public detail page.",
+            to: [{ type: "journal" }, { type: "project" }, { type: "service" }],
+            options: {
+              filter:
+                'defined(slug.current) && (_type != "project" || coalesce(publicationScope, "full") == "full")',
+              disableNew: true,
+            },
             validation: (rule) => [
               rule.required().error("Choose the document this link points to."),
             ],
