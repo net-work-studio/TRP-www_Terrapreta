@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { sanityFetchMetadata } from "@/sanity/lib/live";
 import {
   JOURNAL_SITEMAP_QUERY,
@@ -7,7 +8,7 @@ import {
 } from "@/sanity/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
+  const { baseUrl } = SITE_DEFAULTS;
 
   // Perspective is intentionally hardcoded to "published": a sitemap must only
   // expose live URLs, and resolving request state here would read
@@ -32,37 +33,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
       url: `${baseUrl}/contacts`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/impressum`,
-      lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/journal`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },

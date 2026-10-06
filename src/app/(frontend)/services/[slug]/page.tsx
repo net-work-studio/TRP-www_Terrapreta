@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
   cleanCommaList,
@@ -208,7 +209,7 @@ function ServicePageContent({
           provider: {
             "@type": "Organization",
             name: "Terrapreta",
-            url: "https://terrapreta.it",
+            url: SITE_DEFAULTS.baseUrl,
             ...(knowsAbout && { knowsAbout }),
           },
           serviceType: "Environmental Consulting",
