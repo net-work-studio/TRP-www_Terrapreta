@@ -10,18 +10,17 @@ import {
 /**
  * Map document types to their URL paths
  */
-function getPathForType(type: string): string {
-  const cleanType = stegaClean(type);
-  const pathMap: Record<string, string> = {
-    journal: "/journal",
-    project: "/projects",
-    service: "/services",
-    research: "/research",
-    press: "/press",
-    about: "/about",
-    page: "",
-  };
-  return pathMap[cleanType] || "";
+function getPathForType(type: string): string | undefined {
+  switch (type) {
+    case "journal":
+      return "/journal";
+    case "project":
+      return "/projects";
+    case "service":
+      return "/services";
+    default:
+      return undefined;
+  }
 }
 
 /**
@@ -59,7 +58,10 @@ export const portableTextComponents: PortableTextComponents = {
         return <span>{children}</span>;
       }
       const basePath = getPathForType(type);
-      const href = basePath ? `${basePath}/${slug}` : `/${slug}`;
+      if (!basePath) {
+        return <span>{children}</span>;
+      }
+      const href = `${basePath}/${slug}`;
       return (
         <Link
           className="underline underline-offset-4 transition-colors hover:text-stone-400"

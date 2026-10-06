@@ -7,6 +7,7 @@ import {
 } from "@/components/shared/domain-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
@@ -60,8 +61,6 @@ function SectionWrapper({
   );
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
-
 export default function Home() {
   return (
     <>
@@ -70,7 +69,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Terrapreta",
-          url: baseUrl,
+          url: SITE_DEFAULTS.baseUrl,
           description: "Soil-based solutions for ecosystem regeneration",
         }}
         id="website-json-ld"
@@ -89,9 +88,6 @@ export default function Home() {
         <SectionWrapper>
           <Services />
         </SectionWrapper>
-        {/*       <SectionWrapper>
-          <Context />
-        </SectionWrapper> */}
         <SectionWrapper>
           <Customers />
         </SectionWrapper>
@@ -100,7 +96,6 @@ export default function Home() {
         </SectionWrapper>
         <SectionWrapper>
           <Logos />
-          {/* <ContactForm /> */}
           <div className="flex w-full items-center justify-center">
             <Link className={buttonVariants()} href="/contacts">
               Get in contact

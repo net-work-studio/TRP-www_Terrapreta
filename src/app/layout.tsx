@@ -3,6 +3,7 @@ import "./globals.css";
 import PlausibleProvider from "next-plausible";
 import type { ScriptHTMLAttributes } from "react";
 import { JsonLd } from "@/components/shared/json-ld";
+import { SITE_DEFAULTS } from "@/lib/constants";
 
 interface LegacyPlausibleScriptProps
   extends ScriptHTMLAttributes<HTMLScriptElement> {
@@ -12,7 +13,7 @@ interface LegacyPlausibleScriptProps
 
 // The self-hosted legacy tracker still reads attributes instead of init options.
 const LEGACY_PLAUSIBLE_SCRIPT_PROPS: LegacyPlausibleScriptProps = {
-  "data-domain": "terrapreta.it",
+  "data-domain": SITE_DEFAULTS.analyticsDomain,
   "data-api": "/api/event",
 };
 
@@ -29,7 +30,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
+  const { baseUrl } = SITE_DEFAULTS;
 
   return (
     <html
@@ -87,7 +88,7 @@ export default function RootLayout({
             },
             contactPoint: {
               "@type": "ContactPoint",
-              email: "mail@terrapreta.it",
+              email: SITE_DEFAULTS.email,
               contactType: "Customer Service",
             },
           }}
