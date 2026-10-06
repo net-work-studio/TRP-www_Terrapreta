@@ -3,6 +3,7 @@ import { stegaClean } from "next-sanity";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
+import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import type { StegaAware } from "@/lib/sanity-stega";
 import { cn } from "@/lib/utils";
 import {
@@ -59,9 +60,8 @@ function GridItem({
     return null;
   }
 
-  const publishingDateValue = publishingDate
-    ? stegaClean(publishingDate)
-    : undefined;
+  const publishingDateValue = cleanPublishingDate(publishingDate);
+  const publishingDateLabel = formatPublishingDate(publishingDate);
   const className = cn(
     "h-fit space-y-2.5",
     isInteractive && "group",
@@ -96,11 +96,7 @@ function GridItem({
                 className="text-muted-foreground text-sm"
                 dateTime={publishingDateValue}
               >
-                {new Date(publishingDateValue).toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+                {publishingDateLabel}
               </time>
             )}
           </span>

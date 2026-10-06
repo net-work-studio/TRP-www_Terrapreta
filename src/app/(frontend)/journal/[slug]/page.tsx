@@ -9,6 +9,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
+import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
   cleanCommaList,
@@ -35,30 +36,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  timeZone: "UTC",
-  year: "numeric",
-});
-
-function cleanPublishingDate(value: string | null) {
-  const publishingDate = cleanOptionalString(value);
-
-  if (!publishingDate || Number.isNaN(new Date(publishingDate).getTime())) {
-    return null;
-  }
-
-  return publishingDate;
-}
-
-function formatPublishingDate(value: string | null) {
-  const publishingDate = cleanPublishingDate(value);
-
-  return publishingDate
-    ? JOURNAL_DATE_FORMATTER.format(new Date(publishingDate))
-    : null;
-}
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
