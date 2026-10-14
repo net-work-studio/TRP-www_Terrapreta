@@ -1,0 +1,19 @@
+src/app/(frontend)/_sections/home-hero.tsx
+  s_3f00f9e5e51163::t_bad57cdac0175a 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5deeccad462d68f2118fa00852e0f74800273761",
+  "prompts": {},
+  "sessions": {
+    "s_3f00f9e5e51163": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13b53-408c-71a0-b012-419a8f0a0c40",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
