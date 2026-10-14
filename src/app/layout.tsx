@@ -55,7 +55,7 @@ export default function RootLayout({
           type="font/woff2"
         />
       </head>
-      <body className="flex h-screen flex-col justify-between bg-stone-950 font-light font-sans text-stone-50 antialiased">
+      <body className="flex min-h-dvh flex-col justify-between bg-stone-950 font-light font-sans text-stone-50 antialiased">
         <JsonLd
           data={{
             "@context": "https://schema.org",
