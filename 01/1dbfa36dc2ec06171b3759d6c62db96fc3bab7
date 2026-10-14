@@ -1,0 +1,27 @@
+src/app/(frontend)/_sections/home-hero.tsx
+  s_6b89040c0ee649::t_2321161954c970 39
+src/app/(frontend)/_sections/customers.tsx
+  s_6b89040c0ee649::t_2321161954c970 49,57
+src/app/(frontend)/_sections/numbers.tsx
+  s_6b89040c0ee649::t_2321161954c970 9,12,19,50,56,62
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_6b89040c0ee649::t_2321161954c970 16
+src/app/(frontend)/_sections/services.tsx
+  s_6b89040c0ee649::t_2321161954c970 41,153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "011dbfa36dc2ec06171b3759d6c62db96fc3bab7",
+  "prompts": {},
+  "sessions": {
+    "s_6b89040c0ee649": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c3925d42-4cb1-46c8-a870-ac3b17b8888e",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
