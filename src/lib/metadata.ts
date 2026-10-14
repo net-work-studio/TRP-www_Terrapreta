@@ -189,8 +189,15 @@ export function generateWebsitePageMetadata({
     canonicalUrl: seo?.canonicalUrl || undefined,
     robotsIndex: seo?.robotsIndex ?? defaults?.robotsIndex ?? undefined,
     robotsFollow: seo?.robotsFollow ?? defaults?.robotsFollow ?? undefined,
-    ogTitle: seo?.ogTitle || defaults?.ogTitle || undefined,
-    ogDescription: seo?.ogDescription || defaults?.ogDescription || undefined,
+    // Let the shared helper format the page's meta title for social previews.
+    ogTitle:
+      seo?.ogTitle ||
+      (seo?.metaTitle ? undefined : defaults?.ogTitle || undefined),
+    ogDescription:
+      seo?.ogDescription ||
+      seo?.metaDescription ||
+      defaults?.ogDescription ||
+      undefined,
     twitterCard: seo?.twitterCard ?? undefined,
     siteSettings,
     isDraftMode,
