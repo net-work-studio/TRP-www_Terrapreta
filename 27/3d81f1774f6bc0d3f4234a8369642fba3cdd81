@@ -1,0 +1,30 @@
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_f25f7d385a8c09::t_5583478d33ba4e 125,141
+src/app/(frontend)/_sections/home-hero.tsx
+  s_f25f7d385a8c09::t_5350fc05f69209 33
+  s_f25f7d385a8c09::t_5583478d33ba4e 11,14,25
+src/components/layout/page-grid.tsx
+  s_f25f7d385a8c09::t_5583478d33ba4e 132
+src/components/shared/page-header.tsx
+  s_f25f7d385a8c09::t_5583478d33ba4e 19
+src/app/layout.tsx
+  s_f25f7d385a8c09::t_5583478d33ba4e 57
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_f25f7d385a8c09::t_5583478d33ba4e 141,155
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "273d81f1774f6bc0d3f4234a8369642fba3cdd81",
+  "prompts": {},
+  "sessions": {
+    "s_f25f7d385a8c09": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13a4e-8b36-7771-ba73-da8b70d0bb72",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
