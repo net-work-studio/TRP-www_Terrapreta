@@ -68,24 +68,48 @@ ${EDITORIAL_IMAGE_PROJECTION}
   }
 `;
 
-export const SITE_SETTINGS_QUERY =
-  defineQuery(`*[_type == "site" && _id == "site"][0]{
-  name,
-  seo{
+const SEO_METADATA_PROJECTION = /* groq */ `
     metaTitle,
     metaDescription,
     ogImage{
-      asset->{
-        _id,
-        url
-      }
+${IMAGE_FIELD_PROJECTION}
     },
     canonicalUrl,
     robotsIndex,
     robotsFollow,
     ogTitle,
     ogDescription,
-    twitterCard
+    twitterCard`;
+
+export const SITE_SETTINGS_QUERY = defineQuery(`*[
+  _type == "site"
+  && _id == "site"
+][0]{
+  name,
+  brandName,
+  seo{
+${SEO_METADATA_PROJECTION}
+  }
+}`);
+
+export const WEBSITE_PAGE_SEO_QUERY = defineQuery(`*[
+  _id == $id
+  && _type == $id
+][0]{
+  _id,
+  seo{
+${SEO_METADATA_PROJECTION}
+  }
+}`);
+
+export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
+  _id in $ids
+  && _type == _id
+]{
+  _id,
+  _updatedAt,
+  seo{
+    robotsIndex
   }
 }`);
 

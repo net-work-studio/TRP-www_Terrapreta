@@ -87,3 +87,23 @@ _Avoid_: Tag, journal page
 **Journal tag**:
 A taxonomy label that classifies journal entries and can narrow the Journal collection without defining website hierarchy.
 _Avoid_: Breadcrumb, section
+
+**Fixed website page**:
+One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Projects overview, Journal overview, or Research overview.
+_Avoid_: Generic Page, collection entry
+
+**Collection overview**:
+A fixed website page presenting the Projects, Journal, or Research collection. Its page metadata describes the collection as a whole, while each entry has its own content and metadata.
+_Avoid_: Detail page, collection entry
+
+**Site SEO defaults**:
+Terrapreta's shared search and social metadata defaults, used when a page has no more specific value. They are distinct from Homepage SEO.
+_Avoid_: Homepage SEO, page override
+
+**Page SEO**:
+Search and social metadata describing one website page. Page-specific values take priority over shared defaults.
+_Avoid_: Site SEO defaults, visible page content
+
+**Site brand name**:
+The name identifying Terrapreta in page title suffixes and social metadata. It is distinct from a page's SEO title and the administrative label of Site Settings.
+_Avoid_: Homepage title, settings document name

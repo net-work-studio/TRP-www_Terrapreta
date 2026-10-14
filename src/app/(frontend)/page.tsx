@@ -8,10 +8,8 @@ import {
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE_DEFAULTS } from "@/lib/constants";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { getSiteSettings } from "@/lib/site-settings";
 import { cn } from "@/lib/utils";
-import { getSanityRequestState } from "@/sanity/lib/live";
+import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
 import Customers from "./_sections/customers";
 import HomeHero from "./_sections/home-hero";
 import Logos from "./_sections/logos";
@@ -21,23 +19,7 @@ import Services from "./_sections/services";
 import SoilRevolution from "./_sections/soil-revolution";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { fetchOptions, isDraftMode } = await getSanityRequestState();
-  const siteSettings = await getSiteSettings(fetchOptions);
-
-  return generateMetadataHelper({
-    title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",
-    description: siteSettings?.seo?.metaDescription || undefined,
-    image: siteSettings?.seo?.ogImage ?? undefined,
-    url: "/",
-    siteSettings,
-    canonicalUrl: siteSettings?.seo?.canonicalUrl ?? undefined,
-    robotsIndex: siteSettings?.seo?.robotsIndex ?? undefined,
-    robotsFollow: siteSettings?.seo?.robotsFollow ?? undefined,
-    ogTitle: siteSettings?.seo?.ogTitle ?? undefined,
-    ogDescription: siteSettings?.seo?.ogDescription ?? undefined,
-    twitterCard: siteSettings?.seo?.twitterCard ?? undefined,
-    isDraftMode,
-  });
+  return getWebsitePageMetadata("homePage");
 }
 
 interface SectionWrapperProps {

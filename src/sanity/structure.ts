@@ -10,21 +10,26 @@ import {
   Link,
   Mailbox,
   Newspaper,
-  Rocket,
   Route,
   Settings2,
   User,
   WholeWord,
 } from "lucide-react";
 import { structureTool } from "sanity/structure";
-import { group, singleton } from "./lib/builders";
+import { WEBSITE_PAGES } from "@/lib/website-pages";
+import { group } from "./lib/builders";
 
 export const structure = structureTool({
   structure: (S, context) =>
     S.list()
       .title("Content")
       .items([
-        singleton(S, "site", "Site Settings").icon(Settings2),
+        S.listItem().singleton("site").icon(Settings2),
+        group(
+          S,
+          "Website pages",
+          Object.keys(WEBSITE_PAGES).map((id) => S.listItem().singleton(id))
+        ).icon(FileStack),
         S.divider(),
 
         S.documentTypeListItem("page").title("All Pages").icon(FileStack),
@@ -46,7 +51,6 @@ export const structure = structureTool({
         S.divider(),
 
         group(S, "Company", [
-          S.documentTypeListItem("about").title("About").icon(Rocket),
           S.documentTypeListItem("customer").title("Customers").icon(User),
         ]),
         S.divider(),

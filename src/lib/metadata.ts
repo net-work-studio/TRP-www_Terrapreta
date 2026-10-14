@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { SITE_DEFAULTS } from "@/lib/constants";
+import { WEBSITE_PAGES, type WebsitePageId } from "@/lib/website-pages";
 import {
   getSanityImageUrl,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
-import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/types";
+import type {
+  SITE_SETTINGS_QUERY_RESULT,
+  WEBSITE_PAGE_SEO_QUERY_RESULT,
+} from "@/sanity/types";
 
 interface GenerateMetadataOptions {
   title: string;
@@ -95,8 +99,7 @@ export function generateMetadata({
   isDraftMode,
 }: GenerateMetadataOptions): Metadata {
   // Use site settings as fallbacks with hardcoded values as last resort
-  const siteName =
-    siteSettings?.seo?.metaTitle || siteSettings?.name || SITE_DEFAULTS.name;
+  const siteName = siteSettings?.brandName || SITE_DEFAULTS.name;
   const defaultDescription =
     siteSettings?.seo?.metaDescription || SITE_DEFAULTS.description;
   const defaultImage = siteSettings?.seo?.ogImage || null;
@@ -155,4 +158,41 @@ export function generateMetadata({
       images: [imageUrl],
     },
   };
+}
+
+export function generateWebsitePageMetadata({
+  pageId,
+  page,
+  siteSettings,
+  isDraftMode,
+}: {
+  pageId: WebsitePageId;
+  page: WEBSITE_PAGE_SEO_QUERY_RESULT;
+  siteSettings: SITE_SETTINGS_QUERY_RESULT;
+  isDraftMode?: boolean;
+}): Metadata {
+  const definition = WEBSITE_PAGES[pageId];
+  const seo = page?.seo;
+  const defaults = siteSettings?.seo;
+  const fallbackTitle =
+    pageId === "homePage"
+      ? defaults?.metaTitle ||
+        siteSettings?.brandName ||
+        definition.metadataTitle
+      : definition.metadataTitle;
+
+  return generateMetadata({
+    title: seo?.metaTitle || fallbackTitle,
+    description: seo?.metaDescription || definition.description,
+    image: seo?.ogImage ?? undefined,
+    url: definition.path,
+    canonicalUrl: seo?.canonicalUrl || undefined,
+    robotsIndex: seo?.robotsIndex ?? defaults?.robotsIndex ?? undefined,
+    robotsFollow: seo?.robotsFollow ?? defaults?.robotsFollow ?? undefined,
+    ogTitle: seo?.ogTitle || defaults?.ogTitle || undefined,
+    ogDescription: seo?.ogDescription || defaults?.ogDescription || undefined,
+    twitterCard: seo?.twitterCard ?? undefined,
+    siteSettings,
+    isDraftMode,
+  });
 }
