@@ -16,7 +16,7 @@ export default function HomeHero() {
               Regenerating ecosystems from the <em>Soil Up</em>
             </h1>
             <p className="text-pretty text-2xl">
-              Developing places for nature, people and climate
+              Developing projects for nature, people and climate
             </p>
           </hgroup>
           <Link
