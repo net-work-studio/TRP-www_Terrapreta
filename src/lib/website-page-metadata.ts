@@ -1,4 +1,4 @@
-import { generateWebsitePageMetadata } from "@/lib/metadata";
+import { generateMetadata, generateWebsitePageMetadata } from "@/lib/metadata";
 import { getSiteSettings } from "@/lib/site-settings";
 import type { WebsitePageId } from "@/lib/website-pages";
 import { getSanityRequestState, sanityFetchMetadata } from "@/sanity/lib/live";
@@ -21,4 +21,14 @@ export async function getWebsitePageMetadata(pageId: WebsitePageId) {
     siteSettings,
     isDraftMode,
   });
+}
+
+export async function getStaticPageMetadata(options: {
+  title: string;
+  description: string;
+  url: string;
+}) {
+  const { fetchOptions, isDraftMode } = await getSanityRequestState();
+  const siteSettings = await getSiteSettings(fetchOptions);
+  return generateMetadata({ ...options, siteSettings, isDraftMode });
 }

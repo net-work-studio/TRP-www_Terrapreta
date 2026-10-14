@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageHeader from "@/components/shared/page-header";
 import { SITE_DEFAULTS } from "@/lib/constants";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getStaticPageMetadata } from "@/lib/website-page-metadata";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Impressum",
-  description: "Legal information about Terrapreta.",
-  url: "/impressum",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getStaticPageMetadata({
+    title: "Impressum",
+    description: "Legal information about Terrapreta.",
+    url: "/impressum",
+  });
+}
 
 export default function ImpressumPage() {
   return (

@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  EcosystemRestorationJsonLd,
-  NatureBasedSolutionsJsonLd,
-  SoilHealthJsonLd,
-} from "@/components/shared/domain-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE_DEFAULTS } from "@/lib/constants";
@@ -56,9 +51,6 @@ export default function Home() {
         }}
         id="website-json-ld"
       />
-      <SoilHealthJsonLd />
-      <EcosystemRestorationJsonLd />
-      <NatureBasedSolutionsJsonLd />
       <HomeHero />
       <div className="scroll-mt-16 space-y-0" id="learn-more">
         <SectionWrapper isFirstItem>

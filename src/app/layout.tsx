@@ -20,7 +20,7 @@ const LEGACY_PLAUSIBLE_SCRIPT_PROPS: LegacyPlausibleScriptProps = {
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 
 export const metadata: Metadata = generateMetadataHelper({
-  title: "Terrapreta — Soil-based Solutions",
+  title: SITE_DEFAULTS.name,
   description:
     "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
 });

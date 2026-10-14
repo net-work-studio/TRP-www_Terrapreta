@@ -4,7 +4,10 @@ import type {
   WEBSITE_PAGE_SEO_QUERY_RESULT,
 } from "@/sanity/types";
 import { SITE_DEFAULTS } from "./constants";
-import { getWebsitePagesSitemap } from "./website-page-sitemap";
+import {
+  getContentSitemap,
+  getWebsitePagesSitemap,
+} from "./website-page-sitemap";
 
 // Metadata's image builder needs a project configuration even for fallback images.
 process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ??= "example";
@@ -88,7 +91,7 @@ describe("fixed website page SEO", () => {
       siteName: "Terrapreta",
       title: "Work social title",
       description: "Work social description",
-      url: `${SITE_DEFAULTS.baseUrl}/projects`,
+      url: "https://example.com/work",
     });
     expect(metadata.twitter).toMatchObject({
       card: "summary_large_image",
@@ -239,22 +242,22 @@ describe("fixed website page SEO", () => {
         {
           _id: "site",
           _updatedAt: "2026-10-01",
-          seo: { robotsIndex: "noindex" },
+          seo: { robotsIndex: "noindex", canonicalUrl: null },
         },
         {
           _id: "contactPage",
           _updatedAt: "2026-10-02",
-          seo: { robotsIndex: "index" },
+          seo: { robotsIndex: "index", canonicalUrl: null },
         },
         {
           _id: "aboutPage",
           _updatedAt: "2026-10-03",
-          seo: { robotsIndex: "index" },
+          seo: { robotsIndex: "index", canonicalUrl: null },
         },
         {
           _id: "researchIndexPage",
           _updatedAt: "2026-10-03",
-          seo: { robotsIndex: "index" },
+          seo: { robotsIndex: "index", canonicalUrl: null },
         },
       ],
       SITE_DEFAULTS.baseUrl
@@ -280,7 +283,7 @@ describe("fixed website page SEO", () => {
         {
           _id: "projectsIndexPage",
           _updatedAt: "2026-10-02",
-          seo: { robotsIndex: "noindex" },
+          seo: { robotsIndex: "noindex", canonicalUrl: null },
         },
       ],
       SITE_DEFAULTS.baseUrl
@@ -300,5 +303,154 @@ describe("fixed website page SEO", () => {
       isDraftMode: true,
     });
     expect(metadata.robots).toEqual({ index: false, follow: false });
+  });
+});
+
+describe("complete SEO integration", () => {
+  test("inherits Site robots on detail and static pages, with independent page overrides", () => {
+    const siteSettings = {
+      ...SITE_SETTINGS,
+      seo: {
+        ...SITE_SETTINGS.seo,
+        robotsIndex: "noindex",
+        robotsFollow: "nofollow",
+      },
+    } satisfies SITE_SETTINGS_QUERY_RESULT;
+    expect(
+      generateMetadata({ title: "A service", siteSettings }).robots
+    ).toEqual({ index: false, follow: false });
+    expect(
+      generateMetadata({
+        title: "A service",
+        robotsIndex: "index",
+        siteSettings,
+      }).robots
+    ).toEqual({ index: true, follow: false });
+    expect(
+      generateMetadata({
+        title: "A service",
+        robotsIndex: "index",
+        siteSettings,
+        isDraftMode: true,
+      }).robots
+    ).toEqual({ index: false, follow: false });
+  });
+
+  test("adds the brand to titles containing punctuation without duplicating an existing suffix", () => {
+    expect(generateMetadata({ title: "Soil — a living system" }).title).toBe(
+      "Soil — a living system — Terrapreta"
+    );
+    expect(generateMetadata({ title: "Soil — Terrapreta" }).title).toBe(
+      "Soil — Terrapreta"
+    );
+  });
+
+  test("omits noindex, noncanonical and redirected URLs across every sitemap collection", () => {
+    const result = getContentSitemap({
+      baseUrl: "https://terrapreta.it",
+      pages: [
+        {
+          _id: "site",
+          _updatedAt: "2026-10-01",
+          seo: { robotsIndex: "noindex", canonicalUrl: null },
+        },
+        {
+          _id: "contactPage",
+          _updatedAt: "2026-10-02",
+          seo: {
+            robotsIndex: "index",
+            canonicalUrl: "https://example.org/contact",
+          },
+        },
+      ],
+      projects: [
+        {
+          slug: "old",
+          _updatedAt: "2026-10-02",
+          seo: { robotsIndex: "index", canonicalUrl: null },
+        },
+      ],
+      journal: [{ slug: "inherited", _updatedAt: "2026-10-03", seo: null }],
+      services: [
+        {
+          slug: "restoration",
+          _updatedAt: "2026-10-04",
+          seo: { robotsIndex: "index", canonicalUrl: null },
+        },
+      ],
+      redirects: [
+        {
+          source: "/projects/:slug",
+          destination: "/projects",
+          permanent: "permanent",
+        },
+      ],
+    });
+    expect(result).toEqual([
+      {
+        url: "https://terrapreta.it/services/restoration",
+        lastModified: new Date("2026-10-04"),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      },
+    ]);
+  });
+
+  test("social images retain editor alt text and advertise dimensions only for resized assets", () => {
+    const metadata = generateMetadata({
+      title: "Forest",
+      image: {
+        asset: { _id: "image-example-2400x1600-webp" },
+        alt: "Sunlight through restored woodland",
+      },
+    });
+    expect(metadata.openGraph).toMatchObject({
+      images: [
+        { width: 1200, height: 630, alt: "Sunlight through restored woodland" },
+      ],
+    });
+    expect(metadata.twitter).toMatchObject({
+      images: [{ alt: "Sunlight through restored woodland" }],
+    });
+    const fallback = generateMetadata({ title: "Contacts" });
+    expect(fallback.openGraph).toMatchObject({
+      images: [
+        {
+          url: `${SITE_DEFAULTS.baseUrl}/images/terrapreta_hero.webp`,
+          alt: "Contacts",
+        },
+      ],
+    });
+    expect(fallback.openGraph).not.toMatchObject({
+      images: [{ width: 1200, height: 630 }],
+    });
+  });
+
+  test("social-image resizing respects the editor's crop and hotspot", () => {
+    const metadata = generateMetadata({
+      title: "Forest",
+      image: {
+        asset: { _id: "image-example-2400x1600-webp" },
+        crop: {
+          _type: "sanity.imageCrop",
+          top: 0.25,
+          bottom: 0.25,
+          left: 0.25,
+          right: 0.25,
+        },
+        hotspot: {
+          _type: "sanity.imageHotspot",
+          x: 0.5,
+          y: 0.5,
+          width: 0.1,
+          height: 0.1,
+        },
+      },
+    });
+    expect(metadata.openGraph).toMatchObject({
+      images: [
+        { url: expect.stringContaining("rect=600,485,1200,630&w=1200&h=630") },
+      ],
+    });
   });
 });

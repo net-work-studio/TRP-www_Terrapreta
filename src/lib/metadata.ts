@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { SITE_DEFAULTS } from "@/lib/constants";
+import { formatSeoTitle } from "@/lib/seo-title";
 import { WEBSITE_PAGES, type WebsitePageId } from "@/lib/website-pages";
 import {
+  getSanityImageAlt,
   getSanityImageUrl,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
@@ -32,18 +34,16 @@ interface GenerateMetadataOptions {
 function getImageUrl(
   image: SanityImageSourceInput | string | undefined,
   defaultImage: SanityImageSourceInput
-): string {
+): { url: string; source?: SanityImageSourceInput; resized?: boolean } {
   if (typeof image === "string") {
-    return image.startsWith("http")
-      ? image
-      : `${SITE_DEFAULTS.baseUrl}${image}`;
+    return { url: new URL(image, SITE_DEFAULTS.baseUrl).toString() };
   }
 
   if (image) {
     const imageUrl = getSanityImageUrl(image, { width: 1200, height: 630 });
 
     if (imageUrl) {
-      return imageUrl;
+      return { url: imageUrl, source: image, resized: true };
     }
   }
 
@@ -54,11 +54,13 @@ function getImageUrl(
     });
 
     if (defaultImageUrl) {
-      return defaultImageUrl;
+      return { url: defaultImageUrl, source: defaultImage, resized: true };
     }
   }
 
-  return `${SITE_DEFAULTS.baseUrl}${SITE_DEFAULTS.defaultImage}`;
+  return {
+    url: new URL(SITE_DEFAULTS.defaultImage, SITE_DEFAULTS.baseUrl).toString(),
+  };
 }
 
 function getRobotsConfig(
@@ -84,7 +86,7 @@ export function generateMetadata({
   title,
   description,
   image,
-  url,
+  url = "/",
   type = "website",
   publishedTime,
   modifiedTime,
@@ -110,17 +112,21 @@ export function generateMetadata({
     (siteSettings?.seo?.twitterCard as "summary_large_image" | "summary") ||
     "summary_large_image";
 
-  const fullTitle =
-    title.includes("—") || title === siteName
-      ? title
-      : `${title} — ${siteName}`;
-  const pageUrl = url
-    ? `${SITE_DEFAULTS.baseUrl}${url}`
-    : SITE_DEFAULTS.baseUrl;
-  const canonical = canonicalUrl || pageUrl;
+  const fullTitle = formatSeoTitle(title, siteName);
+  const pageUrl = new URL(url, SITE_DEFAULTS.baseUrl).toString();
+  const canonical = new URL(
+    canonicalUrl || pageUrl,
+    SITE_DEFAULTS.baseUrl
+  ).toString();
 
-  const imageUrl = getImageUrl(image, defaultImage);
-  const robotsConfig = getRobotsConfig(isDraftMode, robotsIndex, robotsFollow);
+  const socialImage = getImageUrl(image, defaultImage);
+  const imageUrl = socialImage.url;
+  const robotsConfig = getRobotsConfig(
+    isDraftMode,
+    robotsIndex ?? siteSettings?.seo?.robotsIndex ?? undefined,
+    robotsFollow ?? siteSettings?.seo?.robotsFollow ?? undefined
+  );
+  const imageAlt = getSanityImageAlt(socialImage.source, title);
 
   // Open Graph values (use overrides or fall back to defaults)
   const ogTitleValue = ogTitle || fullTitle;
@@ -138,13 +144,12 @@ export function generateMetadata({
       siteName,
       title: ogTitleValue,
       description: ogDescriptionValue,
-      url: pageUrl,
+      url: canonical,
       images: [
         {
           url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
+          ...(socialImage.resized && { width: 1200, height: 630 }),
+          alt: imageAlt,
         },
       ],
       ...(publishedTime && { publishedTime }),
@@ -155,7 +160,7 @@ export function generateMetadata({
       card: finalTwitterCard,
       title: ogTitleValue,
       description: ogDescriptionValue,
-      images: [imageUrl],
+      images: [{ url: imageUrl, alt: imageAlt }],
     },
   };
 }
