@@ -1,31 +1,5 @@
 [
   {
-    "type": "type",
-    "name": "customSchema",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "knowsAbout": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "hasOfferCatalog": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "array",
-            "of": {
-              "type": "string"
-            }
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
     "name": "heroSplitModule",
     "type": "type",
     "value": {
@@ -163,6 +137,13 @@
                 },
                 "optional": true
               },
+              "alt": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
               "_type": {
                 "type": "objectAttribute",
                 "value": {
@@ -222,23 +203,11 @@
             "of": [
               {
                 "type": "string",
-                "value": "Organization"
-              },
-              {
-                "type": "string",
-                "value": "Service"
-              },
-              {
-                "type": "string",
-                "value": "Project"
+                "value": "BlogPosting"
               },
               {
                 "type": "string",
                 "value": "Article"
-              },
-              {
-                "type": "string",
-                "value": "LocalBusiness"
               }
             ]
           },
@@ -1251,6 +1220,39 @@
             "name": "slug"
           },
           "optional": false
+        }
+      }
+    }
+  },
+  {
+    "name": "customSchema",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "customSchema"
+          }
+        },
+        "knowsAbout": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "hasOfferCatalog": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "string"
+            }
+          },
+          "optional": true
         }
       }
     }

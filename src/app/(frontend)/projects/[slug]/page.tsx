@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import ArticleContent from "@/components/shared/article-content";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
-import { JsonLd } from "@/components/shared/json-ld";
+import { ProjectJsonLd } from "@/components/shared/project-json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Breadcrumb,
@@ -16,13 +16,9 @@ import { portableTextComponents } from "@/components/ui/portable-text-components
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import {
-  cleanCommaList,
-  cleanOptionalString,
-  type StegaAware,
-} from "@/lib/sanity-stega";
+import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
+import { hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -90,7 +86,7 @@ export async function generateMetadata({
       undefined,
     image: projectItem.seo?.ogImage ?? projectItem.mainImage ?? undefined,
     url: `/projects/${slug}`,
-    type: "article",
+    type: "website",
     canonicalUrl: projectItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: projectItem.seo?.robotsIndex ?? undefined,
     robotsFollow: projectItem.seo?.robotsFollow ?? undefined,
@@ -113,12 +109,9 @@ function ProjectPageContent({
     notFound();
   }
 
-  const schemaType =
-    cleanOptionalString(projectItem.seo?.schemaType) || "Project";
   const statusLabel = projectItem.status
     ? cleanOptionalString(projectItem.status)?.replaceAll("-", " ")
     : undefined;
-  const knowsAbout = cleanCommaList(projectItem.seo?.customSchema?.knowsAbout);
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
@@ -173,20 +166,7 @@ function ProjectPageContent({
       </div>
 
       <SocialShare />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": schemaType,
-          name: projectItem.name,
-          description: projectItem.shortDescription,
-          ...(projectItem.location && { location: projectItem.location }),
-          ...(projectItem.status && { status: projectItem.status }),
-          ...(hasSanityImage(projectItem.mainImage) && {
-            image: getSanityImageUrl(projectItem.mainImage, { width: 1200 }),
-          }),
-          ...(knowsAbout && { knowsAbout }),
-        }}
-      />
+      <ProjectJsonLd project={projectItem} slug={slug} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },

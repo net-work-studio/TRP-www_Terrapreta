@@ -9,6 +9,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
@@ -85,6 +86,7 @@ export async function generateMetadata({
     url: `/journal/${slug}`,
     type: "article",
     publishedTime: publishingDate ?? undefined,
+    modifiedTime: journalItem._updatedAt,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
     robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
@@ -108,7 +110,9 @@ function JournalPageContent({
   }
 
   const schemaType =
-    cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
+    cleanOptionalString(journalItem.seo?.schemaType) === "Article"
+      ? "Article"
+      : "BlogPosting";
   const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
   const publishingDateValue = cleanPublishingDate(journalItem.publishingDate);
   const publishingDate = formatPublishingDate(journalItem.publishingDate);
@@ -158,6 +162,10 @@ function JournalPageContent({
           "@context": "https://schema.org",
           "@type": schemaType,
           headline: journalItem.name,
+          url:
+            journalItem.seo?.canonicalUrl ||
+            new URL(`/journal/${slug}`, SITE_DEFAULTS.baseUrl).toString(),
+          dateModified: journalItem._updatedAt,
           description: journalItem.shortDescription,
           ...(publishingDateValue && {
             datePublished: publishingDateValue,
@@ -166,9 +174,9 @@ function JournalPageContent({
             image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),
           }),
           ...(journalItem.location && {
-            locationCreated: journalItem.location,
+            locationCreated: { "@type": "Place", name: journalItem.location },
           }),
-          ...(knowsAbout && { knowsAbout }),
+          ...(knowsAbout && { keywords: knowsAbout }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",

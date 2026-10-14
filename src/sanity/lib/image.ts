@@ -53,9 +53,14 @@ export function getSanityImageUrl(
     return imageBuilder.url();
   }
 
-  return imageBuilder
-    .width(options.width ?? 800)
-    .height(options.height ?? 600)
+  let resized = imageBuilder;
+  if (options.width) {
+    resized = resized.width(options.width);
+  }
+  if (options.height) {
+    resized = resized.height(options.height);
+  }
+  return resized
     .quality(options.quality ?? DEFAULT_IMAGE_QUALITY)
     .auto("format")
     .url();

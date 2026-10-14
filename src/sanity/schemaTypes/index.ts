@@ -27,8 +27,9 @@ import { unGoalDoc } from "./documents/unGoalDoc";
 import modules from "./fragments/modules";
 /* Modules */
 import { heroSplitModule } from "./modules/hero-split";
-/* Objects */
 import { competitionObject } from "./objects/competitionObject";
+/* Objects */
+import { customSchemaObject } from "./objects/customSchemaObject";
 import { editorialImageType } from "./objects/editorialImageType";
 import { fundingProgrammeObject } from "./objects/fundingProgrammeObject";
 import { gridDimensionObject } from "./objects/gridDimensionObject";
@@ -66,6 +67,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
     /* Objects */
     competitionObject,
+    customSchemaObject,
     titleSlugObject,
     editorialImageType,
     fundingProgrammeObject,

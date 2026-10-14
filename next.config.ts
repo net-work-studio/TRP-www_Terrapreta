@@ -2,6 +2,7 @@ import { createClient } from "@sanity/client";
 import type { NextConfig } from "next";
 import { withPlausibleProxy } from "next-plausible";
 import { sanity } from "next-sanity/live/cache-life";
+import { LEGACY_REDIRECTS } from "./src/lib/redirects";
 import { apiVersion } from "./src/sanity/env";
 import { REDIRECTS_QUERY } from "./src/sanity/lib/queries";
 
@@ -63,83 +64,26 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    // Fetch CMS-managed redirects from Sanity
-    const sanityRedirects = await getSanityRedirects();
-
-    // Legacy redirects (kept for backwards compatibility)
-    const legacyRedirects = [
-      { source: "/en", destination: "/", permanent: true },
-      { source: "/ita", destination: "/", permanent: true },
-      { source: "/en/journal", destination: "/journal", permanent: true },
-      { source: "/ita/journal", destination: "/journal", permanent: true },
-      {
-        source: "/ita/journal/vuoto-futuro",
-        destination: "/journal/vuoto-futuro",
-        permanent: true,
-      },
-      {
-        source: "/en/journal/vuoto-futuro",
-        destination: "/journal/vuoto-futuro",
-        permanent: true,
-      },
-      {
-        source: "/ita/journal/eui-goccia",
-        destination: "/journal/eui-goccia",
-        permanent: true,
-      },
-      {
-        source: "/en/journal/eui-goccia",
-        destination: "/journal/eui-goccia",
-        permanent: true,
-      },
-      {
-        source: "/ita/journal/luar-bovisa-art-district",
-        destination: "/journal/bovisa-art-district-luar",
-        permanent: true,
-      },
-      {
-        source: "/en/journal/luar-bovisa-art-district",
-        destination: "/journal/bovisa-art-district-luar",
-        permanent: true,
-      },
-      {
-        source: "/en/projects/osservatorio-la-goccia",
-        destination: "/projects/osservatorio-la-goccia",
-        permanent: true,
-      },
-      {
-        source: "/ita/progetti/osservatorio-la-goccia",
-        destination: "/projects/osservatorio-la-goccia",
-        permanent: true,
-      },
-      {
-        source: "/ita/impressum",
-        destination: "/impressum",
-        permanent: true,
-      },
-      {
-        source: "/en/impressum",
-        destination: "/impressum",
-        permanent: true,
-      },
-      {
-        source: "/en/credits",
-        destination: "/",
-        permanent: true,
-      },
-      {
-        source: "/ita/credits",
-        destination: "/",
-        permanent: true,
-      },
-    ];
-
-    // CMS redirects take precedence over legacy redirects
-    return [...sanityRedirects, ...legacyRedirects];
-  },
 };
 
-export default withPlausibleProxy({
-  src: "https://plausible.net-work.studio/js/script.file-downloads.hash.outbound-links.js",
-})(nextConfig);
+export default async function config(): Promise<NextConfig> {
+  const sanityRedirects = await getSanityRedirects();
+  return withPlausibleProxy({
+    src: "https://plausible.net-work.studio/js/script.file-downloads.hash.outbound-links.js",
+  })({
+    ...nextConfig,
+    env: {
+      // Embed the same snapshot used by redirects(), rather than current CMS state.
+      SITEMAP_REDIRECTS: JSON.stringify(
+        sanityRedirects.map(({ source, destination, permanent }) => ({
+          source,
+          destination,
+          permanent: permanent ? "permanent" : "temporary",
+        }))
+      ),
+    },
+    async redirects() {
+      return [...sanityRedirects, ...LEGACY_REDIRECTS];
+    },
+  });
+}

@@ -10,11 +10,7 @@ import { portableTextComponents } from "@/components/ui/portable-text-components
 import SanityImage from "@/components/ui/sanity-image";
 import { SITE_DEFAULTS } from "@/lib/constants";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import {
-  cleanCommaList,
-  cleanOptionalString,
-  type StegaAware,
-} from "@/lib/sanity-stega";
+import { cleanCommaList, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -91,7 +87,6 @@ function ServicePageContent({
   service: StegaAware<NonNullable<SERVICE_QUERY_RESULT>>;
   slug: string;
 }) {
-  const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";
   const knowsAbout = cleanCommaList(service.seo?.customSchema?.knowsAbout);
 
   return (
@@ -171,7 +166,10 @@ function ServicePageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": schemaType,
+          "@type": "Service",
+          url:
+            service.seo?.canonicalUrl ||
+            new URL(`/services/${slug}`, SITE_DEFAULTS.baseUrl).toString(),
           name: service.name,
           description: service.shortDescription,
           provider: {
