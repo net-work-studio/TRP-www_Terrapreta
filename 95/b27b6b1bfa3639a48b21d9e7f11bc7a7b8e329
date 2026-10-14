@@ -19,6 +19,7 @@ src/sanity/schemaTypes/documents/homePageDoc.ts
   s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
 src/components/ui/portable-text-components.tsx
   s_468b60e98d2ae9::t_0b50218ad92cf8 58-60
+  s_468b60e98d2ae9::t_af635177b9121e 3,61-63,65-67
 src/lib/website-page-seo.test.ts
   s_468b60e98d2ae9::t_18d33a434c27f9 29-30,124-133
   s_468b60e98d2ae9::t_02727b5cc80f9a 1-7,15-28,31-52,61-96,101-123,134-149,190-205,216-232
@@ -45,6 +46,7 @@ src/lib/website-page-sitemap.ts
 src/sanity/schemaTypes/helpers/websitePage.ts
   s_468b60e98d2ae9::t_25e0b0768e6aeb 1-2,4-5,8-10,12,15-18,24-34,36-37,40-41
   s_468b60e98d2ae9::t_18d33a434c27f9 19-23
+  s_468b60e98d2ae9::t_120a1943ce9709 3,6-7,11,13-14,35,38-39
 src/lib/website-page-metadata.ts
   s_468b60e98d2ae9::t_1f819215dfd1a9 1-3,5-24
   s_468b60e98d2ae9::t_f8f5b6b87eb3c0 4
@@ -54,6 +56,8 @@ src/sanity/schemaTypes/documents/aboutPageDoc.ts
   s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
 src/sanity/extract.json
   s_468b60e98d2ae9::t_1d94e688f91b09 382,407-557,758-778,1040-1045,1046-1052,2976,2983,2993-2995,2997-3008,3010-3036,3038-3040,3042,3155-3162,3170-3173,3175-3186,3188-3225,3227-3238,3240-3273
+  s_468b60e98d2ae9::t_b74d1ae4f40e41 2023,2036,2063-2122
+  s_468b60e98d2ae9::t_120a1943ce9709 1037-1039,2212-2218,3174,3187,3226,3239,3274-3380
 src/sanity/lib/queries.ts
   s_468b60e98d2ae9::t_18d33a434c27f9 89
   s_468b60e98d2ae9::t_1f819215dfd1a9 71,75,82-88,90-112
@@ -62,6 +66,7 @@ package.json
 src/lib/website-pages.ts
   s_468b60e98d2ae9::t_0b50218ad92cf8 42-45
   s_468b60e98d2ae9::t_25e0b0768e6aeb 1-41,46-52
+  s_468b60e98d2ae9::t_af635177b9121e 53-58
 src/sanity/schemaTypes/objects/linkObject.ts
   s_468b60e98d2ae9::t_0b50218ad92cf8 3,43
 sanity.config.ts
@@ -85,8 +90,15 @@ src/sanity/presentation/resolve.ts
 src/sanity/types.ts
   s_468b60e98d2ae9::t_1d94e688f91b09 83,87-122,166-171,208-209,210,420,593-612,613-630,758-763,798-799,800-801,823-825,829-836,848-905,1024-1025,1027,1029,1166-1167,1169,1171,1389-1390,1392,1394,1617-1618
   s_468b60e98d2ae9::t_211e5c75ffcdfd 815,818,1616
+  s_468b60e98d2ae9::t_120a1943ce9709 204-207,631-632,1023,1026,1028,1030,1165,1168,1170,1172,1388,1391,1393,1395
+  s_468b60e98d2ae9::t_b74d1ae4f40e41 211,384,386,391-401,785-786
 bun.lock
   s_468b60e98d2ae9::t_75e46b35c10e36 24
+src/sanity/schemaTypes/helpers/richTextBlock.ts
+  s_468b60e98d2ae9::t_120a1943ce9709 61-64,66
+  s_468b60e98d2ae9::t_af635177b9121e 2,60,65,69-70
+src/components/ui/portable-text-components.test.tsx
+  s_468b60e98d2ae9::t_c6d3138a8a6cbf 1-58
 ---
 {
   "schema_version": "authorship/3.0.0",
