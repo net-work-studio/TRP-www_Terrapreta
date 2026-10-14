@@ -15,15 +15,16 @@ const engageCover =
 interface SoilCardProps {
   title: string;
   image: StaticImageData | string;
+  imageAlt: string;
   description: string;
 }
 
-function SoilCard({ title, image, description }: SoilCardProps) {
+function SoilCard({ title, image, imageAlt, description }: SoilCardProps) {
   return (
     <div className="flex flex-col gap-2.5">
       <AspectRatio className="relative h-full w-full rounded" ratio={4 / 5}>
         <Image
-          alt={title}
+          alt={imageAlt}
           className="h-full w-full rounded-md object-cover"
           fill
           quality={75}
@@ -54,16 +55,19 @@ export default function SoilRevolution() {
         <SoilCard
           description="Scientific research and field studies allow us to collect data for evidence-based design and planning."
           image={analyzeCover}
+          imageAlt="Two people in gloves kneeling on a forest floor, digging a small pit in dark soil with hand tools"
           title="Analyze"
         />
         <SoilCard
           description="Through our landscape design process, we develop solutions for restoring degraded land."
           image={designCover}
+          imageAlt="Hands pointing at a printed site plan laid on leaf litter, one using a twig as a pointer"
           title="Design"
         />
         <SoilCard
           description="To create real change, we engage stakeholders throughout the process and promote soil knowledge through educational activities."
           image={engageCover}
+          imageAlt="Audience listening to a speaker with a microphone beside a projected slide about terra preta, the dark Amazonian soil"
           title="Engage"
         />
       </div>

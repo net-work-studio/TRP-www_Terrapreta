@@ -38,7 +38,7 @@ function ServiceCard({
   const titleId = `service-${slug}-title`;
 
   return (
-    <div className="relative flex aspect-3/2 w-full grid-cols-3 items-end gap-5 rounded bg-gray-600 p-7.5">
+    <div className="relative flex aspect-3/2 w-full items-end gap-5 rounded bg-stone-800 p-7.5">
       <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/20" />
       <SanityImage
         alt={name}
@@ -150,7 +150,7 @@ function ServicesContent({
           )
           .map((service) => (
             <ServiceCard
-              key={service.name}
+              key={service._id}
               mainImage={service.mainImage}
               name={service.name}
               shortDescription={service.shortDescription || ""}
