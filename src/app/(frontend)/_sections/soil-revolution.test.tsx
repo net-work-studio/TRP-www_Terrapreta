@@ -4,7 +4,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import sanityImageLoader from "@/sanity/lib/image-loader";
 import SoilRevolution from "./soil-revolution";
 
-const DESIGN_IMAGE_PATTERN = /<img\b[^>]*alt="Design"[^>]*>/;
+const DESIGN_IMAGE_PATTERN =
+  /<img\b[^>]*c3e88b5e56a22300b4add544c008ffb4e89674eb[^>]*>/;
 const SRC_PATTERN = /\bsrc="([^"]+)"/;
 const SIZES_PATTERN = /\bsizes="([^"]+)"/;
 
@@ -47,7 +48,7 @@ test("the Design image retains enough detail to cover its portrait card at DPR 2
   expect(height).toBeGreaterThanOrEqual(cardHeight * 2);
 
   const { props } = getImageProps({
-    alt: "Design",
+    alt: "Design card image",
     src: source.href,
     fill: true,
     sizes,
