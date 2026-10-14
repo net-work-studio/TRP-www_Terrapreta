@@ -1,0 +1,22 @@
+src/lib/website-page-seo.test.ts
+  s_7fdabaf51a158f::t_9ef9960de3a452 35-36
+  s_7fdabaf51a158f::t_d34f24dc4b369a 105-168,179-184
+src/lib/metadata.ts
+  s_7fdabaf51a158f::t_54a2530446ce3f 192-200
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dcddd03c80a5083fc9d22c7b130bf97cd143b6a9",
+  "prompts": {},
+  "sessions": {
+    "s_7fdabaf51a158f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13bfb-c3f1-7aa2-9a5a-8012238b1002",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
