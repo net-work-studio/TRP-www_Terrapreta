@@ -32,6 +32,8 @@ const SITE_SETTINGS = {
     ...EMPTY_SEO,
     metaTitle: "Soil-based solutions",
     metaDescription: "Shared description",
+    ogTitle: "Shared social title",
+    ogDescription: "Shared social description",
     canonicalUrl: "https://example.com/site-canonical",
     twitterCard: "summary",
   },
@@ -100,6 +102,70 @@ describe("fixed website page SEO", () => {
     ).toBe("An article — Terrapreta");
   });
 
+  test.each([null, ""])(
+    "uses page SEO for social previews when OG overrides are %j",
+    (override) => {
+      const metadata = generateWebsitePageMetadata({
+        pageId: "projectsIndexPage",
+        page: {
+          _id: "projectsIndexPage",
+          seo: {
+            ...EMPTY_SEO,
+            metaTitle: "Our work",
+            metaDescription: "Page description",
+            ogTitle: override,
+            ogDescription: override,
+          },
+        },
+        siteSettings: SITE_SETTINGS,
+      });
+
+      expect(metadata.title).toBe("Our work — Terrapreta");
+      expect(metadata.description).toBe("Page description");
+      for (const social of [metadata.openGraph, metadata.twitter]) {
+        expect(social).toMatchObject({
+          title: "Our work — Terrapreta",
+          description: "Page description",
+        });
+      }
+    }
+  );
+
+  test.each([
+    {
+      metaTitle: "Our work",
+      metaDescription: null,
+      title: "Our work — Terrapreta",
+      description: "Shared social description",
+    },
+    {
+      metaTitle: null,
+      metaDescription: "Page description",
+      title: "Shared social title",
+      description: "Page description",
+    },
+  ])("resolves social title and description independently for %j", (values) => {
+    const metadata = generateWebsitePageMetadata({
+      pageId: "projectsIndexPage",
+      page: {
+        _id: "projectsIndexPage",
+        seo: {
+          ...EMPTY_SEO,
+          metaTitle: values.metaTitle,
+          metaDescription: values.metaDescription,
+        },
+      },
+      siteSettings: SITE_SETTINGS,
+    });
+
+    for (const social of [metadata.openGraph, metadata.twitter]) {
+      expect(social).toMatchObject({
+        title: values.title,
+        description: values.description,
+      });
+    }
+  });
+
   test("uses shared homepage fallbacks but keeps canonical URLs specific to each route", () => {
     const home = generateWebsitePageMetadata({
       pageId: "homePage",
@@ -110,6 +176,12 @@ describe("fixed website page SEO", () => {
     expect(home.description).toBe("Shared description");
     expect(home.alternates?.canonical).toBe(`${SITE_DEFAULTS.baseUrl}/`);
     expect(home.twitter).toMatchObject({ card: "summary" });
+    for (const social of [home.openGraph, home.twitter]) {
+      expect(social).toMatchObject({
+        title: "Shared social title",
+        description: "Shared social description",
+      });
+    }
 
     const journal = generateWebsitePageMetadata({
       pageId: "journalIndexPage",
