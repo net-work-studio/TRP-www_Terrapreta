@@ -1,5 +1,6 @@
 import { SearchIcon } from "@sanity/icons/Search";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { isWebsitePageId } from "@/lib/website-pages";
 
 export const seoObject = defineType({
   type: "object",
@@ -79,6 +80,7 @@ export const seoObject = defineType({
       type: "string",
       name: "schemaType",
       title: "Primary Schema Type",
+      hidden: ({ document }) => isWebsitePageId(document?._type || ""),
       description: "Override the default JSON-LD schema type for this page",
       options: {
         list: [
@@ -94,6 +96,7 @@ export const seoObject = defineType({
       type: "object",
       name: "customSchema",
       title: "Custom Schema Properties",
+      hidden: ({ document }) => isWebsitePageId(document?._type || ""),
       fields: [
         defineField({
           type: "text",

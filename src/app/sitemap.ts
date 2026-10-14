@@ -1,10 +1,13 @@
 import type { MetadataRoute } from "next";
 import { SITE_DEFAULTS } from "@/lib/constants";
+import { getWebsitePagesSitemap } from "@/lib/website-page-sitemap";
+import { LIVE_WEBSITE_PAGE_IDS } from "@/lib/website-pages";
 import { sanityFetchMetadata } from "@/sanity/lib/live";
 import {
   JOURNAL_SITEMAP_QUERY,
   PROJECTS_SITEMAP_QUERY,
   SERVICES_SITEMAP_QUERY,
+  WEBSITE_PAGES_SITEMAP_QUERY,
 } from "@/sanity/lib/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -14,47 +17,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // expose live URLs, and resolving request state here would read
   // cookies() and force the sitemap to render dynamically. Do not "fix" this to
   // use a dynamic perspective.
-  const [{ data: projects }, { data: journal }, { data: services }] =
-    await Promise.all([
-      sanityFetchMetadata({
-        query: PROJECTS_SITEMAP_QUERY,
-        perspective: "published",
-      }),
-      sanityFetchMetadata({
-        query: JOURNAL_SITEMAP_QUERY,
-        perspective: "published",
-      }),
-      sanityFetchMetadata({
-        query: SERVICES_SITEMAP_QUERY,
-        perspective: "published",
-      }),
-    ]);
+  const [
+    { data: projects },
+    { data: journal },
+    { data: services },
+    { data: websitePages },
+  ] = await Promise.all([
+    sanityFetchMetadata({
+      query: PROJECTS_SITEMAP_QUERY,
+      perspective: "published",
+    }),
+    sanityFetchMetadata({
+      query: JOURNAL_SITEMAP_QUERY,
+      perspective: "published",
+    }),
+    sanityFetchMetadata({
+      query: SERVICES_SITEMAP_QUERY,
+      perspective: "published",
+    }),
+    sanityFetchMetadata({
+      query: WEBSITE_PAGES_SITEMAP_QUERY,
+      params: { ids: ["site", ...LIVE_WEBSITE_PAGE_IDS] },
+      perspective: "published",
+    }),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/contacts`,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+    ...getWebsitePagesSitemap(websitePages ?? [], baseUrl),
     {
       url: `${baseUrl}/impressum`,
       changeFrequency: "yearly",
       priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/journal`,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      changeFrequency: "weekly",
-      priority: 0.9,
     },
     {
       url: `${baseUrl}/services`,

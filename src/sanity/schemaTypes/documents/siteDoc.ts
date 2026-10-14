@@ -15,9 +15,18 @@ export const siteDoc = defineType({
       title: "Site Name",
       hidden: true,
       readOnly: true,
+      initialValue: "Site settings",
       validation: (rule) => [
         rule.required().error("The site settings document needs a site name."),
       ],
+    }),
+    defineField({
+      name: "brandName",
+      type: "string",
+      group: "content",
+      initialValue: "Terrapreta",
+      description:
+        "The brand used in page titles and social metadata. Defaults to Terrapreta when empty.",
     }),
     defineField({
       type: "seoObject",
@@ -25,17 +34,17 @@ export const siteDoc = defineType({
       title: "Site SEO Defaults",
       group: "seo",
       description:
-        "Default SEO settings used across the site and for the homepage",
+        "Shared SEO defaults. Homepage-specific metadata is edited under Website pages.",
     }),
   ],
   preview: {
     select: {
-      title: "name",
+      brandName: "brandName",
     },
-    prepare({ title }) {
+    prepare({ brandName }) {
       return {
-        subtitle: "Site settings",
-        title: title || "Site settings",
+        subtitle: `${brandName || "Terrapreta"} · Shared SEO defaults`,
+        title: "Site settings",
       };
     },
   },

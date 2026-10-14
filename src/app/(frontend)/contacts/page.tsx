@@ -4,13 +4,11 @@ import CalendarStefano from "@/components/features/calendar-stefano";
 import PageHeader from "@/components/shared/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE_DEFAULTS } from "@/lib/constants";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Contacts",
-  description: "Get in touch with Terrapreta.",
-  url: "/contacts",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getWebsitePageMetadata("contactPage");
+}
 
 export default function ContactsPage() {
   return (

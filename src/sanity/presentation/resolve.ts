@@ -2,9 +2,20 @@ import {
   defineLocations,
   type PresentationPluginOptions,
 } from "sanity/presentation";
+import { LIVE_WEBSITE_PAGE_IDS, WEBSITE_PAGES } from "@/lib/website-pages";
 
 export const resolve: PresentationPluginOptions["resolve"] = {
   locations: {
+    ...Object.fromEntries(
+      LIVE_WEBSITE_PAGE_IDS.map((id) => [
+        id,
+        defineLocations({
+          locations: [
+            { title: WEBSITE_PAGES[id].title, href: WEBSITE_PAGES[id].path },
+          ],
+        }),
+      ])
+    ),
     journal: defineLocations({
       select: {
         title: "name",

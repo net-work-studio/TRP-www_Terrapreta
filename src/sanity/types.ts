@@ -80,11 +80,46 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
-export type AboutReference = {
+export type HomePageReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "about";
+  [internalGroqTypeReferenceTo]?: "homePage";
+};
+
+export type ContactPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "contactPage";
+};
+
+export type AboutPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "aboutPage";
+};
+
+export type ProjectsIndexPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "projectsIndexPage";
+};
+
+export type JournalIndexPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "journalIndexPage";
+};
+
+export type ResearchIndexPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "researchIndexPage";
 };
 
 export type JournalReference = {
@@ -128,7 +163,12 @@ export type LinkObject = {
   type: "internal" | "external";
   page?:
     | PageReference
-    | AboutReference
+    | HomePageReference
+    | ContactPageReference
+    | AboutPageReference
+    | ProjectsIndexPageReference
+    | JournalIndexPageReference
+    | ResearchIndexPageReference
     | JournalReference
     | ProjectReference
     | ServiceReference
@@ -161,7 +201,14 @@ export type RichTextContent = Array<
             _key: string;
           }
         | {
-            reference: JournalReference | ProjectReference | ServiceReference;
+            reference:
+              | JournalReference
+              | ProjectReference
+              | ServiceReference
+              | HomePageReference
+              | ContactPageReference
+              | ProjectsIndexPageReference
+              | JournalIndexPageReference;
             _type: "internalLink";
             _key: string;
           }
@@ -334,13 +381,24 @@ export type Capability = {
   name: string;
 };
 
-export type About = {
+export type ResearchIndexPage = {
   _id: string;
-  _type: "about";
+  _type: "researchIndexPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   name: string;
+  seo?: SeoObject;
+};
+
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  seo?: SeoObject;
 };
 
 export type Press = {
@@ -359,6 +417,7 @@ export type Site = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  brandName?: string;
   seo?: SeoObject;
 };
 
@@ -531,6 +590,46 @@ export type Service = {
   orderRank?: string;
 };
 
+export type JournalIndexPage = {
+  _id: string;
+  _type: "journalIndexPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  seo?: SeoObject;
+};
+
+export type ProjectsIndexPage = {
+  _id: string;
+  _type: "projectsIndexPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  seo?: SeoObject;
+};
+
+export type ContactPage = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  seo?: SeoObject;
+};
+
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  seo?: SeoObject;
+};
+
 export type Tag = {
   _id: string;
   _type: "tag";
@@ -656,7 +755,12 @@ export type AllSanitySchemaTypes =
   | OrganizationReference
   | ProjectTeamMember
   | PageReference
-  | AboutReference
+  | HomePageReference
+  | ContactPageReference
+  | AboutPageReference
+  | ProjectsIndexPageReference
+  | JournalIndexPageReference
+  | ResearchIndexPageReference
   | JournalReference
   | ProjectReference
   | ServiceReference
@@ -678,7 +782,8 @@ export type AllSanitySchemaTypes =
   | Navigation
   | Process
   | Capability
-  | About
+  | ResearchIndexPage
+  | AboutPage
   | Press
   | Site
   | Page
@@ -690,6 +795,10 @@ export type AllSanitySchemaTypes =
   | Project
   | CapabilityReference
   | Service
+  | JournalIndexPage
+  | ProjectsIndexPage
+  | ContactPage
+  | HomePage
   | Tag
   | MediaTag
   | SanityImagePaletteSwatch
@@ -703,16 +812,28 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "site" && _id == "site"][0]{  name,  seo{    metaTitle,    metaDescription,    ogImage{      asset->{        _id,        url      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[  _type == "site"  && _id == "site"][0]{  name,  brandName,  seo{    metaTitle,    metaDescription,    ogImage{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
 export type SITE_SETTINGS_QUERY_RESULT = {
   name: string;
+  brandName: string | null;
   seo: {
     metaTitle: string | null;
     metaDescription: string | null;
     ogImage: {
+      _type: "image";
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
       asset: {
         _id: string;
         url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
       } | null;
     } | null;
     canonicalUrl: string | null;
@@ -723,6 +844,64 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     twitterCard: "summary_large_image" | "summary" | null;
   } | null;
 } | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: WEBSITE_PAGE_SEO_QUERY
+// Query: *[  _id == $id  && _type == $id][0]{  _id,  seo{    metaTitle,    metaDescription,    ogImage{      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    ogTitle,    ogDescription,    twitterCard  }}
+export type WEBSITE_PAGE_SEO_QUERY_RESULT =
+  | {
+      _id: string;
+      seo: null;
+    }
+  | {
+      _id: string;
+      seo: {
+        metaTitle: string | null;
+        metaDescription: string | null;
+        ogImage: {
+          _type: "image";
+          hotspot: SanityImageHotspot | null;
+          crop: SanityImageCrop | null;
+          asset: {
+            _id: string;
+            url: string;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number;
+                height: number;
+                aspectRatio: number;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+        canonicalUrl: string | null;
+        robotsIndex: "index" | "noindex" | null;
+        robotsFollow: "follow" | "nofollow" | null;
+        ogTitle: string | null;
+        ogDescription: string | null;
+        twitterCard: "summary_large_image" | "summary" | null;
+      } | null;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: WEBSITE_PAGES_SITEMAP_QUERY
+// Query: *[  _id in $ids  && _type == _id]{  _id,  _updatedAt,  seo{    robotsIndex  }}
+export type WEBSITE_PAGES_SITEMAP_QUERY_RESULT = Array<
+  | {
+      _id: string;
+      _updatedAt: string;
+      seo: null;
+    }
+  | {
+      _id: string;
+      _updatedAt: string;
+      seo: {
+        robotsIndex: "index" | "noindex" | null;
+      } | null;
+    }
+>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROJECTS_QUERY
@@ -841,7 +1020,14 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
               href: null;
               blank: null;
               slug: null | string;
-              type: "journal" | "project" | "service";
+              type:
+                | "contactPage"
+                | "homePage"
+                | "journal"
+                | "journalIndexPage"
+                | "project"
+                | "projectsIndexPage"
+                | "service";
             }
           | {
               _key: string;
@@ -976,7 +1162,14 @@ export type SERVICE_QUERY_RESULT = {
               href: null;
               blank: null;
               slug: null | string;
-              type: "journal" | "project" | "service";
+              type:
+                | "contactPage"
+                | "homePage"
+                | "journal"
+                | "journalIndexPage"
+                | "project"
+                | "projectsIndexPage"
+                | "service";
             }
           | {
               _key: string;
@@ -1192,7 +1385,14 @@ export type PROJECT_ITEM_QUERY_RESULT = {
               href: null;
               blank: null;
               slug: null | string;
-              type: "journal" | "project" | "service";
+              type:
+                | "contactPage"
+                | "homePage"
+                | "journal"
+                | "journalIndexPage"
+                | "project"
+                | "projectsIndexPage"
+                | "service";
             }
           | {
               _key: string;
@@ -1413,7 +1613,9 @@ export type REDIRECTS_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '*[_type == "site" && _id == "site"][0]{\n  name,\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
+    '*[\n  _type == "site"\n  && _id == "site"\n][0]{\n  name,\n  brandName,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
+    "*[\n  _id == $id\n  && _type == $id\n][0]{\n  _id,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}": WEBSITE_PAGE_SEO_QUERY_RESULT;
+    "*[\n  _id in $ids\n  && _type == _id\n]{\n  _id,\n  _updatedAt,\n  seo{\n    robotsIndex\n  }\n}": WEBSITE_PAGES_SITEMAP_QUERY_RESULT;
     '*[\n  _type == "project"\n  && defined(slug.current)\n] | order(orderRank asc) {\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
     '*[_type == "journal" && slug.current == $slug][0]{\n  _id,\n  name,\n  slug,\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
