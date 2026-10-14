@@ -1,0 +1,106 @@
+src/sanity/schemaTypes/documents/projectsIndexPageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/lib/metadata.ts
+  s_468b60e98d2ae9::t_18d33a434c27f9 102,179
+  s_468b60e98d2ae9::t_1f819215dfd1a9 3,8-11,162-178,180-195
+  s_468b60e98d2ae9::t_e4d45898fd9d9e 196-198
+src/sanity/structure.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 19-20,27-32
+src/app/(frontend)/page.tsx
+  s_468b60e98d2ae9::t_1f819215dfd1a9 12,22
+src/sanity/schemaTypes/documents/journalIndexPageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/app/sitemap.ts
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 25-43
+  s_468b60e98d2ae9::t_1f819215dfd1a9 3-4,10,20-24,46
+src/sanity/schemaTypes/documents/contactPageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/sanity/schemaTypes/documents/homePageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/components/ui/portable-text-components.tsx
+  s_468b60e98d2ae9::t_0b50218ad92cf8 58-60
+src/lib/website-page-seo.test.ts
+  s_468b60e98d2ae9::t_18d33a434c27f9 29-30,124-133
+  s_468b60e98d2ae9::t_02727b5cc80f9a 1-7,15-28,31-52,61-96,101-123,134-149,190-205,216-232
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 53-60,97-100,150-189,206-215
+  s_468b60e98d2ae9::t_5737210ad72169 8-14
+src/sanity/schemaTypes/index.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 2,4,8,10,17,20,53-58
+src/sanity/singletons.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-17
+CONTEXT.md
+  s_468b60e98d2ae9::t_8a9128669b25ce 106-109
+  s_468b60e98d2ae9::t_8a1d75ca96c76b 90-97
+  s_468b60e98d2ae9::t_13d82304608c71 98-105
+src/sanity/schemaTypes/objects/seoObject.ts
+  s_468b60e98d2ae9::t_552e9ebce6d530 3,83,99
+src/sanity/schemaTypes/documents/siteDoc.ts
+  s_468b60e98d2ae9::t_18d33a434c27f9 18,23-29,42,44,46-47
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 37
+  s_468b60e98d2ae9::t_c61bad3f340d57 30
+src/lib/website-page-sitemap.ts
+  s_468b60e98d2ae9::t_5737210ad72169 5-11,31
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 2
+  s_468b60e98d2ae9::t_1f819215dfd1a9 1,3-4,12-30,32-35
+src/sanity/schemaTypes/helpers/websitePage.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-2,4-5,8-10,12,15-18,24-34,36-37,40-41
+  s_468b60e98d2ae9::t_18d33a434c27f9 19-23
+src/lib/website-page-metadata.ts
+  s_468b60e98d2ae9::t_1f819215dfd1a9 1-3,5-24
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 4
+src/sanity/schemaTypes/documents/researchIndexPageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/sanity/schemaTypes/documents/aboutPageDoc.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-12
+src/sanity/extract.json
+  s_468b60e98d2ae9::t_1d94e688f91b09 382,407-557,758-778,1040-1045,1046-1052,2976,2983,2993-2995,2997-3008,3010-3036,3038-3040,3042,3155-3162,3170-3173,3175-3186,3188-3225,3227-3238,3240-3273
+src/sanity/lib/queries.ts
+  s_468b60e98d2ae9::t_18d33a434c27f9 89
+  s_468b60e98d2ae9::t_1f819215dfd1a9 71,75,82-88,90-112
+package.json
+  s_468b60e98d2ae9::t_1f819215dfd1a9 39
+src/lib/website-pages.ts
+  s_468b60e98d2ae9::t_0b50218ad92cf8 42-45
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 1-41,46-52
+src/sanity/schemaTypes/objects/linkObject.ts
+  s_468b60e98d2ae9::t_0b50218ad92cf8 3,43
+sanity.config.ts
+  s_468b60e98d2ae9::t_25e0b0768e6aeb 16,27-33
+src/app/(frontend)/projects/page.tsx
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 5
+  s_468b60e98d2ae9::t_1f819215dfd1a9 16-18
+src/app/(frontend)/contacts/page.tsx
+  s_468b60e98d2ae9::t_1f819215dfd1a9 7,9-11
+src/app/(frontend)/journal/page.tsx
+  s_468b60e98d2ae9::t_1f819215dfd1a9 16-18
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 5
+docs/adr/0001-fixed-website-page-models.md
+  s_468b60e98d2ae9::t_8ec31bf1fc86da 7-8
+  s_468b60e98d2ae9::t_18d33a434c27f9 9-10
+  s_468b60e98d2ae9::t_5737210ad72169 12-13
+  s_468b60e98d2ae9::t_13d82304608c71 1-6,11
+src/sanity/presentation/resolve.ts
+  s_468b60e98d2ae9::t_f8f5b6b87eb3c0 5
+  s_468b60e98d2ae9::t_0b50218ad92cf8 9-18
+src/sanity/types.ts
+  s_468b60e98d2ae9::t_1d94e688f91b09 83,87-122,166-171,208-209,210,420,593-612,613-630,758-763,798-799,800-801,823-825,829-836,848-905,1024-1025,1027,1029,1166-1167,1169,1171,1389-1390,1392,1394,1617-1618
+  s_468b60e98d2ae9::t_211e5c75ffcdfd 815,818,1616
+bun.lock
+  s_468b60e98d2ae9::t_75e46b35c10e36 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "95b27b6b1bfa3639a48b21d9e7f11bc7a7b8e329",
+  "prompts": {},
+  "sessions": {
+    "s_468b60e98d2ae9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13b7f-5865-7901-86db-bf1a8745d7b7",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
