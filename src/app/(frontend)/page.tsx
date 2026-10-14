@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  EcosystemRestorationJsonLd,
-  NatureBasedSolutionsJsonLd,
-  SoilHealthJsonLd,
-} from "@/components/shared/domain-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import { getSiteSettings } from "@/lib/site-settings";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { getSanityRequestState } from "@/sanity/lib/live";
+import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
 import Customers from "./_sections/customers";
 import HomeHero from "./_sections/home-hero";
 import Logos from "./_sections/logos";
@@ -20,23 +14,7 @@ import Services from "./_sections/services";
 import SoilRevolution from "./_sections/soil-revolution";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { fetchOptions, isDraftMode } = await getSanityRequestState();
-  const siteSettings = await getSiteSettings(fetchOptions);
-
-  return generateMetadataHelper({
-    title: siteSettings?.seo?.metaTitle || siteSettings?.name || "Terrapreta",
-    description: siteSettings?.seo?.metaDescription || undefined,
-    image: siteSettings?.seo?.ogImage ?? undefined,
-    url: "/",
-    siteSettings,
-    canonicalUrl: siteSettings?.seo?.canonicalUrl ?? undefined,
-    robotsIndex: siteSettings?.seo?.robotsIndex ?? undefined,
-    robotsFollow: siteSettings?.seo?.robotsFollow ?? undefined,
-    ogTitle: siteSettings?.seo?.ogTitle ?? undefined,
-    ogDescription: siteSettings?.seo?.ogDescription ?? undefined,
-    twitterCard: siteSettings?.seo?.twitterCard ?? undefined,
-    isDraftMode,
-  });
+  return getWebsitePageMetadata("homePage");
 }
 
 interface SectionWrapperProps {
@@ -60,8 +38,6 @@ function SectionWrapper({
   );
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
-
 export default function Home() {
   return (
     <>
@@ -70,14 +46,11 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Terrapreta",
-          url: baseUrl,
+          url: SITE_DEFAULTS.baseUrl,
           description: "Soil-based solutions for ecosystem regeneration",
         }}
         id="website-json-ld"
       />
-      <SoilHealthJsonLd />
-      <EcosystemRestorationJsonLd />
-      <NatureBasedSolutionsJsonLd />
       <HomeHero />
       <div className="scroll-mt-16 space-y-0" id="learn-more">
         <SectionWrapper isFirstItem>
@@ -89,9 +62,6 @@ export default function Home() {
         <SectionWrapper>
           <Services />
         </SectionWrapper>
-        {/*       <SectionWrapper>
-          <Context />
-        </SectionWrapper> */}
         <SectionWrapper>
           <Customers />
         </SectionWrapper>
@@ -100,7 +70,6 @@ export default function Home() {
         </SectionWrapper>
         <SectionWrapper>
           <Logos />
-          {/* <ContactForm /> */}
           <div className="flex w-full items-center justify-center">
             <Link className={buttonVariants()} href="/contacts">
               Get in contact

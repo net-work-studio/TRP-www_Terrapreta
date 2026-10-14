@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { type PortableTextComponents, stegaClean } from "next-sanity";
+import { isLiveWebsitePageId, WEBSITE_PAGES } from "@/lib/website-pages";
 import { PortableImage } from "./portable-image";
 import {
   PortableTextHeadingFour,
@@ -10,18 +11,17 @@ import {
 /**
  * Map document types to their URL paths
  */
-function getPathForType(type: string): string {
-  const cleanType = stegaClean(type);
-  const pathMap: Record<string, string> = {
-    journal: "/journal",
-    project: "/projects",
-    service: "/services",
-    research: "/research",
-    press: "/press",
-    about: "/about",
-    page: "",
-  };
-  return pathMap[cleanType] || "";
+function getPathForType(type: string): string | undefined {
+  switch (type) {
+    case "journal":
+      return "/journal";
+    case "project":
+      return "/projects";
+    case "service":
+      return "/services";
+    default:
+      return undefined;
+  }
 }
 
 /**
@@ -55,11 +55,18 @@ export const portableTextComponents: PortableTextComponents = {
     internalLink: ({ children, value }) => {
       const slug = stegaClean(value?.slug);
       const type = stegaClean(value?.type);
-      if (!(slug && type)) {
+      if (!type) {
         return <span>{children}</span>;
       }
+      const fixedPath = isLiveWebsitePageId(type)
+        ? WEBSITE_PAGES[type].path
+        : undefined;
       const basePath = getPathForType(type);
-      const href = basePath ? `${basePath}/${slug}` : `/${slug}`;
+      const detailPath = basePath && slug ? `${basePath}/${slug}` : undefined;
+      const href = fixedPath ?? detailPath;
+      if (!href) {
+        return <span>{children}</span>;
+      }
       return (
         <Link
           className="underline underline-offset-4 transition-colors hover:text-stone-400"

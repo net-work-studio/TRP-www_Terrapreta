@@ -8,21 +8,21 @@ const heroImage =
 
 export default function HomeHero() {
   return (
-    <div className="h-[90vh] w-full">
+    <div className="h-[90svh] w-full">
       <div className="relative flex h-full flex-col items-center justify-center">
         <div className="z-10 flex flex-col items-center justify-center gap-8">
-          <hgroup className="mx-auto flex max-w-3xl starting:translate-y-4 translate-y-0 flex-col items-center justify-center gap-2.5 text-center opacity-100 starting:opacity-0 transition-all duration-800">
+          <hgroup className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-2.5 text-center">
             <h1 className="text-balance font-bold text-4xl md:text-5xl lg:text-6xl">
               Regenerating ecosystems from the <em>Soil Up</em>
             </h1>
             <p className="text-pretty text-2xl">
-              Developing places for nature, people and climate
+              Developing projects for nature, people and climate
             </p>
           </hgroup>
           <Link
             className={buttonVariants({
               className:
-                "opacity-100 starting:opacity-0 transition-opacity duration-1000",
+                "motion-safe:starting:opacity-0 motion-safe:transition-opacity motion-safe:duration-200",
               variant: "brand",
             })}
             href="#learn-more"
@@ -30,13 +30,13 @@ export default function HomeHero() {
             Learn More
           </Link>
         </div>
-        <div className="absolute right-0 bottom-0 left-0 z-10 flex animate-bounce flex-col items-center justify-center gap-2.5 pb-5 opacity-100 starting:opacity-0 transition-opacity duration-2000">
+        <div className="absolute right-0 bottom-0 left-0 z-10 flex animate-bounce flex-col items-center justify-center gap-2.5 pb-5 motion-safe:starting:opacity-0 motion-safe:transition-opacity motion-safe:duration-200 motion-reduce:animate-none">
           <p>Scroll to learn more</p>
           <ArrowDownIcon className="h-4 w-4" />
         </div>
         <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/30" />
         <Image
-          alt="Hero"
+          alt="Two researchers crouching in a dense, shaded woodland to examine the forest floor"
           className="z-0 h-full w-full object-cover"
           fill
           preload

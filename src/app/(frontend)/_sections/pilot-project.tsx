@@ -13,7 +13,7 @@ export default function PilotProject() {
       <div className="relative h-full w-full rounded md:w-1/2">
         <AspectRatio ratio={5 / 4}>
           <Image
-            alt="Pilot Project Image"
+            alt="Aerial view of the disused brick gasworks buildings and chimney of Bovisa, surrounded by the spontaneous forest that grew around them"
             className="h-full w-full rounded object-cover object-center"
             fill
             quality={75}

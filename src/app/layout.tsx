@@ -3,6 +3,7 @@ import "./globals.css";
 import PlausibleProvider from "next-plausible";
 import type { ScriptHTMLAttributes } from "react";
 import { JsonLd } from "@/components/shared/json-ld";
+import { SITE_DEFAULTS } from "@/lib/constants";
 
 interface LegacyPlausibleScriptProps
   extends ScriptHTMLAttributes<HTMLScriptElement> {
@@ -12,14 +13,14 @@ interface LegacyPlausibleScriptProps
 
 // The self-hosted legacy tracker still reads attributes instead of init options.
 const LEGACY_PLAUSIBLE_SCRIPT_PROPS: LegacyPlausibleScriptProps = {
-  "data-domain": "terrapreta.it",
+  "data-domain": SITE_DEFAULTS.analyticsDomain,
   "data-api": "/api/event",
 };
 
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 
 export const metadata: Metadata = generateMetadataHelper({
-  title: "Terrapreta — Soil-based Solutions",
+  title: SITE_DEFAULTS.name,
   description:
     "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
 });
@@ -29,7 +30,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
+  const { baseUrl } = SITE_DEFAULTS;
 
   return (
     <html
@@ -54,7 +55,7 @@ export default function RootLayout({
           type="font/woff2"
         />
       </head>
-      <body className="flex h-screen flex-col justify-between bg-stone-950 font-light font-sans text-stone-50 antialiased">
+      <body className="flex min-h-dvh flex-col justify-between bg-stone-950 font-light font-sans text-stone-50 antialiased">
         <JsonLd
           data={{
             "@context": "https://schema.org",
@@ -87,7 +88,7 @@ export default function RootLayout({
             },
             contactPoint: {
               "@type": "ContactPoint",
-              email: "mail@terrapreta.it",
+              email: SITE_DEFAULTS.email,
               contactType: "Customer Service",
             },
           }}

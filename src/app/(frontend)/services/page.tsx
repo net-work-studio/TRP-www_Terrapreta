@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { getStaticPageMetadata } from "@/lib/website-page-metadata";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -12,11 +12,13 @@ import {
 import { SERVICES_QUERY } from "@/sanity/lib/queries";
 import type { SERVICES_QUERY_RESULT } from "@/sanity/types";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Services",
-  description: "Discover our services.",
-  url: "/services",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getStaticPageMetadata({
+    title: "Services",
+    description: "Discover our services.",
+    url: "/services",
+  });
+}
 
 function ServicesContent({
   services,

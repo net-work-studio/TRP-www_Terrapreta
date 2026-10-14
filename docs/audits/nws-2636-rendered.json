@@ -1,0 +1,1622 @@
+{
+  "date": "2026-10-14",
+  "baselineCommit": "559b70ac969a2ba6e6721b97e78d8e64130ee005",
+  "environment": "Local Next.js production server using the existing production dataset, without CMS mutations",
+  "before": [
+    {
+      "path": "/",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/",
+      "title": "Terrapreta",
+      "titleLength": 10,
+      "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+      "canonical": "https://terrapreta.it/",
+      "meta": [
+        ["robots", "index, follow"],
+        ["og:title", "Terrapreta"],
+        [
+          "og:description",
+          "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate."
+        ],
+        ["og:url", "https://terrapreta.it/"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Terrapreta"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Terrapreta"],
+        [
+          "twitter:description",
+          "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate."
+        ],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Terrapreta",
+          "url": "https://terrapreta.it",
+          "description": "Soil-based solutions for ecosystem regeneration"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTerm",
+          "name": "Soil Health",
+          "description": "The continued capacity of soil to function as a vital living ecosystem that sustains plants, animals, and humans. Healthy soil filters water, cycles nutrients, and supports biodiversity.",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "Environmental Science Terminology"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTerm",
+          "name": "Ecosystem Restoration",
+          "description": "The process of assisting the recovery of an ecosystem that has been degraded, damaged, or destroyed. It involves returning a natural area to a self-sustaining condition.",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "Environmental Science Terminology"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTerm",
+          "name": "Nature-Based Solutions",
+          "description": "Actions to protect, sustainably manage, and restore natural or modified ecosystems that address societal challenges effectively and adaptively, simultaneously providing human well-being and biodiversity benefits.",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "Environmental Science Terminology"
+          }
+        }
+      ]
+    },
+    {
+      "path": "/contacts",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/contacts",
+      "title": "Contacts — Terrapreta",
+      "titleLength": 21,
+      "description": "Get in touch with Terrapreta.",
+      "canonical": "https://terrapreta.it/contacts",
+      "meta": [
+        ["robots", "index, follow"],
+        ["og:title", "Contacts — Terrapreta"],
+        ["og:description", "Get in touch with Terrapreta."],
+        ["og:url", "https://terrapreta.it/contacts"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Contacts"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Contacts — Terrapreta"],
+        ["twitter:description", "Get in touch with Terrapreta."],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/projects",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/projects",
+      "title": "Projects — Terrapreta",
+      "titleLength": 21,
+      "description": "Explore our latest projects.",
+      "canonical": "https://terrapreta.it/projects",
+      "meta": [
+        ["robots", "index, follow"],
+        ["og:title", "Projects — Terrapreta"],
+        ["og:description", "Explore our latest projects."],
+        ["og:url", "https://terrapreta.it/projects"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Projects"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Projects — Terrapreta"],
+        ["twitter:description", "Explore our latest projects."],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/journal",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/journal",
+      "title": "Journal — Terrapreta",
+      "titleLength": 20,
+      "description": "Read our latest journal entries.",
+      "canonical": "https://terrapreta.it/journal",
+      "meta": [
+        ["robots", "index, follow"],
+        ["og:title", "Journal — Terrapreta"],
+        ["og:description", "Read our latest journal entries."],
+        ["og:url", "https://terrapreta.it/journal"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Journal"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Journal — Terrapreta"],
+        ["twitter:description", "Read our latest journal entries."],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/services",
+      "title": "Services — Terrapreta",
+      "titleLength": 21,
+      "description": "Discover our services.",
+      "canonical": "https://terrapreta.it/services",
+      "meta": [
+        ["og:title", "Services — Terrapreta"],
+        ["og:description", "Discover our services."],
+        ["og:url", "https://terrapreta.it/services"],
+        ["og:site_name", "Terrapreta"],
+        ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Services"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Services — Terrapreta"],
+        ["twitter:description", "Discover our services."],
+        ["twitter:image", "https://terrapreta.it/images/terrapreta_hero.webp"]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/impressum",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/impressum",
+      "title": "Impressum — Terrapreta",
+      "titleLength": 22,
+      "description": "Legal information about Terrapreta.",
+      "canonical": "https://terrapreta.it/impressum",
+      "meta": [
+        ["og:title", "Impressum — Terrapreta"],
+        ["og:description", "Legal information about Terrapreta."],
+        ["og:url", "https://terrapreta.it/impressum"],
+        ["og:site_name", "Terrapreta"],
+        ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Impressum"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Impressum — Terrapreta"],
+        ["twitter:description", "Legal information about Terrapreta."],
+        ["twitter:image", "https://terrapreta.it/images/terrapreta_hero.webp"]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/projects/la-goccia-urban-forest",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/projects/la-goccia-urban-forest",
+      "title": "La Goccia Urban Forest — Terrapreta",
+      "titleLength": 35,
+      "description": "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions.",
+      "canonical": "https://terrapreta.it/projects/la-goccia-urban-forest",
+      "meta": [
+        ["robots", "index, follow"],
+        ["og:title", "La Goccia Urban Forest — Terrapreta"],
+        [
+          "og:description",
+          "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions."
+        ],
+        ["og:url", "https://terrapreta.it/projects/la-goccia-urban-forest"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "La Goccia Urban Forest"],
+        ["og:type", "article"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "La Goccia Urban Forest — Terrapreta"],
+        [
+          "twitter:description",
+          "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions."
+        ],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Project",
+          "name": "La Goccia Urban Forest",
+          "description": "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions.",
+          "location": "Milan, Italy",
+          "status": "in-progress",
+          "image": "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,200,2400,1200&w=1200&h=600&q=75&auto=format"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://terrapreta.it/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Projects",
+              "item": "https://terrapreta.it/projects"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "La Goccia Urban Forest",
+              "item": "https://terrapreta.it/projects/la-goccia-urban-forest"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/services/brownfield-restoration",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/services/brownfield-restoration",
+      "title": "Brownfield Restoration — Terrapreta",
+      "titleLength": 35,
+      "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets",
+      "canonical": "https://terrapreta.it/services/brownfield-restoration",
+      "meta": [
+        ["og:title", "Brownfield Restoration — Terrapreta"],
+        [
+          "og:description",
+          "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+        ],
+        ["og:url", "https://terrapreta.it/services/brownfield-restoration"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,213,3000,1575&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Brownfield Restoration"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Brownfield Restoration — Terrapreta"],
+        [
+          "twitter:description",
+          "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+        ],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,213,3000,1575&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://terrapreta.it/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://terrapreta.it/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Brownfield Restoration",
+              "item": "https://terrapreta.it/services/brownfield-restoration"
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Brownfield Restoration",
+          "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets",
+          "provider": {
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it"
+          },
+          "serviceType": "Environmental Consulting",
+          "areaServed": {
+            "@type": "Place",
+            "name": "Europe"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Terrapreta Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Brownfield Restoration",
+                  "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+                }
+              }
+            ]
+          },
+          "image": "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,250,3000,1500&w=1200&h=600&q=75&auto=format"
+        }
+      ]
+    },
+    {
+      "path": "/journal/vuoto-futuro",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/journal/vuoto-futuro",
+      "title": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta",
+      "titleLength": 94,
+      "description": "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan.",
+      "canonical": "https://terrapreta.it/journal/vuoto-futuro",
+      "meta": [
+        ["robots", "index, follow"],
+        [
+          "og:title",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+        ],
+        [
+          "og:description",
+          "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+        ],
+        ["og:url", "https://terrapreta.it/journal/vuoto-futuro"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        [
+          "og:image:alt",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration"
+        ],
+        ["og:type", "article"],
+        ["twitter:card", "summary_large_image"],
+        [
+          "twitter:title",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+        ],
+        [
+          "twitter:description",
+          "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+        ],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+          "description": "Terrapreta participated in “Observatory for a New Industrial Re-Use” at the Ex Lanificio Carotti in Fermignano, organized by Vuoto Futuro and curated by Il Bugiardino.",
+          "datePublished": "2024-09-16",
+          "image": "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,200,2400,1200&w=1200&h=600&q=75&auto=format",
+          "locationCreated": "Fermignano (Italy)",
+          "author": {
+            "@type": "Organization",
+            "name": "Terrapreta"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Terrapreta"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://terrapreta.it/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Journal",
+              "item": "https://terrapreta.it/journal"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+              "item": "https://terrapreta.it/journal/vuoto-futuro"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/about",
+      "status": 404,
+      "finalUrl": "http://localhost:3100/about",
+      "title": "Page Not Found — Terrapreta",
+      "titleLength": 27,
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "canonical": "https://terrapreta.it/404",
+      "meta": [
+        ["robots", "noindex"],
+        ["robots", "noindex, nofollow"],
+        ["og:title", "Page Not Found — Terrapreta"],
+        [
+          "og:description",
+          "The page you're looking for doesn't exist or has been moved."
+        ],
+        ["og:url", "https://terrapreta.it/404"],
+        ["og:site_name", "Terrapreta"],
+        ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Page Not Found"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Page Not Found — Terrapreta"],
+        [
+          "twitter:description",
+          "The page you're looking for doesn't exist or has been moved."
+        ],
+        ["twitter:image", "https://terrapreta.it/images/terrapreta_hero.webp"]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/research",
+      "status": 404,
+      "finalUrl": "http://localhost:3100/research",
+      "title": "Page Not Found — Terrapreta",
+      "titleLength": 27,
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "canonical": "https://terrapreta.it/404",
+      "meta": [
+        ["robots", "noindex"],
+        ["robots", "noindex, nofollow"],
+        ["og:title", "Page Not Found — Terrapreta"],
+        [
+          "og:description",
+          "The page you're looking for doesn't exist or has been moved."
+        ],
+        ["og:url", "https://terrapreta.it/404"],
+        ["og:site_name", "Terrapreta"],
+        ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:alt", "Page Not Found"],
+        ["og:type", "website"],
+        ["twitter:card", "summary_large_image"],
+        ["twitter:title", "Page Not Found — Terrapreta"],
+        [
+          "twitter:description",
+          "The page you're looking for doesn't exist or has been moved."
+        ],
+        ["twitter:image", "https://terrapreta.it/images/terrapreta_hero.webp"]
+      ],
+      "schemas": []
+    },
+    {
+      "path": "/en/journal/vuoto-futuro",
+      "status": 200,
+      "finalUrl": "http://localhost:3100/journal/vuoto-futuro",
+      "title": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta",
+      "titleLength": 94,
+      "description": "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan.",
+      "canonical": "https://terrapreta.it/journal/vuoto-futuro",
+      "meta": [
+        ["robots", "index, follow"],
+        [
+          "og:title",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+        ],
+        [
+          "og:description",
+          "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+        ],
+        ["og:url", "https://terrapreta.it/journal/vuoto-futuro"],
+        ["og:site_name", "Terrapreta"],
+        [
+          "og:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ],
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        [
+          "og:image:alt",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration"
+        ],
+        ["og:type", "article"],
+        ["twitter:card", "summary_large_image"],
+        [
+          "twitter:title",
+          "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+        ],
+        [
+          "twitter:description",
+          "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+        ],
+        [
+          "twitter:image",
+          "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+        ]
+      ],
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+          "description": "Terrapreta participated in “Observatory for a New Industrial Re-Use” at the Ex Lanificio Carotti in Fermignano, organized by Vuoto Futuro and curated by Il Bugiardino.",
+          "datePublished": "2024-09-16",
+          "image": "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,200,2400,1200&w=1200&h=600&q=75&auto=format",
+          "locationCreated": "Fermignano (Italy)",
+          "author": {
+            "@type": "Organization",
+            "name": "Terrapreta"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Terrapreta"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://terrapreta.it/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Journal",
+              "item": "https://terrapreta.it/journal"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+              "item": "https://terrapreta.it/journal/vuoto-futuro"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "after": {
+    "pages": [
+      {
+        "path": "/",
+        "status": 200,
+        "title": "Terrapreta",
+        "titleLength": 10,
+        "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+        "canonical": "https://terrapreta.it/",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Terrapreta"],
+          [
+            "og:description",
+            "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate."
+          ],
+          ["og:url", "https://terrapreta.it/"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Terrapreta"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Terrapreta"],
+          [
+            "twitter:description",
+            "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate."
+          ],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Terrapreta"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "description": "Soil-based solutions for ecosystem regeneration"
+          }
+        ]
+      },
+      {
+        "path": "/contacts",
+        "status": 200,
+        "title": "Contacts — Terrapreta",
+        "titleLength": 21,
+        "description": "Get in touch with Terrapreta.",
+        "canonical": "https://terrapreta.it/contacts",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Contacts — Terrapreta"],
+          ["og:description", "Get in touch with Terrapreta."],
+          ["og:url", "https://terrapreta.it/contacts"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Contacts"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Contacts — Terrapreta"],
+          ["twitter:description", "Get in touch with Terrapreta."],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Contacts"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/projects",
+        "status": 200,
+        "title": "Projects — Terrapreta",
+        "titleLength": 21,
+        "description": "Explore our latest projects.",
+        "canonical": "https://terrapreta.it/projects",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Projects — Terrapreta"],
+          ["og:description", "Explore our latest projects."],
+          ["og:url", "https://terrapreta.it/projects"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Projects"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Projects — Terrapreta"],
+          ["twitter:description", "Explore our latest projects."],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Projects"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/journal",
+        "status": 200,
+        "title": "Journal — Terrapreta",
+        "titleLength": 20,
+        "description": "Read our latest journal entries.",
+        "canonical": "https://terrapreta.it/journal",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Journal — Terrapreta"],
+          ["og:description", "Read our latest journal entries."],
+          ["og:url", "https://terrapreta.it/journal"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Journal"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Journal — Terrapreta"],
+          ["twitter:description", "Read our latest journal entries."],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Journal"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/services",
+        "status": 200,
+        "title": "Services — Terrapreta",
+        "titleLength": 21,
+        "description": "Discover our services.",
+        "canonical": "https://terrapreta.it/services",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Services — Terrapreta"],
+          ["og:description", "Discover our services."],
+          ["og:url", "https://terrapreta.it/services"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Services"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Services — Terrapreta"],
+          ["twitter:description", "Discover our services."],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Services"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/impressum",
+        "status": 200,
+        "title": "Impressum — Terrapreta",
+        "titleLength": 22,
+        "description": "Legal information about Terrapreta.",
+        "canonical": "https://terrapreta.it/impressum",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Impressum — Terrapreta"],
+          ["og:description", "Legal information about Terrapreta."],
+          ["og:url", "https://terrapreta.it/impressum"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Impressum"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Impressum — Terrapreta"],
+          ["twitter:description", "Legal information about Terrapreta."],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Impressum"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/projects/la-goccia-urban-forest",
+        "status": 200,
+        "title": "La Goccia Urban Forest — Terrapreta",
+        "titleLength": 35,
+        "description": "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions.",
+        "canonical": "https://terrapreta.it/projects/la-goccia-urban-forest",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "La Goccia Urban Forest — Terrapreta"],
+          [
+            "og:description",
+            "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions."
+          ],
+          ["og:url", "https://terrapreta.it/projects/la-goccia-urban-forest"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "La Goccia Urban Forest"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "La Goccia Urban Forest — Terrapreta"],
+          [
+            "twitter:description",
+            "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions."
+          ],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "La Goccia Urban Forest"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "name": "La Goccia Urban Forest",
+            "description": "Eighteen hectares of spontaneous forest on Milan's former gasworks, and one of the largest contaminated sites in Europe to be restored with Nature-based Solutions.",
+            "url": "https://terrapreta.it/projects/la-goccia-urban-forest",
+            "contentLocation": {
+              "@type": "Place",
+              "name": "Milan, Italy"
+            },
+            "image": "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?w=1200&q=75&auto=format"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://terrapreta.it/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Projects",
+                "item": "https://terrapreta.it/projects"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "La Goccia Urban Forest",
+                "item": "https://terrapreta.it/projects/la-goccia-urban-forest"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "/services/brownfield-restoration",
+        "status": 200,
+        "title": "Brownfield Restoration — Terrapreta",
+        "titleLength": 35,
+        "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets",
+        "canonical": "https://terrapreta.it/services/brownfield-restoration",
+        "meta": [
+          ["robots", "index, follow"],
+          ["og:title", "Brownfield Restoration — Terrapreta"],
+          [
+            "og:description",
+            "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+          ],
+          ["og:url", "https://terrapreta.it/services/brownfield-restoration"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,213,3000,1575&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          ["og:image:alt", "Brownfield Restoration"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Brownfield Restoration — Terrapreta"],
+          [
+            "twitter:description",
+            "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+          ],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,213,3000,1575&w=1200&h=630&q=75&auto=format"
+          ],
+          ["twitter:image:alt", "Brownfield Restoration"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://terrapreta.it/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://terrapreta.it/services"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Brownfield Restoration",
+                "item": "https://terrapreta.it/services/brownfield-restoration"
+              }
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "url": "https://terrapreta.it/services/brownfield-restoration",
+            "name": "Brownfield Restoration",
+            "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets",
+            "provider": {
+              "@type": "Organization",
+              "name": "Terrapreta",
+              "url": "https://terrapreta.it"
+            },
+            "serviceType": "Environmental Consulting",
+            "areaServed": {
+              "@type": "Place",
+              "name": "Europe"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Terrapreta Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Brownfield Restoration",
+                    "description": "Complex redevelopment projects on brownfield sites through natural remediation systems and strategies to enhance existing assets"
+                  }
+                }
+              ]
+            },
+            "image": "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?w=1200&q=75&auto=format"
+          }
+        ]
+      },
+      {
+        "path": "/journal/vuoto-futuro",
+        "status": 200,
+        "title": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta",
+        "titleLength": 94,
+        "description": "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan.",
+        "canonical": "https://terrapreta.it/journal/vuoto-futuro",
+        "meta": [
+          ["robots", "index, follow"],
+          [
+            "og:title",
+            "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+          ],
+          [
+            "og:description",
+            "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+          ],
+          ["og:url", "https://terrapreta.it/journal/vuoto-futuro"],
+          ["og:site_name", "Terrapreta"],
+          [
+            "og:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          ["og:image:width", "1200"],
+          ["og:image:height", "630"],
+          [
+            "og:image:alt",
+            "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration"
+          ],
+          ["og:type", "article"],
+          ["twitter:card", "summary_large_image"],
+          [
+            "twitter:title",
+            "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration — Terrapreta"
+          ],
+          [
+            "twitter:description",
+            "Notes from Vuoto Futuro, an exhibition on adaptive reuse and research practices, including Terrapreta’s contribution linked to Osservatorio La Goccia in Milan."
+          ],
+          [
+            "twitter:image",
+            "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format"
+          ],
+          [
+            "twitter:image:alt",
+            "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration"
+          ]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+            "url": "https://terrapreta.it/journal/vuoto-futuro",
+            "dateModified": "2026-07-15T10:58:10Z",
+            "description": "Terrapreta participated in “Observatory for a New Industrial Re-Use” at the Ex Lanificio Carotti in Fermignano, organized by Vuoto Futuro and curated by Il Bugiardino.",
+            "datePublished": "2024-09-16",
+            "image": "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?w=1200&q=75&auto=format",
+            "locationCreated": {
+              "@type": "Place",
+              "name": "Fermignano (Italy)"
+            },
+            "author": {
+              "@type": "Organization",
+              "name": "Terrapreta"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Terrapreta"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://terrapreta.it/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Journal",
+                "item": "https://terrapreta.it/journal"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Terrapreta at Vuoto Futuro, an exhibition on Adaptive Reuse and Soil Regeneration",
+                "item": "https://terrapreta.it/journal/vuoto-futuro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "/about",
+        "status": 404,
+        "title": "Page Not Found — Terrapreta",
+        "titleLength": 27,
+        "description": "The page you're looking for doesn't exist or has been moved.",
+        "canonical": "https://terrapreta.it/404",
+        "meta": [
+          ["robots", "noindex"],
+          ["robots", "noindex, nofollow"],
+          ["og:title", "Page Not Found — Terrapreta"],
+          [
+            "og:description",
+            "The page you're looking for doesn't exist or has been moved."
+          ],
+          ["og:url", "https://terrapreta.it/404"],
+          ["og:site_name", "Terrapreta"],
+          ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+          ["og:image:alt", "Page Not Found"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Page Not Found — Terrapreta"],
+          [
+            "twitter:description",
+            "The page you're looking for doesn't exist or has been moved."
+          ],
+          [
+            "twitter:image",
+            "https://terrapreta.it/images/terrapreta_hero.webp"
+          ],
+          ["twitter:image:alt", "Page Not Found"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      },
+      {
+        "path": "/research",
+        "status": 404,
+        "title": "Page Not Found — Terrapreta",
+        "titleLength": 27,
+        "description": "The page you're looking for doesn't exist or has been moved.",
+        "canonical": "https://terrapreta.it/404",
+        "meta": [
+          ["robots", "noindex"],
+          ["robots", "noindex, nofollow"],
+          ["og:title", "Page Not Found — Terrapreta"],
+          [
+            "og:description",
+            "The page you're looking for doesn't exist or has been moved."
+          ],
+          ["og:url", "https://terrapreta.it/404"],
+          ["og:site_name", "Terrapreta"],
+          ["og:image", "https://terrapreta.it/images/terrapreta_hero.webp"],
+          ["og:image:alt", "Page Not Found"],
+          ["og:type", "website"],
+          ["twitter:card", "summary_large_image"],
+          ["twitter:title", "Page Not Found — Terrapreta"],
+          [
+            "twitter:description",
+            "The page you're looking for doesn't exist or has been moved."
+          ],
+          [
+            "twitter:image",
+            "https://terrapreta.it/images/terrapreta_hero.webp"
+          ],
+          ["twitter:image:alt", "Page Not Found"]
+        ],
+        "schemas": [
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Terrapreta",
+            "url": "https://terrapreta.it",
+            "logo": "https://terrapreta.it/terrapreta-logo.png",
+            "description": "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
+            "sameAs": [
+              "https://www.linkedin.com/company/terrapreta-it/",
+              "https://www.instagram.com/terrapreta_it/"
+            ],
+            "knowsAbout": [
+              "soil regeneration",
+              "ecosystem restoration",
+              "nature-based solutions",
+              "sustainable development",
+              "brownfield restoration",
+              "soil health"
+            ],
+            "areaServed": "Europe",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Via Valparaiso 11",
+              "addressLocality": "Milano",
+              "addressRegion": "MI",
+              "postalCode": "20144",
+              "addressCountry": "IT"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "mail@terrapreta.it",
+              "contactType": "Customer Service"
+            }
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "src": "https://cdn.sanity.io/images/wj2okvbq/production/eecceff4dc7444ca6289425e2b06dc94610ea58e-2400x1602.webp?rect=0,171,2400,1260&w=1200&h=630&q=75&auto=format",
+        "width": 1200,
+        "height": 630
+      },
+      {
+        "src": "https://cdn.sanity.io/images/wj2okvbq/production/bf5359dbaaabe2a723a66fd982db42a7196a52af-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format",
+        "width": 1200,
+        "height": 630
+      },
+      {
+        "src": "https://cdn.sanity.io/images/wj2okvbq/production/70db1c703d7f9f4d6c5b95f6deb1fe88f599b440-3000x1999.webp?rect=0,213,3000,1575&w=1200&h=630&q=75&auto=format",
+        "width": 1200,
+        "height": 630
+      },
+      {
+        "src": "https://cdn.sanity.io/images/wj2okvbq/production/206f6405712c77e44c888f872b2541666fd45b7a-2400x1600.webp?rect=0,170,2400,1260&w=1200&h=630&q=75&auto=format",
+        "width": 1200,
+        "height": 630
+      },
+      {
+        "src": "https://terrapreta.it/images/terrapreta_hero.webp",
+        "width": 2400,
+        "height": 1602
+      }
+    ],
+    "sitemap": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://terrapreta.it/</loc>\n<changefreq>daily</changefreq>\n<priority>1</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/contacts</loc>\n<changefreq>monthly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/projects</loc>\n<changefreq>weekly</changefreq>\n<priority>0.9</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal</loc>\n<changefreq>weekly</changefreq>\n<priority>0.9</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/services</loc>\n<changefreq>weekly</changefreq>\n<priority>0.9</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/impressum</loc>\n<changefreq>yearly</changefreq>\n<priority>0.3</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/projects/sarcidano-lakes</loc>\n<lastmod>2026-08-16T14:55:15.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/projects/la-goccia-urban-forest</loc>\n<lastmod>2026-08-16T14:55:07.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/projects/a2a-garden</loc>\n<lastmod>2026-08-16T13:21:33.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/terrapreta-five-year-journey-with-master-s-students-at-universita-cattolica</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/come-gocce-ethnographic-residency-with-students-in-la-goccia-forest</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/first-osservatorio-la-goccia-plenary-workshop-at-boscoincitta-milan</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/terrapreta-at-the-nicole-spring-workshop-in-bagnoli</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/eui-goccia</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/vuoto-futuro</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/soil-assessment-parco-baden-powell-milan-support-urban-nature-based-solutions</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/bovisa-art-district-luar</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/journal/park-stage-landscape-restoration-via-soil-based-solutions</loc>\n<lastmod>2026-07-15T10:58:10.000Z</lastmod>\n<changefreq>weekly</changefreq>\n<priority>0.8</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/services/data-driven-urban-planning</loc>\n<lastmod>2026-08-05T14:45:32.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/services/brownfield-restoration</loc>\n<lastmod>2026-08-05T14:41:04.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/services/nbs-landscape-design</loc>\n<lastmod>2026-08-05T14:41:04.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n<url>\n<loc>https://terrapreta.it/services/soil-health-strategies</loc>\n<lastmod>2026-08-05T14:45:31.000Z</lastmod>\n<changefreq>monthly</changefreq>\n<priority>0.7</priority>\n</url>\n</urlset>\n",
+    "robots": "User-Agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: https://terrapreta.it/sitemap.xml\n",
+    "redirect": {
+      "status": 200,
+      "url": "http://localhost:3101/journal/vuoto-futuro"
+    }
+  },
+  "cacheInvalidation": {
+    "method": "Actual SanityLive Next Server Action called with production query tags",
+    "actionStatus": 200,
+    "actionResult": "refresh",
+    "servicesBefore": "HIT",
+    "servicesAfter": "STALE"
+  },
+  "sitemapSmoke": {
+    "urls": 22,
+    "status": 200,
+    "redirected": 0
+  },
+  "previewSmoke": {
+    "routes": [
+      "/",
+      "/contacts",
+      "/services",
+      "/impressum",
+      "/projects/la-goccia-urban-forest",
+      "/services/brownfield-restoration",
+      "/journal/vuoto-futuro"
+    ],
+    "status": 200,
+    "robots": "noindex, nofollow"
+  }
+}

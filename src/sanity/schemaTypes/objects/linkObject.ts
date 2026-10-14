@@ -1,5 +1,6 @@
 import { LinkIcon } from "@sanity/icons/Link";
 import { defineField, defineType } from "sanity";
+import { WEBSITE_PAGES } from "@/lib/website-pages";
 
 export const linkObject = defineType({
   type: "object",
@@ -39,7 +40,7 @@ export const linkObject = defineType({
       title: "Page",
       to: [
         { type: "page" },
-        { type: "about" },
+        ...Object.keys(WEBSITE_PAGES).map((type) => ({ type })),
         { type: "journal" },
         { type: "project" },
         { type: "service" },

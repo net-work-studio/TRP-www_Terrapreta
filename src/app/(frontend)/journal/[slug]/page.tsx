@@ -9,6 +9,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
   cleanCommaList,
@@ -35,30 +37,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  timeZone: "UTC",
-  year: "numeric",
-});
-
-function cleanPublishingDate(value: string | null) {
-  const publishingDate = cleanOptionalString(value);
-
-  if (!publishingDate || Number.isNaN(new Date(publishingDate).getTime())) {
-    return null;
-  }
-
-  return publishingDate;
-}
-
-function formatPublishingDate(value: string | null) {
-  const publishingDate = cleanPublishingDate(value);
-
-  return publishingDate
-    ? JOURNAL_DATE_FORMATTER.format(new Date(publishingDate))
-    : null;
-}
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
@@ -108,6 +86,7 @@ export async function generateMetadata({
     url: `/journal/${slug}`,
     type: "article",
     publishedTime: publishingDate ?? undefined,
+    modifiedTime: journalItem._updatedAt,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
     robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
@@ -131,14 +110,16 @@ function JournalPageContent({
   }
 
   const schemaType =
-    cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
+    cleanOptionalString(journalItem.seo?.schemaType) === "Article"
+      ? "Article"
+      : "BlogPosting";
   const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
   const publishingDateValue = cleanPublishingDate(journalItem.publishingDate);
   const publishingDate = formatPublishingDate(journalItem.publishingDate);
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <header className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 space-y-5 text-balance pb-5 text-center opacity-100 starting:opacity-0 transition-all duration-400">
+      <header className="flex flex-col items-center justify-center gap-5 space-y-5 text-balance pb-5 text-center">
         <BreadcrumbCustom tag={journalItem.tag?.name} />
         <h1 className="text-4xl tracking-tight md:text-5xl lg:text-6xl">
           {journalItem.name}
@@ -152,10 +133,7 @@ function JournalPageContent({
         ) : null}
       </header>
 
-      <AspectRatio
-        className="relative blur-none starting:blur-xl transition-all duration-400"
-        ratio={ASPECT_RATIO}
-      >
+      <AspectRatio className="relative" ratio={ASPECT_RATIO}>
         <SanityImage
           alt={journalItem.mainImage.altContent || journalItem.name || ""}
           className="z-0 h-full w-full object-cover"
@@ -184,6 +162,10 @@ function JournalPageContent({
           "@context": "https://schema.org",
           "@type": schemaType,
           headline: journalItem.name,
+          url:
+            journalItem.seo?.canonicalUrl ||
+            new URL(`/journal/${slug}`, SITE_DEFAULTS.baseUrl).toString(),
+          dateModified: journalItem._updatedAt,
           description: journalItem.shortDescription,
           ...(publishingDateValue && {
             datePublished: publishingDateValue,
@@ -192,9 +174,9 @@ function JournalPageContent({
             image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),
           }),
           ...(journalItem.location && {
-            locationCreated: journalItem.location,
+            locationCreated: { "@type": "Place", name: journalItem.location },
           }),
-          ...(knowsAbout && { knowsAbout }),
+          ...(knowsAbout && { keywords: knowsAbout }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",

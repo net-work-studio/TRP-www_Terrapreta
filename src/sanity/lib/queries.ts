@@ -49,7 +49,11 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     href,
     blank,
     _type == "internalLink" => {
-      "slug": reference->slug.current,
+      "slug": select(
+        reference->_type == "project"
+          && coalesce(reference->publicationScope, "full") != "full" => null,
+        reference->slug.current
+      ),
       "type": reference->_type
     }
   },
@@ -64,24 +68,50 @@ ${EDITORIAL_IMAGE_PROJECTION}
   }
 `;
 
-export const SITE_SETTINGS_QUERY =
-  defineQuery(`*[_type == "site" && _id == "site"][0]{
-  name,
-  seo{
+const SEO_METADATA_PROJECTION = /* groq */ `
     metaTitle,
     metaDescription,
     ogImage{
-      asset->{
-        _id,
-        url
-      }
+      alt,
+${IMAGE_FIELD_PROJECTION}
     },
     canonicalUrl,
     robotsIndex,
     robotsFollow,
     ogTitle,
     ogDescription,
-    twitterCard
+    twitterCard`;
+
+export const SITE_SETTINGS_QUERY = defineQuery(`*[
+  _type == "site"
+  && _id == "site"
+][0]{
+  name,
+  brandName,
+  seo{
+${SEO_METADATA_PROJECTION}
+  }
+}`);
+
+export const WEBSITE_PAGE_SEO_QUERY = defineQuery(`*[
+  _id == $id
+  && _type == $id
+][0]{
+  _id,
+  seo{
+${SEO_METADATA_PROJECTION}
+  }
+}`);
+
+export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
+  _id in $ids
+  && _type == _id
+]{
+  _id,
+  _updatedAt,
+  seo{
+    robotsIndex,
+    canonicalUrl
   }
 }`);
 
@@ -125,9 +155,12 @@ ${EDITORIAL_IMAGE_PROJECTION}
   }
 }`);
 
-export const JOURNAL_ITEM_QUERY =
-  defineQuery(`*[_type == "journal" && slug.current == $slug][0]{
+export const JOURNAL_ITEM_QUERY = defineQuery(`*[
+  _type == "journal"
+  && slug.current == $slug
+][0]{
   _id,
+  _updatedAt,
   name,
   slug,
   mainImage{
@@ -147,10 +180,8 @@ ${EDITORIAL_IMAGE_PROJECTION}
     metaTitle,
     metaDescription,
     ogImage{
-      asset->{
-        _id,
-        url
-      }
+      alt,
+${IMAGE_FIELD_PROJECTION}
     },
     canonicalUrl,
     robotsIndex,
@@ -185,8 +216,10 @@ ${EDITORIAL_IMAGE_PROJECTION}
   }
 }`);
 
-export const SERVICE_QUERY =
-  defineQuery(`*[_type == "service" && slug.current == $slug][0]{
+export const SERVICE_QUERY = defineQuery(`*[
+  _type == "service"
+  && slug.current == $slug
+][0]{
   _id,
   name,
   slug,
@@ -213,10 +246,8 @@ ${EDITORIAL_IMAGE_PROJECTION}
     metaTitle,
     metaDescription,
     ogImage{
-      asset->{
-        _id,
-        url
-      }
+      alt,
+${IMAGE_FIELD_PROJECTION}
     },
     canonicalUrl,
     robotsIndex,
@@ -232,8 +263,10 @@ ${EDITORIAL_IMAGE_PROJECTION}
   }
 }`);
 
-export const PROJECT_ITEM_QUERY =
-  defineQuery(`*[_type == "project" && slug.current == $slug][0]{
+export const PROJECT_ITEM_QUERY = defineQuery(`*[
+  _type == "project"
+  && slug.current == $slug
+][0]{
   _id,
   name,
   slug,
@@ -280,10 +313,8 @@ ${IMAGE_FIELD_PROJECTION}
     metaTitle,
     metaDescription,
     ogImage{
-      asset->{
-        _id,
-        url
-      }
+      alt,
+${IMAGE_FIELD_PROJECTION}
     },
     canonicalUrl,
     robotsIndex,
@@ -347,31 +378,44 @@ export const SERVICE_SLUGS_QUERY = defineQuery(
   `*[_type == "service" && defined(slug.current)] | order(_updatedAt desc) [0...100]{"slug": slug.current}`
 );
 
-export const PROJECTS_SITEMAP_QUERY = defineQuery(
-  `*[
+export const PROJECTS_SITEMAP_QUERY = defineQuery(`*[
     _type == "project"
     && defined(slug.current)
     && coalesce(publicationScope, "full") == "full"
-    && seo.robotsIndex != "noindex"
-  ] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
+    && defined(mainImage.asset)
+]{
+  "slug": slug.current,
+  _updatedAt,
+  seo{
+    robotsIndex,
+    canonicalUrl
+  }
+}`);
 
-export const JOURNAL_SITEMAP_QUERY = defineQuery(
-  `*[_type == "journal" && defined(slug.current) && seo.robotsIndex != "noindex"] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
+export const JOURNAL_SITEMAP_QUERY = defineQuery(`*[
+    _type == "journal"
+    && defined(slug.current)
+    && defined(mainImage.asset)
+]{
+  "slug": slug.current,
+  _updatedAt,
+  seo{
+    robotsIndex,
+    canonicalUrl
+  }
+}`);
 
-export const SERVICES_SITEMAP_QUERY = defineQuery(
-  `*[_type == "service" && defined(slug.current) && seo.robotsIndex != "noindex"] {
-    "slug": slug.current,
-    _updatedAt
-  }`
-);
+export const SERVICES_SITEMAP_QUERY = defineQuery(`*[
+    _type == "service"
+    && defined(slug.current)
+]{
+  "slug": slug.current,
+  _updatedAt,
+  seo{
+    robotsIndex,
+    canonicalUrl
+  }
+}`);
 
 export const REDIRECTS_QUERY = defineQuery(`*[
   _type == "redirect"

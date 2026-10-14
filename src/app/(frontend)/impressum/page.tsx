@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { ObfuscatedEmail } from "@/components/shared/obfuscated-email";
+import Link from "next/link";
 import PageHeader from "@/components/shared/page-header";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { getStaticPageMetadata } from "@/lib/website-page-metadata";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Impressum",
-  description: "Legal information about Terrapreta.",
-  url: "/impressum",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getStaticPageMetadata({
+    title: "Impressum",
+    description: "Legal information about Terrapreta.",
+    url: "/impressum",
+  });
+}
 
 export default function ImpressumPage() {
   return (
@@ -24,22 +27,18 @@ export default function ImpressumPage() {
           <section>
             <h3 className="mb-2 font-bold">Email</h3>
             <p>
-              <ObfuscatedEmail
-                display="mail@terrapreta.it"
-                domain="terrapreta.it"
-                local="mail"
-              />
+              <Link href={`mailto:${SITE_DEFAULTS.email}`}>
+                {SITE_DEFAULTS.email}
+              </Link>
             </p>
           </section>
 
           <section>
             <h3 className="mb-2 font-bold">Certified Email (PEC)</h3>
             <p>
-              <ObfuscatedEmail
-                display="pec@srlc.terrapreta.it"
-                domain="srlc.terrapreta.it"
-                local="pec"
-              />
+              <Link href={`mailto:${SITE_DEFAULTS.certifiedEmail}`}>
+                {SITE_DEFAULTS.certifiedEmail}
+              </Link>
             </p>
           </section>
 

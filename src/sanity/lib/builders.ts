@@ -5,24 +5,6 @@ import type {
   StructureBuilder,
 } from "sanity/structure";
 
-const CAMEL_CASE_SPLIT_REGEX = /(?=[A-Z])/;
-
-export const singleton = (
-  S: StructureBuilder,
-  id: string,
-  title?: string
-): ListItemBuilder =>
-  S.listItem()
-    .id(id)
-    .title(
-      title ||
-        id
-          .split(CAMEL_CASE_SPLIT_REGEX)
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ")
-    )
-    .child(S.editor().id(id).schemaType(id).documentId(id));
-
 export const group = (
   S: StructureBuilder,
   title: string,

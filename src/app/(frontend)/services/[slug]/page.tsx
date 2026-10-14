@@ -2,17 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import { ServiceClients } from "@/components/features/service-clients";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
 import { JsonLd } from "@/components/shared/json-ld";
 import { buttonVariants } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
+import { SITE_DEFAULTS } from "@/lib/constants";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import {
-  cleanCommaList,
-  cleanOptionalString,
-  type StegaAware,
-} from "@/lib/sanity-stega";
+import { cleanCommaList, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
 import {
@@ -26,10 +24,6 @@ import {
 } from "@/sanity/lib/live";
 import { SERVICE_QUERY, SERVICE_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { SERVICE_QUERY_RESULT } from "@/sanity/types";
-
-type ServiceClient = NonNullable<
-  NonNullable<SERVICE_QUERY_RESULT>["clients"]
->[number];
 
 type SlugPageProps = {
   params: Promise<{ slug: string }>;
@@ -93,7 +87,6 @@ function ServicePageContent({
   service: StegaAware<NonNullable<SERVICE_QUERY_RESULT>>;
   slug: string;
 }) {
-  const schemaType = cleanOptionalString(service.seo?.schemaType) || "Service";
   const knowsAbout = cleanCommaList(service.seo?.customSchema?.knowsAbout);
 
   return (
@@ -111,11 +104,11 @@ function ServicePageContent({
               Book a Discovery Call
             </Link>
           </div>
-          <div className="container-site relative aspect-3/2 rounded-md">
+          <div className="relative aspect-3/2 rounded-md">
             {hasSanityImage(service.mainImage) && (
               <SanityImage
                 alt={service.name || ""}
-                className="z-0 aspect-4/5 h-full w-full rounded-md object-cover object-center"
+                className="z-0 h-full w-full rounded-md object-cover object-center"
                 fill
                 quality={75}
                 sizes="(min-width: 1024px) 60vw, 100vw"
@@ -126,69 +119,40 @@ function ServicePageContent({
         </div>
       </div>
 
-      <article className="container-article container-site space-y-20 py-20">
-        {!!service.clients && (
-          <div className="flex flex-col items-start justify-center">
-            <h3 className="text-2xl">Our Clients</h3>
-            <div className="flex flex-row items-center justify-center gap-5">
-              {service.clients
+      <article className="container-site py-20">
+        <div className="container-article space-y-20">
+          <ServiceClients clients={service.clients} />
+
+          <div className="flex flex-col items-start justify-center space-y-2.5">
+            <h2 className="font-bold text-2xl">Our Capabilities</h2>
+            <div className="flex flex-row flex-wrap items-start justify-start gap-x-2.5 gap-y-3">
+              {service.capabilities
                 ?.filter(
-                  (
-                    client: ServiceClient
-                  ): client is ServiceClient & {
-                    name: string;
-                    logoDark: {
-                      asset: {
-                        _id: string;
-                        url: string;
-                      };
-                    };
-                  } => Boolean(client.name && client.logoDark?.asset?._id)
+                  (capability: {
+                    _id: string;
+                    name: string | null;
+                  }): capability is { _id: string; name: string } =>
+                    Boolean(capability.name)
                 )
-                .map((client) => (
-                  <div key={client._id}>
-                    <SanityImage
-                      alt={client.name}
-                      height={100}
-                      quality={75}
-                      source={client.logoDark}
-                      width={100}
-                    />
+                .map((capability: { _id: string; name: string }) => (
+                  <div
+                    className="rounded-full border border-stone-500 px-3 py-1.5 text-stone-100"
+                    key={capability._id}
+                  >
+                    {capability.name}
                   </div>
                 ))}
             </div>
           </div>
-        )}
 
-        <div className="flex flex-col items-start justify-center space-y-2.5">
-          <h3 className="font-bold text-2xl">Our Capabilities</h3>
-          <div className="flex flex-row flex-wrap items-start justify-start gap-x-2.5 gap-y-3">
-            {service.capabilities
-              ?.filter(
-                (capability: {
-                  _id: string;
-                  name: string | null;
-                }): capability is { _id: string; name: string } =>
-                  Boolean(capability.name)
-              )
-              .map((capability: { _id: string; name: string }) => (
-                <div
-                  className="rounded-full border border-stone-500 px-3 py-1.5 text-stone-100"
-                  key={capability._id}
-                >
-                  {capability.name}
-                </div>
-              ))}
+          <div className="flex flex-col items-start justify-center space-y-5 text-lg md:text-xl lg:text-2xl">
+            {!!service.content && (
+              <PortableText
+                components={portableTextComponents}
+                value={service.content}
+              />
+            )}
           </div>
-        </div>
-
-        <div className="flex flex-col items-start justify-center space-y-5 text-lg md:text-xl lg:text-2xl">
-          {!!service.content && (
-            <PortableText
-              components={portableTextComponents}
-              value={service.content}
-            />
-          )}
         </div>
       </article>
 
@@ -202,13 +166,16 @@ function ServicePageContent({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": schemaType,
+          "@type": "Service",
+          url:
+            service.seo?.canonicalUrl ||
+            new URL(`/services/${slug}`, SITE_DEFAULTS.baseUrl).toString(),
           name: service.name,
           description: service.shortDescription,
           provider: {
             "@type": "Organization",
             name: "Terrapreta",
-            url: "https://terrapreta.it",
+            url: SITE_DEFAULTS.baseUrl,
             ...(knowsAbout && { knowsAbout }),
           },
           serviceType: "Environmental Consulting",
@@ -294,13 +261,15 @@ function ServicePageFallback() {
             </div>
             <div className="h-10 w-48 animate-pulse rounded bg-stone-700" />
           </div>
-          <div className="container-site relative aspect-3/2 w-full animate-pulse rounded-md bg-stone-700" />
+          <div className="relative aspect-3/2 w-full animate-pulse rounded-md bg-stone-700" />
         </div>
       </div>
-      <div className="container-article container-site space-y-5 py-20">
-        <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
-        <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
-        <div className="h-6 w-2/3 animate-pulse rounded bg-stone-800" />
+      <div className="container-site py-20">
+        <div className="container-article space-y-5">
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-full animate-pulse rounded bg-stone-800" />
+          <div className="h-6 w-2/3 animate-pulse rounded bg-stone-800" />
+        </div>
       </div>
     </div>
   );
