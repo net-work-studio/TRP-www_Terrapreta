@@ -36,7 +36,7 @@ export default function HomeHero() {
         </div>
         <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/30" />
         <Image
-          alt="Hero"
+          alt="Two researchers crouching in a dense, shaded woodland to examine the forest floor"
           className="z-0 h-full w-full object-cover"
           fill
           preload

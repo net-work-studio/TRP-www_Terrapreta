@@ -46,7 +46,7 @@ function CustomersContent({
   return (
     <div
       className="container-site flex flex-col items-start gap-10"
-      id="soil-revolution"
+      id="customers"
     >
       <hgroup className="flex h-full flex-col justify-between gap-2">
         <TagTitle
@@ -54,7 +54,7 @@ function CustomersContent({
           title="Helping our customers to make the difference"
         />
       </hgroup>
-      <div className="md grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {validCustomers.map(
           (
             customer: CUSTOMERS_QUERY_RESULT[number] & {
