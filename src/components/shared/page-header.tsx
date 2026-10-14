@@ -16,7 +16,7 @@ export default function PageHeader({
   return (
     <hgroup
       className={cn(
-        "container-site mx-auto mt-24 flex starting:translate-y-2 translate-y-0 flex-col gap-2.5 pb-10 opacity-100 starting:opacity-0 transition-all duration-300 md:mt-34 md:mb-16",
+        "container-site mx-auto mt-24 flex flex-col gap-2.5 pb-10 md:mt-34 md:mb-16",
         position === "center"
           ? "items-center justify-center"
           : "items-start justify-start"

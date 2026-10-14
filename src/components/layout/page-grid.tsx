@@ -125,7 +125,7 @@ export default function PageGrid({
   basePath: string;
 }) {
   return (
-    <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 starting:opacity-0 transition-opacity duration-300 md:grid-cols-2 lg:grid-cols-3">
+    <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 md:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
         const slugValue = getSlugValue(item.slug);
 

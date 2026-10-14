@@ -122,7 +122,7 @@ function ProjectPageContent({
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
+      <hgroup className="flex flex-col items-center justify-center gap-5 text-balance pb-5 text-center">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -138,10 +138,7 @@ function ProjectPageContent({
         </p>
       </hgroup>
 
-      <AspectRatio
-        className="relative blur-none starting:blur-xl transition-all duration-400"
-        ratio={ASPECT_RATIO}
-      >
+      <AspectRatio className="relative" ratio={ASPECT_RATIO}>
         <SanityImage
           alt={projectItem.name || ""}
           className="z-0 h-full w-full object-cover"
