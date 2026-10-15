@@ -1,0 +1,79 @@
+src/app/layout.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 39
+src/components/features/service-clients.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 30
+src/app/(frontend)/_sections/soil-revolution.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 47,49-51
+src/app/(frontend)/_sections/services.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 114,128
+src/lib/journal-date.ts
+  s_738433436fec37::t_ed3fa1f3138bc3 3
+src/app/(frontend)/_sections/numbers.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 10-13,16-22,38,42-53,63-64,70,73-77,80,83-87,90,93-96
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 28,30-34,43
+src/components/shared/footer.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 29,50,55,60,65,124-125
+src/app/(frontend)/_sections/home-hero.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 16,30
+src/app/(frontend)/contacts/page.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 16
+src/app/(frontend)/services/[slug]/page.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 104,127
+src/app/(frontend)/impressum/page.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 37,46,53,58,63-64
+src/components/features/calendar-stefano.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 45
+src/app/(frontend)/_sections/customers.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 52
+src/app/(frontend)/_sections/logos.tsx
+  s_738433436fec37::t_ed3fa1f3138bc3 49,52
+copy-corrections-2026-10-15.ndjson
+  s_9dd865c9eae1bf::t_8b14d2a328a9ce 1-12
+copy-sources-2026-10-15.ndjson
+  s_8b87aeb99b51e5::t_a25fd850ca714e 1
+copy-us-english-2026-10-15.ndjson
+  s_738433436fec37::t_c5eb687e443ce1 1-32
+docs/audits/site-copy-review-2026-10-15.html
+  s_6493506b07c9a5::t_5d50afef0bb0c2 1-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5dafde8f429815191f825f58705b9de12bac72d1",
+  "prompts": {},
+  "sessions": {
+    "s_6493506b07c9a5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13f99-cf9a-7ce1-aa79-25d0010083a0",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_738433436fec37": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13e5f-3213-77e0-96a1-efa48b8f7f55",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_8b87aeb99b51e5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13ea5-25a8-7a62-9887-892cc26d9050",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_9dd865c9eae1bf": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13e83-3ed3-75b3-831e-eb0d706f9dba",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
