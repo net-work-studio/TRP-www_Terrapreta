@@ -1,0 +1,39 @@
+src/lib/website-pages.ts
+  s_13d3deeb0fb65b::t_ba881325502b69 22,28,34
+src/sanity/schemaTypes/documents/researchIndexPageDoc.ts
+  s_13d3deeb0fb65b::t_ba881325502b69 7
+docs/adr/0001-fixed-website-page-models.md
+  s_13d3deeb0fb65b::t_f49dab71d4d334 3,14-15
+src/sanity/types.ts
+  s_13d3deeb0fb65b::t_600e75b5b93f16 183,1005-1011,1146-1152
+CONTEXT.md
+  s_13d3deeb0fb65b::t_f49dab71d4d334 24,52,59-62,112,115,117
+src/sanity/schemaTypes/index.ts
+  s_13d3deeb0fb65b::t_0649915e63a45b 1,98
+  s_13d3deeb0fb65b::t_ecb98638a1d659 48,97,99
+src/sanity/schemaTypes/documents/journalIndexPageDoc.ts
+  s_13d3deeb0fb65b::t_ba881325502b69 7
+src/sanity/schemaTypes/documents/projectsIndexPageDoc.ts
+  s_13d3deeb0fb65b::t_ba881325502b69 7
+src/sanity/structure.ts
+  s_13d3deeb0fb65b::t_ba881325502b69 13,15,27-35,43-50,54-66,70-98
+src/sanity/extract.json
+  s_13d3deeb0fb65b::t_600e75b5b93f16 865-866
+  s_13d3deeb0fb65b::t_dfc1e07e11efda 863-864
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6f3948faf4f0a04557e54db3f5c1293ca15b203c",
+  "prompts": {},
+  "sessions": {
+    "s_13d3deeb0fb65b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14108-c27e-7650-a941-851fab0c93bc",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
