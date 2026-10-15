@@ -82,6 +82,59 @@ ${IMAGE_FIELD_PROJECTION}
     ogDescription,
     twitterCard`;
 
+const INTERNAL_PAGE_DESTINATION_PROJECTION = /* groq */ `
+    _id,
+    _type,
+    "slug": slug.current,
+    "publicationScope": coalesce(publicationScope, "full"),
+    "hasImage": defined(mainImage.asset->url)`;
+
+export const INTERNAL_PAGE_DESTINATION_QUERY = defineQuery(`*[
+  _id == $id
+][0]{
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+}`);
+
+export const HOME_HERO_QUERY = defineQuery(`*[
+  _id == "homePage"
+  && _type == "homePage"
+][0]{
+  hero{
+    heading[]{
+      _key,
+      _type,
+      style,
+      children[]{
+        _key,
+        _type,
+        text,
+        marks
+      },
+      markDefs[]{
+        _key,
+        _type
+      }
+    },
+    description,
+    image{
+      altContent,
+${IMAGE_FIELD_PROJECTION}
+    },
+    button{
+      visibility,
+      label,
+      "destinationType": coalesce(
+        destinationType,
+        select(defined(page._ref) => "page", "section")
+      ),
+      page->{
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+      }
+    },
+    scrollCue
+  }
+}`);
+
 export const SITE_SETTINGS_QUERY = defineQuery(`*[
   _type == "site"
   && _id == "site"

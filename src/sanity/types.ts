@@ -173,6 +173,53 @@ export type LinkObject = {
   target: "_self" | "_blank";
 };
 
+export type InternalCallToAction = {
+  _type: "internalCallToAction";
+  visibility: "hidden" | "shown";
+  destinationType?: "section" | "page";
+  label?: string;
+  page?:
+    | ContactPageReference
+    | ProjectsIndexPageReference
+    | JournalIndexPageReference
+    | ProjectReference
+    | JournalReference
+    | ServiceReference;
+};
+
+export type HomeHero = {
+  _type: "homeHero";
+  heading: HeroHeading;
+  description: string;
+  image: HeroImage;
+  button?: InternalCallToAction;
+  scrollCue: "static" | "animated" | "hidden";
+};
+
+export type HeroImage = {
+  _type: "heroImage";
+  asset: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  altContent: string;
+};
+
+export type HeroHeading = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
 export type GridDimensionObject = {
   _type: "gridDimensionObject";
   prominence: "standard" | "featured";
@@ -628,6 +675,7 @@ export type HomePage = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  hero: HomeHero;
   seo?: SeoObject;
 };
 
@@ -767,6 +815,10 @@ export type AllSanitySchemaTypes =
   | ResearchReference
   | PressReference
   | LinkObject
+  | InternalCallToAction
+  | HomeHero
+  | HeroImage
+  | HeroHeading
   | GridDimensionObject
   | RichTextContent
   | FundingProgramme
@@ -810,6 +862,276 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERNAL_PAGE_DESTINATION_QUERY
+// Query: *[  _id == $id][0]{    _id,    _type,    "slug": slug.current,    "publicationScope": coalesce(publicationScope, "full"),    "hasImage": defined(mainImage.asset->url)}
+export type INTERNAL_PAGE_DESTINATION_QUERY_RESULT =
+  | {
+      _id: string;
+      _type: "aboutPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "capability";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "contactPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "customer";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false | true;
+    }
+  | {
+      _id: string;
+      _type: "glossary";
+      slug: string;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "homePage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "journal";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "journalIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "media.tag";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "navigation";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "organization";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "page";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "press";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "process";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "project";
+      slug: string;
+      publicationScope: "full" | "overview";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "projectsIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "redirect";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "research";
+      slug: null;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "researchIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "sanity.fileAsset";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "sanity.imageAsset";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "service";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "site";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "tag";
+      slug: string;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "unGoal";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: HOME_HERO_QUERY
+// Query: *[  _id == "homePage"  && _type == "homePage"][0]{  hero{    heading[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        _key,        _type      }    },    description,    image{      altContent,      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    button{      visibility,      label,      "destinationType": coalesce(        destinationType,        select(defined(page._ref) => "page", "section")      ),      page->{    _id,    _type,    "slug": slug.current,    "publicationScope": coalesce(publicationScope, "full"),    "hasImage": defined(mainImage.asset->url)      }    },    scrollCue  }}
+export type HOME_HERO_QUERY_RESULT = {
+  hero: {
+    heading: Array<{
+      _key: string;
+      _type: "block";
+      style: "normal" | null;
+      children: Array<{
+        _key: string;
+        _type: "span";
+        text: string | null;
+        marks: Array<string> | null;
+      }> | null;
+      markDefs: null;
+    }>;
+    description: string;
+    image: {
+      altContent: string;
+      _type: "heroImage";
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      };
+    };
+    button: {
+      visibility: "hidden" | "shown";
+      label: string | null;
+      destinationType: "page" | "section";
+      page:
+        | {
+            _id: string;
+            _type: "contactPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "journal";
+            slug: string;
+            publicationScope: "full";
+            hasImage: true;
+          }
+        | {
+            _id: string;
+            _type: "journalIndexPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "project";
+            slug: string;
+            publicationScope: "full" | "overview";
+            hasImage: true;
+          }
+        | {
+            _id: string;
+            _type: "projectsIndexPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "service";
+            slug: string;
+            publicationScope: "full";
+            hasImage: true;
+          }
+        | null;
+    } | null;
+    scrollCue: "animated" | "hidden" | "static";
+  };
+} | null;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
@@ -1648,6 +1970,8 @@ export type REDIRECTS_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
+    '*[\n  _id == $id\n][0]{\n\n    _id,\n    _type,\n    "slug": slug.current,\n    "publicationScope": coalesce(publicationScope, "full"),\n    "hasImage": defined(mainImage.asset->url)\n}': INTERNAL_PAGE_DESTINATION_QUERY_RESULT;
+    '*[\n  _id == "homePage"\n  && _type == "homePage"\n][0]{\n  hero{\n    heading[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        _key,\n        _type\n      }\n    },\n    description,\n    image{\n      altContent,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    button{\n      visibility,\n      label,\n      "destinationType": coalesce(\n        destinationType,\n        select(defined(page._ref) => "page", "section")\n      ),\n      page->{\n\n    _id,\n    _type,\n    "slug": slug.current,\n    "publicationScope": coalesce(publicationScope, "full"),\n    "hasImage": defined(mainImage.asset->url)\n      }\n    },\n    scrollCue\n  }\n}': HOME_HERO_QUERY_RESULT;
     '*[\n  _type == "site"\n  && _id == "site"\n][0]{\n  name,\n  brandName,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
     "*[\n  _id == $id\n  && _type == $id\n][0]{\n  _id,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}": WEBSITE_PAGE_SEO_QUERY_RESULT;
     "*[\n  _id in $ids\n  && _type == _id\n]{\n  _id,\n  _updatedAt,\n  seo{\n    robotsIndex,\n    canonicalUrl\n  }\n}": WEBSITE_PAGES_SITEMAP_QUERY_RESULT;

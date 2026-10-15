@@ -33,6 +33,10 @@ import { customSchemaObject } from "./objects/customSchemaObject";
 import { editorialImageType } from "./objects/editorialImageType";
 import { fundingProgrammeObject } from "./objects/fundingProgrammeObject";
 import { gridDimensionObject } from "./objects/gridDimensionObject";
+import { heroHeadingType } from "./objects/heroHeadingType";
+import { heroImageType } from "./objects/heroImageType";
+import { homeHeroObject } from "./objects/homeHeroObject";
+import { internalCallToActionObject } from "./objects/internalCallToActionObject";
 import { linkObject } from "./objects/linkObject";
 import { projectTeamMemberObject } from "./objects/projectTeamMemberObject";
 import { richTextContentType } from "./objects/richTextContentType";
@@ -73,6 +77,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     fundingProgrammeObject,
     richTextContentType,
     gridDimensionObject,
+    heroHeadingType,
+    heroImageType,
+    homeHeroObject,
+    internalCallToActionObject,
     linkObject,
     projectTeamMemberObject,
     seoObject,
