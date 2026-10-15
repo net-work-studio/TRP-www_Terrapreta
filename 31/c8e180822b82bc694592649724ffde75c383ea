@@ -1,0 +1,22 @@
+src/components/ui/portable-image.tsx
+  s_66f885399ed5dd::t_5c78adec340a1a 3,14,39-42,62-69,76-80
+src/components/features/about-content.tsx
+  s_66f885399ed5dd::t_5c78adec340a1a 2,5,18-28,54,56
+  s_66f885399ed5dd::t_685b194278273d 15-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "31c8e180822b82bc694592649724ffde75c383ea",
+  "prompts": {},
+  "sessions": {
+    "s_66f885399ed5dd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1417e-b78c-72f0-88ba-4cdf9ee5ebaf",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
