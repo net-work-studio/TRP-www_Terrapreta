@@ -29,6 +29,7 @@ describe("Portable Text public destinations", () => {
   test.each([
     { type: "homePage", href: "/" },
     { type: "contactPage", href: "/contacts" },
+    { type: "aboutPage", href: "/about" },
     { type: "projectsIndexPage", href: "/projects" },
     { type: "journalIndexPage", href: "/journal" },
   ])("links to $type without needing a slug", ({ type, href }) => {
@@ -43,7 +44,7 @@ describe("Portable Text public destinations", () => {
     expect(renderInternalLink(type, "example")).toContain(`href="${href}"`);
   });
 
-  test.each(["aboutPage", "researchIndexPage", "page", "research", "press"])(
+  test.each(["researchIndexPage", "page", "research", "press"])(
     "keeps %s references as text until a public route exists",
     (type) => {
       const html = renderInternalLink(type, "example");

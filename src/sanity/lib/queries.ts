@@ -103,6 +103,26 @@ ${SEO_METADATA_PROJECTION}
   }
 }`);
 
+export const ABOUT_PAGE_QUERY = defineQuery(`*[
+  _type == "aboutPage"
+  && _id == "aboutPage"
+][0]{
+  _id,
+  name,
+  introduction[]{
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
+  },
+  team[]->{
+    _id,
+    name,
+    role,
+    portrait{
+${EDITORIAL_IMAGE_PROJECTION}
+    }
+  },
+  collaborators
+}`);
+
 export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
   _id in $ids
   && _type == _id
@@ -168,6 +188,10 @@ ${EDITORIAL_IMAGE_PROJECTION}
   },
   location,
   publishingDate,
+  authors[]->{
+    _id,
+    name
+  },
   shortDescription,
   contentObject[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}

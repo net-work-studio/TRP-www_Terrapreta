@@ -11,6 +11,7 @@ import { journalIndexPageDoc } from "./documents/journalIndexPageDoc";
 import { navigationDoc } from "./documents/navigationDoc";
 import { organizationDoc } from "./documents/organizationDoc";
 import { pageDoc } from "./documents/pageDoc";
+import { personDoc } from "./documents/personDoc";
 import { pressDoc } from "./documents/pressDoc";
 import { processDoc } from "./documents/processDoc";
 import { projectDoc } from "./documents/projectDoc";
@@ -54,6 +55,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePageDoc,
     contactPageDoc,
     aboutPageDoc,
+    personDoc,
     projectsIndexPageDoc,
     journalIndexPageDoc,
     researchIndexPageDoc,
