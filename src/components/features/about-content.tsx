@@ -50,7 +50,7 @@ export function AboutContent({
             <h2 className="text-3xl tracking-tight" id="team-heading">
               Team
             </h2>
-            <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-15 md:grid-cols-2 lg:grid-cols-4">
               {team.map((person) => {
                 const email =
                   cleanOptionalString(person.emailVisibility) === "visible"
@@ -66,7 +66,7 @@ export function AboutContent({
                         }
                         className="h-auto w-full"
                         height={900}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                         source={person.portrait}
                         width={
                           getSanityImageWidthForHeight(person.portrait, 900) ??
@@ -112,7 +112,7 @@ export function AboutContent({
             <h2 className="text-3xl tracking-tight" id="collaborators-heading">
               Collaborators
             </h2>
-            <ul className="grid grid-cols-1 gap-x-10 gap-y-3 text-lg sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-15 text-lg md:grid-cols-2 lg:grid-cols-4">
               {collaborators.map((collaborator) => {
                 const email = cleanOptionalString(collaborator.email)?.trim();
                 const bio = cleanOptionalString(collaborator.bio)?.trim();
