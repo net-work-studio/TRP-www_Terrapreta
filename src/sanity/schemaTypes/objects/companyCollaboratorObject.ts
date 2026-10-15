@@ -27,6 +27,29 @@ export const companyCollaboratorObject = defineType({
           .warning("Keep the public role concise for the collaborator list."),
       ],
     }),
+    defineField({
+      name: "bio",
+      type: "text",
+      rows: 3,
+      description: "Optional short biography displayed on About.",
+      validation: (rule) => [
+        rule
+          .max(400)
+          .warning(
+            "Keep the biography under 400 characters for the collaborator list."
+          ),
+      ],
+    }),
+    defineField({
+      name: "email",
+      type: "string",
+      description: "Optional public contact address displayed on About.",
+      validation: (rule) => [
+        rule
+          .email()
+          .error("Enter a valid email address or leave this field empty."),
+      ],
+    }),
   ],
   preview: {
     select: { title: "name", subtitle: "role" },

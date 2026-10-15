@@ -41,7 +41,7 @@ test("About renders its editable introduction without empty people sections", ()
   expect(html).not.toContain(">Collaborators</h2>");
 });
 
-test("About preserves team and collaborator order and displays optional collaborator roles", () => {
+test("About preserves people order and displays collaborator details only when filled in", () => {
   const html = renderToStaticMarkup(
     <AboutContent
       page={{
@@ -78,8 +78,16 @@ test("About preserves team and collaborator order and displays optional collabor
             _key: "francesco",
             name: "Francesco Castrovilli",
             role: "Landscape designer",
+            email: "francesco@example.com",
+            bio: "Works on ecological restoration and landscape design.",
           },
-          { _key: "gabriele", name: "Gabriele Gagliardi", role: null },
+          {
+            _key: "gabriele",
+            name: "Gabriele Gagliardi",
+            role: null,
+            email: "  ",
+            bio: "  ",
+          },
         ],
       }}
     />
@@ -96,5 +104,11 @@ test("About preserves team and collaborator order and displays optional collabor
     html.indexOf("Gabriele Gagliardi")
   );
   expect(html).toContain("Landscape designer");
+  expect(html).toContain('href="mailto:francesco@example.com"');
+  expect(html).toContain(
+    "Works on ecological restoration and landscape design."
+  );
+  expect(html.match(/href="mailto:/g)).toHaveLength(1);
+  expect(html).not.toContain(">  </p>");
   expect(html).not.toContain("undefined");
 });

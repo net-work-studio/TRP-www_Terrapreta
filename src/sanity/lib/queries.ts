@@ -124,7 +124,9 @@ ${EDITORIAL_IMAGE_PROJECTION}
     collaborators[0]._type == "companyCollaborator" => collaborators[]{
       _key,
       name,
-      role
+      role,
+      email,
+      bio
     },
     collaborators
   )

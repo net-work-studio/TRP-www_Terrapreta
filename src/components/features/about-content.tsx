@@ -3,7 +3,7 @@ import ArticleContent from "@/components/shared/article-content";
 import PageHeader from "@/components/shared/page-header";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
-import type { StegaAware } from "@/lib/sanity-stega";
+import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
 import {
   getSanityImageWidthForHeight,
   hasSanityImage,
@@ -20,7 +20,13 @@ export function AboutContent({
   const collaborators = page.collaborators
     ?.map((collaborator) =>
       typeof collaborator === "string"
-        ? { _key: collaborator, name: collaborator, role: null }
+        ? {
+            _key: collaborator,
+            name: collaborator,
+            role: null,
+            email: null,
+            bio: null,
+          }
         : collaborator
     )
     .filter((collaborator) => collaborator?.name);
@@ -83,16 +89,33 @@ export function AboutContent({
               Collaborators
             </h2>
             <ul className="grid grid-cols-1 gap-x-10 gap-y-3 text-lg sm:grid-cols-2 lg:grid-cols-3">
-              {collaborators.map((collaborator) => (
-                <li className="flex flex-col gap-1" key={collaborator._key}>
-                  <span>{collaborator.name}</span>
-                  {collaborator.role ? (
-                    <p className="text-base text-muted-foreground">
-                      {collaborator.role}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
+              {collaborators.map((collaborator) => {
+                const email = cleanOptionalString(collaborator.email)?.trim();
+                const bio = cleanOptionalString(collaborator.bio)?.trim();
+                return (
+                  <li className="flex flex-col gap-1" key={collaborator._key}>
+                    <span>{collaborator.name}</span>
+                    {collaborator.role ? (
+                      <p className="text-base text-muted-foreground">
+                        {collaborator.role}
+                      </p>
+                    ) : null}
+                    {bio ? (
+                      <p className="whitespace-pre-line text-base text-muted-foreground">
+                        {collaborator.bio}
+                      </p>
+                    ) : null}
+                    {email ? (
+                      <a
+                        className="w-fit break-all text-base underline underline-offset-4"
+                        href={`mailto:${email}`}
+                      >
+                        {collaborator.email}
+                      </a>
+                    ) : null}
+                  </li>
+                );
+              })}
             </ul>
           </section>
         ) : null}
