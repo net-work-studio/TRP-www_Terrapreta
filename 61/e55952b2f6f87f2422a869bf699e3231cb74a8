@@ -1,0 +1,22 @@
+src/sanity/schemaTypes/objects/homeHeroObject.test.ts
+  s_8b87aeb99b51e5::t_fb6f3417e7ec71 15-16,79-85,90-96,103-109,113-116,120-126,130-140
+  s_8b87aeb99b51e5::t_91b082ef5dbc05 5,19-21
+  s_8b87aeb99b51e5::t_8ea400d0828e45 111-112,117-119,127-129,141-142
+  s_8b87aeb99b51e5::t_00ad773c7c7dac 1-4,6-14,17-18,22-78,86-89,97-102,110,143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "61e55952b2f6f87f2422a869bf699e3231cb74a8",
+  "prompts": {},
+  "sessions": {
+    "s_8b87aeb99b51e5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13ea5-25a8-7a62-9887-892cc26d9050",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
