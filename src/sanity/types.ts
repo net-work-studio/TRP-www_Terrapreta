@@ -180,6 +180,7 @@ export type InternalCallToAction = {
   label?: string;
   page?:
     | ContactPageReference
+    | AboutPageReference
     | ProjectsIndexPageReference
     | JournalIndexPageReference
     | ProjectReference
@@ -1022,6 +1023,13 @@ export type INTERNAL_PAGE_DESTINATION_QUERY_RESULT =
     }
   | {
       _id: string;
+      _type: "person";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
       _type: "press";
       slug: null;
       publicationScope: "full";
@@ -1154,6 +1162,13 @@ export type HOME_HERO_QUERY_RESULT = {
       label: string | null;
       destinationType: "page" | "section";
       page:
+        | {
+            _id: string;
+            _type: "aboutPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
         | {
             _id: string;
             _type: "contactPage";

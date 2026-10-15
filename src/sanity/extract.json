@@ -862,6 +862,10 @@
               },
               {
                 "type": "inline",
+                "name": "aboutPage.reference"
+              },
+              {
+                "type": "inline",
                 "name": "projectsIndexPage.reference"
               },
               {

@@ -4,7 +4,7 @@ import { websitePageFields, websitePagePreview } from "../helpers/websitePage";
 
 export const projectsIndexPageDoc = defineType({
   name: "projectsIndexPage",
-  title: "Projects overview",
+  title: "Projects index",
   type: "document",
   icon: ProjectsIcon,
   fields: websitePageFields("projectsIndexPage"),

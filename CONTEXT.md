@@ -21,7 +21,7 @@ An image referenced by a fixed Sanity CDN URL or asset ID in frontend code, not 
 _Avoid_: CMS-backed image when the source is not query-driven.
 
 **Overview-only project**:
-A published project whose publication scope is limited to the projects overview and has no publicly accessible detail page.
+A published project whose publication scope is limited to the Projects index and has no publicly accessible detail page.
 _Avoid_: Unclickable project, disabled project, unpublished project
 
 **Publication scope**:
@@ -49,12 +49,16 @@ The optional year an editor considers most relevant to presenting a project, typ
 _Avoid_: Mandatory start year
 
 **Project sequence**:
-The editor-controlled global order in which projects appear on the Projects overview. It includes both full and overview-only projects.
+The editor-controlled global order in which projects appear on the Projects index. It includes both full and overview-only projects.
 _Avoid_: Publication date, realization status, grid order
 
 **Service sequence**:
 The editor-controlled global order in which services appear wherever the service collection is presented.
 _Avoid_: Alphabetical order, publication date
+
+**Capability**:
+A named ability offered as part of a service. A service may present multiple capabilities.
+_Avoid_: Project role, process
 
 **Organization**:
 A named external entity that can participate in one or more projects in different capacities.
@@ -105,12 +109,12 @@ A named individual acknowledged separately from Terrapreta's core team, with an 
 _Avoid_: Company team member, project team member
 
 **Fixed website page**:
-One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Projects overview, Journal overview, or Research overview.
+One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Projects index, Journal index, or Research index.
 _Avoid_: Generic Page, collection entry
 
-**Collection overview**:
+**Collection index**:
 A fixed website page presenting the Projects, Journal, or Research collection. Its page metadata describes the collection as a whole, while each entry has its own content and metadata.
-_Avoid_: Detail page, collection entry
+_Avoid_: Collection overview, detail page, collection entry
 
 **Site SEO defaults**:
 Terrapreta's shared search and social metadata defaults, used when a page has no more specific value. They are distinct from Homepage SEO.
