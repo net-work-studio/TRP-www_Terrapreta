@@ -1,0 +1,37 @@
+src/sanity/lib/queries.ts
+  s_6c98735435c932::t_78b8ee52a82b84 127-129
+src/components/features/about-content.tsx
+  s_6c98735435c932::t_0df5a44c1838b9 23-29,95-117
+  s_6c98735435c932::t_78b8ee52a82b84 6,92-94,118
+CONTEXT.md
+  s_6c98735435c932::t_78b8ee52a82b84 104
+docs/adr/0002-reuse-people-for-team-and-authorship.md
+  s_6c98735435c932::t_78b8ee52a82b84 5
+src/components/features/about-content.test.tsx
+  s_6c98735435c932::t_649e0e91134238 44,112
+  s_6c98735435c932::t_29b4439b9e6086 81-82,107,111
+  s_6c98735435c932::t_0df5a44c1838b9 84-89,108-110
+  s_6c98735435c932::t_708757268e7fa3 83
+src/sanity/schemaTypes/objects/companyCollaboratorObject.ts
+  s_6c98735435c932::t_649e0e91134238 30
+  s_6c98735435c932::t_78b8ee52a82b84 31-35,41-47,51-52
+  s_6c98735435c932::t_0df5a44c1838b9 36-40,48-50
+src/sanity/extract.json
+  s_6c98735435c932::t_63e375dac9c907 1290-1303
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "053adce0b675bbe33019dd0842cca614dbc27a52",
+  "prompts": {},
+  "sessions": {
+    "s_6c98735435c932": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14013-06ac-7eb1-9a08-a2a7d7edd204",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
