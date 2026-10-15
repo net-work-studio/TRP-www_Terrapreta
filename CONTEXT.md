@@ -107,3 +107,15 @@ _Avoid_: Site SEO defaults, visible page content
 **Site brand name**:
 The name identifying Terrapreta in page title suffixes and social metadata. It is distinct from a page's SEO title and the administrative label of Site Settings.
 _Avoid_: Homepage title, settings document name
+
+**Homepage hero**:
+The opening section of the Homepage, introducing Terrapreta with an image, a main heading, and supporting text. Its image has alternative text and no caption.
+_Avoid_: Homepage SEO, page title when referring to the visible hero heading
+
+**Hero link**:
+An optional call to action in the Homepage hero, with its own label, that takes visitors to the next section on the Homepage or to a publicly available internal website page. Editors can hide a configured Hero link without removing its settings, and a link to another page disappears if that page becomes unavailable.
+_Avoid_: Scroll cue, external link
+
+**Scroll cue**:
+The "Scroll to learn more" prompt and arrow in the Homepage hero, taking visitors to the next section when selected. It can be animated, static, or hidden, independently of the Hero link, and starts static.
+_Avoid_: Hero link, Learn more button
