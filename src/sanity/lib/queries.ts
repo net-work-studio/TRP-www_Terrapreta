@@ -120,7 +120,14 @@ export const ABOUT_PAGE_QUERY = defineQuery(`*[
 ${EDITORIAL_IMAGE_PROJECTION}
     }
   },
-  collaborators
+  "collaborators": select(
+    collaborators[0]._type == "companyCollaborator" => collaborators[]{
+      _key,
+      name,
+      role
+    },
+    collaborators
+  )
 }`);
 
 export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[

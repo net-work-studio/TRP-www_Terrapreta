@@ -41,7 +41,7 @@ test("About renders its editable introduction without empty people sections", ()
   expect(html).not.toContain(">Collaborators</h2>");
 });
 
-test("About preserves team and collaborator order, showing portraits and roles only for the team", () => {
+test("About preserves team and collaborator order and displays optional collaborator roles", () => {
   const html = renderToStaticMarkup(
     <AboutContent
       page={{
@@ -73,7 +73,14 @@ test("About preserves team and collaborator order, showing portraits and roles o
             portrait: null,
           },
         ],
-        collaborators: ["Francesco Castrovilli", "Gabriele Gagliardi"],
+        collaborators: [
+          {
+            _key: "francesco",
+            name: "Francesco Castrovilli",
+            role: "Landscape designer",
+          },
+          { _key: "gabriele", name: "Gabriele Gagliardi", role: null },
+        ],
       }}
     />
   );
@@ -88,4 +95,6 @@ test("About preserves team and collaborator order, showing portraits and roles o
   expect(html.indexOf("Francesco Castrovilli")).toBeLessThan(
     html.indexOf("Gabriele Gagliardi")
   );
+  expect(html).toContain("Landscape designer");
+  expect(html).not.toContain("undefined");
 });

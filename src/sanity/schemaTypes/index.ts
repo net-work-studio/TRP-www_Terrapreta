@@ -28,6 +28,7 @@ import { unGoalDoc } from "./documents/unGoalDoc";
 import modules from "./fragments/modules";
 /* Modules */
 import { heroSplitModule } from "./modules/hero-split";
+import { companyCollaboratorObject } from "./objects/companyCollaboratorObject";
 import { competitionObject } from "./objects/competitionObject";
 /* Objects */
 import { customSchemaObject } from "./objects/customSchemaObject";
@@ -69,6 +70,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
     /* Objects */
     competitionObject,
+    companyCollaboratorObject,
     customSchemaObject,
     titleSlugObject,
     editorialImageType,

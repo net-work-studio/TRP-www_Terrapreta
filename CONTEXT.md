@@ -101,7 +101,7 @@ A person credited with writing a journal entry. A journal entry may credit multi
 _Avoid_: Responsible person, publisher
 
 **Company collaborator**:
-A named individual acknowledged separately from Terrapreta's core team. The public acknowledgement consists of their name.
+A named individual acknowledged separately from Terrapreta's core team, with an optional public role or area of contribution.
 _Avoid_: Company team member, project team member
 
 **Fixed website page**:

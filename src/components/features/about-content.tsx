@@ -16,7 +16,14 @@ export function AboutContent({
   page: StegaAware<NonNullable<ABOUT_PAGE_QUERY_RESULT>>;
 }) {
   const team = page.team?.filter((person) => person?.name);
-  const collaborators = page.collaborators?.filter(Boolean);
+  // Published About content can still contain names while its updated draft is being edited.
+  const collaborators = page.collaborators
+    ?.map((collaborator) =>
+      typeof collaborator === "string"
+        ? { _key: collaborator, name: collaborator, role: null }
+        : collaborator
+    )
+    .filter((collaborator) => collaborator?.name);
   return (
     <>
       <PageHeader position="left" title={page.name || "About"} />
@@ -76,8 +83,15 @@ export function AboutContent({
               Collaborators
             </h2>
             <ul className="grid grid-cols-1 gap-x-10 gap-y-3 text-lg sm:grid-cols-2 lg:grid-cols-3">
-              {collaborators.map((name) => (
-                <li key={name}>{name}</li>
+              {collaborators.map((collaborator) => (
+                <li className="flex flex-col gap-1" key={collaborator._key}>
+                  <span>{collaborator.name}</span>
+                  {collaborator.role ? (
+                    <p className="text-base text-muted-foreground">
+                      {collaborator.role}
+                    </p>
+                  ) : null}
+                </li>
               ))}
             </ul>
           </section>

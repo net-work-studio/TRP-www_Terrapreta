@@ -39,16 +39,10 @@ export const aboutPageDoc = defineType({
       name: "collaborators",
       type: "array",
       description:
-        "Names only, displayed separately from the core team in this order.",
+        "Names and optional roles, displayed separately from the core team in this order.",
       of: [
         defineArrayMember({
-          type: "string",
-          validation: (rule) => [
-            rule.required().error("Enter the collaborator's public name."),
-            rule.custom((value) =>
-              value && !value.trim() ? "Enter a name, not just spaces." : true
-            ),
-          ],
+          type: "companyCollaborator",
         }),
       ],
       validation: (rule) => [
