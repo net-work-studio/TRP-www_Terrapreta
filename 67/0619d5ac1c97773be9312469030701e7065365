@@ -1,0 +1,80 @@
+src/sanity/lib/queries.ts
+  s_6c98735435c932::t_0d44a7e64f9e53 106-125,191-194
+src/sanity/schemaTypes/documents/aboutPageDoc.ts
+  s_6c98735435c932::t_0d44a7e64f9e53 2,4,12-32,36-40,57-58,63
+  s_6c98735435c932::t_7a03137c026620 3,33-35,41-56
+  s_6c98735435c932::t_7a0521d870be1c 59-62
+src/lib/website-pages.ts
+  s_6c98735435c932::t_7a03137c026620 18-19
+  s_6c98735435c932::t_a24065251d7014 47,51
+src/components/features/journal-authorship.test.tsx
+  s_6c98735435c932::t_7a03137c026620 3
+  s_6c98735435c932::t_06068689f9f478 1-2,4-18
+  s_6c98735435c932::t_c0a00ba5d95eb8 19-28
+src/lib/website-page-sitemap.ts
+  s_6c98735435c932::t_a24065251d7014 15,29-31
+src/sanity/types.ts
+  s_6c98735435c932::t_8e8a2eadecdeba 205,396,398,403-404,469-475,487-491,608-624,818,825,831,924-1020,1116,1143-1146,1163,1312,1542
+  s_6c98735435c932::t_7027f7b507af7d 1790,1794
+src/components/features/about-content.tsx
+  s_6c98735435c932::t_1167a558e912db 7-10,53-56
+  s_6c98735435c932::t_7a0521d870be1c 5,18-19,31-32,40-44,49-52,57-60,64-70,78,82-83
+  s_6c98735435c932::t_7a03137c026620 26-29,33-39,45-48,61-63,71-77,79-81
+  s_6c98735435c932::t_784dcec496625b 1-4,6,11-17,20-25,30,84-88
+src/components/features/journal-authorship.tsx
+  s_6c98735435c932::t_7a03137c026620 4-6,9-15,25-30
+  s_6c98735435c932::t_847c0fb64f0d44 1-3,7-8,16-24,31-34
+src/lib/navigation.ts
+  s_6c98735435c932::t_a24065251d7014 24-27
+  s_6c98735435c932::t_a6664f70bb5103 23
+src/sanity/schemaTypes/index.ts
+  s_6c98735435c932::t_0d44a7e64f9e53 14,58
+src/sanity/structure.ts
+  s_6c98735435c932::t_0d44a7e64f9e53 54
+CONTEXT.md
+  s_6c98735435c932::t_95243321e80a93 91-106
+src/sanity/extract.json
+  s_6c98735435c932::t_8e8a2eadecdeba 1017-1018,2081,2094,2122-2129,2133,2459-2488,2562-2583,3238-3326
+  s_6c98735435c932::t_8df4b1912dd73d 1015-1016,3327-3329
+src/components/features/about-content.test.tsx
+  s_6c98735435c932::t_24edc3534b1c2c 43-45,79-84,91
+  s_6c98735435c932::t_4a6fdeedd3dd12 3-6
+  s_6c98735435c932::t_7a03137c026620 14-31,46-78,85-90
+  s_6c98735435c932::t_a4d3e11640e746 1-2,7-13,32-42
+src/sanity/schemaTypes/documents/journalDoc.ts
+  s_6c98735435c932::t_7a03137c026620 72-74
+  s_6c98735435c932::t_0d44a7e64f9e53 2,66-71,75
+  s_6c98735435c932::t_75bf339a9f5ede 76
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_6c98735435c932::t_c0a00ba5d95eb8 134,188
+  s_6c98735435c932::t_7a03137c026620 4-7,92-94
+src/sanity/schemaTypes/documents/personDoc.ts
+  s_6c98735435c932::t_7a0521d870be1c 3,40
+  s_6c98735435c932::t_7a03137c026620 15-17,26-27,29-31,57-61
+  s_6c98735435c932::t_0d44a7e64f9e53 1-2,4-14,18-25,28,32-39,41-56,62-64
+src/lib/website-page-seo.test.ts
+  s_6c98735435c932::t_52016322190d8d 267
+src/components/ui/portable-text-components.test.tsx
+  s_6c98735435c932::t_52016322190d8d 32,47
+src/app/(frontend)/about/page.tsx
+  s_6c98735435c932::t_0f079631f1b46a 1,3-14,16-35,42-56
+  s_6c98735435c932::t_7a03137c026620 36-41
+docs/adr/0002-reuse-people-for-team-and-authorship.md
+  s_6c98735435c932::t_95243321e80a93 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "670619d5ac1c97773be9312469030701e7065365",
+  "prompts": {},
+  "sessions": {
+    "s_6c98735435c932": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14013-06ac-7eb1-9a08-a2a7d7edd204",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
