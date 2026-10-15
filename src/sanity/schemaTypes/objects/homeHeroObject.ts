@@ -27,9 +27,6 @@ export const homeHeroObject = defineType({
       name: "heading",
       type: "heroHeading",
       group: "content",
-      validation: (rule) => [
-        rule.required().error("Add the main hero heading before publishing."),
-      ],
     }),
     defineField({
       name: "description",
@@ -51,9 +48,6 @@ export const homeHeroObject = defineType({
       name: "image",
       type: "heroImage",
       group: "image",
-      validation: (rule) => [
-        rule.required().error("Choose the hero image before publishing."),
-      ],
     }),
     defineField({
       name: "button",
