@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
+import {
+  getJournalAuthors,
+  JournalByline,
+} from "@/components/features/journal-authorship";
 import ArticleContent from "@/components/shared/article-content";
 import BreadcrumbCustom from "@/components/shared/breadcrumb-custom";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
@@ -85,6 +89,9 @@ export async function generateMetadata({
     image: journalItem.seo?.ogImage ?? journalItem.mainImage ?? undefined,
     url: `/journal/${slug}`,
     type: "article",
+    authors: getJournalAuthors(journalItem.authors).map(
+      (author) => author.name
+    ),
     publishedTime: publishingDate ?? undefined,
     modifiedTime: journalItem._updatedAt,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
@@ -124,6 +131,7 @@ function JournalPageContent({
         <h1 className="text-4xl tracking-tight md:text-5xl lg:text-6xl">
           {journalItem.name}
         </h1>
+        <JournalByline authors={journalItem.authors} />
         {publishingDate ? (
           <p className="text-base text-muted-foreground">
             <time dateTime={publishingDateValue ?? undefined}>
@@ -177,10 +185,7 @@ function JournalPageContent({
             locationCreated: { "@type": "Place", name: journalItem.location },
           }),
           ...(knowsAbout && { keywords: knowsAbout }),
-          author: {
-            "@type": "Organization",
-            name: "Terrapreta",
-          },
+          author: getJournalAuthors(journalItem.authors),
           publisher: {
             "@type": "Organization",
             name: "Terrapreta",

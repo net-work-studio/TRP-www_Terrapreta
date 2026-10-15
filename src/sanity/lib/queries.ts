@@ -156,6 +156,39 @@ ${SEO_METADATA_PROJECTION}
   }
 }`);
 
+export const ABOUT_PAGE_QUERY = defineQuery(`*[
+  _type == "aboutPage"
+  && _id == "aboutPage"
+][0]{
+  _id,
+  name,
+  introduction[]{
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
+  },
+  team[]->{
+    _id,
+    name,
+    role,
+    description,
+    bio,
+    emailVisibility,
+    "email": select(emailVisibility == "visible" => email, null),
+    portrait{
+${EDITORIAL_IMAGE_PROJECTION}
+    }
+  },
+  "collaborators": select(
+    collaborators[0]._type == "companyCollaborator" => collaborators[]{
+      _key,
+      name,
+      role,
+      email,
+      bio
+    },
+    collaborators
+  )
+}`);
+
 export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
   _id in $ids
   && _type == _id
@@ -221,6 +254,10 @@ ${EDITORIAL_IMAGE_PROJECTION}
   },
   location,
   publishingDate,
+  authors[]->{
+    _id,
+    name
+  },
   shortDescription,
   contentObject[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}

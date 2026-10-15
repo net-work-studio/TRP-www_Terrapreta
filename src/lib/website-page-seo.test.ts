@@ -264,6 +264,7 @@ describe("fixed website page SEO", () => {
     );
     expect(sitemap.map(({ url }) => url)).toEqual([
       `${SITE_DEFAULTS.baseUrl}/contacts`,
+      `${SITE_DEFAULTS.baseUrl}/about`,
     ]);
     expect(sitemap[0]?.lastModified).toEqual(new Date("2026-10-02"));
   });

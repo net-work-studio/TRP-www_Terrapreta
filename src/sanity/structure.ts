@@ -51,6 +51,7 @@ export const structure = structureTool({
         S.divider(),
 
         group(S, "Company", [
+          S.documentTypeListItem("person").title("People").icon(User),
           S.documentTypeListItem("customer").title("Customers").icon(User),
         ]),
         S.divider(),

@@ -88,6 +88,22 @@ _Avoid_: Tag, journal page
 A taxonomy label that classifies journal entries and can narrow the Journal collection without defining website hierarchy.
 _Avoid_: Breadcrumb, section
 
+**Person**:
+An individual who may be presented as a company team member, credited as a journal author, or both.
+_Avoid_: Team as the name for an individual
+
+**Company team member**:
+A person selected for public presentation as part of Terrapreta's core team, with a public role and portrait. Their profile may include a description, short biography, and an email address whose public display is optional.
+_Avoid_: Project team member, collaborator
+
+**Journal author**:
+A person credited with writing a journal entry. A journal entry may credit multiple authors, independently of company team membership.
+_Avoid_: Responsible person, publisher
+
+**Company collaborator**:
+A named individual acknowledged separately from Terrapreta's core team, with an optional public role, short biography, and contact email.
+_Avoid_: Company team member, project team member
+
 **Fixed website page**:
 One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Projects overview, Journal overview, or Research overview.
 _Avoid_: Generic Page, collection entry
