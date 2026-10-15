@@ -1,6 +1,6 @@
 import { cleanOptionalString } from "@/lib/sanity-stega";
 
-const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   month: "short",
   timeZone: "UTC",
