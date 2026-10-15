@@ -185,11 +185,11 @@ describe("Homepage hero content", () => {
 
   test("preserves the existing hero until CMS content is available", () => {
     const html = renderHero(null);
-    expect(html).toContain("Regenerating ecosystems from the <em>Soil Up</em>");
+    expect(html).toContain("Regenerating ecosystems from the <em>soil up</em>");
     expect(html).toContain(
       "Developing projects for nature, people and climate"
     );
-    expect(html).toContain("Learn More");
+    expect(html).toContain("Learn more");
   });
 
   test("incomplete image alt text cannot replace the existing hero", () => {
@@ -198,7 +198,7 @@ describe("Homepage hero content", () => {
       ...hero,
       image: { ...hero.image, altContent: " " },
     });
-    expect(html).toContain("Regenerating ecosystems from the <em>Soil Up</em>");
+    expect(html).toContain("Regenerating ecosystems from the <em>soil up</em>");
     expect(html).not.toContain("Restoring ecosystems together");
   });
 });

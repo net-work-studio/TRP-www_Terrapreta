@@ -44,11 +44,11 @@ export default function SoilRevolution() {
   return (
     <div className="container-site flex flex-col items-start gap-10">
       <hgroup className="flex h-full flex-col justify-between gap-1.5">
-        <TagTitle tag="How" title="Leading the Soil revolution" />
+        <TagTitle tag="How" title="Leading the soil revolution" />
         <p className="text-pretty text-stone-400 text-xl md:w-2/3">
-          We are architects and innovators, working with a wide team of
-          scientists to address the complexity of nature interactions for
-          leading the Soil Revolution.
+          We are architects and innovators working with a multidisciplinary team
+          of scientists to understand ecological interactions and lead the soil
+          revolution.
         </p>
       </hgroup>
       <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

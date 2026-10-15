@@ -49,10 +49,7 @@ function CustomersContent({
       id="customers"
     >
       <hgroup className="flex h-full flex-col justify-between gap-2">
-        <TagTitle
-          tag="Customers"
-          title="Helping our customers to make the difference"
-        />
+        <TagTitle tag="Clients" title="Helping our clients make a difference" />
       </hgroup>
       <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {validCustomers.map(

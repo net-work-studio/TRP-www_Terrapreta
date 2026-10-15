@@ -26,7 +26,7 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
             <div className="flex flex-col gap-7.5">
               <p className="max-w-full text-pretty md:max-w-[50ch] md:text-balance">
                 Our mission is to regenerate one thousand hectares of land by
-                2031 via Soil-based Solutions.
+                2031 via soil-based solutions.
               </p>
               {logos.length > 0 && (
                 <div className="flex flex-wrap items-center gap-4">{logos}</div>
@@ -47,22 +47,22 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
             <ul className="space-y-2">
               <li>
                 <Link href="/services/brownfield-restoration">
-                  Brownfield Restoration
+                  Brownfield restoration
                 </Link>
               </li>
               <li>
                 <Link href="/services/data-driven-urban-planning">
-                  Data-driven Urban Planning
+                  Data-driven urban planning
                 </Link>
               </li>
               <li>
                 <Link href="/services/soil-health-strategies">
-                  Soil Health Strategies
+                  Soil health strategies
                 </Link>
               </li>
               <li>
                 <Link href="/services/nbs-landscape-design">
-                  NbS Landscape Design
+                  NbS landscape design
                 </Link>
               </li>
             </ul>
@@ -121,8 +121,8 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
           <p>Terrapreta SRL Società Benefit</p>
           <ul className="space-y-1.5 text-stone-400">
             <li>© Terrapreta SRL SB, Via Valparaiso 11, 20144 Milan, Italy</li>
-            <li>VAT Number IT13083330962, REA number MI 2702314</li>
-            <li>Contributed capital €10,000.00 fully paid-in</li>
+            <li>VAT number IT13083330962, REA number MI 2702314</li>
+            <li>Share capital: €10,000.00, fully paid in</li>
           </ul>
         </div>
       </footer>

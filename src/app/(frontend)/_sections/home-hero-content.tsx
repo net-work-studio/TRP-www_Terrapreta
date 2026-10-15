@@ -68,7 +68,7 @@ export function HomeHeroContent({ hero }: { hero: Hero | null | undefined }) {
                 />
               ) : (
                 <>
-                  Regenerating ecosystems from the <em>Soil Up</em>
+                  Regenerating ecosystems from the <em>soil up</em>
                 </>
               )}
             </h1>
@@ -86,7 +86,7 @@ export function HomeHeroContent({ hero }: { hero: Hero | null | undefined }) {
               })}
               href={buttonHref}
             >
-              {content ? button?.label : "Learn More"}
+              {content ? button?.label : "Learn more"}
             </Link>
           ) : null}
         </div>
