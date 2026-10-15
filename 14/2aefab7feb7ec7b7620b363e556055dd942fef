@@ -1,0 +1,39 @@
+src/lib/internal-page.test.ts
+  s_6265b01cde0e1d::t_f42d3cbcfa144f 7,38-39
+package.json
+  s_6265b01cde0e1d::t_bfaad371679aa8 49
+src/components/features/about-content.test.tsx
+  s_6265b01cde0e1d::t_34e428c9aeb4e7 2,166-212,214-225
+  s_6265b01cde0e1d::t_f5002781065358 123,131,213
+  s_6265b01cde0e1d::t_8bf7c4095c3e5d 226
+src/sanity/lib/queries.test.ts
+  s_6265b01cde0e1d::t_f424881d1bf9b5 19-24,26-28
+  s_6265b01cde0e1d::t_f42d3cbcfa144f 1-18,25,29
+src/sanity/lib/queries.ts
+  s_6265b01cde0e1d::t_b9e4c0e020fe8f 180
+copy-us-english-2026-10-15.ndjson
+  s_6265b01cde0e1d::t_5aa95c7c6aa263 18
+src/sanity/types.ts
+  s_6265b01cde0e1d::t_2aa29eab21d81f 998-1002,1306,1402-1406,2180
+  s_6265b01cde0e1d::t_72067e763e3b57 996-997
+src/components/features/about-content.tsx
+  s_6265b01cde0e1d::t_c74c73fe77ec8c 97,137
+bun.lock
+  s_6265b01cde0e1d::t_9b77af686bf6e5 38,1612,2126-2127,2130-2131,2154-2155,2158-2159,2162-2163,2176-2179,2182-2183,2308-2309
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "142aefab7feb7ec7b7620b363e556055dd942fef",
+  "prompts": {},
+  "sessions": {
+    "s_6265b01cde0e1d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1413f-c4d5-72a1-bffc-6f29819197bc",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
