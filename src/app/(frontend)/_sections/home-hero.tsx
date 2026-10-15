@@ -13,7 +13,7 @@ export default function HomeHero() {
         <div className="z-10 flex flex-col items-center justify-center gap-8">
           <hgroup className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-2.5 text-center">
             <h1 className="text-balance font-bold text-4xl md:text-5xl lg:text-6xl">
-              Regenerating ecosystems from the <em>Soil Up</em>
+              Regenerating ecosystems from the <em>soil up</em>
             </h1>
             <p className="text-pretty text-2xl">
               Developing projects for nature, people and climate
@@ -27,7 +27,7 @@ export default function HomeHero() {
             })}
             href="#learn-more"
           >
-            Learn More
+            Learn more
           </Link>
         </div>
         <div className="absolute right-0 bottom-0 left-0 z-10 flex animate-bounce flex-col items-center justify-center gap-2.5 pb-5 motion-safe:starting:opacity-0 motion-safe:transition-opacity motion-safe:duration-200 motion-reduce:animate-none">

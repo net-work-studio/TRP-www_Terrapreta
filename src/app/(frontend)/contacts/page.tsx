@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function ContactsPage() {
   return (
     <>
-      <PageHeader position="left" title="Contact Us" />
+      <PageHeader position="left" title="Contact us" />
 
       <section className="container-site grid w-full grid-cols-1 items-start justify-start gap-10 py-20 lg:grid-cols-[60%_40%]">
         <CalendarStefano />

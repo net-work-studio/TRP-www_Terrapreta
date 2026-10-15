@@ -36,7 +36,7 @@ export default function RootLayout({
     <html
       className="dark scroll-smooth bg-stone-950"
       data-scroll-behavior="smooth"
-      lang="en"
+      lang="en-US"
     >
       <head>
         <meta content="Terrapreta" name="apple-mobile-web-app-title" />

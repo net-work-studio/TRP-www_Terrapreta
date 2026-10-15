@@ -46,10 +46,10 @@ function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
   return (
     <div className="container-site flex w-full flex-col items-center justify-center space-y-20">
       <hgroup className="flex max-w-prose flex-col items-center justify-center gap-1.5 text-center">
-        <h2 className="text-3xl">A solid Network of Partners</h2>
+        <h2 className="text-3xl">A solid network of partners</h2>
         <p className="text-balance text-lg text-stone-400">
           We are proud to work with a network of partners who share our vision
-          and commitment to regenerate Soil.
+          and commitment to regenerate soil.
         </p>
       </hgroup>
       <div className="relative w-full">

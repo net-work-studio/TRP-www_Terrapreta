@@ -101,7 +101,7 @@ function ServicePageContent({
               </p>
             </hgroup>
             <Link className={buttonVariants()} href="/contacts">
-              Book a Discovery Call
+              Book a discovery call
             </Link>
           </div>
           <div className="relative aspect-3/2 rounded-md">
@@ -124,7 +124,7 @@ function ServicePageContent({
           <ServiceClients clients={service.clients} />
 
           <div className="flex flex-col items-start justify-center space-y-2.5">
-            <h2 className="font-bold text-2xl">Our Capabilities</h2>
+            <h2 className="font-bold text-2xl">Our capabilities</h2>
             <div className="flex flex-row flex-wrap items-start justify-start gap-x-2.5 gap-y-3">
               {service.capabilities
                 ?.filter(

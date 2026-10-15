@@ -34,7 +34,7 @@ export default function ImpressumPage() {
           </section>
 
           <section>
-            <h3 className="mb-2 font-bold">Certified Email (PEC)</h3>
+            <h3 className="mb-2 font-bold">Certified email (PEC)</h3>
             <p>
               <Link href={`mailto:${SITE_DEFAULTS.certifiedEmail}`}>
                 {SITE_DEFAULTS.certifiedEmail}
@@ -43,25 +43,25 @@ export default function ImpressumPage() {
           </section>
 
           <section>
-            <h3 className="mb-2 font-bold">Registered Office</h3>
+            <h3 className="mb-2 font-bold">Registered office</h3>
             <p className="whitespace-pre-line">
               {"Via Valparaiso 11\n20144 Milano MI\nItaly"}
             </p>
           </section>
 
           <section>
-            <h3 className="mb-2 font-bold">VAT Number and Tax Code</h3>
+            <h3 className="mb-2 font-bold">VAT number and tax code</h3>
             <p>13083330962</p>
           </section>
 
           <section>
-            <h3 className="mb-2 font-bold">REA Registration Number</h3>
+            <h3 className="mb-2 font-bold">REA registration number</h3>
             <p>MI - 2702314</p>
           </section>
 
           <section>
-            <h3 className="mb-2 font-bold">Share Capital</h3>
-            <p>€ 10.000,00, fully paid-in</p>
+            <h3 className="mb-2 font-bold">Share capital</h3>
+            <p>€10,000.00, fully paid in</p>
           </section>
         </div>
       </div>
