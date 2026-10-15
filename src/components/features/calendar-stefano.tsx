@@ -42,7 +42,7 @@ export default function CalendarStefano() {
 
   return (
     <div className="flex flex-col gap-10">
-      <h2 className="font-bold text-2xl">Schedule a Discovery Call</h2>
+      <h2 className="font-bold text-2xl">Schedule a discovery call</h2>
       <div
         className="h-[700px] min-h-[700px] overflow-y-auto"
         ref={containerRef}

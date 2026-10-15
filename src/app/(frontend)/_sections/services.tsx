@@ -111,7 +111,7 @@ function ServicesContent({
   return (
     <div className="container-site flex flex-col items-start justify-center gap-10">
       <hgroup className="flex w-full flex-col gap-1.5">
-        <TagTitle tag="Services" title="Soil-based Solutions" />
+        <TagTitle tag="Services" title="Soil-based solutions" />
         <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-3">
           <p className="col-span-2 text-balance text-stone-400 text-xl">
             We pioneer ecological restoration providing full-service design and
@@ -125,7 +125,7 @@ function ServicesContent({
             })}
             href="/contacts"
           >
-            Book a Discovery Call
+            Book a discovery call
           </Link>
         </div>
       </hgroup>

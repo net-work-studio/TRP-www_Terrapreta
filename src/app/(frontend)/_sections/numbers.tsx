@@ -7,9 +7,19 @@ interface NumberCardProps {
   description: string;
   image: string;
   imageAlt: string;
+  source: {
+    name: string;
+    url: string;
+  };
 }
 
-function NumberCard({ title, description, image, imageAlt }: NumberCardProps) {
+function NumberCard({
+  title,
+  description,
+  image,
+  imageAlt,
+  source,
+}: NumberCardProps) {
   return (
     <div className="flex flex-col justify-start rounded-lg border border-stone-700">
       <div className="relative">
@@ -25,10 +35,22 @@ function NumberCard({ title, description, image, imageAlt }: NumberCardProps) {
           />
         </AspectRatio>
       </div>
-      <hgroup className="space-y-2.5 bg-linear-to-b from-stone-800 to-transparent px-5 pt-5 pb-6">
+      <hgroup className="space-y-2.5 bg-linear-to-b from-stone-800 to-transparent px-5 pt-5 pb-4">
         <h3 className="text-4xl">{title}</h3>
         <p className="text-balance text-stone-300 text-xl">{description}</p>
       </hgroup>
+      <p className="mt-auto px-5 pb-6 text-sm text-stone-400">
+        Source:{" "}
+        <a
+          className="underline underline-offset-4 hover:text-stone-200"
+          href={source.url}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {source.name}
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      </p>
     </div>
   );
 }
@@ -38,28 +60,40 @@ export default function Numbers() {
       <hgroup className="flex h-full flex-col justify-between gap-1.5">
         <TagTitle tag="Why" title="Soil needs our help" />
         <p className="text-pretty text-stone-400 text-xl md:w-2/3">
-          The conditions of soil in the European Union (and worldwide) are
-          worrying, causing problems for the environment and human health.
+          Poor soil health in the European Union and worldwide threatens
+          ecosystems and human health.
         </p>
       </hgroup>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         <NumberCard
-          description="Of estimated contaminated sites to be recovered, only in the EU."
+          description="Estimated potentially contaminated sites in the EU."
           image="https://cdn.sanity.io/images/wj2okvbq/production/05956bbe8b5b11c2c1fec5a7cd315971cfcc509b-1500x1125.webp"
           imageAlt="Compacted, muddy contaminated ground around the base of a young tree, scattered with stones and rubble"
-          title="3 million"
+          source={{
+            name: "European Environment Agency",
+            url: "https://www.eea.europa.eu/en/european-zero-pollution-dashboards/indicators/progress-in-the-management-of-contaminated-sites",
+          }}
+          title="2.8 million"
         />
         <NumberCard
-          description="Percentage of degraded soils in the EU."
+          description="Estimated share of EU soils that are unhealthy."
           image="https://cdn.sanity.io/images/wj2okvbq/production/73f468c87925b92b5c0140bdab8125267f4b6bb2-1500x1186.webp"
           imageAlt="A street tree on a busy pavement, its roots confined to a small paved circle edged with bricks"
-          title="Over 60%"
+          source={{
+            name: "European Commission",
+            url: "https://environment.ec.europa.eu/topics/soil-health_en",
+          }}
+          title="60–70%"
         />
         <NumberCard
-          description="The loss of ecosystem benefits cause by soil degradation."
+          description="Annual losses caused by soil degradation in the EU."
           image="https://cdn.sanity.io/images/wj2okvbq/production/90180c6a849b692f747bac16dd81abffbda0c52a-2000x1500.webp"
           imageAlt="Top of a freshly cut tree stump with visible growth rings, on bare dark soil"
+          source={{
+            name: "European Commission",
+            url: "https://environment.ec.europa.eu/topics/soil-health_en",
+          }}
           title="€50 bn/year"
         />
       </div>
