@@ -1,0 +1,59 @@
+src/app/(frontend)/_sections/logos.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 49,52
+docs/audits/site-copy-review-2026-10-15.html
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 1-64
+copy-us-english-2026-10-15.ndjson
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 1-32
+src/components/shared/footer.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 29,50,55,60,65,124-125
+src/lib/journal-date.ts
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 3
+src/app/(frontend)/_sections/customers.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 52
+homepage-hero.ndjson
+  s_8b87aeb99b51e5::t_cb053af70ed9e4 1
+src/components/features/calendar-stefano.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 45
+copy-corrections-2026-10-15.ndjson
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 1-12
+src/app/layout.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 39
+src/app/(frontend)/impressum/page.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 37,46,53,58,63-64
+src/app/(frontend)/_sections/soil-revolution.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 47,49-51
+src/app/(frontend)/contacts/page.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 16
+src/app/(frontend)/_sections/numbers.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 10-13,16-22,38,42-53,63-64,70,73-77,80,83-87,90,93-96
+src/app/(frontend)/_sections/home-hero-content.tsx
+  s_8b87aeb99b51e5::t_cb053af70ed9e4 71,89
+src/app/(frontend)/_sections/home-hero-content.test.tsx
+  s_8b87aeb99b51e5::t_cb053af70ed9e4 188,192,201
+src/components/features/service-clients.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 30
+src/app/(frontend)/_sections/pilot-project.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 28,30-34,43
+src/app/(frontend)/_sections/services.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 114,128
+src/app/(frontend)/services/[slug]/page.tsx
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 104,127
+copy-sources-2026-10-15.ndjson
+  s_8b87aeb99b51e5::t_c1f9dd8ba74e18 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3c2f8dcf101c17c373f3dbbae12b8e119aca9a99",
+  "prompts": {},
+  "sessions": {
+    "s_8b87aeb99b51e5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13ea5-25a8-7a62-9887-892cc26d9050",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
