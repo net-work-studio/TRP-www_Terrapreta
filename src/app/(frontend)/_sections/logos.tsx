@@ -1,4 +1,5 @@
 import SanityImage from "@/components/ui/sanity-image";
+import { getSanityImageWidthForHeight } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -9,11 +10,9 @@ import {
 import { ORGANIZATIONS_QUERY } from "@/sanity/lib/queries";
 import type { ORGANIZATIONS_QUERY_RESULT } from "@/sanity/types";
 
-function LogosContent({
-  logos,
-}: {
-  logos: ORGANIZATIONS_QUERY_RESULT | null;
-}) {
+const LOGO_HEIGHT = 48;
+
+function LogosContent({ logos }: { logos: ORGANIZATIONS_QUERY_RESULT | null }) {
   const logoItems =
     logos
       ?.filter(
@@ -34,11 +33,12 @@ function LogosContent({
           <SanityImage
             alt={logo.name}
             className="h-12 w-auto object-contain"
-            height={48}
+            height={LOGO_HEIGHT}
             quality={75}
-            sizes="20vw"
             source={logo.logoDark}
-            width={120}
+            width={
+              getSanityImageWidthForHeight(logo.logoDark, LOGO_HEIGHT) ?? 120
+            }
           />
         </div>
       )) || [];
@@ -56,7 +56,7 @@ function LogosContent({
         <div className="absolute top-0 left-0 z-10 h-full w-24 bg-linear-to-r from-stone-900 to-transparent" />
         <div className="absolute top-0 right-0 z-10 h-full w-24 bg-linear-to-l from-stone-900 to-transparent" />
         <div className="overflow-hidden">
-          <div className="flex w-max hover:[animation-duration:37.5s] motion-reduce:transform-none motion-reduce:animate-none animate-logo-ticker">
+          <div className="flex w-max animate-logo-ticker motion-reduce:transform-none motion-reduce:animate-none hover:[animation-duration:37.5s]">
             <div className="flex shrink-0">{logoItems}</div>
             <div aria-hidden="true" className="flex shrink-0">
               {logoItems}
@@ -85,7 +85,7 @@ async function DynamicLogos() {
   return <CachedLogos {...fetchOptions} />;
 }
 
-export default async function Logos() {
+export default function Logos() {
   return renderSanityCacheBoundary({
     draft: <DynamicLogos />,
     fallback: <LogosContent logos={null} />,

@@ -1,8 +1,7 @@
-import { VisualEditing } from "next-sanity/visual-editing";
-import { DisableDraftMode } from "@/lib/disable-draft-mode";
 import Footer, { FooterFallback } from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { Toaster } from "@/components/ui/sonner";
+import { DraftModeTools } from "@/lib/draft-mode-tools";
 import {
   getSanityRequestState,
   isSanityDraftMode,
@@ -36,12 +35,7 @@ export default async function FrontendLayout({
       {footer}
       <Toaster />
       <SanityLive includeDrafts={isDraftMode} />
-      {isDraftMode && (
-        <>
-          <DisableDraftMode />
-          <VisualEditing />
-        </>
-      )}
+      {isDraftMode ? <DraftModeTools /> : null}
     </>
   );
 }

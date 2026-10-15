@@ -1,16 +1,15 @@
 import type { MetadataRoute } from "next";
+import { SITE_DEFAULTS } from "@/lib/constants";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
-
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin/", "/api/"],
+        disallow: ["/admin", "/api/"],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${SITE_DEFAULTS.baseUrl}/sitemap.xml`,
   };
 }

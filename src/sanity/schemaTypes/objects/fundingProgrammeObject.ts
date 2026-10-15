@@ -22,9 +22,7 @@ export const fundingProgrammeObject = defineType({
       name: "amount",
       description: "Enter the amount together with its currency, if known.",
       validation: (rule) => [
-        rule
-          .max(80)
-          .warning("Keep the funding amount under 80 characters."),
+        rule.max(80).warning("Keep the funding amount under 80 characters."),
       ],
     }),
     defineField({

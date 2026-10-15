@@ -2,8 +2,9 @@ import Image, { type StaticImageData } from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
 
+// Center-crop the landscape source to the card's 4:5 frame before resizing.
 const designCover =
-  "https://cdn.sanity.io/images/wj2okvbq/production/c3e88b5e56a22300b4add544c008ffb4e89674eb-1200x857.webp";
+  "https://cdn.sanity.io/images/wj2okvbq/production/c3e88b5e56a22300b4add544c008ffb4e89674eb-1200x857.webp?rect=258,1,684,855";
 
 const analyzeCover =
   "https://cdn.sanity.io/images/wj2okvbq/production/5dd442374b3c7dc8c8a8e2b2f4cd60da8627d824-1200x1798.webp";
@@ -14,23 +15,25 @@ const engageCover =
 interface SoilCardProps {
   title: string;
   image: StaticImageData | string;
+  imageAlt: string;
   description: string;
 }
 
-function SoilCard({ title, image, description }: SoilCardProps) {
+function SoilCard({ title, image, imageAlt, description }: SoilCardProps) {
   return (
     <div className="flex flex-col gap-2.5">
       <AspectRatio className="relative h-full w-full rounded" ratio={4 / 5}>
         <Image
-          alt={title}
+          alt={imageAlt}
           className="h-full w-full rounded-md object-cover"
           fill
           quality={75}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           src={image}
         />
       </AspectRatio>
       <div className="space-y-1">
-        <h3 className="text-balance font-medium text-xl">{title}</h3>
+        <h3 className="text-balance font-light text-xl">{title}</h3>
         <p className="text-lg text-stone-400">{description}</p>
       </div>
     </div>
@@ -52,16 +55,19 @@ export default function SoilRevolution() {
         <SoilCard
           description="Scientific research and field studies allow us to collect data for evidence-based design and planning."
           image={analyzeCover}
+          imageAlt="Two people in gloves kneeling on a forest floor, digging a small pit in dark soil with hand tools"
           title="Analyze"
         />
         <SoilCard
           description="Through our landscape design process, we develop solutions for restoring degraded land."
           image={designCover}
+          imageAlt="Hands pointing at a printed site plan laid on leaf litter, one using a twig as a pointer"
           title="Design"
         />
         <SoilCard
           description="To create real change, we engage stakeholders throughout the process and promote soil knowledge through educational activities."
           image={engageCover}
+          imageAlt="Audience listening to a speaker with a microphone beside a projected slide about terra preta, the dark Amazonian soil"
           title="Engage"
         />
       </div>

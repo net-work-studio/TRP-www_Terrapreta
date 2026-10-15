@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import type { StegaAware } from "@/lib/sanity-stega";
+import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -13,11 +13,9 @@ import {
 import { PROJECTS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECTS_QUERY_RESULT } from "@/sanity/types";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Projects",
-  description: "Explore our latest projects.",
-  url: "/projects",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getWebsitePageMetadata("projectsIndexPage");
+}
 
 function ProjectsContent({
   projects,

@@ -1,8 +1,8 @@
 "use client";
 
-import { ExternalLink, Mail, MessageCircle, Share2 } from "lucide-react";
-import { CopyLink } from "@/components/ui/copy-link";
+import { ExternalLink, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CopyLink } from "@/components/ui/copy-link";
 
 const SHARE_ACTIONS = [
   {
@@ -27,11 +27,7 @@ const SHARE_ACTIONS = [
 
 export default function SocialShare() {
   const handleShare = (getHref: (url: string) => string) => {
-    window.open(
-      getHref(window.location.href),
-      "_blank",
-      "noopener,noreferrer"
-    );
+    window.open(getHref(window.location.href), "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -40,7 +36,7 @@ export default function SocialShare() {
       className="mx-auto w-full max-w-[52ch] border-t pt-6 text-lg"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-muted-foreground text-sm">
           <h2 id="share-heading">Share this page</h2>
         </div>
         <div className="flex flex-wrap items-center gap-2">

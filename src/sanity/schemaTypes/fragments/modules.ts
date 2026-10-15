@@ -40,9 +40,7 @@ export default defineField({
         },
         { name: "list" },
       ],
-      groups: [
-        { name: "hero", of: ["heroSplitModule"] },
-      ],
+      groups: [{ name: "hero", of: ["heroSplitModule"] }],
     },
   },
 });

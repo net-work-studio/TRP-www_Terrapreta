@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 import ArticleContent from "@/components/shared/article-content";
 import { BreadcrumbJsonLd } from "@/components/shared/breadcrumb-json-ld";
-import { JsonLd } from "@/components/shared/json-ld";
+import { ProjectJsonLd } from "@/components/shared/project-json-ld";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {
   Breadcrumb,
@@ -16,13 +16,9 @@ import { portableTextComponents } from "@/components/ui/portable-text-components
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
-import {
-  cleanCommaList,
-  cleanOptionalString,
-  type StegaAware,
-} from "@/lib/sanity-stega";
+import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
+import { hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -32,10 +28,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import {
-  PROJECT_ITEM_QUERY,
-  PROJECT_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
+import { PROJECT_ITEM_QUERY, PROJECT_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { PROJECT_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 type SlugPageProps = {
@@ -93,7 +86,7 @@ export async function generateMetadata({
       undefined,
     image: projectItem.seo?.ogImage ?? projectItem.mainImage ?? undefined,
     url: `/projects/${slug}`,
-    type: "article",
+    type: "website",
     canonicalUrl: projectItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: projectItem.seo?.robotsIndex ?? undefined,
     robotsFollow: projectItem.seo?.robotsFollow ?? undefined,
@@ -116,15 +109,13 @@ function ProjectPageContent({
     notFound();
   }
 
-  const schemaType = cleanOptionalString(projectItem.seo?.schemaType) || "Project";
   const statusLabel = projectItem.status
     ? cleanOptionalString(projectItem.status)?.replaceAll("-", " ")
     : undefined;
-  const knowsAbout = cleanCommaList(projectItem.seo?.customSchema?.knowsAbout);
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <hgroup className="flex starting:translate-y-2 translate-y-0 flex-col items-center justify-center gap-5 text-balance pb-5 text-center starting:opacity-0 transition-all duration-400">
+      <hgroup className="flex flex-col items-center justify-center gap-5 text-balance pb-5 text-center">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -140,15 +131,12 @@ function ProjectPageContent({
         </p>
       </hgroup>
 
-      <AspectRatio
-        className="relative blur-none starting:blur-xl transition-all duration-400"
-        ratio={ASPECT_RATIO}
-      >
+      <AspectRatio className="relative" ratio={ASPECT_RATIO}>
         <SanityImage
           alt={projectItem.name || ""}
           className="z-0 h-full w-full object-cover"
           fill
-          priority
+          preload
           quality={IMAGE_QUALITY}
           sizes="100vw"
           source={projectItem.mainImage}
@@ -156,20 +144,18 @@ function ProjectPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        <ul className="flex items-center hidden gap-2 text-lg text-muted-foreground">
-          {projectItem.location && (
+        <ul className="flex hidden items-center gap-2 text-lg text-muted-foreground">
+          {!!projectItem.location && (
             <>
               <li>{projectItem.location}</li>
-              {projectItem.status && <Minus size={16} />}
+              {!!projectItem.status && <Minus size={16} />}
             </>
           )}
-          {projectItem.status && (
-            <li className="capitalize">
-              {statusLabel}
-            </li>
+          {!!projectItem.status && (
+            <li className="capitalize">{statusLabel}</li>
           )}
         </ul>
-        {projectItem.pageContent && (
+        {!!projectItem.pageContent && (
           <ArticleContent className="text-pretty">
             <PortableText
               components={portableTextComponents}
@@ -180,20 +166,7 @@ function ProjectPageContent({
       </div>
 
       <SocialShare />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": schemaType,
-          name: projectItem.name,
-          description: projectItem.shortDescription,
-          ...(projectItem.location && { location: projectItem.location }),
-          ...(projectItem.status && { status: projectItem.status }),
-          ...(hasSanityImage(projectItem.mainImage) && {
-            image: getSanityImageUrl(projectItem.mainImage, { width: 1200 }),
-          }),
-          ...(knowsAbout && { knowsAbout }),
-        }}
-      />
+      <ProjectJsonLd project={projectItem} slug={slug} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", url: "/" },
@@ -231,9 +204,7 @@ async function CachedProjectPage({
   return <ProjectPageContent projectItem={projectItem} slug={slug} />;
 }
 
-async function DynamicProjectPage({
-  params,
-}: SlugPageProps) {
+async function DynamicProjectPage({ params }: SlugPageProps) {
   const [{ slug }, { fetchOptions, isDraftMode }] = await Promise.all([
     params,
     getSanityRequestState(),
@@ -274,9 +245,7 @@ function ProjectPageFallback() {
   );
 }
 
-export default async function Page({
-  params,
-}: SlugPageProps) {
+export default async function Page({ params }: SlugPageProps) {
   return renderSanityCacheBoundary({
     draft: <DynamicProjectPage params={params} />,
     fallback: <ProjectPageFallback />,

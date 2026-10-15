@@ -1,6 +1,6 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import TagTitle from "@/components/ui/tag-title";
 import SanityImage from "@/components/ui/sanity-image";
+import TagTitle from "@/components/ui/tag-title";
 import {
   getSanityRequestState,
   PUBLISHED_SANITY_FETCH_OPTIONS,
@@ -9,9 +9,14 @@ import {
   sanityFetch,
 } from "@/sanity/lib/live";
 import { CUSTOMERS_QUERY } from "@/sanity/lib/queries";
-import type { CUSTOMERS_QUERY_RESULT, SanityImageHotspot } from "@/sanity/types";
+import type {
+  CUSTOMERS_QUERY_RESULT,
+  SanityImageHotspot,
+} from "@/sanity/types";
 
-function getObjectPosition(hotspot?: SanityImageHotspot | null): string {
+function getObjectPosition(
+  hotspot?: Partial<SanityImageHotspot> | null
+): string {
   if (!hotspot) {
     return "center";
   }
@@ -41,7 +46,7 @@ function CustomersContent({
   return (
     <div
       className="container-site flex flex-col items-start gap-10"
-      id="soil-revolution"
+      id="customers"
     >
       <hgroup className="flex h-full flex-col justify-between gap-2">
         <TagTitle
@@ -49,7 +54,7 @@ function CustomersContent({
           title="Helping our customers to make the difference"
         />
       </hgroup>
-      <div className="md grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {validCustomers.map(
           (
             customer: CUSTOMERS_QUERY_RESULT[number] & {
@@ -66,16 +71,18 @@ function CustomersContent({
                   className="rounded object-cover"
                   fill
                   quality={75}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   source={customer.mainImage}
                   style={{
-                    objectPosition: getObjectPosition(customer.mainImage.hotspot),
+                    objectPosition: getObjectPosition(
+                      customer.mainImage.hotspot
+                    ),
                   }}
                 />
               </AspectRatio>
               <div className="space-y-1">
                 <h3 className="text-2xl">{customer.name}</h3>
-                {customer.shortDescription && (
+                {!!customer.shortDescription && (
                   <p className="text-lg text-stone-400">
                     {customer.shortDescription}
                   </p>
@@ -106,7 +113,7 @@ async function DynamicCustomers() {
   return <CachedCustomers {...fetchOptions} />;
 }
 
-export default async function Customers() {
+export default function Customers() {
   return renderSanityCacheBoundary({
     draft: <DynamicCustomers />,
     fallback: <CustomersContent customers={null} />,

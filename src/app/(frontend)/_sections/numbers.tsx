@@ -1,33 +1,27 @@
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import TagTitle from "@/components/ui/tag-title";
-import { urlFor } from "@/sanity/lib/image";
 
 interface NumberCardProps {
   title: string;
   description: string;
   image: string;
+  imageAlt: string;
 }
 
-function NumberCard({ title, description, image }: NumberCardProps) {
+function NumberCard({ title, description, image, imageAlt }: NumberCardProps) {
   return (
     <div className="flex flex-col justify-start rounded-lg border border-stone-700">
       <div className="relative">
         <div className="absolute right-0 bottom-0 left-0 z-1 h-[35%] w-full bg-linear-to-t from-stone-800 to-transparent" />
         <AspectRatio className="relative w-full rounded" ratio={5 / 4}>
           <Image
-            alt="Why? Our Soil needs help."
-            blurDataURL={urlFor(image)
-              .width(24)
-              .height(24)
-              .quality(5)
-              .auto("format")
-              .url()}
+            alt={imageAlt}
             className="h-full w-full rounded object-cover object-center"
             fill
-            placeholder="blur"
             quality={75}
-            src={urlFor(image).quality(75).auto("format").url()}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            src={image}
           />
         </AspectRatio>
       </div>
@@ -53,16 +47,19 @@ export default function Numbers() {
         <NumberCard
           description="Of estimated contaminated sites to be recovered, only in the EU."
           image="https://cdn.sanity.io/images/wj2okvbq/production/05956bbe8b5b11c2c1fec5a7cd315971cfcc509b-1500x1125.webp"
+          imageAlt="Compacted, muddy contaminated ground around the base of a young tree, scattered with stones and rubble"
           title="3 million"
         />
         <NumberCard
           description="Percentage of degraded soils in the EU."
           image="https://cdn.sanity.io/images/wj2okvbq/production/73f468c87925b92b5c0140bdab8125267f4b6bb2-1500x1186.webp"
+          imageAlt="A street tree on a busy pavement, its roots confined to a small paved circle edged with bricks"
           title="Over 60%"
         />
         <NumberCard
           description="The loss of ecosystem benefits cause by soil degradation."
           image="https://cdn.sanity.io/images/wj2okvbq/production/90180c6a849b692f747bac16dd81abffbda0c52a-2000x1500.webp"
+          imageAlt="Top of a freshly cut tree stump with visible growth rings, on bare dark soil"
           title="€50 bn/year"
         />
       </div>

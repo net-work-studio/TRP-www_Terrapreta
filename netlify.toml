@@ -12,6 +12,7 @@ force = true
 
 [build]
 command = "bun install --frozen-lockfile && bun run build"
+ignore = "node ./scripts/netlify-ignore-build.mjs"
 publish = ".next"
 
   [build.environment]

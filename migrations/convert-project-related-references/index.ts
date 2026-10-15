@@ -38,7 +38,7 @@ export default defineMigration({
     document(document) {
       const relatedService = toReferenceArray(document.relatedService);
       const relatedResearch = toReferenceArray(document.relatedResearch);
-      const patches = [];
+      const patches: ReturnType<typeof at>[] = [];
 
       if (relatedService !== document.relatedService) {
         patches.push(at("relatedService", set(relatedService)));

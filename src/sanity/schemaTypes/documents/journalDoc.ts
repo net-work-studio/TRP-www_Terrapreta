@@ -15,7 +15,9 @@ export const journalDoc = defineType({
       title: "Title",
       group: "meta",
       validation: (rule) => [
-        rule.required().error("A journal entry needs a title before publishing."),
+        rule
+          .required()
+          .error("A journal entry needs a title before publishing."),
       ],
     }),
     defineField({
@@ -24,7 +26,9 @@ export const journalDoc = defineType({
       title: "Slug",
       group: "meta",
       validation: (rule) => [
-        rule.required().error("A slug is required to generate the journal URL."),
+        rule
+          .required()
+          .error("A slug is required to generate the journal URL."),
       ],
       options: {
         source: "name",
@@ -54,7 +58,9 @@ export const journalDoc = defineType({
       description:
         "Use always a city and country in English, never a state or region. (Example: Milan, Italy)",
       validation: (rule) => [
-        rule.required().error("Add the city and country for this journal entry."),
+        rule
+          .required()
+          .error("Add the city and country for this journal entry."),
       ],
     }),
     defineField({
@@ -84,7 +90,9 @@ export const journalDoc = defineType({
         rule.required().error("Add a short summary for journal cards and SEO."),
         rule
           .max(220)
-          .warning("Keep journal summaries under 220 characters for cards and SEO."),
+          .warning(
+            "Keep journal summaries under 220 characters for cards and SEO."
+          ),
       ],
     }),
     defineField({
@@ -93,7 +101,9 @@ export const journalDoc = defineType({
       title: "Content",
       group: "content",
       validation: (rule) => [
-        rule.required().error("Add content before publishing this journal entry."),
+        rule
+          .required()
+          .error("Add content before publishing this journal entry."),
       ],
     }),
     defineField({

@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField } from "sanity";
+import { LIVE_WEBSITE_PAGE_IDS } from "@/lib/website-pages";
 
 /**
  * Rich text block configuration with internal link support.
@@ -55,20 +56,22 @@ export const richTextBlock = defineArrayMember({
           defineField({
             name: "reference",
             type: "reference",
-            title: "Reference",
+            description:
+              "Link to a live website page, journal entry, service, or project with a public detail page.",
             to: [
-              { type: "page" },
               { type: "journal" },
               { type: "project" },
               { type: "service" },
-              { type: "research" },
-              { type: "press" },
-              { type: "about" },
+              ...LIVE_WEBSITE_PAGE_IDS.map((type) => ({ type })),
             ],
+            options: {
+              filter:
+                '_type in $pageTypes || (defined(slug.current) && (_type != "project" || coalesce(publicationScope, "full") == "full"))',
+              filterParams: { pageTypes: [...LIVE_WEBSITE_PAGE_IDS] },
+              disableNew: true,
+            },
             validation: (rule) => [
-              rule
-                .required()
-                .error("Choose the document this link points to."),
+              rule.required().error("Choose the document this link points to."),
             ],
           }),
         ],

@@ -44,7 +44,9 @@ export const serviceDoc = defineType({
       title: "Slug",
       group: "meta",
       validation: (rule) => [
-        rule.required().error("A slug is required to generate the service URL."),
+        rule
+          .required()
+          .error("A slug is required to generate the service URL."),
       ],
       options: {
         source: "name",
@@ -58,7 +60,9 @@ export const serviceDoc = defineType({
       validation: (rule) => [
         rule
           .max(220)
-          .warning("Keep service summaries under 220 characters for cards and SEO."),
+          .warning(
+            "Keep service summaries under 220 characters for cards and SEO."
+          ),
       ],
     }),
     defineField({

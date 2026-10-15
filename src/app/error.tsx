@@ -26,7 +26,7 @@ export default function ErrorPage({
             We encountered an unexpected error. Please try again or contact us
             if the problem persists.
           </p>
-          {error.digest && (
+          {!!error.digest && (
             <p className="font-mono text-stone-500 text-xs">
               Error ID: {error.digest}
             </p>

@@ -22,7 +22,7 @@ export default defineMigration({
           setIfMissing({
             _type: "gridDimensionObject",
             prominence,
-          }),
+          })
         ),
         at("gridDimension.prominence", setIfMissing(prominence)),
       ];

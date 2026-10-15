@@ -1,31 +1,26 @@
+import type { ImageUrlBuilder, SanityImageSource } from "@sanity/image-url";
 import { createImageUrlBuilder } from "@sanity/image-url";
-import type { ImageUrlBuilder } from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url";
 
 import { dataset, projectId } from "../env";
 import {
-  getBlurDataUrl,
-  getSanityImageAlt,
   getSanityImageField,
-  hasSanityImage,
   type SanityImageSourceInput,
 } from "./image-source";
 
+// biome-ignore lint/performance/noBarrelFile: Keep image metadata and URL helpers available through the shared image API.
 export {
   getBlurDataUrl,
   getSanityImageAlt,
   getSanityImageField,
+  getSanityImageWidthForHeight,
   hasSanityImage,
   type SanityImageSourceInput,
 } from "./image-source";
 
 const builder = createImageUrlBuilder({ projectId, dataset });
 
-export const urlFor = (source: SanityImageSource) => {
-  return builder.image(source);
-};
+export const urlFor = (source: SanityImageSource) => builder.image(source);
 
-const DEFAULT_FILL_WIDTH = 1920;
 const DEFAULT_IMAGE_QUALITY = 75;
 
 export function urlForImage(
@@ -33,7 +28,7 @@ export function urlForImage(
 ): ImageUrlBuilder | null {
   const imageField = getSanityImageField(source);
 
-  if (!imageField?.asset?._id && !imageField?.asset?.url) {
+  if (!(imageField?.asset?._id || imageField?.asset?.url)) {
     return null;
   }
 
@@ -43,7 +38,6 @@ export function urlForImage(
 export function getSanityImageUrl(
   source: SanityImageSourceInput,
   options?: {
-    fill?: boolean;
     width?: number;
     height?: number;
     quality?: number;
@@ -55,20 +49,19 @@ export function getSanityImageUrl(
     return null;
   }
 
-  const quality = options?.quality ?? DEFAULT_IMAGE_QUALITY;
-
-  if (options?.fill) {
-    return imageBuilder
-      .width(DEFAULT_FILL_WIDTH)
-      .quality(quality)
-      .auto("format")
-      .url();
+  if (!options) {
+    return imageBuilder.url();
   }
 
-  return imageBuilder
-    .width(options?.width ?? 800)
-    .height(options?.height ?? 600)
-    .quality(quality)
+  let resized = imageBuilder;
+  if (options.width) {
+    resized = resized.width(options.width);
+  }
+  if (options.height) {
+    resized = resized.height(options.height);
+  }
+  return resized
+    .quality(options.quality ?? DEFAULT_IMAGE_QUALITY)
     .auto("format")
     .url();
 }

@@ -3,10 +3,8 @@ import type { StegaBranded } from "next-sanity";
 import Mark from "@/components/brand/mark";
 import { buttonVariants } from "@/components/ui/button";
 import SanityImage from "@/components/ui/sanity-image";
-import {
-  type SanityFetchOptions,
-  sanityFetch,
-} from "@/sanity/lib/live";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { type SanityFetchOptions, sanityFetch } from "@/sanity/lib/live";
 import { UN_GOALS_QUERY } from "@/sanity/lib/queries";
 import type { UN_GOALS_QUERY_RESULT } from "@/sanity/types";
 
@@ -101,7 +99,7 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
               </li>
               <li>
                 <a
-                  href="mailto:mail@terrapreta.it"
+                  href={`mailto:${SITE_DEFAULTS.email}`}
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -110,17 +108,11 @@ function FooterShell({ logos = [] }: { logos?: React.ReactNode[] }) {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col gap-5 opacity-0">
+          <div className="flex flex-col gap-5">
             <h3 className="text-stone-400">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="">Impressum</Link>
-              </li>
-              <li>
-                <Link href="">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link href="">Cookie Policy</Link>
+                <Link href="/impressum">Impressum</Link>
               </li>
             </ul>
           </div>
@@ -159,12 +151,10 @@ export default async function Footer({
 
   const unGoalLogos =
     unGoals
-      ?.filter(
-        (goal): goal is UnGoalWithLogo =>
-          Boolean(
-            goal.logoNegative?.asset?.url &&
-              goal.logoNegative.asset.url !== null
-          )
+      ?.filter((goal): goal is UnGoalWithLogo =>
+        Boolean(
+          goal.logoNegative?.asset?.url && goal.logoNegative.asset.url !== null
+        )
       )
       .map((goal) => (
         <SanityImage
@@ -173,7 +163,6 @@ export default async function Footer({
           height={144}
           key={goal._id}
           quality={75}
-          sizes="20vw"
           source={goal.logoNegative}
           width={160}
         />

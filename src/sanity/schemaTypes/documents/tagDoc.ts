@@ -10,9 +10,7 @@ export const tagDoc = defineType({
     defineField({
       type: "string",
       name: "name",
-      validation: (rule) => [
-        rule.required().error("A tag needs a name."),
-      ],
+      validation: (rule) => [rule.required().error("A tag needs a name.")],
     }),
     defineField({
       type: "slug",

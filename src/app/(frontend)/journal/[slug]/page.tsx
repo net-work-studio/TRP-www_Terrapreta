@@ -9,6 +9,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
 import {
   cleanCommaList,
@@ -26,10 +28,7 @@ import {
   sanityFetchMetadata,
   sanityFetchStaticParams,
 } from "@/sanity/lib/live";
-import {
-  JOURNAL_ITEM_QUERY,
-  JOURNAL_SLUGS_QUERY,
-} from "@/sanity/lib/queries";
+import { JOURNAL_ITEM_QUERY, JOURNAL_SLUGS_QUERY } from "@/sanity/lib/queries";
 import type { JOURNAL_ITEM_QUERY_RESULT } from "@/sanity/types";
 
 type SlugPageProps = {
@@ -38,30 +37,6 @@ type SlugPageProps = {
 
 const ASPECT_RATIO = 16 / 9;
 const IMAGE_QUALITY = 75;
-const JOURNAL_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  timeZone: "UTC",
-  year: "numeric",
-});
-
-function cleanPublishingDate(value: string | null) {
-  const publishingDate = cleanOptionalString(value);
-
-  if (!publishingDate || Number.isNaN(new Date(publishingDate).getTime())) {
-    return null;
-  }
-
-  return publishingDate;
-}
-
-function formatPublishingDate(value: string | null) {
-  const publishingDate = cleanPublishingDate(value);
-
-  return publishingDate
-    ? JOURNAL_DATE_FORMATTER.format(new Date(publishingDate))
-    : null;
-}
 
 export async function generateStaticParams() {
   const { data } = await sanityFetchStaticParams({
@@ -111,6 +86,7 @@ export async function generateMetadata({
     url: `/journal/${slug}`,
     type: "article",
     publishedTime: publishingDate ?? undefined,
+    modifiedTime: journalItem._updatedAt,
     canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
     robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
     robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
@@ -134,14 +110,16 @@ function JournalPageContent({
   }
 
   const schemaType =
-    cleanOptionalString(journalItem.seo?.schemaType) || "BlogPosting";
+    cleanOptionalString(journalItem.seo?.schemaType) === "Article"
+      ? "Article"
+      : "BlogPosting";
   const knowsAbout = cleanCommaList(journalItem.seo?.customSchema?.knowsAbout);
   const publishingDateValue = cleanPublishingDate(journalItem.publishingDate);
   const publishingDate = formatPublishingDate(journalItem.publishingDate);
 
   return (
     <article className="container-site flex flex-col items-center justify-center gap-5 pt-30 pb-20 md:pt-40">
-      <header className="flex translate-y-0 flex-col items-center justify-center gap-5 space-y-5 pb-5 text-balance text-center opacity-100 transition-all duration-400 starting:translate-y-2 starting:opacity-0">
+      <header className="flex flex-col items-center justify-center gap-5 space-y-5 text-balance pb-5 text-center">
         <BreadcrumbCustom tag={journalItem.tag?.name} />
         <h1 className="text-4xl tracking-tight md:text-5xl lg:text-6xl">
           {journalItem.name}
@@ -155,15 +133,12 @@ function JournalPageContent({
         ) : null}
       </header>
 
-      <AspectRatio
-        className="relative blur-none transition-all duration-400 starting:blur-xl"
-        ratio={ASPECT_RATIO}
-      >
+      <AspectRatio className="relative" ratio={ASPECT_RATIO}>
         <SanityImage
           alt={journalItem.mainImage.altContent || journalItem.name || ""}
           className="z-0 h-full w-full object-cover"
           fill
-          priority
+          preload
           quality={IMAGE_QUALITY}
           sizes="100vw"
           source={journalItem.mainImage}
@@ -171,7 +146,7 @@ function JournalPageContent({
       </AspectRatio>
 
       <div className="container-article space-y-4 py-20">
-        {journalItem.contentObject && (
+        {!!journalItem.contentObject && (
           <ArticleContent>
             <PortableText
               components={portableTextComponents}
@@ -187,6 +162,10 @@ function JournalPageContent({
           "@context": "https://schema.org",
           "@type": schemaType,
           headline: journalItem.name,
+          url:
+            journalItem.seo?.canonicalUrl ||
+            new URL(`/journal/${slug}`, SITE_DEFAULTS.baseUrl).toString(),
+          dateModified: journalItem._updatedAt,
           description: journalItem.shortDescription,
           ...(publishingDateValue && {
             datePublished: publishingDateValue,
@@ -195,9 +174,9 @@ function JournalPageContent({
             image: getSanityImageUrl(journalItem.mainImage, { width: 1200 }),
           }),
           ...(journalItem.location && {
-            locationCreated: journalItem.location,
+            locationCreated: { "@type": "Place", name: journalItem.location },
           }),
-          ...(knowsAbout && { knowsAbout }),
+          ...(knowsAbout && { keywords: knowsAbout }),
           author: {
             "@type": "Organization",
             name: "Terrapreta",
@@ -240,9 +219,7 @@ async function CachedJournalPage({
   return <JournalPageContent journalItem={journalItem} slug={slug} />;
 }
 
-async function DynamicJournalPage({
-  params,
-}: SlugPageProps) {
+async function DynamicJournalPage({ params }: SlugPageProps) {
   const [{ slug }, { fetchOptions }] = await Promise.all([
     params,
     getSanityRequestState(),

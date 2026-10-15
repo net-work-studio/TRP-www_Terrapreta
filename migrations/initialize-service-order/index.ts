@@ -1,6 +1,8 @@
 import { LexoRank } from "lexorank";
 import { at, defineMigration, patch, set } from "sanity/migrate";
 
+const DRAFT_ID_PREFIX = /^drafts\./;
+
 type ServiceDocument = {
   _createdAt?: string;
   _id: string;
@@ -21,7 +23,7 @@ export default defineMigration({
 
     for await (const document of documents()) {
       const service = document as ServiceDocument;
-      const serviceId = service._id.replace(/^drafts\./, "");
+      const serviceId = service._id.replace(DRAFT_ID_PREFIX, "");
       const serviceDocuments = servicesById.get(serviceId) ?? [];
 
       serviceDocuments.push(service);
@@ -33,27 +35,28 @@ export default defineMigration({
         documents: serviceDocuments,
         service:
           serviceDocuments.find((service) =>
-            service._id.startsWith("drafts."),
+            service._id.startsWith("drafts.")
           ) ?? serviceDocuments[0],
-      }),
+      })
     );
 
     services.sort(
       (first, second) =>
         (first.service.name ?? "").localeCompare(second.service.name ?? "") ||
         (first.service._createdAt ?? "").localeCompare(
-          second.service._createdAt ?? "",
-        ),
+          second.service._createdAt ?? ""
+        )
     );
 
-    const canonicalRanks = services.map((service) =>
-      service.documents
-        .flatMap((document) =>
-          document.orderRank === undefined ? [] : [document.orderRank],
-        )
-        .sort((first, second) =>
-          LexoRank.parse(first).compareTo(LexoRank.parse(second)),
-        )[0],
+    const canonicalRanks = services.map(
+      (service) =>
+        service.documents
+          .flatMap((document) =>
+            document.orderRank === undefined ? [] : [document.orderRank]
+          )
+          .sort((first, second) =>
+            LexoRank.parse(first).compareTo(LexoRank.parse(second))
+          )[0]
     );
     let rank = LexoRank.min();
 

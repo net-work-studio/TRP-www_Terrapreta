@@ -9,4 +9,8 @@ export const SITE_DEFAULTS = {
     "Regenerating ecosystems from the soil up. Growing equitable places for nature, people and climate.",
   defaultImage: "/images/terrapreta_hero.webp",
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it",
+  email: "mail@terrapreta.it",
+  certifiedEmail: "pec@srlc.terrapreta.it",
+  // Keep the analytics site identity fixed when the base URL is overridden.
+  analyticsDomain: "terrapreta.it",
 } as const;

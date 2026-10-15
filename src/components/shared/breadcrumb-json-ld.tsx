@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/shared/json-ld";
+import { SITE_DEFAULTS } from "@/lib/constants";
 
 interface BreadcrumbItem {
   name: string;
@@ -9,14 +10,12 @@ interface BreadcrumbJsonLdProps {
   items: BreadcrumbItem[];
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://terrapreta.it";
-
 export function BreadcrumbJsonLd({ items }: BreadcrumbJsonLdProps) {
   const itemListElement = items.map((item, index) => ({
     "@type": "ListItem",
     position: index + 1,
     name: item.name,
-    item: `${baseUrl}${item.url}`,
+    item: `${SITE_DEFAULTS.baseUrl}${item.url}`,
   }));
 
   return (

@@ -38,13 +38,14 @@ function ServiceCard({
   const titleId = `service-${slug}-title`;
 
   return (
-    <div className="relative flex aspect-3/2 w-full grid-cols-3 items-end gap-5 rounded bg-gray-600 p-7.5">
+    <div className="relative flex aspect-3/2 w-full items-end gap-5 rounded bg-stone-800 p-7.5">
       <div className="absolute inset-0 z-1 h-full w-full bg-stone-950/20" />
       <SanityImage
         alt={name}
         className="z-0 h-full w-full rounded object-cover object-center"
         fill
         quality={75}
+        sizes="(min-width: 768px) 50vw, 100vw"
         source={mainImage}
       />
 
@@ -76,10 +77,11 @@ function ServiceCard({
                       className="h-full w-full rounded object-cover object-center"
                       fill
                       quality={75}
+                      sizes="(min-width: 864px) 864px, 100vw"
                       source={mainImage}
                     />
                   </AspectRatio>
-                  <DialogTitle className="px-5 text-left font-normal text-2xl text-stone-50 md:px-10 md:text-3xl">
+                  <DialogTitle className="px-5 text-left font-light text-2xl text-stone-50 md:px-10 md:text-3xl">
                     {name}
                   </DialogTitle>
                 </div>
@@ -90,10 +92,7 @@ function ServiceCard({
             </div>
 
             <div className="p-5 pb-10 md:p-10">
-              <Link
-                className={buttonVariants()}
-                href={`/services/${slug}`}
-              >
+              <Link className={buttonVariants()} href={`/services/${slug}`}>
                 Discover more
               </Link>
             </div>
@@ -124,7 +123,7 @@ function ServicesContent({
             className={buttonVariants({
               className: "w-fit md:justify-self-end",
             })}
-            href="/discovery-call"
+            href="/contacts"
           >
             Book a Discovery Call
           </Link>
@@ -151,7 +150,7 @@ function ServicesContent({
           )
           .map((service) => (
             <ServiceCard
-              key={service.name}
+              key={service._id}
               mainImage={service.mainImage}
               name={service.name}
               shortDescription={service.shortDescription || ""}
@@ -180,7 +179,7 @@ async function DynamicServices() {
   return <CachedServices {...fetchOptions} />;
 }
 
-export default async function Services() {
+export default function Services() {
   return renderSanityCacheBoundary({
     draft: <DynamicServices />,
     fallback: <ServicesContent services={null} />,

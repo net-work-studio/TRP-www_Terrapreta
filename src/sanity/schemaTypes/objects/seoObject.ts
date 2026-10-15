@@ -1,25 +1,54 @@
 import { SearchIcon } from "@sanity/icons/Search";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { formatSeoTitle } from "@/lib/seo-title";
+import type { Site } from "@/sanity/types";
 
 export const seoObject = defineType({
   type: "object",
   name: "seoObject",
   title: "SEO",
   icon: SearchIcon,
+  groups: [
+    { name: "search", icon: SearchIcon, default: true },
+    { name: "social", icon: SearchIcon },
+    { name: "structuredData", title: "Structured data", icon: SearchIcon },
+  ],
   fields: [
     defineField({
       type: "string",
       name: "metaTitle",
-      title: "Meta Title",
-      description: "Override page title for search engines (50-60 chars)",
+      group: "search",
+      description:
+        "Search title. The website adds the Site brand suffix; aim for 60 characters including the suffix.",
       validation: (rule) => [
-        rule.max(60).warning("Meta titles should be under 60 characters"),
+        rule
+          .custom(async (value, context) => {
+            if (!value) {
+              return true;
+            }
+            const site =
+              context.document?._type === "site"
+                ? context.document
+                : await context
+                    .getClient({ apiVersion: "2026-01-16" })
+                    .getDocument<Site>("site");
+            const brandName =
+              (typeof site?.brandName === "string" && site.brandName) ||
+              SITE_DEFAULTS.name;
+            const { length } = formatSeoTitle(value, brandName);
+            return (
+              length <= 60 ||
+              `The rendered title is ${length} characters including the brand. Aim for 60 or fewer.`
+            );
+          })
+          .warning(),
       ],
     }),
     defineField({
       type: "text",
       name: "metaDescription",
-      title: "Meta Description",
+      group: "search",
       rows: 3,
       description: "Description for search results (150-160 chars)",
       validation: (rule) => [
@@ -31,16 +60,32 @@ export const seoObject = defineType({
     defineField({
       type: "image",
       name: "ogImage",
+      group: "social",
       title: "Social Share Image",
       description: "Custom image for social sharing (1200x630px recommended)",
       options: {
         hotspot: true,
       },
+      fields: [
+        defineField({
+          name: "alt",
+          type: "string",
+          description:
+            "Describe the image for social previews. Defaults to the page title.",
+          validation: (rule) => [
+            rule
+              .max(140)
+              .warning("Keep social-image alt text under 140 characters."),
+          ],
+        }),
+      ],
     }),
     defineField({
       type: "url",
       name: "canonicalUrl",
+      group: "search",
       title: "Canonical URL",
+      hidden: ({ document }) => document?._type === "site",
       description:
         "Override the default canonical URL (leave empty to use page URL)",
       validation: (rule) => [
@@ -52,6 +97,7 @@ export const seoObject = defineType({
     defineField({
       type: "string",
       name: "robotsIndex",
+      group: "search",
       title: "Indexing",
       options: {
         list: [
@@ -65,6 +111,7 @@ export const seoObject = defineType({
     defineField({
       type: "string",
       name: "robotsFollow",
+      group: "search",
       title: "Link Following",
       options: {
         list: [
@@ -78,47 +125,47 @@ export const seoObject = defineType({
     defineField({
       type: "string",
       name: "schemaType",
+      group: "structuredData",
       title: "Primary Schema Type",
-      description: "Override the default JSON-LD schema type for this page",
+      hidden: ({ document }) => document?._type !== "journal",
+      description:
+        "Journal structured-data type. Other routes use a type matching their content.",
       options: {
         list: [
-          { title: "Organization", value: "Organization" },
-          { title: "Service", value: "Service" },
-          { title: "Project", value: "Project" },
+          { title: "Blog posting", value: "BlogPosting" },
           { title: "Article", value: "Article" },
-          { title: "LocalBusiness", value: "LocalBusiness" },
         ],
+        layout: "radio",
       },
+      validation: (rule) => [
+        rule.custom(
+          (value, context) =>
+            context.document?._type !== "journal" ||
+            !value ||
+            ["Article", "BlogPosting"].includes(value) ||
+            "Choose Article or Blog posting for a journal entry."
+        ),
+      ],
     }),
     defineField({
-      type: "object",
+      type: "customSchema",
       name: "customSchema",
+      group: "structuredData",
       title: "Custom Schema Properties",
-      fields: [
-        defineField({
-          type: "text",
-          name: "knowsAbout",
-          title: "Knows About",
-          description:
-            "Comma-separated topics (e.g., 'soil regeneration, ecosystem restoration')",
-        }),
-        defineField({
-          type: "array",
-          name: "hasOfferCatalog",
-          title: "Services Offered",
-          of: [defineArrayMember({ type: "string" })],
-        }),
-      ],
+      hidden: ({ document }) =>
+        !["project", "service", "journal"].includes(document?._type || ""),
     }),
     defineField({
       type: "string",
       name: "ogTitle",
+      group: "social",
       title: "OG Title Override",
       description: "Override the Open Graph title (defaults to meta title)",
     }),
     defineField({
       type: "text",
       name: "ogDescription",
+      group: "social",
       title: "OG Description Override",
       description:
         "Override the Open Graph description (defaults to meta description)",
@@ -127,6 +174,7 @@ export const seoObject = defineType({
     defineField({
       type: "string",
       name: "twitterCard",
+      group: "social",
       title: "Twitter Card Type",
       options: {
         list: [

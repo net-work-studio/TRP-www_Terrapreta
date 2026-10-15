@@ -3,15 +3,14 @@ import { stegaClean } from "next-sanity";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
+import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import type { StegaAware } from "@/lib/sanity-stega";
 import { cn } from "@/lib/utils";
 import {
   hasSanityImage,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
-import type {
-  Slug,
-} from "@/sanity/types";
+import type { Slug } from "@/sanity/types";
 
 type GridItemProps = {
   _id: string;
@@ -61,13 +60,12 @@ function GridItem({
     return null;
   }
 
-  const publishingDateValue = publishingDate
-    ? stegaClean(publishingDate)
-    : undefined;
+  const publishingDateValue = cleanPublishingDate(publishingDate);
+  const publishingDateLabel = formatPublishingDate(publishingDate);
   const className = cn(
     "h-fit space-y-2.5",
     isInteractive && "group",
-    isFeatured ? "col-span-2" : "col-span-1"
+    isFeatured ? "md:col-span-2" : "col-span-1"
   );
   const content = (
     <>
@@ -81,24 +79,24 @@ function GridItem({
           )}
           fill
           quality={IMAGE_QUALITY}
-          sizes={isFeatured ? "50vw" : "30vw"}
+          sizes={
+            isFeatured
+              ? "(min-width: 1024px) 66vw, 100vw"
+              : "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          }
           source={mainImage}
         />
       </AspectRatio>
       <hgroup className="space-y-2">
-        {(tag?.name || publishingDateValue) && (
+        {!!(tag?.name || publishingDateValue) && (
           <span className="flex items-center gap-2.5">
-            {tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
-            {publishingDateValue && (
+            {!!tag?.name && <Badge variant="secondary">{tag?.name}</Badge>}
+            {!!publishingDateValue && (
               <time
                 className="text-muted-foreground text-sm"
                 dateTime={publishingDateValue}
               >
-                {new Date(publishingDateValue).toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
+                {publishingDateLabel}
               </time>
             )}
           </span>
@@ -127,7 +125,7 @@ export default function PageGrid({
   basePath: string;
 }) {
   return (
-    <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 starting:opacity-0 transition-opacity duration-300 md:grid-cols-2 lg:grid-cols-3">
+    <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 md:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
         const slugValue = getSlugValue(item.slug);
 

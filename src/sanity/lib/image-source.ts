@@ -70,6 +70,44 @@ export function hasSanityImage(source: SanityImageSourceInput): boolean {
   return Boolean(imageField?.asset?._id || imageField?.asset?.url);
 }
 
+export function getSanityImageWidthForHeight(
+  source: SanityImageSourceInput,
+  displayHeight: number
+): number | undefined {
+  const dimensions = source?.asset?.metadata?.dimensions;
+  const width = dimensions?.width;
+  const height = dimensions?.height;
+
+  if (
+    !(
+      width &&
+      height &&
+      displayHeight > 0 &&
+      Number.isFinite(width) &&
+      Number.isFinite(height)
+    )
+  ) {
+    return undefined;
+  }
+
+  // Match the image URL builder's crop rectangle in source pixels.
+  const left = Math.round((source?.crop?.left ?? 0) * width);
+  const top = Math.round((source?.crop?.top ?? 0) * height);
+  const croppedWidth = Math.round(
+    width - (source?.crop?.right ?? 0) * width - left
+  );
+  const croppedHeight = Math.round(
+    height - (source?.crop?.bottom ?? 0) * height - top
+  );
+  const displayWidth = Math.ceil(
+    (displayHeight * croppedWidth) / croppedHeight
+  );
+
+  return croppedWidth > 0 && croppedHeight > 0 && Number.isFinite(displayWidth)
+    ? displayWidth
+    : undefined;
+}
+
 export function getBlurDataUrl(
   source: SanityImageSourceInput
 ): string | undefined {

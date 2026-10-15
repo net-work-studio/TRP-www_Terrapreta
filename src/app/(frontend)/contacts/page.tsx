@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import CalendarStefano from "@/components/features/calendar-stefano";
-import { ObfuscatedEmail } from "@/components/shared/obfuscated-email";
 import PageHeader from "@/components/shared/page-header";
 import { buttonVariants } from "@/components/ui/button";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { SITE_DEFAULTS } from "@/lib/constants";
+import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
 
-export const metadata: Metadata = generateMetadataHelper({
-  title: "Contacts",
-  description: "Get in touch with Terrapreta.",
-  url: "/contacts",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return getWebsitePageMetadata("contactPage");
+}
 
 export default function ContactsPage() {
   return (
@@ -20,12 +19,12 @@ export default function ContactsPage() {
         <CalendarStefano />
         <div className="flex flex-col items-start justify-center gap-10">
           <h2 className="font-bold text-2xl">Write us an email</h2>
-          <ObfuscatedEmail
+          <Link
             className={buttonVariants({ size: "lg", variant: "outline" })}
-            display="mail@terrapreta.it"
-            domain="terrapreta.it"
-            local="mail"
-          />
+            href={`mailto:${SITE_DEFAULTS.email}`}
+          >
+            {SITE_DEFAULTS.email}
+          </Link>
         </div>
       </section>
     </>
