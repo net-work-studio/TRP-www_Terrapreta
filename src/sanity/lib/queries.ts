@@ -82,6 +82,59 @@ ${IMAGE_FIELD_PROJECTION}
     ogDescription,
     twitterCard`;
 
+const INTERNAL_PAGE_DESTINATION_PROJECTION = /* groq */ `
+    _id,
+    _type,
+    "slug": slug.current,
+    "publicationScope": coalesce(publicationScope, "full"),
+    "hasImage": defined(mainImage.asset->url)`;
+
+export const INTERNAL_PAGE_DESTINATION_QUERY = defineQuery(`*[
+  _id == $id
+][0]{
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+}`);
+
+export const HOME_HERO_QUERY = defineQuery(`*[
+  _id == "homePage"
+  && _type == "homePage"
+][0]{
+  hero{
+    heading[]{
+      _key,
+      _type,
+      style,
+      children[]{
+        _key,
+        _type,
+        text,
+        marks
+      },
+      markDefs[]{
+        _key,
+        _type
+      }
+    },
+    description,
+    image{
+      altContent,
+${IMAGE_FIELD_PROJECTION}
+    },
+    button{
+      visibility,
+      label,
+      "destinationType": coalesce(
+        destinationType,
+        select(defined(page._ref) => "page", "section")
+      ),
+      page->{
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+      }
+    },
+    scrollCue
+  }
+}`);
+
 export const SITE_SETTINGS_QUERY = defineQuery(`*[
   _type == "site"
   && _id == "site"
@@ -101,6 +154,30 @@ export const WEBSITE_PAGE_SEO_QUERY = defineQuery(`*[
   seo{
 ${SEO_METADATA_PROJECTION}
   }
+}`);
+
+export const ABOUT_PAGE_QUERY = defineQuery(`*[
+  _type == "aboutPage"
+  && _id == "aboutPage"
+][0]{
+  _id,
+  name,
+  introduction[]{
+    ${PORTABLE_TEXT_CONTENT_PROJECTION}
+  },
+  team[]->{
+    _id,
+    name,
+    role,
+    description,
+    bio,
+    emailVisibility,
+    "email": select(emailVisibility == "visible" => email, null),
+    portrait{
+${EDITORIAL_IMAGE_PROJECTION}
+    }
+  },
+  collaborators
 }`);
 
 export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
@@ -168,6 +245,10 @@ ${EDITORIAL_IMAGE_PROJECTION}
   },
   location,
   publishingDate,
+  authors[]->{
+    _id,
+    name
+  },
   shortDescription,
   contentObject[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}

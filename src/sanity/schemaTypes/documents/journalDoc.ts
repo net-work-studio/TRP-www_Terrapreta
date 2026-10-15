@@ -1,5 +1,5 @@
 import { DocumentTextIcon } from "@sanity/icons/DocumentText";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { groups } from "../helpers/groups";
 
 export const journalDoc = defineType({
@@ -62,6 +62,17 @@ export const journalDoc = defineType({
           .required()
           .error("Add the city and country for this journal entry."),
       ],
+    }),
+    defineField({
+      name: "authors",
+      type: "array",
+      description:
+        "People credited in this order. Leave empty to credit Terrapreta as the author.",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "person" }] })],
+      validation: (rule) => [
+        rule.unique().error("Credit each author only once."),
+      ],
+      group: "content",
     }),
     defineField({
       type: "date",

@@ -798,6 +798,334 @@
     }
   },
   {
+    "name": "internalCallToAction",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "internalCallToAction"
+          }
+        },
+        "visibility": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "hidden"
+              },
+              {
+                "type": "string",
+                "value": "shown"
+              }
+            ]
+          },
+          "optional": false
+        },
+        "destinationType": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "section"
+              },
+              {
+                "type": "string",
+                "value": "page"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "label": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "page": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "inline",
+                "name": "contactPage.reference"
+              },
+              {
+                "type": "inline",
+                "name": "aboutPage.reference"
+              },
+              {
+                "type": "inline",
+                "name": "projectsIndexPage.reference"
+              },
+              {
+                "type": "inline",
+                "name": "journalIndexPage.reference"
+              },
+              {
+                "type": "inline",
+                "name": "project.reference"
+              },
+              {
+                "type": "inline",
+                "name": "journal.reference"
+              },
+              {
+                "type": "inline",
+                "name": "service.reference"
+              }
+            ]
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "homeHero",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "homeHero"
+          }
+        },
+        "heading": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "heroHeading"
+          },
+          "optional": false
+        },
+        "description": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        },
+        "image": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "heroImage"
+          },
+          "optional": false
+        },
+        "button": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "internalCallToAction"
+          },
+          "optional": true
+        },
+        "scrollCue": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "static"
+              },
+              {
+                "type": "string",
+                "value": "animated"
+              },
+              {
+                "type": "string",
+                "value": "hidden"
+              }
+            ]
+          },
+          "optional": false
+        }
+      }
+    }
+  },
+  {
+    "name": "heroImage",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "heroImage"
+          }
+        },
+        "asset": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageAsset.reference"
+          },
+          "optional": false
+        },
+        "media": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "unknown"
+          },
+          "optional": true
+        },
+        "hotspot": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageHotspot"
+          },
+          "optional": true
+        },
+        "crop": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "sanity.imageCrop"
+          },
+          "optional": true
+        },
+        "altContent": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        }
+      }
+    }
+  },
+  {
+    "name": "heroHeading",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "object",
+        "attributes": {
+          "children": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "array",
+              "of": {
+                "type": "object",
+                "attributes": {
+                  "marks": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "array",
+                      "of": {
+                        "type": "string"
+                      }
+                    },
+                    "optional": true
+                  },
+                  "text": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
+                  "_type": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string",
+                      "value": "span"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "optional": true
+          },
+          "style": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "union",
+              "of": [
+                {
+                  "type": "string",
+                  "value": "normal"
+                }
+              ]
+            },
+            "optional": true
+          },
+          "listItem": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "union",
+              "of": []
+            },
+            "optional": true
+          },
+          "markDefs": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "null"
+            },
+            "optional": true
+          },
+          "level": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "number"
+            },
+            "optional": true
+          },
+          "_type": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "string",
+              "value": "block"
+            }
+          }
+        },
+        "rest": {
+          "type": "object",
+          "attributes": {
+            "_key": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
     "name": "gridDimensionObject",
     "type": "type",
     "value": {
@@ -1011,6 +1339,10 @@
                                 {
                                   "type": "inline",
                                   "name": "contactPage.reference"
+                                },
+                                {
+                                  "type": "inline",
+                                  "name": "aboutPage.reference"
                                 },
                                 {
                                   "type": "inline",
@@ -1251,6 +1583,50 @@
             "of": {
               "type": "string"
             }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "companyCollaborator",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "companyCollaborator"
+          }
+        },
+        "name": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": false
+        },
+        "role": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "bio": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "email": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
           },
           "optional": true
         }
@@ -2074,7 +2450,7 @@
     }
   },
   {
-    "name": "aboutPage",
+    "name": "person",
     "type": "document",
     "attributes": {
       "_id": {
@@ -2087,7 +2463,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "aboutPage"
+          "value": "person"
         }
       },
       "_createdAt": {
@@ -2115,11 +2491,56 @@
         },
         "optional": false
       },
-      "seo": {
+      "role": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "bio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "portrait": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "seoObject"
+          "name": "editorialImage"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "emailVisibility": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "hidden"
+            },
+            {
+              "type": "string",
+              "value": "visible"
+            }
+          ]
         },
         "optional": true
       }
@@ -2446,6 +2867,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "person.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "person"
+    }
+  },
+  {
     "name": "journal",
     "type": "document",
     "attributes": {
@@ -2517,6 +2968,28 @@
           "type": "string"
         },
         "optional": false
+      },
+      "authors": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "person.reference"
+            }
+          }
+        },
+        "optional": true
       },
       "publishingDate": {
         "type": "objectAttribute",
@@ -3173,6 +3646,110 @@
     }
   },
   {
+    "name": "aboutPage",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "aboutPage"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "introduction": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "richTextContent"
+        },
+        "optional": false
+      },
+      "team": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "person.reference"
+            }
+          }
+        },
+        "optional": true
+      },
+      "collaborators": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "companyCollaborator"
+            }
+          }
+        },
+        "optional": true
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seoObject"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "journalIndexPage",
     "type": "document",
     "attributes": {
@@ -3370,6 +3947,14 @@
         },
         "optional": false
       },
+      "hero": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "homeHero"
+        },
+        "optional": false
+      },
       "seo": {
         "type": "objectAttribute",
         "value": {
@@ -3429,6 +4014,88 @@
           "name": "slug"
         },
         "optional": false
+      }
+    }
+  },
+  {
+    "type": "type",
+    "name": "media.folder.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "media.folder"
+    }
+  },
+  {
+    "name": "media.folder",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "media.folder"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "parent": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "media.folder.reference"
+        },
+        "optional": true
       }
     }
   },

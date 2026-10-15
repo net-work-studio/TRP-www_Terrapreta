@@ -7,16 +7,16 @@ import {
   GraduationCap,
   Hammer,
   HeartHandshake,
-  Link,
   Mailbox,
   Newspaper,
   Route,
+  Search,
   Settings2,
+  Tags,
   User,
   WholeWord,
 } from "lucide-react";
 import { structureTool } from "sanity/structure";
-import { WEBSITE_PAGES } from "@/lib/website-pages";
 import { group } from "./lib/builders";
 
 export const structure = structureTool({
@@ -24,16 +24,15 @@ export const structure = structureTool({
     S.list()
       .title("Content")
       .items([
-        S.listItem().singleton("site").icon(Settings2),
-        group(
-          S,
-          "Website pages",
-          Object.keys(WEBSITE_PAGES).map((id) => S.listItem().singleton(id))
-        ).icon(FileStack),
-        S.divider(),
-
-        S.documentTypeListItem("page").title("All Pages").icon(FileStack),
-        S.divider(),
+        group(S, "Website pages", [
+          S.listItem().singleton("homePage"),
+          S.listItem().singleton("aboutPage"),
+          S.listItem().singleton("contactPage"),
+          S.listItem().singleton("projectsIndexPage"),
+          S.listItem().singleton("journalIndexPage"),
+        ])
+          .id("website-pages")
+          .icon(FileStack),
         orderableDocumentListDeskItem({
           type: "project",
           title: "Projects",
@@ -41,51 +40,61 @@ export const structure = structureTool({
           S,
           context,
         }),
-        orderableDocumentListDeskItem({
-          type: "service",
-          title: "Services",
-          icon: HeartHandshake,
-          S,
-          context,
-        }),
-        S.divider(),
-
-        group(S, "Company", [
-          S.documentTypeListItem("customer").title("Customers").icon(User),
-        ]),
-        S.divider(),
-
-        group(S, "Media", [
-          S.documentTypeListItem("journal")
-            .title("Journal posts")
-            .icon(Newspaper),
-          S.documentTypeListItem("press").title("Press").icon(Mailbox),
-        ]),
-        S.divider(),
-
-        group(S, "Resources", [
-          S.documentTypeListItem("glossary").title("Glossary").icon(WholeWord),
-        ]),
-        S.divider(),
-
-        group(S, "Miscellaneous", [
+        group(S, "Services", [
+          orderableDocumentListDeskItem({
+            type: "service",
+            title: "Service entries",
+            icon: HeartHandshake,
+            S,
+            context,
+          }),
           S.documentTypeListItem("capability")
             .title("Capabilities")
             .icon(GraduationCap),
-          S.documentTypeListItem("process").title("Processes").icon(Route),
-
+        ])
+          .id("services")
+          .icon(HeartHandshake),
+        group(S, "Journal", [
+          S.documentTypeListItem("journal")
+            .title("Journal entries")
+            .icon(Newspaper),
+          S.documentTypeListItem("tag").title("Tags").icon(Tags),
+        ])
+          .id("journal")
+          .icon(Newspaper),
+        group(S, "People & organizations", [
+          S.documentTypeListItem("person").title("People").icon(User),
           S.documentTypeListItem("organization")
             .title("Organizations")
             .icon(Building),
-          S.documentTypeListItem("unGoal")
-            .title("United Nations Goals")
-            .icon(Flag),
-        ]),
-        S.divider(),
-
-        S.documentTypeListItem("navigation").title("Navigations").icon(Link),
-        S.documentTypeListItem("redirect")
-          .title("Redirects")
-          .icon(ArrowRightLeft),
+          S.documentTypeListItem("customer").title("Customers").icon(User),
+        ])
+          .id("people-organizations")
+          .icon(User),
+        group(S, "Project classifications", [
+          S.documentTypeListItem("unGoal").title("UN Goals").icon(Flag),
+        ])
+          .id("project-classifications")
+          .icon(Flag),
+        S.documentTypeListItem("glossary").title("Glossary").icon(WholeWord),
+        group(S, "Website settings", [
+          S.listItem().singleton("site").icon(Settings2),
+          S.documentTypeListItem("redirect")
+            .title("Redirects")
+            .icon(ArrowRightLeft),
+        ])
+          .id("website-settings")
+          .icon(Settings2),
+        group(S, "Inactive content", [
+          S.documentTypeListItem("page").title("Generic Pages").icon(FileStack),
+          S.listItem().singleton("researchIndexPage"),
+          S.documentTypeListItem("research")
+            .title("Research entries")
+            .icon(Search),
+          S.documentTypeListItem("press").title("Press").icon(Mailbox),
+          S.documentTypeListItem("process").title("Processes").icon(Route),
+        ])
+          .id("inactive-content")
+          .icon(FileStack),
       ]),
 });

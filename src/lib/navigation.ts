@@ -21,6 +21,11 @@ export const navigationData: NavigationItem[] = [
     description: "Latest updates and insights",
   },
   {
+    label: "About",
+    href: "/about",
+    description: "Our company and people",
+  },
+  {
     label: "Contact",
     href: "/contacts",
     description: "",

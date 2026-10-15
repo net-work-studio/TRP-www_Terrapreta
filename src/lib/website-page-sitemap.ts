@@ -12,6 +12,7 @@ import type {
 const SITEMAP_OPTIONS = {
   homePage: { changeFrequency: "daily", priority: 1 },
   contactPage: { changeFrequency: "monthly", priority: 0.8 },
+  aboutPage: { changeFrequency: "monthly", priority: 0.8 },
   projectsIndexPage: { changeFrequency: "weekly", priority: 0.9 },
   journalIndexPage: { changeFrequency: "weekly", priority: 0.9 },
 } as const;
@@ -25,6 +26,9 @@ export function getWebsitePagesSitemap(
 
   return LIVE_WEBSITE_PAGE_IDS.flatMap((id) => {
     const page = pages.find((entry) => entry._id === id);
+    if (id === "aboutPage" && !page) {
+      return [];
+    }
     const { path } = WEBSITE_PAGES[id];
     if (
       !isSitemapPage(

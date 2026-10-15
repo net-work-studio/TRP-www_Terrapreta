@@ -1,10 +1,8 @@
-import { describe, expect, mock, test } from "bun:test";
+import { describe, expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
 
-// SanityImage pulls in the Sanity client, which requires project env vars.
-mock.module("@/components/ui/sanity-image", () => ({
-  default: ({ alt }: { alt: string }) => <span aria-label={alt} role="img" />,
-}));
+process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ??= "example";
+process.env.NEXT_PUBLIC_SANITY_DATASET ??= "production";
 
 const { ServiceClients } = await import("./service-clients");
 
@@ -50,7 +48,7 @@ describe("ServiceClients", () => {
     expect(markup).toContain("<h2");
     expect(markup).not.toContain("<h3");
     expect(markup).toContain("flex-wrap");
-    expect(markup).toContain('aria-label="Acme"');
+    expect(markup).toContain('alt="Acme"');
     expect(markup).not.toContain("No logo");
   });
 });

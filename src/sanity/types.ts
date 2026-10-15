@@ -173,6 +173,54 @@ export type LinkObject = {
   target: "_self" | "_blank";
 };
 
+export type InternalCallToAction = {
+  _type: "internalCallToAction";
+  visibility: "hidden" | "shown";
+  destinationType?: "section" | "page";
+  label?: string;
+  page?:
+    | ContactPageReference
+    | AboutPageReference
+    | ProjectsIndexPageReference
+    | JournalIndexPageReference
+    | ProjectReference
+    | JournalReference
+    | ServiceReference;
+};
+
+export type HomeHero = {
+  _type: "homeHero";
+  heading: HeroHeading;
+  description: string;
+  image: HeroImage;
+  button?: InternalCallToAction;
+  scrollCue: "static" | "animated" | "hidden";
+};
+
+export type HeroImage = {
+  _type: "heroImage";
+  asset: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  altContent: string;
+};
+
+export type HeroHeading = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
 export type GridDimensionObject = {
   _type: "gridDimensionObject";
   prominence: "standard" | "featured";
@@ -202,6 +250,7 @@ export type RichTextContent = Array<
               | ServiceReference
               | HomePageReference
               | ContactPageReference
+              | AboutPageReference
               | ProjectsIndexPageReference
               | JournalIndexPageReference;
             _type: "internalLink";
@@ -244,6 +293,14 @@ export type CustomSchema = {
   _type: "customSchema";
   knowsAbout?: string;
   hasOfferCatalog?: Array<string>;
+};
+
+export type CompanyCollaborator = {
+  _type: "companyCollaborator";
+  name: string;
+  role?: string;
+  bio?: string;
+  email?: string;
 };
 
 export type CompetitionObject = {
@@ -392,14 +449,19 @@ export type ResearchIndexPage = {
   seo?: SeoObject;
 };
 
-export type AboutPage = {
+export type Person = {
   _id: string;
-  _type: "aboutPage";
+  _type: "person";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   name: string;
-  seo?: SeoObject;
+  role?: string;
+  description?: string;
+  bio?: string;
+  portrait?: EditorialImage;
+  email?: string;
+  emailVisibility?: "hidden" | "visible";
 };
 
 export type Press = {
@@ -464,6 +526,13 @@ export type TagReference = {
   [internalGroqTypeReferenceTo]?: "tag";
 };
 
+export type PersonReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "person";
+};
+
 export type Journal = {
   _id: string;
   _type: "journal";
@@ -475,6 +544,11 @@ export type Journal = {
   gridDimension?: GridDimensionObject;
   tag: TagReference;
   location: string;
+  authors?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
   publishingDate: string;
   mainImage: EditorialImage;
   shortDescription: string;
@@ -591,6 +665,27 @@ export type Service = {
   orderRank?: string;
 };
 
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  introduction: RichTextContent;
+  team?: Array<
+    {
+      _key: string;
+    } & PersonReference
+  >;
+  collaborators?: Array<
+    {
+      _key: string;
+    } & CompanyCollaborator
+  >;
+  name: string;
+  seo?: SeoObject;
+};
+
 export type JournalIndexPage = {
   _id: string;
   _type: "journalIndexPage";
@@ -628,6 +723,7 @@ export type HomePage = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  hero: HomeHero;
   seo?: SeoObject;
 };
 
@@ -639,6 +735,23 @@ export type Tag = {
   _rev: string;
   name: string;
   slug: Slug;
+};
+
+export type MediaFolderReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "media.folder";
+};
+
+export type MediaFolder = {
+  _id: string;
+  _type: "media.folder";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  parent?: MediaFolderReference;
 };
 
 export type MediaTag = {
@@ -767,12 +880,17 @@ export type AllSanitySchemaTypes =
   | ResearchReference
   | PressReference
   | LinkObject
+  | InternalCallToAction
+  | HomeHero
+  | HeroImage
+  | HeroHeading
   | GridDimensionObject
   | RichTextContent
   | FundingProgramme
   | EditorialImage
   | TitleSlugObject
   | CustomSchema
+  | CompanyCollaborator
   | CompetitionObject
   | Redirect
   | Customer
@@ -784,23 +902,27 @@ export type AllSanitySchemaTypes =
   | Process
   | Capability
   | ResearchIndexPage
-  | AboutPage
+  | Person
   | Press
   | Site
   | Page
   | Slug
   | Glossary
   | TagReference
+  | PersonReference
   | Journal
   | Research
   | Project
   | CapabilityReference
   | Service
+  | AboutPage
   | JournalIndexPage
   | ProjectsIndexPage
   | ContactPage
   | HomePage
   | Tag
+  | MediaFolderReference
+  | MediaFolder
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -810,6 +932,297 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: INTERNAL_PAGE_DESTINATION_QUERY
+// Query: *[  _id == $id][0]{    _id,    _type,    "slug": slug.current,    "publicationScope": coalesce(publicationScope, "full"),    "hasImage": defined(mainImage.asset->url)}
+export type INTERNAL_PAGE_DESTINATION_QUERY_RESULT =
+  | {
+      _id: string;
+      _type: "aboutPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "capability";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "contactPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "customer";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false | true;
+    }
+  | {
+      _id: string;
+      _type: "glossary";
+      slug: string;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "homePage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "journal";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "journalIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "media.folder";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "media.tag";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "navigation";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "organization";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "page";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "person";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "press";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "process";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "project";
+      slug: string;
+      publicationScope: "full" | "overview";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "projectsIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "redirect";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "research";
+      slug: null;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "researchIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "sanity.fileAsset";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "sanity.imageAsset";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "service";
+      slug: string;
+      publicationScope: "full";
+      hasImage: true;
+    }
+  | {
+      _id: string;
+      _type: "site";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "tag";
+      slug: string;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
+      _type: "unGoal";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: HOME_HERO_QUERY
+// Query: *[  _id == "homePage"  && _type == "homePage"][0]{  hero{    heading[]{      _key,      _type,      style,      children[]{        _key,        _type,        text,        marks      },      markDefs[]{        _key,        _type      }    },    description,    image{      altContent,      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    button{      visibility,      label,      "destinationType": coalesce(        destinationType,        select(defined(page._ref) => "page", "section")      ),      page->{    _id,    _type,    "slug": slug.current,    "publicationScope": coalesce(publicationScope, "full"),    "hasImage": defined(mainImage.asset->url)      }    },    scrollCue  }}
+export type HOME_HERO_QUERY_RESULT = {
+  hero: {
+    heading: Array<{
+      _key: string;
+      _type: "block";
+      style: "normal" | null;
+      children: Array<{
+        _key: string;
+        _type: "span";
+        text: string | null;
+        marks: Array<string> | null;
+      }> | null;
+      markDefs: null;
+    }>;
+    description: string;
+    image: {
+      altContent: string;
+      _type: "heroImage";
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      };
+    };
+    button: {
+      visibility: "hidden" | "shown";
+      label: string | null;
+      destinationType: "page" | "section";
+      page:
+        | {
+            _id: string;
+            _type: "aboutPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "contactPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "journal";
+            slug: string;
+            publicationScope: "full";
+            hasImage: true;
+          }
+        | {
+            _id: string;
+            _type: "journalIndexPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "project";
+            slug: string;
+            publicationScope: "full" | "overview";
+            hasImage: true;
+          }
+        | {
+            _id: string;
+            _type: "projectsIndexPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
+        | {
+            _id: string;
+            _type: "service";
+            slug: string;
+            publicationScope: "full";
+            hasImage: true;
+          }
+        | null;
+    } | null;
+    scrollCue: "animated" | "hidden" | "static";
+  };
+} | null;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_SETTINGS_QUERY
@@ -887,6 +1300,111 @@ export type WEBSITE_PAGE_SEO_QUERY_RESULT =
       } | null;
     }
   | null;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: ABOUT_PAGE_QUERY
+// Query: *[  _type == "aboutPage"  && _id == "aboutPage"][0]{  _id,  name,  introduction[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": select(        reference->_type == "project"          && coalesce(reference->publicationScope, "full") != "full" => null,        reference->slug.current      ),      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  team[]->{    _id,    name,    role,    description,    bio,    emailVisibility,    "email": select(emailVisibility == "visible" => email, null),    portrait{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }    }  },  collaborators}
+export type ABOUT_PAGE_QUERY_RESULT = {
+  _id: "aboutPage";
+  name: string;
+  introduction: Array<
+    | {
+        _key: string;
+        _type: "block";
+        style: "h2" | "h3" | "h4" | "normal" | null;
+        listItem: "bullet" | "number" | null;
+        level: number | null;
+        markDefs: Array<
+          | {
+              _key: string;
+              _type: "internalLink";
+              href: null;
+              blank: null;
+              slug: null | string;
+              type:
+                | "aboutPage"
+                | "contactPage"
+                | "homePage"
+                | "journal"
+                | "journalIndexPage"
+                | "project"
+                | "projectsIndexPage"
+                | "service";
+            }
+          | {
+              _key: string;
+              _type: "link";
+              href: string;
+              blank: "false" | "true" | null;
+            }
+        > | null;
+        children: Array<{
+          _key: string;
+          _type: "span";
+          text: string | null;
+          marks: Array<string> | null;
+        }> | null;
+      }
+    | {
+        _key: string;
+        _type: "editorialImage";
+        style: null;
+        listItem: null;
+        level: null;
+        markDefs: null;
+        children: null;
+        altContent: string | null;
+        caption: string | null;
+        hotspot: SanityImageHotspot | null;
+        crop: SanityImageCrop | null;
+        asset: {
+          _id: string;
+          url: string;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
+            } | null;
+          } | null;
+        };
+      }
+  >;
+  team: Array<{
+    _id: string;
+    name: string;
+    role: string | null;
+    description: string | null;
+    bio: string | null;
+    emailVisibility: "hidden" | "visible" | null;
+    email: string | null;
+    portrait: {
+      _type: "editorialImage";
+      altContent: string | null;
+      caption: string | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      };
+    } | null;
+  }> | null;
+  collaborators: Array<
+    {
+      _key: string;
+    } & CompanyCollaborator
+  > | null;
+} | null;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: WEBSITE_PAGES_SITEMAP_QUERY
@@ -983,7 +1501,7 @@ export type JOURNAL_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_ITEM_QUERY
-// Query: *[  _type == "journal"  && slug.current == $slug][0]{  _id,  _updatedAt,  name,  slug,  mainImage{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  },  location,  publishingDate,  shortDescription,  contentObject[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": select(        reference->_type == "project"          && coalesce(reference->publicationScope, "full") != "full" => null,        reference->slug.current      ),      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  tag->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      alt,      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
+// Query: *[  _type == "journal"  && slug.current == $slug][0]{  _id,  _updatedAt,  name,  slug,  mainImage{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  },  location,  publishingDate,  authors[]->{    _id,    name  },  shortDescription,  contentObject[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": select(        reference->_type == "project"          && coalesce(reference->publicationScope, "full") != "full" => null,        reference->slug.current      ),      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  tag->{    _id,    name  },  seo{    metaTitle,    metaDescription,    ogImage{      alt,      _type,      hotspot,      crop,      asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }      }    },    canonicalUrl,    robotsIndex,    robotsFollow,    schemaType,    customSchema{      knowsAbout,      hasOfferCatalog    },    ogTitle,    ogDescription,    twitterCard  }}
 export type JOURNAL_ITEM_QUERY_RESULT = {
   _id: string;
   _updatedAt: string;
@@ -1010,6 +1528,10 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
   };
   location: string;
   publishingDate: string;
+  authors: Array<{
+    _id: string;
+    name: string;
+  }> | null;
   shortDescription: string;
   contentObject: Array<
     | {
@@ -1026,6 +1548,7 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
               blank: null;
               slug: null | string;
               type:
+                | "aboutPage"
                 | "contactPage"
                 | "homePage"
                 | "journal"
@@ -1174,6 +1697,7 @@ export type SERVICE_QUERY_RESULT = {
               blank: null;
               slug: null | string;
               type:
+                | "aboutPage"
                 | "contactPage"
                 | "homePage"
                 | "journal"
@@ -1403,6 +1927,7 @@ export type PROJECT_ITEM_QUERY_RESULT = {
               blank: null;
               slug: null | string;
               type:
+                | "aboutPage"
                 | "contactPage"
                 | "homePage"
                 | "journal"
@@ -1648,12 +2173,15 @@ export type REDIRECTS_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
+    '*[\n  _id == $id\n][0]{\n\n    _id,\n    _type,\n    "slug": slug.current,\n    "publicationScope": coalesce(publicationScope, "full"),\n    "hasImage": defined(mainImage.asset->url)\n}': INTERNAL_PAGE_DESTINATION_QUERY_RESULT;
+    '*[\n  _id == "homePage"\n  && _type == "homePage"\n][0]{\n  hero{\n    heading[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        _key,\n        _type\n      }\n    },\n    description,\n    image{\n      altContent,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    button{\n      visibility,\n      label,\n      "destinationType": coalesce(\n        destinationType,\n        select(defined(page._ref) => "page", "section")\n      ),\n      page->{\n\n    _id,\n    _type,\n    "slug": slug.current,\n    "publicationScope": coalesce(publicationScope, "full"),\n    "hasImage": defined(mainImage.asset->url)\n      }\n    },\n    scrollCue\n  }\n}': HOME_HERO_QUERY_RESULT;
     '*[\n  _type == "site"\n  && _id == "site"\n][0]{\n  name,\n  brandName,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
     "*[\n  _id == $id\n  && _type == $id\n][0]{\n  _id,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}": WEBSITE_PAGE_SEO_QUERY_RESULT;
+    '*[\n  _type == "aboutPage"\n  && _id == "aboutPage"\n][0]{\n  _id,\n  name,\n  introduction[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  team[]->{\n    _id,\n    name,\n    role,\n    description,\n    bio,\n    emailVisibility,\n    "email": select(emailVisibility == "visible" => email, null),\n    portrait{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n    }\n  },\n  collaborators\n}': ABOUT_PAGE_QUERY_RESULT;
     "*[\n  _id in $ids\n  && _type == _id\n]{\n  _id,\n  _updatedAt,\n  seo{\n    robotsIndex,\n    canonicalUrl\n  }\n}": WEBSITE_PAGES_SITEMAP_QUERY_RESULT;
     '*[\n  _type == "project"\n  && defined(slug.current)\n] | order(orderRank asc) {\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;
-    '*[\n  _type == "journal"\n  && slug.current == $slug\n][0]{\n  _id,\n  _updatedAt,\n  name,\n  slug,\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  location,\n  publishingDate,\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
+    '*[\n  _type == "journal"\n  && slug.current == $slug\n][0]{\n  _id,\n  _updatedAt,\n  name,\n  slug,\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  location,\n  publishingDate,\n  authors[]->{\n    _id,\n    name\n  },\n  shortDescription,\n  contentObject[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  tag->{\n    _id,\n    name\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': JOURNAL_ITEM_QUERY_RESULT;
     '*[_type == "tag"] | order(name asc){\n  _id,\n  name,\n  slug\n}': TAGS_QUERY_RESULT;
     '*[\n  _type == "service"\n  && defined(slug.current)\n] | order(orderRank asc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n}': SERVICES_QUERY_RESULT;
     '*[\n  _type == "service"\n  && slug.current == $slug\n][0]{\n  _id,\n  name,\n  slug,\n  shortDescription,\n\n  content[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  capabilities[]->{\n    _id,\n    name\n  },\n  clients[]->{\n    _id,\n    name,\n    logoDark{\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    }\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  seo{\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    schemaType,\n    customSchema{\n      knowsAbout,\n      hasOfferCatalog\n    },\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SERVICE_QUERY_RESULT;

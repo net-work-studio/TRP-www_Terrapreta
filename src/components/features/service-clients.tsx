@@ -27,7 +27,7 @@ export function ServiceClients({
 
   return (
     <div className="flex flex-col items-start justify-center gap-2.5">
-      <h2 className="text-2xl">Our Clients</h2>
+      <h2 className="text-2xl">Our clients</h2>
       <div className="flex flex-row flex-wrap items-center justify-start gap-5">
         {clientsWithLogo.map((client) => (
           <div key={client._id}>

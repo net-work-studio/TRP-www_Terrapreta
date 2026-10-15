@@ -15,22 +15,23 @@ export const WEBSITE_PAGES = {
     title: "About",
     path: "/about",
     metadataTitle: "About",
-    description: undefined,
+    description:
+      "Meet Terrapreta, an interdisciplinary team developing nature-based solutions and ecological restoration projects with soil health at the centre.",
   },
   projectsIndexPage: {
-    title: "Projects overview",
+    title: "Projects index",
     path: "/projects",
     metadataTitle: "Projects",
     description: "Explore our latest projects.",
   },
   journalIndexPage: {
-    title: "Journal overview",
+    title: "Journal index",
     path: "/journal",
     metadataTitle: "Journal",
     description: "Read our latest journal entries.",
   },
   researchIndexPage: {
-    title: "Research overview",
+    title: "Research index",
     path: "/research",
     metadataTitle: "Research",
     description: undefined,
@@ -43,10 +44,11 @@ export function isWebsitePageId(value: string): value is WebsitePageId {
   return Object.hasOwn(WEBSITE_PAGES, value);
 }
 
-// About and Research join this list when their public routes launch.
+// Research joins this list when its public route launches.
 export const LIVE_WEBSITE_PAGE_IDS = [
   "homePage",
   "contactPage",
+  "aboutPage",
   "projectsIndexPage",
   "journalIndexPage",
 ] as const satisfies readonly WebsitePageId[];

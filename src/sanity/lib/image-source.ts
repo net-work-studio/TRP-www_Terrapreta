@@ -1,6 +1,7 @@
 import type {
   EditorialImage,
   SanityImageAsset as GeneratedSanityImageAsset,
+  HeroImage,
 } from "../types";
 
 type GeneratedImageMetadata = NonNullable<
@@ -27,7 +28,7 @@ type SanityImageAsset = Partial<
 };
 
 export type SanityImageField = {
-  _type?: EditorialImage["_type"] | "image";
+  _type?: EditorialImage["_type"] | HeroImage["_type"] | "image";
 } & NullablePartial<Pick<EditorialImage, "crop" | "hotspot">> & {
     asset?: SanityImageAsset | null;
   };
