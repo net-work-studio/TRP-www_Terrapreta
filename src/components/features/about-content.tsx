@@ -1,6 +1,8 @@
 import { PortableText } from "next-sanity";
+import type { ComponentProps } from "react";
 import ArticleContent from "@/components/shared/article-content";
 import PageHeader from "@/components/shared/page-header";
+import { PortableImage } from "@/components/ui/portable-image";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
@@ -9,6 +11,20 @@ import {
   hasSanityImage,
 } from "@/sanity/lib/image";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
+
+function AboutIntroductionImage({
+  value,
+}: ComponentProps<typeof PortableImage>) {
+  return <PortableImage layout="contained" value={value} />;
+}
+
+const ABOUT_PORTABLE_TEXT_COMPONENTS = {
+  ...portableTextComponents,
+  types: {
+    ...portableTextComponents.types,
+    editorialImage: AboutIntroductionImage,
+  },
+};
 
 export function AboutContent({
   page,
@@ -35,9 +51,9 @@ export function AboutContent({
       <PageHeader position="left" title={page.name || "About"} />
       <div className="container-site flex flex-col gap-20 pb-20">
         {page.introduction?.length ? (
-          <ArticleContent className="mx-0">
+          <ArticleContent className="mx-0 max-w-none [&>:not(figure)]:max-w-[52ch]">
             <PortableText
-              components={portableTextComponents}
+              components={ABOUT_PORTABLE_TEXT_COMPONENTS}
               value={page.introduction}
             />
           </ArticleContent>
@@ -50,7 +66,7 @@ export function AboutContent({
             <h2 className="text-3xl tracking-tight" id="team-heading">
               Team
             </h2>
-            <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-15 md:grid-cols-2 lg:grid-cols-4">
               {team.map((person) => {
                 const email =
                   cleanOptionalString(person.emailVisibility) === "visible"
@@ -66,7 +82,7 @@ export function AboutContent({
                         }
                         className="h-auto w-full"
                         height={900}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                         source={person.portrait}
                         width={
                           getSanityImageWidthForHeight(person.portrait, 900) ??
@@ -112,7 +128,7 @@ export function AboutContent({
             <h2 className="text-3xl tracking-tight" id="collaborators-heading">
               Collaborators
             </h2>
-            <ul className="grid grid-cols-1 gap-x-10 gap-y-3 text-lg sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-15 text-lg md:grid-cols-2 lg:grid-cols-4">
               {collaborators.map((collaborator) => {
                 const email = cleanOptionalString(collaborator.email)?.trim();
                 const bio = cleanOptionalString(collaborator.bio)?.trim();
