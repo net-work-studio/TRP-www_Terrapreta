@@ -94,7 +94,7 @@ export function AboutContent({
                           className="w-fit break-all text-base underline underline-offset-4"
                           href={`mailto:${email}`}
                         >
-                          {person.email}
+                          {email}
                         </a>
                       ) : null}
                     </div>
@@ -134,7 +134,7 @@ export function AboutContent({
                         className="w-fit break-all text-base underline underline-offset-4"
                         href={`mailto:${email}`}
                       >
-                        {collaborator.email}
+                        {email}
                       </a>
                     ) : null}
                   </li>

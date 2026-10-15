@@ -177,16 +177,7 @@ export const ABOUT_PAGE_QUERY = defineQuery(`*[
 ${EDITORIAL_IMAGE_PROJECTION}
     }
   },
-  "collaborators": select(
-    collaborators[0]._type == "companyCollaborator" => collaborators[]{
-      _key,
-      name,
-      role,
-      email,
-      bio
-    },
-    collaborators
-  )
+  collaborators
 }`);
 
 export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[

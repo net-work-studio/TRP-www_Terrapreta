@@ -4,6 +4,7 @@ import { getInternalPageHref } from "./internal-page";
 describe("Hero button destinations", () => {
   test.each([
     { _type: "contactPage", href: "/contacts" },
+    { _type: "aboutPage", href: "/about" },
     { _type: "projectsIndexPage", href: "/projects" },
     { _type: "journalIndexPage", href: "/journal" },
   ] as const)("resolves the live $_type singleton", ({ _type, href }) => {
@@ -34,8 +35,8 @@ describe("Hero button destinations", () => {
     ).toBe(href);
   });
 
-  test.each(["homePage", "aboutPage", "researchIndexPage"] as const)(
-    "rejects $_type as a Homepage hero destination",
+  test.each(["homePage", "researchIndexPage"] as const)(
+    "rejects %s as a Homepage hero destination",
     (_type) => {
       expect(
         getInternalPageHref({

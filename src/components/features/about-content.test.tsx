@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { stegaEncodeSourceMap } from "@sanity/client/stega";
 import { renderToStaticMarkup } from "react-dom/server";
 
 process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ??= "example";
@@ -119,6 +120,7 @@ test("About preserves people order and displays collaborator details only when f
         collaborators: [
           {
             _key: "francesco",
+            _type: "companyCollaborator",
             name: "Francesco Castrovilli",
             role: "Landscape designer",
             email: "francesco@example.com",
@@ -126,8 +128,8 @@ test("About preserves people order and displays collaborator details only when f
           },
           {
             _key: "gabriele",
+            _type: "companyCollaborator",
             name: "Gabriele Gagliardi",
-            role: null,
             email: "  ",
             bio: "  ",
           },
@@ -160,4 +162,65 @@ test("About preserves people order and displays collaborator details only when f
   expect(html.match(/href="mailto:/g)).toHaveLength(2);
   expect(html).not.toContain(">  </p>");
   expect(html).not.toContain("undefined");
+});
+
+test("About email links display cleaned, trimmed team and collaborator addresses", () => {
+  const emails = stegaEncodeSourceMap(
+    {
+      teamEmail: "  anna@example.com  ",
+      collaboratorEmail: "  francesco@example.com  ",
+    },
+    {
+      documents: [{ _id: "aboutPage", _type: "aboutPage" }],
+      paths: ["$['teamEmail']", "$['collaboratorEmail']"],
+      mappings: {
+        "$['teamEmail']": {
+          type: "value",
+          source: { type: "documentValue", document: 0, path: 0 },
+        },
+        "$['collaboratorEmail']": {
+          type: "value",
+          source: { type: "documentValue", document: 0, path: 1 },
+        },
+      },
+    },
+    { enabled: true, studioUrl: "/admin", filter: () => true }
+  );
+  expect(emails.teamEmail).not.toBe("  anna@example.com  ");
+  expect(emails.collaboratorEmail).not.toBe("  francesco@example.com  ");
+
+  const html = renderToStaticMarkup(
+    <AboutContent
+      page={{
+        _id: "aboutPage",
+        name: "About",
+        introduction: [],
+        team: [
+          {
+            _id: "anna",
+            name: "Anna Verdi",
+            role: null,
+            description: null,
+            bio: null,
+            portrait: null,
+            email: emails.teamEmail,
+            emailVisibility: "visible",
+          },
+        ],
+        collaborators: [
+          {
+            _key: "francesco",
+            _type: "companyCollaborator",
+            name: "Francesco Castrovilli",
+            email: emails.collaboratorEmail,
+          },
+        ],
+      }}
+    />
+  );
+
+  expect(html).toContain('href="mailto:anna@example.com">anna@example.com</a>');
+  expect(html).toContain(
+    'href="mailto:francesco@example.com">francesco@example.com</a>'
+  );
 });
