@@ -1,4 +1,4 @@
-import type { SchemaTypeDefinition } from "sanity";
+import type { SchemaTypeDefinition, Template } from "sanity";
 import { aboutPageDoc } from "./documents/aboutPageDoc";
 import { capabilityDoc } from "./documents/capabilityDoc";
 import { contactPageDoc } from "./documents/contactPageDoc";
@@ -45,7 +45,7 @@ import { richTextContentType } from "./objects/richTextContentType";
 import { seoObject } from "./objects/seoObject";
 import { titleSlugObject } from "./objects/titleSlugObject";
 
-export const schema: { types: SchemaTypeDefinition[] } = {
+export const schema = {
   types: [
     /* Documents */
     journalDoc,
@@ -94,5 +94,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
     /* Modules */
     heroSplitModule,
-  ],
+  ] satisfies SchemaTypeDefinition[],
+  templates: (templates: Template[]) =>
+    templates.filter((template) => template.schemaType !== "navigation"),
 };

@@ -4,7 +4,7 @@ import { websitePageFields, websitePagePreview } from "../helpers/websitePage";
 
 export const journalIndexPageDoc = defineType({
   name: "journalIndexPage",
-  title: "Journal overview",
+  title: "Journal index",
   type: "document",
   icon: DocumentTextIcon,
   fields: websitePageFields("journalIndexPage"),
