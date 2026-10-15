@@ -1,6 +1,8 @@
 import { PortableText } from "next-sanity";
+import type { ComponentProps } from "react";
 import ArticleContent from "@/components/shared/article-content";
 import PageHeader from "@/components/shared/page-header";
+import { PortableImage } from "@/components/ui/portable-image";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
@@ -9,6 +11,20 @@ import {
   hasSanityImage,
 } from "@/sanity/lib/image";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity/types";
+
+function AboutIntroductionImage({
+  value,
+}: ComponentProps<typeof PortableImage>) {
+  return <PortableImage layout="contained" value={value} />;
+}
+
+const ABOUT_PORTABLE_TEXT_COMPONENTS = {
+  ...portableTextComponents,
+  types: {
+    ...portableTextComponents.types,
+    editorialImage: AboutIntroductionImage,
+  },
+};
 
 export function AboutContent({
   page,
@@ -35,9 +51,9 @@ export function AboutContent({
       <PageHeader position="left" title={page.name || "About"} />
       <div className="container-site flex flex-col gap-20 pb-20">
         {page.introduction?.length ? (
-          <ArticleContent className="mx-0">
+          <ArticleContent className="mx-0 max-w-none [&>:not(figure)]:max-w-[52ch]">
             <PortableText
-              components={portableTextComponents}
+              components={ABOUT_PORTABLE_TEXT_COMPONENTS}
               value={page.introduction}
             />
           </ArticleContent>
