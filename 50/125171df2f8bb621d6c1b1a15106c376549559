@@ -1,0 +1,38 @@
+CONTEXT.md
+  s_6c98735435c932::t_5af36d10c12744 96
+src/sanity/schemaTypes/documents/personDoc.ts
+  s_6c98735435c932::t_280758c063f6d3 1,49-53,61-62,64-68,96-97,99-101
+  s_6c98735435c932::t_5af36d10c12744 11-15,19,32,42-48,54-60,63,69-70,73,91-95,98,102-118
+src/components/features/about-content.test.tsx
+  s_6c98735435c932::t_c4af56d33db401 48
+  s_6c98735435c932::t_40f1815e663f62 91-94,112-115,142,146-147,160
+  s_6c98735435c932::t_280758c063f6d3 44-47,78,143-145
+  s_6c98735435c932::t_c13392d1a74887 49-77
+src/components/features/about-content.tsx
+  s_6c98735435c932::t_5af36d10c12744 54,59,102-103
+  s_6c98735435c932::t_9aa681f91cd5e9 55-58,60-75,77-101
+docs/adr/0002-reuse-people-for-team-and-authorship.md
+  s_6c98735435c932::t_5af36d10c12744 3
+src/sanity/lib/queries.ts
+  s_6c98735435c932::t_5af36d10c12744 119-122
+src/sanity/extract.json
+  s_6c98735435c932::t_71e6ff996aa534 2173-2186,2194-2217
+src/sanity/types.ts
+  s_6c98735435c932::t_bcd40a0aba4766 412-413,415-416,943,1015-1018,1824
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "50125171df2f8bb621d6c1b1a15106c376549559",
+  "prompts": {},
+  "sessions": {
+    "s_6c98735435c932": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14013-06ac-7eb1-9a08-a2a7d7edd204",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
