@@ -41,6 +41,41 @@ test("About renders its editable introduction without empty people sections", ()
   expect(html).not.toContain(">Collaborators</h2>");
 });
 
+test.each([
+  { emailVisibility: null, email: "private@example.com" },
+  { emailVisibility: "hidden", email: "private@example.com" },
+  { emailVisibility: "visible", email: "  " },
+] as const)(
+  "team email stays absent for $emailVisibility visibility and $email",
+  ({ emailVisibility, email }) => {
+    const html = renderToStaticMarkup(
+      <AboutContent
+        page={{
+          _id: "aboutPage",
+          name: "About",
+          introduction: [],
+          collaborators: null,
+          team: [
+            {
+              _id: "person",
+              name: "Anna Verdi",
+              role: null,
+              description: "  ",
+              bio: "  ",
+              portrait: null,
+              email,
+              emailVisibility,
+            },
+          ],
+        }}
+      />
+    );
+    expect(html).not.toContain("mailto:");
+    expect(html).not.toContain("private@example.com");
+    expect(html).not.toContain(">  </p>");
+  }
+);
+
 test("About preserves people order and displays collaborator details only when filled in", () => {
   const html = renderToStaticMarkup(
     <AboutContent
@@ -53,6 +88,10 @@ test("About preserves people order and displays collaborator details only when f
             _id: "bianca",
             name: "Bianca Rossi",
             role: "Ecologist",
+            description: "Ecologist working on soil health.",
+            bio: "Bianca studies how urban forests recover after industrial use.",
+            email: "bianca@example.com",
+            emailVisibility: "visible",
             portrait: {
               _type: "editorialImage",
               altContent: "Bianca in the Goccia forest",
@@ -70,6 +109,10 @@ test("About preserves people order and displays collaborator details only when f
             _id: "anna",
             name: "Anna Verdi",
             role: "Landscape architect",
+            description: null,
+            bio: null,
+            email: "anna@example.com",
+            emailVisibility: "hidden",
             portrait: null,
           },
         ],
@@ -96,6 +139,12 @@ test("About preserves people order and displays collaborator details only when f
   expect(html).toContain(">Team</h2>");
   expect(html).toContain("Bianca in the Goccia forest");
   expect(html).toContain("Ecologist");
+  expect(html).toContain("Ecologist working on soil health.");
+  expect(html).toContain(
+    "Bianca studies how urban forests recover after industrial use."
+  );
+  expect(html).toContain('href="mailto:bianca@example.com"');
+  expect(html).not.toContain("anna@example.com");
   expect(html.indexOf("Bianca Rossi")).toBeLessThan(html.indexOf("Anna Verdi"));
   expect(html.indexOf("Anna Verdi")).toBeLessThan(
     html.indexOf(">Collaborators</h2>")
@@ -108,7 +157,7 @@ test("About preserves people order and displays collaborator details only when f
   expect(html).toContain(
     "Works on ecological restoration and landscape design."
   );
-  expect(html.match(/href="mailto:/g)).toHaveLength(1);
+  expect(html.match(/href="mailto:/g)).toHaveLength(2);
   expect(html).not.toContain(">  </p>");
   expect(html).not.toContain("undefined");
 });

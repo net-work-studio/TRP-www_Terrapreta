@@ -93,7 +93,7 @@ An individual who may be presented as a company team member, credited as a journ
 _Avoid_: Team as the name for an individual
 
 **Company team member**:
-A person selected for public presentation as part of Terrapreta's core team, with a public role and portrait.
+A person selected for public presentation as part of Terrapreta's core team, with a public role and portrait. Their profile may include a description, short biography, and an email address whose public display is optional.
 _Avoid_: Project team member, collaborator
 
 **Journal author**:

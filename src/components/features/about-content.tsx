@@ -51,32 +51,56 @@ export function AboutContent({
               Team
             </h2>
             <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {team.map((person) => (
-                <li className="flex flex-col gap-4" key={person._id}>
-                  {hasSanityImage(person.portrait) ? (
-                    <SanityImage
-                      alt={
-                        person.portrait?.altContent ||
-                        `Portrait of ${person.name}`
-                      }
-                      className="h-auto w-full"
-                      height={900}
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                      source={person.portrait}
-                      width={
-                        getSanityImageWidthForHeight(person.portrait, 900) ??
-                        675
-                      }
-                    />
-                  ) : null}
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-xl">{person.name}</h3>
-                    {person.role ? (
-                      <p className="text-muted-foreground">{person.role}</p>
+              {team.map((person) => {
+                const email =
+                  cleanOptionalString(person.emailVisibility) === "visible"
+                    ? cleanOptionalString(person.email)?.trim()
+                    : undefined;
+                return (
+                  <li className="flex flex-col gap-4" key={person._id}>
+                    {hasSanityImage(person.portrait) ? (
+                      <SanityImage
+                        alt={
+                          person.portrait?.altContent ||
+                          `Portrait of ${person.name}`
+                        }
+                        className="h-auto w-full"
+                        height={900}
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        source={person.portrait}
+                        width={
+                          getSanityImageWidthForHeight(person.portrait, 900) ??
+                          675
+                        }
+                      />
                     ) : null}
-                  </div>
-                </li>
-              ))}
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-xl">{person.name}</h3>
+                      {person.role ? (
+                        <p className="text-muted-foreground">{person.role}</p>
+                      ) : null}
+                      {cleanOptionalString(person.description)?.trim() ? (
+                        <p className="whitespace-pre-line text-base">
+                          {person.description}
+                        </p>
+                      ) : null}
+                      {cleanOptionalString(person.bio)?.trim() ? (
+                        <p className="whitespace-pre-line text-base text-muted-foreground">
+                          {person.bio}
+                        </p>
+                      ) : null}
+                      {email ? (
+                        <a
+                          className="w-fit break-all text-base underline underline-offset-4"
+                          href={`mailto:${email}`}
+                        >
+                          {person.email}
+                        </a>
+                      ) : null}
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           </section>
         ) : null}

@@ -116,6 +116,10 @@ export const ABOUT_PAGE_QUERY = defineQuery(`*[
     _id,
     name,
     role,
+    description,
+    bio,
+    emailVisibility,
+    "email": select(emailVisibility == "visible" => email, null),
     portrait{
 ${EDITORIAL_IMAGE_PROJECTION}
     }

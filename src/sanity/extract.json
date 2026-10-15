@@ -2170,11 +2170,49 @@
         },
         "optional": true
       },
+      "description": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "bio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "portrait": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "editorialImage"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "emailVisibility": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "hidden"
+            },
+            {
+              "type": "string",
+              "value": "visible"
+            }
+          ]
         },
         "optional": true
       }
