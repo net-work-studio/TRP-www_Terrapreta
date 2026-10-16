@@ -1,0 +1,23 @@
+scripts/setup-worktree.test.ts
+  s_2d9f4c59c8b0ba::t_626c2854da8b73 112-114
+  s_2d9f4c59c8b0ba::t_1907178cc7074d 31
+  s_2d9f4c59c8b0ba::t_e3872f3a774ee2 44-48,100-111,115
+  s_2d9f4c59c8b0ba::t_51e1cd49139a3a 57
+  s_2d9f4c59c8b0ba::t_a16879f27eaef0 116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8de968ce4237e57e3a710a3e963435d2a7ddb3b7",
+  "prompts": {},
+  "sessions": {
+    "s_2d9f4c59c8b0ba": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a144bd-7675-77e1-a6d2-96760d9b9083",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
