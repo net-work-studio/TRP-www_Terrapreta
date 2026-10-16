@@ -1,0 +1,22 @@
+src/sanity/lib/client.ts
+  s_860e786773108b::t_0eb871795db9c1 2,11-24
+src/lib/website-page-heading.test.ts
+  s_860e786773108b::t_9de29707f7a2d0 55-67,70-80
+  s_860e786773108b::t_c7b206610db334 5-47,49-54,68-69,81-85,115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c6ef6f672198f17b6a0835d3c4a449bcf2f17b72",
+  "prompts": {},
+  "sessions": {
+    "s_860e786773108b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14397-3cd0-76d0-830b-c25586680398",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
