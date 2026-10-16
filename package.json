@@ -10,6 +10,7 @@
     "predev": "bun run typegen",
     "dev": "next dev",
     "fix": "bunx ultracite fix",
+    "setup:worktree": "node scripts/setup-worktree.mjs",
     "start": "next start",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
