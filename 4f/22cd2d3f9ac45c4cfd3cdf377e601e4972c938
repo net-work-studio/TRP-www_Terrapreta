@@ -1,0 +1,63 @@
+README.md
+  s_32be4f53e63ace::t_3b4bef974caedd 4-13,19-29
+  s_4e23f04007f88c::t_105555829ee02b 14,17-18
+  s_4e23f04007f88c::t_25d1c5fded649a 15-16
+t3.json
+  s_4e23f04007f88c::t_105555829ee02b 1-11
+package.json
+  s_32be4f53e63ace::t_3b4bef974caedd 13
+scripts/setup-worktree.mjs
+  s_32be4f53e63ace::t_61fd65bdbf180a 2-7,9-10,67,70,86-88,97-99,109-111,129-131,133-135,137-139
+  s_32be4f53e63ace::t_a3cac1a159df7e 54
+  s_32be4f53e63ace::t_ced839df6adb5d 68-69,121-123
+  s_32be4f53e63ace::t_3b4bef974caedd 1,11-53,55-56,58-59,61,66,71-85,89-96,100-108,112-120,124-128,132,136,140-149
+  s_32be4f53e63ace::t_035420807e3cec 57,60
+  s_02d7b183f57d04::t_ed4eacbf9478cd 8,62-65
+scripts/setup-worktree.test.ts
+  s_72a06eab60fb2f::t_de9410961b835c 1,17-18
+  s_02d7b183f57d04::t_ed4eacbf9478cd 5,135-173,177-184
+  s_32be4f53e63ace::t_ced839df6adb5d 64-68,70,73,103
+  s_02d7b183f57d04::t_41086369e50a78 174-176
+  s_32be4f53e63ace::t_61fd65bdbf180a 3-4,6-14,16,22-23,39-44,47-56,59-63,69,71-72,74-83,86-91,104-109,117-120,130-132,191-194,198-200,206-212
+  s_32be4f53e63ace::t_19f980053a49ad 2,15,19-21,24-38,45-46,57-58,84-85,92-102,110-116,121-129,133-134,185-190,195-197,201-205,213-224
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4f22cd2d3f9ac45c4cfd3cdf377e601e4972c938",
+  "prompts": {},
+  "sessions": {
+    "s_02d7b183f57d04": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a144a4-7511-7221-b446-7ca45b3f9517",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_32be4f53e63ace": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1449e-b4d5-7f91-ad27-d246470c8c71",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_4e23f04007f88c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a144ab-ebe3-71c1-8955-0bf800abe2fc",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_72a06eab60fb2f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a144a6-24be-78f0-81a8-2ea339a34712",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
