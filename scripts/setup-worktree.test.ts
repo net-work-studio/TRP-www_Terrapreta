@@ -28,7 +28,7 @@ afterEach(() => {
   }
 });
 
-function fixture() {
+function fixture(gitEnv: Record<string, string> = {}) {
   const base = mkdtempSync(join(tmpdir(), "worktree setup "));
   temporaryDirectories.push(base);
   const source = join(base, "primary checkout");
@@ -41,7 +41,11 @@ function fixture() {
     join(source, "scripts/setup-worktree.mjs")
   );
   const git = (...args: string[]) =>
-    execFileSync("git", args, { cwd: source, stdio: "pipe" });
+    execFileSync("git", args, {
+      cwd: source,
+      env: { ...process.env, ...gitEnv },
+      stdio: "pipe",
+    });
   git("init", "--quiet");
   git("add", "scripts");
   git(
@@ -50,6 +54,7 @@ function fixture() {
     "-c",
     "user.email=test@example.invalid",
     "commit",
+    "--no-gpg-sign",
     "--quiet",
     "-m",
     "Fixture"
@@ -91,6 +96,23 @@ function fixture() {
     });
   return { source, worktree, run, bin };
 }
+
+test("creates a fixture when commit signing is enabled but the signer is unavailable", () => {
+  const { source, worktree } = fixture({
+    GIT_CONFIG_NOSYSTEM: "1",
+    GIT_CONFIG_GLOBAL: "/dev/null",
+    GIT_CONFIG_COUNT: "3",
+    GIT_CONFIG_KEY_0: "commit.gpgsign",
+    GIT_CONFIG_VALUE_0: "true",
+    GIT_CONFIG_KEY_1: "gpg.format",
+    GIT_CONFIG_VALUE_1: "openpgp",
+    GIT_CONFIG_KEY_2: "gpg.program",
+    GIT_CONFIG_VALUE_2: "/nonexistent/worktree-test-gpg",
+  });
+  expect(
+    readFileSync(join(worktree, "scripts/setup-worktree.mjs"), "utf8")
+  ).toBe(readFileSync(join(source, "scripts/setup-worktree.mjs"), "utf8"));
+});
 
 test("copies dotenv files privately, installs dev dependencies, and reruns without overwriting", () => {
   const { source, worktree, run } = fixture();
