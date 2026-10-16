@@ -5,6 +5,7 @@ describe("Hero button destinations", () => {
   test.each([
     { _type: "contactPage", href: "/contacts" },
     { _type: "aboutPage", href: "/about" },
+    { _type: "servicesIndexPage", href: "/services" },
     { _type: "projectsIndexPage", href: "/projects" },
     { _type: "journalIndexPage", href: "/journal" },
   ] as const)("resolves the live $_type singleton", ({ _type, href }) => {

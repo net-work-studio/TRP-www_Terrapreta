@@ -6,6 +6,7 @@ import { PortableImage } from "@/components/ui/portable-image";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
+import { getWebsitePageHeading } from "@/lib/website-page-heading";
 import {
   getSanityImageWidthForHeight,
   hasSanityImage,
@@ -48,7 +49,10 @@ export function AboutContent({
     .filter((collaborator) => collaborator?.name);
   return (
     <>
-      <PageHeader position="left" title={page.name || "About"} />
+      <PageHeader
+        position="left"
+        title={getWebsitePageHeading("aboutPage", page)}
+      />
       <div className="container-site flex flex-col gap-20 pb-20">
         {page.introduction?.length ? (
           <ArticleContent className="mx-0 max-w-none [&>:not(figure)]:max-w-[52ch]">

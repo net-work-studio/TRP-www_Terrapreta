@@ -15,6 +15,12 @@ export const aboutPageDoc = defineType({
     { name: "seo", title: "SEO", icon: SearchIcon },
   ],
   fields: [
+    ...websitePageFields("aboutPage").map((field) =>
+      defineField({
+        ...field,
+        group: field.name === "seo" ? "seo" : "content",
+      })
+    ),
     defineField({
       name: "introduction",
       type: "richTextContent",
@@ -50,10 +56,6 @@ export const aboutPageDoc = defineType({
       ],
       group: "people",
     }),
-    ...websitePageFields("aboutPage").map((field) => ({
-      ...field,
-      group: field.name === "seo" ? "seo" : "content",
-    })),
   ],
   preview: websitePagePreview("aboutPage"),
 });

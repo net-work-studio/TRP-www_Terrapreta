@@ -438,6 +438,36 @@
   },
   {
     "type": "type",
+    "name": "servicesIndexPage.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "servicesIndexPage"
+    }
+  },
+  {
+    "type": "type",
     "name": "projectsIndexPage.reference",
     "value": {
       "type": "object",
@@ -736,6 +766,10 @@
               },
               {
                 "type": "inline",
+                "name": "servicesIndexPage.reference"
+              },
+              {
+                "type": "inline",
                 "name": "projectsIndexPage.reference"
               },
               {
@@ -863,6 +897,10 @@
               {
                 "type": "inline",
                 "name": "aboutPage.reference"
+              },
+              {
+                "type": "inline",
+                "name": "servicesIndexPage.reference"
               },
               {
                 "type": "inline",
@@ -1343,6 +1381,10 @@
                                 {
                                   "type": "inline",
                                   "name": "aboutPage.reference"
+                                },
+                                {
+                                  "type": "inline",
+                                  "name": "servicesIndexPage.reference"
                                 },
                                 {
                                   "type": "inline",
@@ -3680,6 +3722,28 @@
           "type": "string"
         }
       },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "headingOverride": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seoObject"
+        },
+        "optional": true
+      },
       "introduction": {
         "type": "objectAttribute",
         "value": {
@@ -3731,21 +3795,6 @@
           }
         },
         "optional": true
-      },
-      "name": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "seo": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "seoObject"
-        },
-        "optional": true
       }
     }
   },
@@ -3790,6 +3839,13 @@
           "type": "string"
         },
         "optional": false
+      },
+      "headingOverride": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "seo": {
         "type": "objectAttribute",
@@ -3843,6 +3899,72 @@
         },
         "optional": false
       },
+      "headingOverride": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "seo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "seoObject"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
+    "name": "servicesIndexPage",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "servicesIndexPage"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "name": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
+      "headingOverride": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "seo": {
         "type": "objectAttribute",
         "value": {
@@ -3894,6 +4016,13 @@
           "type": "string"
         },
         "optional": false
+      },
+      "headingOverride": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       },
       "seo": {
         "type": "objectAttribute",

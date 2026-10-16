@@ -30,6 +30,7 @@ describe("Portable Text public destinations", () => {
     { type: "homePage", href: "/" },
     { type: "contactPage", href: "/contacts" },
     { type: "aboutPage", href: "/about" },
+    { type: "servicesIndexPage", href: "/services" },
     { type: "projectsIndexPage", href: "/projects" },
     { type: "journalIndexPage", href: "/journal" },
   ])("links to $type without needing a slug", ({ type, href }) => {

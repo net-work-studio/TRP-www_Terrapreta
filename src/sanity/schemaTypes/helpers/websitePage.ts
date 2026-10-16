@@ -1,5 +1,10 @@
 import { defineField } from "sanity";
-import { WEBSITE_PAGES, type WebsitePageId } from "@/lib/website-pages";
+import {
+  isWebsitePageWithHeadingId,
+  WEBSITE_PAGE_HEADING_DEFAULTS,
+  WEBSITE_PAGES,
+  type WebsitePageId,
+} from "@/lib/website-pages";
 
 export function websitePageFields(pageId: WebsitePageId) {
   return [
@@ -12,6 +17,22 @@ export function websitePageFields(pageId: WebsitePageId) {
         rule.required().error("A fixed website page needs its page name."),
       ],
     }),
+    ...(isWebsitePageWithHeadingId(pageId)
+      ? [
+          defineField({
+            name: "headingOverride",
+            type: "string",
+            description: `Visible page heading. Leave empty to use SEO → Meta title, then “${WEBSITE_PAGE_HEADING_DEFAULTS[pageId]}”. Does not change metadata, menus or URLs.`,
+            validation: (rule) => [
+              rule
+                .max(100)
+                .warning(
+                  "Keep the page heading concise; aim for 100 characters or fewer."
+                ),
+            ],
+          }),
+        ]
+      : []),
     defineField({
       name: "seo",
       title: "SEO",
@@ -30,11 +51,11 @@ export function websitePageFields(pageId: WebsitePageId) {
 export function websitePagePreview(pageId: WebsitePageId) {
   const page = WEBSITE_PAGES[pageId];
   return {
-    select: { metaTitle: "seo.metaTitle" },
-    prepare({ metaTitle }: { metaTitle?: string }) {
+    select: { metaTitle: "seo.metaTitle", heading: "headingOverride" },
+    prepare({ metaTitle, heading }: { metaTitle?: string; heading?: string }) {
       return {
         title: page.title,
-        subtitle: `${page.path} · ${metaTitle || "Default SEO"}`,
+        subtitle: `${page.path} · ${heading || metaTitle || "Default heading and SEO"}`,
       };
     },
   };
