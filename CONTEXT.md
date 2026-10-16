@@ -109,11 +109,11 @@ A named individual acknowledged separately from Terrapreta's core team, with an 
 _Avoid_: Company team member, project team member
 
 **Fixed website page**:
-One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Projects index, Journal index, or Research index.
+One of Terrapreta's named website pages with a single editorial identity: Homepage, Contact, About, Services index, Projects index, Journal index, or Research index.
 _Avoid_: Generic Page, collection entry
 
 **Collection index**:
-A fixed website page presenting the Projects, Journal, or Research collection. Its page metadata describes the collection as a whole, while each entry has its own content and metadata.
+A fixed website page presenting the Services, Projects, Journal, or Research collection. Its page metadata describes the collection as a whole, while each entry has its own content and metadata.
 _Avoid_: Collection overview, detail page, collection entry
 
 **Site SEO defaults**:
@@ -123,6 +123,18 @@ _Avoid_: Homepage SEO, page override
 **Page SEO**:
 Search and social metadata describing one website page. Page-specific values take priority over shared defaults.
 _Avoid_: Site SEO defaults, visible page content
+
+**Page heading**:
+The main title visitors see within a website page. Its wording may differ from the page's SEO title and navigation label.
+_Avoid_: SEO title, navigation label
+
+**Heading override**:
+Optional wording for a page heading that replaces the default title visitors would otherwise see, independently of Page SEO.
+_Avoid_: SEO override, page rename
+
+**Navigation label**:
+The wording identifying a page in website menus. Changing a page heading does not rename its navigation label or change its URL.
+_Avoid_: Page heading, SEO title
 
 **Site brand name**:
 The name identifying Terrapreta in page title suffixes and social metadata. It is distinct from a page's SEO title and the administrative label of Site Settings.

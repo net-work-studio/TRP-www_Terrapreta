@@ -5,15 +5,51 @@ import PageHeader from "@/components/shared/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { SITE_DEFAULTS } from "@/lib/constants";
 import { getWebsitePageMetadata } from "@/lib/website-page-metadata";
+import { WEBSITE_PAGE_HEADING_DEFAULTS } from "@/lib/website-pages";
+import {
+  getSanityRequestState,
+  PUBLISHED_SANITY_FETCH_OPTIONS,
+  renderSanityCacheBoundary,
+  type SanityFetchOptions,
+} from "@/sanity/lib/live";
+import { fetchWebsitePageHeading } from "@/sanity/lib/website-page-heading";
 
 export async function generateMetadata(): Promise<Metadata> {
   return getWebsitePageMetadata("contactPage");
 }
 
+async function CachedContactHeading(options: SanityFetchOptions) {
+  "use cache";
+
+  const title = await fetchWebsitePageHeading({
+    pageId: "contactPage",
+    ...options,
+  });
+  return <PageHeader position="left" title={title} />;
+}
+
+async function DynamicContactHeading() {
+  const { fetchOptions } = await getSanityRequestState();
+  return <CachedContactHeading {...fetchOptions} />;
+}
+
+async function ContactHeading() {
+  return renderSanityCacheBoundary({
+    draft: <DynamicContactHeading />,
+    fallback: (
+      <PageHeader
+        position="left"
+        title={WEBSITE_PAGE_HEADING_DEFAULTS.contactPage}
+      />
+    ),
+    published: <CachedContactHeading {...PUBLISHED_SANITY_FETCH_OPTIONS} />,
+  });
+}
+
 export default function ContactsPage() {
   return (
     <>
-      <PageHeader position="left" title="Contact us" />
+      <ContactHeading />
 
       <section className="container-site grid w-full grid-cols-1 items-start justify-start gap-10 py-20 lg:grid-cols-[60%_40%]">
         <CalendarStefano />

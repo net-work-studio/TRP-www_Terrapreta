@@ -18,6 +18,12 @@ export const WEBSITE_PAGES = {
     description:
       "Meet Terrapreta, an interdisciplinary team developing nature-based solutions and ecological restoration projects with soil health at the centre.",
   },
+  servicesIndexPage: {
+    title: "Services index",
+    path: "/services",
+    metadataTitle: "Services",
+    description: "Discover our services.",
+  },
   projectsIndexPage: {
     title: "Projects index",
     path: "/projects",
@@ -40,6 +46,23 @@ export const WEBSITE_PAGES = {
 
 export type WebsitePageId = keyof typeof WEBSITE_PAGES;
 
+export const WEBSITE_PAGE_HEADING_DEFAULTS = {
+  aboutPage: "About",
+  contactPage: "Contact us",
+  servicesIndexPage: "Services",
+  projectsIndexPage: "Projects",
+  journalIndexPage: "Journal",
+} as const satisfies Partial<Record<WebsitePageId, string>>;
+
+export type WebsitePageWithHeadingId =
+  keyof typeof WEBSITE_PAGE_HEADING_DEFAULTS;
+
+export function isWebsitePageWithHeadingId(
+  id: WebsitePageId
+): id is WebsitePageWithHeadingId {
+  return Object.hasOwn(WEBSITE_PAGE_HEADING_DEFAULTS, id);
+}
+
 export function isWebsitePageId(value: string): value is WebsitePageId {
   return Object.hasOwn(WEBSITE_PAGES, value);
 }
@@ -49,6 +72,7 @@ export const LIVE_WEBSITE_PAGE_IDS = [
   "homePage",
   "contactPage",
   "aboutPage",
+  "servicesIndexPage",
   "projectsIndexPage",
   "journalIndexPage",
 ] as const satisfies readonly WebsitePageId[];

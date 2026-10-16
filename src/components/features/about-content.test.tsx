@@ -6,12 +6,39 @@ process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ??= "example";
 process.env.NEXT_PUBLIC_SANITY_DATASET ??= "production";
 const { AboutContent } = await import("./about-content");
 
+test.each([
+  { headingOverride: "Who we are", expected: "Who we are" },
+  { headingOverride: null, expected: "About our studio" },
+  { headingOverride: "  ", expected: "About our studio" },
+])(
+  "About displays $expected without an automatic brand suffix",
+  ({ headingOverride, expected }) => {
+    const html = renderToStaticMarkup(
+      <AboutContent
+        page={{
+          _id: "aboutPage",
+          name: "About",
+          headingOverride,
+          seo: { metaTitle: "About our studio" },
+          introduction: [],
+          team: null,
+          collaborators: null,
+        }}
+      />
+    );
+    expect(html).toContain(`>${expected}</h1>`);
+    expect(html).not.toContain(" — Terrapreta</h1>");
+  }
+);
+
 test("About renders its editable introduction without empty people sections", () => {
   const html = renderToStaticMarkup(
     <AboutContent
       page={{
         _id: "aboutPage",
         name: "About",
+        headingOverride: null,
+        seo: null,
         introduction: [
           {
             _key: "intro",
@@ -54,6 +81,8 @@ test.each([
         page={{
           _id: "aboutPage",
           name: "About",
+          headingOverride: null,
+          seo: null,
           introduction: [],
           collaborators: null,
           team: [
@@ -83,6 +112,8 @@ test("About preserves people order and displays collaborator details only when f
       page={{
         _id: "aboutPage",
         name: "About",
+        headingOverride: null,
+        seo: null,
         introduction: [],
         team: [
           {
@@ -194,6 +225,8 @@ test("About email links display cleaned, trimmed team and collaborator addresses
       page={{
         _id: "aboutPage",
         name: "About",
+        headingOverride: null,
+        seo: null,
         introduction: [],
         team: [
           {

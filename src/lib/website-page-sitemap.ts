@@ -13,6 +13,7 @@ const SITEMAP_OPTIONS = {
   homePage: { changeFrequency: "daily", priority: 1 },
   contactPage: { changeFrequency: "monthly", priority: 0.8 },
   aboutPage: { changeFrequency: "monthly", priority: 0.8 },
+  servicesIndexPage: { changeFrequency: "weekly", priority: 0.9 },
   projectsIndexPage: { changeFrequency: "weekly", priority: 0.9 },
   journalIndexPage: { changeFrequency: "weekly", priority: 0.9 },
 } as const;
@@ -97,7 +98,6 @@ export function getContentSitemap({
   const defaultIndex = pages.find(({ _id }) => _id === "site")?.seo
     ?.robotsIndex;
   const staticPages: MetadataRoute.Sitemap = [
-    { url: "/services", changeFrequency: "weekly", priority: 0.9 },
     { url: "/impressum", changeFrequency: "yearly", priority: 0.3 },
   ];
   return [

@@ -96,6 +96,13 @@ export type AboutPageReference = {
   [internalGroqTypeReferenceTo]?: "aboutPage";
 };
 
+export type ServicesIndexPageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "servicesIndexPage";
+};
+
 export type ProjectsIndexPageReference = {
   _ref: string;
   _type: "reference";
@@ -161,6 +168,7 @@ export type LinkObject = {
     | HomePageReference
     | ContactPageReference
     | AboutPageReference
+    | ServicesIndexPageReference
     | ProjectsIndexPageReference
     | JournalIndexPageReference
     | ResearchIndexPageReference
@@ -181,6 +189,7 @@ export type InternalCallToAction = {
   page?:
     | ContactPageReference
     | AboutPageReference
+    | ServicesIndexPageReference
     | ProjectsIndexPageReference
     | JournalIndexPageReference
     | ProjectReference
@@ -251,6 +260,7 @@ export type RichTextContent = Array<
               | HomePageReference
               | ContactPageReference
               | AboutPageReference
+              | ServicesIndexPageReference
               | ProjectsIndexPageReference
               | JournalIndexPageReference;
             _type: "internalLink";
@@ -671,6 +681,9 @@ export type AboutPage = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  name: string;
+  headingOverride?: string;
+  seo?: SeoObject;
   introduction: RichTextContent;
   team?: Array<
     {
@@ -682,8 +695,6 @@ export type AboutPage = {
       _key: string;
     } & CompanyCollaborator
   >;
-  name: string;
-  seo?: SeoObject;
 };
 
 export type JournalIndexPage = {
@@ -693,6 +704,7 @@ export type JournalIndexPage = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  headingOverride?: string;
   seo?: SeoObject;
 };
 
@@ -703,6 +715,18 @@ export type ProjectsIndexPage = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  headingOverride?: string;
+  seo?: SeoObject;
+};
+
+export type ServicesIndexPage = {
+  _id: string;
+  _type: "servicesIndexPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  headingOverride?: string;
   seo?: SeoObject;
 };
 
@@ -713,6 +737,7 @@ export type ContactPage = {
   _updatedAt: string;
   _rev: string;
   name: string;
+  headingOverride?: string;
   seo?: SeoObject;
 };
 
@@ -871,6 +896,7 @@ export type AllSanitySchemaTypes =
   | HomePageReference
   | ContactPageReference
   | AboutPageReference
+  | ServicesIndexPageReference
   | ProjectsIndexPageReference
   | JournalIndexPageReference
   | ResearchIndexPageReference
@@ -918,6 +944,7 @@ export type AllSanitySchemaTypes =
   | AboutPage
   | JournalIndexPage
   | ProjectsIndexPage
+  | ServicesIndexPage
   | ContactPage
   | HomePage
   | Tag
@@ -1107,6 +1134,13 @@ export type INTERNAL_PAGE_DESTINATION_QUERY_RESULT =
     }
   | {
       _id: string;
+      _type: "servicesIndexPage";
+      slug: null;
+      publicationScope: "full";
+      hasImage: false;
+    }
+  | {
+      _id: string;
       _type: "site";
       slug: null;
       publicationScope: "full";
@@ -1218,6 +1252,13 @@ export type HOME_HERO_QUERY_RESULT = {
             publicationScope: "full";
             hasImage: true;
           }
+        | {
+            _id: string;
+            _type: "servicesIndexPage";
+            slug: null;
+            publicationScope: "full";
+            hasImage: false;
+          }
         | null;
     } | null;
     scrollCue: "animated" | "hidden" | "static";
@@ -1302,11 +1343,40 @@ export type WEBSITE_PAGE_SEO_QUERY_RESULT =
   | null;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: WEBSITE_PAGE_HEADING_QUERY
+// Query: *[  _id == $id  && _type == $id][0]{  _id,  headingOverride,  seo{    metaTitle  }}
+export type WEBSITE_PAGE_HEADING_QUERY_RESULT =
+  | {
+      _id: string;
+      headingOverride: null;
+      seo: null;
+    }
+  | {
+      _id: string;
+      headingOverride: null;
+      seo: {
+        metaTitle: string | null;
+      } | null;
+    }
+  | {
+      _id: string;
+      headingOverride: string | null;
+      seo: {
+        metaTitle: string | null;
+      } | null;
+    }
+  | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: ABOUT_PAGE_QUERY
-// Query: *[  _type == "aboutPage"  && _id == "aboutPage"][0]{  _id,  name,  introduction[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": select(        reference->_type == "project"          && coalesce(reference->publicationScope, "full") != "full" => null,        reference->slug.current      ),      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  team[]->{    _id,    name,    role,    description,    bio,    emailVisibility,    "email": select(emailVisibility == "visible" => email, null),    portrait{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }    }  },  collaborators}
+// Query: *[  _type == "aboutPage"  && _id == "aboutPage"][0]{  _id,  name,  headingOverride,  seo{    metaTitle  },  introduction[]{      _key,  _type,  style,  listItem,  level,  markDefs[]{    _key,    _type,    href,    blank,    _type == "internalLink" => {      "slug": select(        reference->_type == "project"          && coalesce(reference->publicationScope, "full") != "full" => null,        reference->slug.current      ),      "type": reference->_type    }  },  children[]{    _key,    _type,    text,    marks  },  _type == "editorialImage" => {    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }  }  },  team[]->{    _id,    name,    role,    description,    bio,    emailVisibility,    "email": select(emailVisibility == "visible" => email, null),    portrait{    _type,    altContent,    caption,    hotspot,    crop,    asset->{        _id,        url,        metadata{          lqip,          dimensions{            width,            height,            aspectRatio          }        }    }    }  },  collaborators}
 export type ABOUT_PAGE_QUERY_RESULT = {
   _id: "aboutPage";
   name: string;
+  headingOverride: string | null;
+  seo: {
+    metaTitle: string | null;
+  } | null;
   introduction: Array<
     | {
         _key: string;
@@ -1329,7 +1399,8 @@ export type ABOUT_PAGE_QUERY_RESULT = {
                 | "journalIndexPage"
                 | "project"
                 | "projectsIndexPage"
-                | "service";
+                | "service"
+                | "servicesIndexPage";
             }
           | {
               _key: string;
@@ -1555,7 +1626,8 @@ export type JOURNAL_ITEM_QUERY_RESULT = {
                 | "journalIndexPage"
                 | "project"
                 | "projectsIndexPage"
-                | "service";
+                | "service"
+                | "servicesIndexPage";
             }
           | {
               _key: string;
@@ -1704,7 +1776,8 @@ export type SERVICE_QUERY_RESULT = {
                 | "journalIndexPage"
                 | "project"
                 | "projectsIndexPage"
-                | "service";
+                | "service"
+                | "servicesIndexPage";
             }
           | {
               _key: string;
@@ -1934,7 +2007,8 @@ export type PROJECT_ITEM_QUERY_RESULT = {
                 | "journalIndexPage"
                 | "project"
                 | "projectsIndexPage"
-                | "service";
+                | "service"
+                | "servicesIndexPage";
             }
           | {
               _key: string;
@@ -2177,7 +2251,8 @@ declare global {
     '*[\n  _id == "homePage"\n  && _type == "homePage"\n][0]{\n  hero{\n    heading[]{\n      _key,\n      _type,\n      style,\n      children[]{\n        _key,\n        _type,\n        text,\n        marks\n      },\n      markDefs[]{\n        _key,\n        _type\n      }\n    },\n    description,\n    image{\n      altContent,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    button{\n      visibility,\n      label,\n      "destinationType": coalesce(\n        destinationType,\n        select(defined(page._ref) => "page", "section")\n      ),\n      page->{\n\n    _id,\n    _type,\n    "slug": slug.current,\n    "publicationScope": coalesce(publicationScope, "full"),\n    "hasImage": defined(mainImage.asset->url)\n      }\n    },\n    scrollCue\n  }\n}': HOME_HERO_QUERY_RESULT;
     '*[\n  _type == "site"\n  && _id == "site"\n][0]{\n  name,\n  brandName,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}': SITE_SETTINGS_QUERY_RESULT;
     "*[\n  _id == $id\n  && _type == $id\n][0]{\n  _id,\n  seo{\n\n    metaTitle,\n    metaDescription,\n    ogImage{\n      alt,\n\n      _type,\n      hotspot,\n      crop,\n      asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n      }\n    },\n    canonicalUrl,\n    robotsIndex,\n    robotsFollow,\n    ogTitle,\n    ogDescription,\n    twitterCard\n  }\n}": WEBSITE_PAGE_SEO_QUERY_RESULT;
-    '*[\n  _type == "aboutPage"\n  && _id == "aboutPage"\n][0]{\n  _id,\n  name,\n  introduction[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  team[]->{\n    _id,\n    name,\n    role,\n    description,\n    bio,\n    emailVisibility,\n    "email": select(emailVisibility == "visible" => email, null),\n    portrait{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n    }\n  },\n  collaborators\n}': ABOUT_PAGE_QUERY_RESULT;
+    "*[\n  _id == $id\n  && _type == $id\n][0]{\n  _id,\n  headingOverride,\n  seo{\n    metaTitle\n  }\n}": WEBSITE_PAGE_HEADING_QUERY_RESULT;
+    '*[\n  _type == "aboutPage"\n  && _id == "aboutPage"\n][0]{\n  _id,\n  name,\n  headingOverride,\n  seo{\n    metaTitle\n  },\n  introduction[]{\n    \n  _key,\n  _type,\n  style,\n  listItem,\n  level,\n  markDefs[]{\n    _key,\n    _type,\n    href,\n    blank,\n    _type == "internalLink" => {\n      "slug": select(\n        reference->_type == "project"\n          && coalesce(reference->publicationScope, "full") != "full" => null,\n        reference->slug.current\n      ),\n      "type": reference->_type\n    }\n  },\n  children[]{\n    _key,\n    _type,\n    text,\n    marks\n  },\n  _type == "editorialImage" => {\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  }\n\n  },\n  team[]->{\n    _id,\n    name,\n    role,\n    description,\n    bio,\n    emailVisibility,\n    "email": select(emailVisibility == "visible" => email, null),\n    portrait{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n    }\n  },\n  collaborators\n}': ABOUT_PAGE_QUERY_RESULT;
     "*[\n  _id in $ids\n  && _type == _id\n]{\n  _id,\n  _updatedAt,\n  seo{\n    robotsIndex,\n    canonicalUrl\n  }\n}": WEBSITE_PAGES_SITEMAP_QUERY_RESULT;
     '*[\n  _type == "project"\n  && defined(slug.current)\n] | order(orderRank asc) {\n  _id,\n  name,\n  slug,\n  "publicationScope": coalesce(publicationScope, "full"),\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  tag->{\n    _id,\n    name\n  }\n}': PROJECTS_QUERY_RESULT;
     '*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){\n  _id,\n  name,\n  slug,\n  shortDescription,\n  gridDimension{\n\n    "prominence": select(\n      prominence == "featured" => "featured",\n      isBig == true => "featured",\n      "standard"\n    )\n  },\n  mainImage{\n\n    _type,\n    altContent,\n    caption,\n    hotspot,\n    crop,\n    asset->{\n\n        _id,\n        url,\n        metadata{\n          lqip,\n          dimensions{\n            width,\n            height,\n            aspectRatio\n          }\n        }\n    }\n  },\n  publishingDate,\n  tag->{\n    _id,\n    name\n  }\n}': JOURNAL_QUERY_RESULT;

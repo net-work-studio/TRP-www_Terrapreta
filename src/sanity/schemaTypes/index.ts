@@ -20,6 +20,7 @@ import { redirectDoc } from "./documents/redirectDoc";
 import { researchDoc } from "./documents/researchDoc";
 import { researchIndexPageDoc } from "./documents/researchIndexPageDoc";
 import { serviceDoc } from "./documents/serviceDoc";
+import { servicesIndexPageDoc } from "./documents/servicesIndexPageDoc";
 import { siteDoc } from "./documents/siteDoc";
 import { tagDoc } from "./documents/tagDoc";
 import { unGoalDoc } from "./documents/unGoalDoc";
@@ -60,6 +61,7 @@ export const schema = {
     homePageDoc,
     contactPageDoc,
     aboutPageDoc,
+    servicesIndexPageDoc,
     personDoc,
     projectsIndexPageDoc,
     journalIndexPageDoc,
