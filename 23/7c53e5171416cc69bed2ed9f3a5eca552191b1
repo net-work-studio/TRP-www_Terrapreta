@@ -1,0 +1,91 @@
+src/sanity/schemaTypes/objects/seoObject.ts
+  s_860e786773108b::t_2debb1510ccb41 23
+src/lib/website-page-sitemap.ts
+  s_860e786773108b::t_2debb1510ccb41 16
+src/sanity/lib/website-page-heading.ts
+  s_860e786773108b::t_2debb1510ccb41 1-20
+src/app/(frontend)/projects/page.tsx
+  s_860e786773108b::t_3d82a6cdb033de 6,42-46
+  s_860e786773108b::t_9a2226e6862611 15,24,27,31,40-41,47,49
+src/sanity/structure.ts
+  s_860e786773108b::t_2debb1510ccb41 30
+src/sanity/schemaTypes/index.ts
+  s_860e786773108b::t_2debb1510ccb41 23,64
+CONTEXT.md
+  s_860e786773108b::t_b6d27cf90ffa92 127-138
+  s_860e786773108b::t_241df3aa7dd4a0 112,116
+src/app/(frontend)/journal/page.tsx
+  s_860e786773108b::t_3d82a6cdb033de 6
+  s_860e786773108b::t_9a2226e6862611 15,24,27,42,51-54,56
+src/app/(frontend)/services/page.tsx
+  s_860e786773108b::t_3d82a6cdb033de 42-46
+  s_860e786773108b::t_9a2226e6862611 4-6,15,19,24,26-27,31,40-41,47,49
+src/lib/website-page-seo.test.ts
+  s_860e786773108b::t_3d82a6cdb033de 81-83,92-97,99-117
+  s_860e786773108b::t_cf54c8542276af 5,98
+  s_860e786773108b::t_2f0eeaccd3b8f2 64,70-80,84-91
+  s_bc73869a7210ce::t_3156ca3e4f66d7 118-119
+src/lib/internal-page.test.ts
+  s_860e786773108b::t_2f0eeaccd3b8f2 8
+src/sanity/schemaTypes/documents/servicesIndexPageDoc.ts
+  s_860e786773108b::t_2debb1510ccb41 1-12
+src/components/features/about-content.tsx
+  s_860e786773108b::t_3d82a6cdb033de 52-55
+  s_860e786773108b::t_2debb1510ccb41 9
+src/lib/website-page-heading.ts
+  s_860e786773108b::t_2debb1510ccb41 1-19
+src/lib/website-pages.ts
+  s_860e786773108b::t_2debb1510ccb41 21-26,49-56,59-65,75
+  s_860e786773108b::t_3d82a6cdb033de 57-58
+docs/adr/0001-fixed-website-page-models.md
+  s_860e786773108b::t_241df3aa7dd4a0 16,18,20,22
+  s_860e786773108b::t_6be6c3af09b872 17,19,21,23
+src/lib/website-page-heading.test.ts
+  s_860e786773108b::t_3d82a6cdb033de 15-18
+  s_860e786773108b::t_2f0eeaccd3b8f2 1-14,19-70
+src/sanity/schemaTypes/helpers/websitePage.ts
+  s_860e786773108b::t_3d82a6cdb033de 27-31
+  s_860e786773108b::t_2debb1510ccb41 2-7,20-26,32-35,54-55,58
+src/components/features/about-content.test.tsx
+  s_860e786773108b::t_cf54c8542276af 9-12,33
+  s_860e786773108b::t_c76fa165d95161 13-32
+  s_860e786773108b::t_94098479e3fc25 40-41,115-116,228-229
+  s_860e786773108b::t_3d82a6cdb033de 84-85
+src/sanity/schemaTypes/documents/aboutPageDoc.ts
+  s_860e786773108b::t_c76fa165d95161 18-23
+src/components/ui/portable-text-components.test.tsx
+  s_860e786773108b::t_cf54c8542276af 33
+src/sanity/lib/queries.ts
+  s_860e786773108b::t_2debb1510ccb41 159-169,176-179
+src/app/(frontend)/contacts/page.tsx
+  s_860e786773108b::t_9a2226e6862611 8-15,21-38,45-48,52
+  s_860e786773108b::t_3d82a6cdb033de 39-44
+src/sanity/extract.json
+  s_860e786773108b::t_50ec797e2b1137 439-468,767-770,901-904,1385-1388,3725-3746,3798-3834,3843-3849,3861,3874,3902-3908,3920,3933,3961-3967,4020-4026
+src/sanity/types.ts
+  s_860e786773108b::t_7c997aa1795d2f 99-105,171,192,263,684-686,707,718-729,740,899,947,1135-1141,1255-1261,1345-1369,1372,1376-1379,1402-1403,1629-1630,1779-1780,2010-2011,2254-2255
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "237c53e5171416cc69bed2ed9f3a5eca552191b1",
+  "prompts": {},
+  "sessions": {
+    "s_860e786773108b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14397-3cd0-76d0-830b-c25586680398",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    },
+    "s_bc73869a7210ce": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14432-d420-7960-9c73-3d7b92043368",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
