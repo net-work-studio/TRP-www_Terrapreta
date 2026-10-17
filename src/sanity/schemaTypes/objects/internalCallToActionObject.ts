@@ -3,7 +3,10 @@ import { defineField, defineType } from "sanity";
 import { getInternalPageHref } from "@/lib/internal-page";
 import { LIVE_WEBSITE_PAGE_IDS } from "@/lib/website-pages";
 import { apiVersion } from "@/sanity/env";
-import { INTERNAL_PAGE_DESTINATION_QUERY } from "@/sanity/lib/queries";
+import {
+  INTERNAL_PAGE_DESTINATION_QUERY,
+  INTERNAL_PAGE_REFERENCE_FILTER,
+} from "@/sanity/lib/queries";
 
 const PAGE_IDS = LIVE_WEBSITE_PAGE_IDS.filter((id) => id !== "homePage");
 
@@ -96,16 +99,7 @@ export const internalCallToActionObject = defineType({
       ],
       options: {
         disableNew: true,
-        filter: `!(_id in path("drafts.**"))
-          && (
-            (_id in $pageIds && _type == _id)
-            || (
-              defined(slug.current)
-              && length(slug.current) > 0
-              && (_type != "project" || coalesce(publicationScope, "full") == "full")
-              && (!(_type in ["project", "journal"]) || defined(mainImage.asset->url))
-            )
-          )`,
+        filter: INTERNAL_PAGE_REFERENCE_FILTER,
         filterParams: { pageIds: PAGE_IDS },
       },
       hidden: ({ parent }) =>
@@ -137,7 +131,7 @@ export const internalCallToActionObject = defineType({
             .withConfig({ perspective: "published", useCdn: false })
             .fetch(INTERNAL_PAGE_DESTINATION_QUERY, { id: value._ref });
 
-          return getInternalPageHref(destination)
+          return getInternalPageHref(destination, "hero")
             ? true
             : "Choose a published page with a working public URL.";
         }),

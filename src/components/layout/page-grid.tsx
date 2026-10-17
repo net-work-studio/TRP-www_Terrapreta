@@ -3,6 +3,7 @@ import { stegaClean } from "next-sanity";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import SanityImage from "@/components/ui/sanity-image";
+import { getInternalPageHref } from "@/lib/internal-page";
 import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
 import type { StegaAware } from "@/lib/sanity-stega";
 import { cn } from "@/lib/utils";
@@ -10,56 +11,42 @@ import {
   hasSanityImage,
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
-import type { Slug } from "@/sanity/types";
+import type { INTERNAL_PAGE_DESTINATION_QUERY_RESULT } from "@/sanity/types";
 
 type GridItemProps = {
   _id: string;
   name: StegaAware<string> | null;
   shortDescription: StegaAware<string> | null;
   mainImage: SanityImageSourceInput;
-  gridDimension?: {
-    prominence: StegaAware<"featured" | "standard">;
-  } | null;
   isFeatured?: boolean;
-  isInteractive?: boolean;
   publishingDate?: StegaAware<string> | null;
-  publicationScope?: StegaAware<string> | null;
-  slug: string;
+  href: string | null;
   tag?: { _id: string; name: StegaAware<string> | null } | null;
 };
 
-type GridItemInput = Omit<GridItemProps, "slug"> & {
-  slug: StegaAware<Slug> | null | string;
+type GridItemInput = Omit<GridItemProps, "href" | "isFeatured"> & {
+  destination: StegaAware<INTERNAL_PAGE_DESTINATION_QUERY_RESULT>;
+  gridDimension?: {
+    prominence: StegaAware<"featured" | "standard">;
+  } | null;
 };
 
 const IMAGE_QUALITY = 75;
 const ASPECT_RATIO = 3 / 2;
-
-function getSlugValue(slug: GridItemInput["slug"]): string | null {
-  if (!slug) {
-    return null;
-  }
-
-  if (typeof slug === "string") {
-    return stegaClean(slug);
-  }
-
-  return stegaClean(slug.current) || null;
-}
 
 function GridItem({
   name,
   mainImage,
   tag,
   isFeatured,
-  isInteractive = true,
-  slug,
+  href,
   publishingDate,
 }: GridItemProps) {
   if (!hasSanityImage(mainImage)) {
     return null;
   }
 
+  const isInteractive = Boolean(href);
   const publishingDateValue = cleanPublishingDate(publishingDate);
   const publishingDateLabel = formatPublishingDate(publishingDate);
   const className = cn(
@@ -106,42 +93,32 @@ function GridItem({
     </>
   );
 
-  if (!isInteractive) {
+  if (!href) {
     return <article className={className}>{content}</article>;
   }
 
   return (
-    <Link className={className} href={slug}>
+    <Link className={className} href={href}>
       {content}
     </Link>
   );
 }
 
-export default function PageGrid({
-  items,
-  basePath,
-}: {
-  items: GridItemInput[];
-  basePath: string;
-}) {
+export default function PageGrid({ items }: { items: GridItemInput[] }) {
   return (
     <section className="container-site mx-auto grid w-full grid-cols-1 gap-x-5 gap-y-15 pb-40 md:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
-        const slugValue = getSlugValue(item.slug);
+        const href = getInternalPageHref(item.destination);
 
         return (
           <GridItem
             key={item._id}
             {...item}
+            href={href}
             isFeatured={
               stegaClean(item.gridDimension?.prominence) === "featured"
             }
-            isInteractive={
-              Boolean(slugValue) &&
-              stegaClean(item.publicationScope) !== "overview"
-            }
             publishingDate={item.publishingDate ?? undefined}
-            slug={slugValue ? `/${basePath}/${slugValue}` : "#"}
           />
         );
       })}

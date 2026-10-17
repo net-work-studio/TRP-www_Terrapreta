@@ -23,20 +23,12 @@ function JournalContent({
   journal: StegaAware<JOURNAL_QUERY_RESULT> | null;
 }) {
   const validJournal =
-    journal?.filter(
-      (item): item is typeof item & { slug: { current: string } } =>
-        Boolean(item.slug?.current)
-    ) ?? [];
-
-  const transformedJournal = validJournal.map((item) => ({
-    ...item,
-    slug: item.slug.current,
-  }));
+    journal?.filter((item) => Boolean(item.slug?.current)) ?? [];
 
   return (
     <>
       <PageHeader position="left" title="Journal" />
-      <PageGrid basePath="journal" items={transformedJournal} />
+      <PageGrid items={validJournal} />
     </>
   );
 }

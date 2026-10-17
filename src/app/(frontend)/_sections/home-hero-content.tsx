@@ -47,7 +47,7 @@ export function HomeHeroContent({ hero }: { hero: Hero | null | undefined }) {
     if (destinationType === "section") {
       buttonHref = "#learn-more";
     } else if (destinationType === "page") {
-      buttonHref = getInternalPageHref(button?.page);
+      buttonHref = getInternalPageHref(button?.page, "hero");
     }
   }
   const scrollCue = content

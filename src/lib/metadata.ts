@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { getJournalAuthors } from "@/components/features/journal-authorship";
 import { SITE_DEFAULTS } from "@/lib/constants";
+import { cleanPublishingDate } from "@/lib/journal-date";
 import { formatSeoTitle } from "@/lib/seo-title";
 import { WEBSITE_PAGES, type WebsitePageId } from "@/lib/website-pages";
 import {
@@ -8,9 +10,40 @@ import {
   type SanityImageSourceInput,
 } from "@/sanity/lib/image";
 import type {
+  JOURNAL_ITEM_QUERY_RESULT,
+  PROJECT_ITEM_QUERY_RESULT,
+  SERVICE_QUERY_RESULT,
   SITE_SETTINGS_QUERY_RESULT,
   WEBSITE_PAGE_SEO_QUERY_RESULT,
 } from "@/sanity/types";
+
+type DetailPageMetadataOptions = (
+  | { kind: "project"; page: PROJECT_ITEM_QUERY_RESULT }
+  | { kind: "journal"; page: JOURNAL_ITEM_QUERY_RESULT }
+  | { kind: "service"; page: SERVICE_QUERY_RESULT }
+) & {
+  slug: string;
+  siteSettings: SITE_SETTINGS_QUERY_RESULT;
+  isDraftMode: boolean;
+};
+
+const DETAIL_PAGE_DEFAULTS = {
+  project: {
+    title: "Projects",
+    description: "Explore our latest projects.",
+    url: "/projects",
+  },
+  journal: {
+    title: "Journal",
+    description: "Read our latest journal entries.",
+    url: "/journal",
+  },
+  service: {
+    title: "Services",
+    description: "Discover our services.",
+    url: "/services",
+  },
+} as const;
 
 interface GenerateMetadataOptions {
   title: string;
@@ -163,6 +196,46 @@ export function generateMetadata({
       images: [{ url: imageUrl, alt: imageAlt }],
     },
   };
+}
+
+export function generateDetailPageMetadata({
+  kind,
+  page,
+  slug,
+  siteSettings,
+  isDraftMode,
+}: DetailPageMetadataOptions): Metadata {
+  const defaults = DETAIL_PAGE_DEFAULTS[kind];
+  if (!page?.name) {
+    return generateMetadata({ ...defaults, siteSettings, isDraftMode });
+  }
+
+  const journalMetadata =
+    kind === "journal"
+      ? {
+          type: "article" as const,
+          authors: getJournalAuthors(page.authors).map((author) => author.name),
+          publishedTime: cleanPublishingDate(page.publishingDate) ?? undefined,
+          modifiedTime: page._updatedAt,
+        }
+      : {};
+
+  return generateMetadata({
+    title: page.seo?.metaTitle || page.name,
+    description:
+      page.seo?.metaDescription || page.shortDescription || undefined,
+    image: page.seo?.ogImage ?? page.mainImage,
+    url: `${defaults.url}/${slug}`,
+    canonicalUrl: page.seo?.canonicalUrl ?? undefined,
+    robotsIndex: page.seo?.robotsIndex ?? undefined,
+    robotsFollow: page.seo?.robotsFollow ?? undefined,
+    ogTitle: page.seo?.ogTitle ?? undefined,
+    ogDescription: page.seo?.ogDescription ?? undefined,
+    twitterCard: page.seo?.twitterCard ?? undefined,
+    ...journalMetadata,
+    siteSettings,
+    isDraftMode,
+  });
 }
 
 export function generateWebsitePageMetadata({

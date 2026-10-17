@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import { SITE_DEFAULTS } from "@/lib/constants";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { generateDetailPageMetadata } from "@/lib/metadata";
 import { cleanCommaList, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getSanityImageUrl, hasSanityImage } from "@/sanity/lib/image";
@@ -53,28 +53,10 @@ export async function generateMetadata({
     getSiteSettings(fetchOptions),
   ]);
 
-  if (!service?.name) {
-    return generateMetadataHelper({
-      title: "Services",
-      description: "Discover our services.",
-      url: "/services",
-      siteSettings,
-      isDraftMode,
-    });
-  }
-
-  return generateMetadataHelper({
-    title: service.seo?.metaTitle || service.name,
-    description:
-      service.seo?.metaDescription || service.shortDescription || undefined,
-    image: service.seo?.ogImage ?? service.mainImage ?? undefined,
-    url: `/services/${slug}`,
-    canonicalUrl: service.seo?.canonicalUrl ?? undefined,
-    robotsIndex: service.seo?.robotsIndex ?? undefined,
-    robotsFollow: service.seo?.robotsFollow ?? undefined,
-    ogTitle: service.seo?.ogTitle ?? undefined,
-    ogDescription: service.seo?.ogDescription ?? undefined,
-    twitterCard: service.seo?.twitterCard ?? undefined,
+  return generateDetailPageMetadata({
+    kind: "service",
+    page: service,
+    slug,
     siteSettings,
     isDraftMode,
   });

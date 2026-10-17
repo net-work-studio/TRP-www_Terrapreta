@@ -15,7 +15,7 @@ import {
 import { portableTextComponents } from "@/components/ui/portable-text-components";
 import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { generateDetailPageMetadata } from "@/lib/metadata";
 import { cleanOptionalString, type StegaAware } from "@/lib/sanity-stega";
 import { getSiteSettings } from "@/lib/site-settings";
 import { hasSanityImage } from "@/sanity/lib/image";
@@ -64,35 +64,18 @@ export async function generateMetadata({
     getSiteSettings(fetchOptions),
   ]);
 
-  if (!projectItem?.name) {
-    return generateMetadataHelper({
-      title: "Projects",
-      description: "Explore our latest projects.",
-      url: "/projects",
-      siteSettings,
-      isDraftMode,
-    });
-  }
-
-  if (projectItem.publicationScope === "overview" && !isDraftMode) {
+  if (
+    projectItem?.name &&
+    projectItem.publicationScope === "overview" &&
+    !isDraftMode
+  ) {
     notFound();
   }
 
-  return generateMetadataHelper({
-    title: projectItem.seo?.metaTitle || projectItem.name,
-    description:
-      projectItem.seo?.metaDescription ||
-      projectItem.shortDescription ||
-      undefined,
-    image: projectItem.seo?.ogImage ?? projectItem.mainImage ?? undefined,
-    url: `/projects/${slug}`,
-    type: "website",
-    canonicalUrl: projectItem.seo?.canonicalUrl ?? undefined,
-    robotsIndex: projectItem.seo?.robotsIndex ?? undefined,
-    robotsFollow: projectItem.seo?.robotsFollow ?? undefined,
-    ogTitle: projectItem.seo?.ogTitle ?? undefined,
-    ogDescription: projectItem.seo?.ogDescription ?? undefined,
-    twitterCard: projectItem.seo?.twitterCard ?? undefined,
+  return generateDetailPageMetadata({
+    kind: "project",
+    page: projectItem,
+    slug,
     siteSettings,
     isDraftMode,
   });
