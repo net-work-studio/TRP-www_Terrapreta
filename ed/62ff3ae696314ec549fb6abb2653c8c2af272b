@@ -1,0 +1,81 @@
+src/components/layout/page-grid.tsx
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 107,117
+  s_3bf36f49dc29a1::t_4901ee1d21dc88 6,14,23,27-31,42,49,96,101,111
+src/components/ui/portable-text-components.tsx
+  s_3bf36f49dc29a1::t_4901ee1d21dc88 3,40
+src/app/(frontend)/_sections/home-hero-content.tsx
+  s_3bf36f49dc29a1::t_8284125fa60f2b 50
+src/lib/website-page-sitemap.ts
+  s_3bf36f49dc29a1::t_4901ee1d21dc88 2,4,30,113-115,117,119-120
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 32-40
+src/app/(frontend)/projects/page.tsx
+  s_3bf36f49dc29a1::t_4901ee1d21dc88 28
+src/lib/internal-page.ts
+  s_3bf36f49dc29a1::t_2f36faa682a56b 3-7,12,15-16,22-30,35
+src/app/(frontend)/journal/page.tsx
+  s_3bf36f49dc29a1::t_c465988c605144 31
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 26
+src/sanity/schemaTypes/helpers/richTextBlock.ts
+  s_3bf36f49dc29a1::t_2c8b0bf1908fd8 3,69-70
+src/sanity/lib/queries.ts
+  s_3bf36f49dc29a1::t_2c8b0bf1908fd8 40-53
+  s_3bf36f49dc29a1::t_8284125fa60f2b 54-60,73-75,199-201,214-216,236-238,312-314,489-491,503-505,517-519
+src/app/(frontend)/journal/[slug]/page.tsx
+  s_3bf36f49dc29a1::t_301bb0e6ff0cf9 18,71-74
+src/lib/website-page-seo.test.ts
+  s_3bf36f49dc29a1::t_f9ce3d817f55be 244-250,256-262,268-274,280-286,314-320,390-396,402-408,418-424,432-436,444-450
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 429-431,437-441
+src/app/(frontend)/projects/[slug]/page.tsx
+  s_3bf36f49dc29a1::t_301bb0e6ff0cf9 18,67-71,75-78
+CONTEXT.md
+  s_3bf36f49dc29a1::t_3dc7ba49d314de 31-34
+src/app/(frontend)/services/[slug]/page.tsx
+  s_3bf36f49dc29a1::t_301bb0e6ff0cf9 12,56-59
+src/lib/public-page-availability.test.tsx
+  s_3bf36f49dc29a1::t_62c3560db176c5 1-29,33-46,59-60,79-101,110-135,145,149,154-187
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 30-32,47-58,61-78,102-109,136-144,151,153
+  s_3bf36f49dc29a1::t_8ed1ad4cb52f84 146-148,150,152
+src/lib/internal-page.test.ts
+  s_3bf36f49dc29a1::t_f9ce3d817f55be 4,80-100
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 42-51
+src/app/(frontend)/services/page.tsx
+  s_3bf36f49dc29a1::t_4901ee1d21dc88 32
+  s_3bf36f49dc29a1::t_f9ce3d817f55be 4,27
+src/lib/metadata.ts
+  s_3bf36f49dc29a1::t_6669f91d2d4aaf 227
+  s_3bf36f49dc29a1::t_5e33c6ac5405ad 2,4,13-15,20-47,201-224,228-238
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 225-226
+  s_3bf36f49dc29a1::t_7ec970c05f740c 239-240
+src/components/ui/portable-text-components.test.tsx
+  s_3bf36f49dc29a1::t_3a4c6cd1ff2b03 2,5-6,12-32,37-43,48-57,61-63,69,76-79,83-92,97-101,107-109,121-156
+  s_3bf36f49dc29a1::t_8ed1ad4cb52f84 58-60,64,110-111,118-120
+  s_3bf36f49dc29a1::t_7c3331dab4c4b4 112-117
+src/lib/detail-page-seo.test.ts
+  s_3bf36f49dc29a1::t_ff64a225403587 19-23
+  s_3bf36f49dc29a1::t_8ed1ad4cb52f84 207-210
+  s_3bf36f49dc29a1::t_7166d4c5e716cf 130-135,144-183,186-206,211-218,220,224-231,249-252
+  s_3bf36f49dc29a1::t_931866f149a419 1-18,24-129,136-143,184-185,219,221-223,232-248,253-257
+src/sanity/schemaTypes/objects/internalCallToActionObject.ts
+  s_3bf36f49dc29a1::t_8284125fa60f2b 134
+  s_3bf36f49dc29a1::t_2c8b0bf1908fd8 6-9,102
+src/app/(frontend)/_sections/services.tsx
+  s_3bf36f49dc29a1::t_f9ce3d817f55be 14,110,139
+src/sanity/types.ts
+  s_3bf36f49dc29a1::t_b81d495817aa69 1306,1323-1379,1458,1462-1759,1765-1786,1793-1816,1821,1824-1830,1865,1868-1874,1909,1954-2010,2102,2105-2111,2138,2157-2213,2336,2434-2490,2683,2685-2691,2701,2703-2709,2719,2721-2727,2751-2755,2757-2759,2766-2768
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ed62ff3ae696314ec549fb6abb2653c8c2af272b",
+  "prompts": {},
+  "sessions": {
+    "s_3bf36f49dc29a1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14670-02d4-75e1-b753-574e7df4e68e",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "az3ta <24527778+az3ta@users.noreply.github.com>"
+    }
+  }
+}
