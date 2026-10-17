@@ -37,6 +37,27 @@ const PROMINENCE_PROJECTION = /* groq */ `
       "standard"
     )`;
 
+// Picker filtering is an early guard; publication validation and rendering use the resolver.
+export const INTERNAL_PAGE_REFERENCE_FILTER = /* groq */ `
+  !(_id in path("drafts.**"))
+  && (
+    (_id in $pageIds && _type == _id)
+    || (
+      _type in ["project", "journal", "service"]
+      && defined(slug.current)
+      && length(slug.current) > 0
+      && (_type != "project" || coalesce(publicationScope, "full") == "full")
+      && (!(_type in ["project", "journal"]) || defined(mainImage.asset->url))
+    )
+  )`;
+
+const INTERNAL_PAGE_DESTINATION_PROJECTION = /* groq */ `
+    _id,
+    _type,
+    "slug": slug.current,
+    "publicationScope": coalesce(publicationScope, "full"),
+    "hasImage": defined(mainImage.asset->url)`;
+
 const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
   _key,
   _type,
@@ -49,12 +70,9 @@ const PORTABLE_TEXT_CONTENT_PROJECTION = /* groq */ `
     href,
     blank,
     _type == "internalLink" => {
-      "slug": select(
-        reference->_type == "project"
-          && coalesce(reference->publicationScope, "full") != "full" => null,
-        reference->slug.current
-      ),
-      "type": reference->_type
+      "destination": reference->{
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+      }
     }
   },
   children[]{
@@ -81,13 +99,6 @@ ${IMAGE_FIELD_PROJECTION}
     ogTitle,
     ogDescription,
     twitterCard`;
-
-const INTERNAL_PAGE_DESTINATION_PROJECTION = /* groq */ `
-    _id,
-    _type,
-    "slug": slug.current,
-    "publicationScope": coalesce(publicationScope, "full"),
-    "hasImage": defined(mainImage.asset->url)`;
 
 export const INTERNAL_PAGE_DESTINATION_QUERY = defineQuery(`*[
   _id == $id
@@ -185,6 +196,9 @@ export const WEBSITE_PAGES_SITEMAP_QUERY = defineQuery(`*[
   && _type == _id
 ]{
   _id,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   _updatedAt,
   seo{
     robotsIndex,
@@ -197,6 +211,9 @@ export const PROJECTS_QUERY = defineQuery(`*[
   && defined(slug.current)
 ] | order(orderRank asc) {
   _id,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   name,
   slug,
   "publicationScope": coalesce(publicationScope, "full"),
@@ -216,6 +233,9 @@ ${EDITORIAL_IMAGE_PROJECTION}
 export const JOURNAL_QUERY =
   defineQuery(`*[_type == "journal" && defined(slug.current)] | order(publishingDate desc){
   _id,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   name,
   slug,
   shortDescription,
@@ -289,6 +309,9 @@ export const SERVICES_QUERY = defineQuery(`*[
   && defined(slug.current)
 ] | order(orderRank asc){
   _id,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   name,
   slug,
   shortDescription,
@@ -462,10 +485,10 @@ export const SERVICE_SLUGS_QUERY = defineQuery(
 export const PROJECTS_SITEMAP_QUERY = defineQuery(`*[
     _type == "project"
     && defined(slug.current)
-    && coalesce(publicationScope, "full") == "full"
-    && defined(mainImage.asset)
 ]{
-  "slug": slug.current,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   _updatedAt,
   seo{
     robotsIndex,
@@ -476,9 +499,10 @@ export const PROJECTS_SITEMAP_QUERY = defineQuery(`*[
 export const JOURNAL_SITEMAP_QUERY = defineQuery(`*[
     _type == "journal"
     && defined(slug.current)
-    && defined(mainImage.asset)
 ]{
-  "slug": slug.current,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   _updatedAt,
   seo{
     robotsIndex,
@@ -490,7 +514,9 @@ export const SERVICES_SITEMAP_QUERY = defineQuery(`*[
     _type == "service"
     && defined(slug.current)
 ]{
-  "slug": slug.current,
+  "destination": {
+${INTERNAL_PAGE_DESTINATION_PROJECTION}
+  },
   _updatedAt,
   seo{
     robotsIndex,

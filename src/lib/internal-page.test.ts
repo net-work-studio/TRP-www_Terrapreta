@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { getInternalPageHref } from "./internal-page";
 
-describe("Hero button destinations", () => {
+describe("Public page destinations", () => {
   test.each([
     { _type: "contactPage", href: "/contacts" },
     { _type: "aboutPage", href: "/about" },
@@ -39,13 +39,16 @@ describe("Hero button destinations", () => {
     "rejects %s as a Homepage hero destination",
     (_type) => {
       expect(
-        getInternalPageHref({
-          _id: _type,
-          _type,
-          slug: null,
-          publicationScope: "full",
-          hasImage: false,
-        })
+        getInternalPageHref(
+          {
+            _id: _type,
+            _type,
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
+          "hero"
+        )
       ).toBeNull();
     }
   );
@@ -73,4 +76,25 @@ describe("Hero button destinations", () => {
       })
     ).toBeNull();
   });
+});
+
+test("Homepage is available to public links but excluded from Hero links", () => {
+  const destination = {
+    _id: "homePage",
+    _type: "homePage",
+    slug: null,
+    publicationScope: "full",
+    hasImage: false,
+  } as const;
+  expect(getInternalPageHref(destination)).toBe("/");
+  expect(getInternalPageHref(destination, "hero")).toBeNull();
+});
+
+test("fixed routes retain public fallbacks except document-backed About", () => {
+  expect(getInternalPageHref("homePage")).toBe("/");
+  expect(getInternalPageHref("contactPage")).toBe("/contacts");
+  expect(getInternalPageHref("projectsIndexPage")).toBe("/projects");
+  expect(getInternalPageHref("journalIndexPage")).toBe("/journal");
+  expect(getInternalPageHref("aboutPage")).toBeNull();
+  expect(getInternalPageHref("researchIndexPage")).toBeNull();
 });

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { getInternalPageHref } from "@/lib/internal-page";
 import { isRedirectSource, LEGACY_REDIRECTS } from "@/lib/redirects";
-import { LIVE_WEBSITE_PAGE_IDS, WEBSITE_PAGES } from "@/lib/website-pages";
+import { LIVE_WEBSITE_PAGE_IDS } from "@/lib/website-pages";
 import type {
   JOURNAL_SITEMAP_QUERY_RESULT,
   PROJECTS_SITEMAP_QUERY_RESULT,
@@ -26,17 +27,17 @@ export function getWebsitePagesSitemap(
 
   return LIVE_WEBSITE_PAGE_IDS.flatMap((id) => {
     const page = pages.find((entry) => entry._id === id);
-    if (id === "aboutPage" && !page) {
-      return [];
-    }
-    const { path } = WEBSITE_PAGES[id];
+    const path = getInternalPageHref(page?.destination ?? id);
     if (
-      !isSitemapPage(
-        path,
-        page?.seo,
-        site?.seo?.robotsIndex,
-        baseUrl,
-        redirects
+      !(
+        path &&
+        isSitemapPage(
+          path,
+          page?.seo,
+          site?.seo?.robotsIndex,
+          baseUrl,
+          redirects
+        )
       )
     ) {
       return [];
@@ -109,16 +110,16 @@ export function getContentSitemap({
     ),
     ...(
       [
-        ["projects", projects, "monthly", 0.7],
-        ["journal", journal, "weekly", 0.8],
-        ["services", services, "monthly", 0.7],
+        [projects, "monthly", 0.7],
+        [journal, "weekly", 0.8],
+        [services, "monthly", 0.7],
       ] as const
-    ).flatMap(([collection, entries, changeFrequency, priority]) =>
+    ).flatMap(([entries, changeFrequency, priority]) =>
       entries.flatMap((entry) => {
-        if (!entry.slug) {
+        const path = getInternalPageHref(entry.destination);
+        if (!path) {
           return [];
         }
-        const path = `/${collection}/${entry.slug}`;
         return isSitemapPage(path, entry.seo, defaultIndex, baseUrl, redirects)
           ? [
               {
