@@ -29,7 +29,7 @@ function ProjectsContent({
   return (
     <>
       <PageHeader position="left" title={title} />
-      <PageGrid basePath="projects" items={projects ?? []} />
+      <PageGrid items={projects ?? []} />
     </>
   );
 }

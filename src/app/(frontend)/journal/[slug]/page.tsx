@@ -15,7 +15,7 @@ import SanityImage from "@/components/ui/sanity-image";
 import SocialShare from "@/components/ui/social-share";
 import { SITE_DEFAULTS } from "@/lib/constants";
 import { cleanPublishingDate, formatPublishingDate } from "@/lib/journal-date";
-import { generateMetadata as generateMetadataHelper } from "@/lib/metadata";
+import { generateDetailPageMetadata } from "@/lib/metadata";
 import {
   cleanCommaList,
   cleanOptionalString,
@@ -68,38 +68,10 @@ export async function generateMetadata({
     getSiteSettings(fetchOptions),
   ]);
 
-  if (!journalItem?.name) {
-    return generateMetadataHelper({
-      title: "Journal",
-      description: "Read our latest journal entries.",
-      url: "/journal",
-      siteSettings,
-      isDraftMode,
-    });
-  }
-
-  const publishingDate = cleanPublishingDate(journalItem.publishingDate);
-
-  return generateMetadataHelper({
-    title: journalItem.seo?.metaTitle || journalItem.name,
-    description:
-      journalItem.seo?.metaDescription ||
-      journalItem.shortDescription ||
-      undefined,
-    image: journalItem.seo?.ogImage ?? journalItem.mainImage ?? undefined,
-    url: `/journal/${slug}`,
-    type: "article",
-    authors: getJournalAuthors(journalItem.authors).map(
-      (author) => author.name
-    ),
-    publishedTime: publishingDate ?? undefined,
-    modifiedTime: journalItem._updatedAt,
-    canonicalUrl: journalItem.seo?.canonicalUrl ?? undefined,
-    robotsIndex: journalItem.seo?.robotsIndex ?? undefined,
-    robotsFollow: journalItem.seo?.robotsFollow ?? undefined,
-    ogTitle: journalItem.seo?.ogTitle ?? undefined,
-    ogDescription: journalItem.seo?.ogDescription ?? undefined,
-    twitterCard: journalItem.seo?.twitterCard ?? undefined,
+  return generateDetailPageMetadata({
+    kind: "journal",
+    page: journalItem,
+    slug,
     siteSettings,
     isDraftMode,
   });

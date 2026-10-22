@@ -92,6 +92,13 @@ describe("fixed website page SEO", () => {
     const pages = [
       {
         _id: "servicesIndexPage",
+        destination: {
+          _id: "servicesIndexPage",
+          _type: "servicesIndexPage",
+          slug: null,
+          publicationScope: "full",
+          hasImage: false,
+        },
         _updatedAt: "2026-10-16",
         seo: { robotsIndex: "index", canonicalUrl: null },
       },
@@ -293,21 +300,49 @@ describe("fixed website page SEO", () => {
       [
         {
           _id: "site",
+          destination: {
+            _id: "site",
+            _type: "site",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-01",
           seo: { robotsIndex: "noindex", canonicalUrl: null },
         },
         {
           _id: "contactPage",
+          destination: {
+            _id: "contactPage",
+            _type: "contactPage",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-02",
           seo: { robotsIndex: "index", canonicalUrl: null },
         },
         {
           _id: "aboutPage",
+          destination: {
+            _id: "aboutPage",
+            _type: "aboutPage",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-03",
           seo: { robotsIndex: "index", canonicalUrl: null },
         },
         {
           _id: "researchIndexPage",
+          destination: {
+            _id: "researchIndexPage",
+            _type: "researchIndexPage",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-03",
           seo: { robotsIndex: "index", canonicalUrl: null },
         },
@@ -335,6 +370,13 @@ describe("fixed website page SEO", () => {
       [
         {
           _id: "projectsIndexPage",
+          destination: {
+            _id: "projectsIndexPage",
+            _type: "projectsIndexPage",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-02",
           seo: { robotsIndex: "noindex", canonicalUrl: null },
         },
@@ -404,11 +446,25 @@ describe("complete SEO integration", () => {
       pages: [
         {
           _id: "site",
+          destination: {
+            _id: "site",
+            _type: "site",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-01",
           seo: { robotsIndex: "noindex", canonicalUrl: null },
         },
         {
           _id: "contactPage",
+          destination: {
+            _id: "contactPage",
+            _type: "contactPage",
+            slug: null,
+            publicationScope: "full",
+            hasImage: false,
+          },
           _updatedAt: "2026-10-02",
           seo: {
             robotsIndex: "index",
@@ -418,15 +474,39 @@ describe("complete SEO integration", () => {
       ],
       projects: [
         {
-          slug: "old",
+          destination: {
+            _id: "old",
+            _type: "project",
+            slug: "old",
+            publicationScope: "full",
+            hasImage: true,
+          },
           _updatedAt: "2026-10-02",
           seo: { robotsIndex: "index", canonicalUrl: null },
         },
       ],
-      journal: [{ slug: "inherited", _updatedAt: "2026-10-03", seo: null }],
+      journal: [
+        {
+          destination: {
+            _id: "inherited",
+            _type: "journal",
+            slug: "inherited",
+            publicationScope: "full",
+            hasImage: true,
+          },
+          _updatedAt: "2026-10-03",
+          seo: null,
+        },
+      ],
       services: [
         {
-          slug: "restoration",
+          destination: {
+            _id: "restoration",
+            _type: "service",
+            slug: "restoration",
+            publicationScope: "full",
+            hasImage: true,
+          },
           _updatedAt: "2026-10-04",
           seo: { robotsIndex: "index", canonicalUrl: null },
         },

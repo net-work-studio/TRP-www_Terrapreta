@@ -28,6 +28,10 @@ _Avoid_: Unclickable project, disabled project, unpublished project
 The extent of a project's content made publicly available: either its overview entry only or both its overview entry and detail page.
 _Avoid_: Clickability, enabled state
 
+**Public page availability**:
+Whether a destination has a working public website page, independently of whether search engines may index it. An overview-only project has no public detail page, and an editor preview does not establish public availability.
+_Avoid_: Indexability, publication scope
+
 **Realization status**:
 The current delivery state of a project: either in progress or completed. It is independent of any competition result and may be omitted from public presentation when it adds no useful context.
 _Avoid_: Competition status, project status

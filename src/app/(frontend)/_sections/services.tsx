@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import SanityImage from "@/components/ui/sanity-image";
 import TagTitle from "@/components/ui/tag-title";
+import type { StegaAware } from "@/lib/sanity-stega";
 import { hasSanityImage } from "@/sanity/lib/image";
 import {
   getSanityRequestState,
@@ -106,7 +107,7 @@ function ServiceCard({
 function ServicesContent({
   services,
 }: {
-  services: SERVICES_QUERY_RESULT | null;
+  services: StegaAware<SERVICES_QUERY_RESULT> | null;
 }) {
   return (
     <div className="container-site flex flex-col items-start justify-center gap-10">
@@ -135,7 +136,7 @@ function ServicesContent({
           ?.filter(
             (
               service
-            ): service is SERVICES_QUERY_RESULT[number] & {
+            ): service is StegaAware<SERVICES_QUERY_RESULT>[number] & {
               name: string;
               slug: { current: string };
               mainImage: NonNullable<

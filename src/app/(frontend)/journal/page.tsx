@@ -27,20 +27,12 @@ function JournalContent({
   title?: string;
 }) {
   const validJournal =
-    journal?.filter(
-      (item): item is typeof item & { slug: { current: string } } =>
-        Boolean(item.slug?.current)
-    ) ?? [];
-
-  const transformedJournal = validJournal.map((item) => ({
-    ...item,
-    slug: item.slug.current,
-  }));
+    journal?.filter((item) => Boolean(item.slug?.current)) ?? [];
 
   return (
     <>
       <PageHeader position="left" title={title} />
-      <PageGrid basePath="journal" items={transformedJournal} />
+      <PageGrid items={validJournal} />
     </>
   );
 }

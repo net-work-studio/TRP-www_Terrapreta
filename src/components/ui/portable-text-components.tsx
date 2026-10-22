@@ -1,28 +1,12 @@
 import Link from "next/link";
 import { type PortableTextComponents, stegaClean } from "next-sanity";
-import { isLiveWebsitePageId, WEBSITE_PAGES } from "@/lib/website-pages";
+import { getInternalPageHref } from "@/lib/internal-page";
 import { PortableImage } from "./portable-image";
 import {
   PortableTextHeadingFour,
   PortableTextHeadingThree,
   PortableTextHeadingTwo,
 } from "./portable-text-headings";
-
-/**
- * Map document types to their URL paths
- */
-function getPathForType(type: string): string | undefined {
-  switch (type) {
-    case "journal":
-      return "/journal";
-    case "project":
-      return "/projects";
-    case "service":
-      return "/services";
-    default:
-      return undefined;
-  }
-}
 
 /**
  * Shared PortableText components configuration with internal link support.
@@ -53,17 +37,7 @@ export const portableTextComponents: PortableTextComponents = {
       );
     },
     internalLink: ({ children, value }) => {
-      const slug = stegaClean(value?.slug);
-      const type = stegaClean(value?.type);
-      if (!type) {
-        return <span>{children}</span>;
-      }
-      const fixedPath = isLiveWebsitePageId(type)
-        ? WEBSITE_PAGES[type].path
-        : undefined;
-      const basePath = getPathForType(type);
-      const detailPath = basePath && slug ? `${basePath}/${slug}` : undefined;
-      const href = fixedPath ?? detailPath;
+      const href = getInternalPageHref(value?.destination);
       if (!href) {
         return <span>{children}</span>;
       }
