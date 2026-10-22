@@ -27,6 +27,7 @@ export const structure = structureTool({
         group(S, "Website pages", [
           S.listItem().singleton("homePage"),
           S.listItem().singleton("aboutPage"),
+          S.listItem().singleton("servicesIndexPage"),
           S.listItem().singleton("contactPage"),
           S.listItem().singleton("projectsIndexPage"),
           S.listItem().singleton("journalIndexPage"),

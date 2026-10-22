@@ -20,7 +20,7 @@ export const seoObject = defineType({
       name: "metaTitle",
       group: "search",
       description:
-        "Search title. The website adds the Site brand suffix; aim for 60 characters including the suffix.",
+        "Search title. On website pages with a Heading override, this is also the default visible heading. The website adds the Site brand suffix to metadata; aim for 60 characters including the suffix.",
       validation: (rule) => [
         rule
           .custom(async (value, context) => {

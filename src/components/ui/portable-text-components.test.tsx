@@ -71,6 +71,7 @@ describe("Portable Text public destinations through GROQ", () => {
     { type: "homePage", href: "/" },
     { type: "contactPage", href: "/contacts" },
     { type: "aboutPage", href: "/about" },
+    { type: "servicesIndexPage", href: "/services" },
     { type: "projectsIndexPage", href: "/projects" },
     { type: "journalIndexPage", href: "/journal" },
   ])("links to canonical $type without a slug", async ({ type, href }) => {

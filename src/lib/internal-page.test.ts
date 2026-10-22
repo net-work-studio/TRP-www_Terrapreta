@@ -5,6 +5,7 @@ describe("Public page destinations", () => {
   test.each([
     { _type: "contactPage", href: "/contacts" },
     { _type: "aboutPage", href: "/about" },
+    { _type: "servicesIndexPage", href: "/services" },
     { _type: "projectsIndexPage", href: "/projects" },
     { _type: "journalIndexPage", href: "/journal" },
   ] as const)("resolves the live $_type singleton", ({ _type, href }) => {
@@ -93,6 +94,7 @@ test("Homepage is available to public links but excluded from Hero links", () =>
 test("fixed routes retain public fallbacks except document-backed About", () => {
   expect(getInternalPageHref("homePage")).toBe("/");
   expect(getInternalPageHref("contactPage")).toBe("/contacts");
+  expect(getInternalPageHref("servicesIndexPage")).toBe("/services");
   expect(getInternalPageHref("projectsIndexPage")).toBe("/projects");
   expect(getInternalPageHref("journalIndexPage")).toBe("/journal");
   expect(getInternalPageHref("aboutPage")).toBeNull();

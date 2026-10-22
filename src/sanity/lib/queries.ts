@@ -167,12 +167,27 @@ ${SEO_METADATA_PROJECTION}
   }
 }`);
 
+export const WEBSITE_PAGE_HEADING_QUERY = defineQuery(`*[
+  _id == $id
+  && _type == $id
+][0]{
+  _id,
+  headingOverride,
+  seo{
+    metaTitle
+  }
+}`);
+
 export const ABOUT_PAGE_QUERY = defineQuery(`*[
   _type == "aboutPage"
   && _id == "aboutPage"
 ][0]{
   _id,
   name,
+  headingOverride,
+  seo{
+    metaTitle
+  },
   introduction[]{
     ${PORTABLE_TEXT_CONTENT_PROJECTION}
   },

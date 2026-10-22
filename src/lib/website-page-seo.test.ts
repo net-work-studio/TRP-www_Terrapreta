@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import type {
   SITE_SETTINGS_QUERY_RESULT,
   WEBSITE_PAGE_SEO_QUERY_RESULT,
+  WEBSITE_PAGES_SITEMAP_QUERY_RESULT,
 } from "@/sanity/types";
 import { SITE_DEFAULTS } from "./constants";
 import {
@@ -60,9 +61,67 @@ describe("fixed website page SEO", () => {
     ).toEqual([
       `${SITE_DEFAULTS.baseUrl}/`,
       `${SITE_DEFAULTS.baseUrl}/contacts`,
+      `${SITE_DEFAULTS.baseUrl}/services`,
       `${SITE_DEFAULTS.baseUrl}/projects`,
       `${SITE_DEFAULTS.baseUrl}/journal`,
     ]);
+  });
+
+  test("Services index has page SEO and a single sitemap entry, respecting noindex", () => {
+    const page = {
+      _id: "servicesIndexPage",
+      seo: { ...EMPTY_SEO, metaTitle: "Ecosystem restoration" },
+    } satisfies WEBSITE_PAGE_SEO_QUERY_RESULT;
+    const metadata = generateWebsitePageMetadata({
+      pageId: "servicesIndexPage",
+      page,
+      siteSettings: null,
+    });
+    expect(metadata.title).toBe("Ecosystem restoration — Terrapreta");
+    expect(metadata.alternates?.canonical).toBe(
+      `${SITE_DEFAULTS.baseUrl}/services`
+    );
+
+    const options = {
+      baseUrl: SITE_DEFAULTS.baseUrl,
+      projects: [],
+      journal: [],
+      services: [],
+      redirects: [],
+    };
+    const pages = [
+      {
+        _id: "servicesIndexPage",
+        destination: {
+          _id: "servicesIndexPage",
+          _type: "servicesIndexPage",
+          slug: null,
+          publicationScope: "full",
+          hasImage: false,
+        },
+        _updatedAt: "2026-10-16",
+        seo: { robotsIndex: "index", canonicalUrl: null },
+      },
+    ] satisfies WEBSITE_PAGES_SITEMAP_QUERY_RESULT;
+    expect(
+      getContentSitemap({ ...options, pages }).filter(
+        ({ url }) => url === `${SITE_DEFAULTS.baseUrl}/services`
+      )
+    ).toHaveLength(1);
+    expect(
+      getContentSitemap({
+        ...options,
+        pages: [
+          {
+            ...pages[0],
+            seo: {
+              robotsIndex: "noindex",
+              canonicalUrl: null,
+            },
+          },
+        ],
+      }).some(({ url }) => url === `${SITE_DEFAULTS.baseUrl}/services`)
+    ).toBe(false);
   });
 
   test("uses page overrides without turning the homepage title into the site brand", () => {
