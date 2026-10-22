@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageGrid from "@/components/layout/page-grid";
 import PageHeader from "@/components/shared/page-header";
+import type { StegaAware } from "@/lib/sanity-stega";
 import { getStaticPageMetadata } from "@/lib/website-page-metadata";
 import {
   getSanityRequestState,
@@ -23,12 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
 function ServicesContent({
   services,
 }: {
-  services: SERVICES_QUERY_RESULT | null;
+  services: StegaAware<SERVICES_QUERY_RESULT> | null;
 }) {
   return (
     <>
       <PageHeader position="left" title="Services" />
-      <PageGrid basePath="services" items={services ?? []} />
+      <PageGrid items={services ?? []} />
     </>
   );
 }
